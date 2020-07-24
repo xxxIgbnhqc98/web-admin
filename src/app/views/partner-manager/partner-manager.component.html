@@ -1,0 +1,95 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-search"></i> {{'Search' | translate}}
+      <div class="btn-action float-right">
+        <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="deleteAll()">
+          <i class="fa fa-trash"></i>{{'Delete all' | translate}}
+        </button>
+        <button class="btn btn-info" routerLink="/partner-manager/add">
+          <i class="fa fa-plus"></i>{{'Add new' | translate}}
+        </button>
+        <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
+          <i class="fa fa-cloud-download"></i> {{'Export excel' | translate}}
+        </button> -->
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row apps">
+        <div class="col-8 search form-group">
+          <div class="row">
+            <div class="col-3">
+              <select class="form-control" name="type" [(ngModel)]="type">
+                <option [ngValue]="null">{{'Choose type' | translate}}</option>
+                <option value="OPERATOR">Operator</option>
+                <option value="ADMIN">Admin</option>
+                <option value="SUPERADMIN">Super admin</option>
+                <option value="VISITOR">Visitor</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
+                [(ngModel)]="keyword">
+            </div>
+            <div class="col-3">
+              <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
+                  class="fa fa-search"></i> {{'Search' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-list"></i> {{'Partner manager list' | translate}}
+    </div>
+    <div class="card-body" id="admin-list">
+      <data-table id="data-table-grid" #itemsTable [indexColumnHeader]="'no' | translate" [items]="items | async"
+        [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
+        [selectColumn]="true" [multiSelect]="true" [substituteRows]="false" [selectOnRowClick]="true"
+        [showReloading]="false">
+        <data-table-column [header]="'Avatar' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <img *ngIf="item.avatar" height="50px" [src]="item.avatar ? item.avatar : thumbDefault"
+              onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+          </ng-template>
+        </data-table-column>
+        <data-table-column property="fullname" [header]="'fullname' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.fullname ?item.fullname: ''}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column property="id" [header]="'ID code' | translate">
+        </data-table-column>
+        <data-table-column property="username" [header]="'User name' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.username ? item.username: 'No information'}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column property="type" [header]="'Role' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.type ? item.type: 'No information'}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column property="email" [header]="'Email' | translate">
+        </data-table-column>
+        <data-table-column property="phone" [header]="'Phone' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.phone ? item.phone: 'No information'}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Actions' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="editItem(item)" class="btn btn-primary" style="margin-right: 5px;">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button (click)="deleteItem(item)" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </data-table-column>
+      </data-table>
+    </div>
+  </div>
+</div>

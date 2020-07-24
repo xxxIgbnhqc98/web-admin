@@ -1,0 +1,175 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-search"></i> {{'Search' | translate}}
+      <div class="btn-action float-right">
+        <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
+          <i class="fa fa-cloud-download"></i> {{'Export excel' | translate}}
+        </button> -->
+        <!-- <button class="btn btn-info" routerLink="/users/add">
+          <i class="fa fa-plus"></i>{{'Add new' | translate}}
+        </button> -->
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row apps">
+        <div class="col-12 search form-group">
+          <div class="row">
+            <div class="col-3">
+              <select class="form-control" name="fieldSearch" [(ngModel)]="fieldSearch">
+                <option [ngValue]="null">{{'Choose search condition' | translate}} </option>
+                <option value="id">{{'ID code' | translate}}</option>
+                <option value="email">{{'email' | translate}}</option>
+                <option value="phone">{{'Mobile phone' | translate}}</option>
+                <option value="nickname">{{'Nickname' | translate}}</option>
+              </select>
+            </div>
+            <!-- <div class="col-2">
+              <select class="form-control" name="sex" [(ngModel)]="sex">
+                <option [ngValue]="null">{{'Choose gender' | translate}}</option>
+                <option value="MALE">{{'Male' | translate}}</option>
+                <option value="FEMALE">{{'Female' | translate}}</option>
+              </select>
+            </div> -->
+            <div class="col-2">
+              <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
+                [(ngModel)]="keyword">
+            </div>
+            <div class="col-3">
+              <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
+                  class="fa fa-search"></i> {{'Search' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-list"></i> {{'User list' | translate}}
+    </div>
+    <div class="card-body scroll-table" id="user-list">
+      <data-table id="data-table-grid" #itemsTable [indexColumnHeader]="'no' | translate" [items]="items | async"
+        [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
+        [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
+        [showReloading]="false">
+        <data-table-column [header]="'ID code' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span ngxClipboard [cbContent]="item.id" (cbOnSuccess)="alertCopied(item.id)">{{item.id}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Login type - Account type' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.login_type}}</span><span>{{item.account_type ?' - '+ item.account_type:''}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column property="username" [header]="'Username' | translate">
+        </data-table-column>
+        <data-table-column property="nickname" [header]="'Nickname' | translate">
+        </data-table-column>
+        <data-table-column [header]="'Email' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.email ? item.email : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Company name' | translate">>
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.company_name ? item.company_name : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Mobile phone' | translate" property="phone">
+          <ng-template #dataTableCell let-item="item">
+            {{item.phone?item.phone:'No info' | translate}}
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Photo (selfie)' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <p lazy-load-images>
+              <img height="50px"
+                [attr.data-src]="item.avatar ? item.avatar : 'https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Post expired date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button *ngIf="item.post_expired_date" (click)="openModalAddTime(template, item)" class="btn btn-primary">
+              <i>{{item.post_expired_date?(getDateFromUnixTimestamp(item.post_expired_date)| date :"yyyy/MM/dd":'+9'):'No info'}}</i>
+            </button>
+            <button *ngIf="!item.post_expired_date" (click)="openModalAddTime(template, item)" class="btn btn-primary">
+              <i>Set expired time</i>
+            </button>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Post Limit' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.post_limit ? item.post_limit : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+
+        <!-- <data-table-column [header]="'Gender' | translate" property="sex">
+        </data-table-column> -->
+        <!-- <data-table-column header="Paypal account">
+        </data-table-column> -->
+        <data-table-column [header]="'Actions' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="editItem(item)" class="btn btn-primary" style="margin-right: 5px;">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button (click)="deleteItem(item)" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </data-table-column>
+      </data-table>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Add time' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">User ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Extra day' | translate }}</span>
+              </div>
+              <select class="form-control" name="extra_day" [(ngModel)]="extra_day">
+                <option value=30>30 days</option>
+                <option value=60>60 days</option>
+                <option value=90>90 days</option>
+                <option value=120>120 days</option>
+                <option value=150>150 days</option>
+                <option value=180>180 days</option>
+              </select>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitAddTime(formContent)">
+          <i *ngIf="!post_expired_date">{{ 'Add' | translate }}</i>
+          <i *ngIf="post_expired_date">{{ 'Edit' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

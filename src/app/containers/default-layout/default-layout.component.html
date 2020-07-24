@@ -1,0 +1,82 @@
+<app-header [fixed]="true" [navbarBrandFull]="{src: 'assets/img/logo.png', alt: 'Kor', height: 45}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'Kor'}"
+  [sidebarToggler]="'lg'" [asideMenuToggler]="false">
+  <!-- <ul class="nav navbar-nav d-md-down-none statistic-header">
+    <li class="nav-item px-3">
+      <div class="text-muted">Unique visitor</div>
+      <div class="left text-right">
+        <strong>{{uniqueVisitor}}</strong>
+      </div>
+      <div class="right text-left">
+        <p><i class="fa fa-venus" aria-hidden="true"></i> {{uniqueFemale}}</p>
+        <p><i class="fa fa-mars" aria-hidden="true"></i> {{uniqueMale}}</p>
+      </div>
+    </li>
+    <li class="nav-item px-3">
+      <div class="text-muted">New member</div>
+      <div class="left text-right">
+        <strong>{{newMember}}</strong>
+      </div>
+      <div class="right text-left">
+        <p><i class="fa fa-venus" aria-hidden="true"></i> {{newMember_female}}</p>
+        <p><i class="fa fa-mars" aria-hidden="true"></i> {{newMember_male}}</p>
+      </div>
+    </li>
+    <li class="nav-item px-3">
+      <div class="text-muted">The ratio of first payment</div>
+      <div class="left"><strong>{{firstPayment}}%</strong></div>
+      <div class="right no-gender"><strong>{{number_firstPayment}}</strong></div>
+    </li>
+    <li class="nav-item px-3">
+      <div class="text-muted">The ratio of re-payment</div>
+      <div class="left"><strong>{{rePayment}}%</strong></div>
+      <div class="right no-gender"><strong>{{number_rePayment}}</strong></div>
+    </li>
+  </ul> -->
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="false">
+        <img [src]="avatar" class="img-avatar" />
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>{{fullname}}</strong></div>
+        <!-- <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Thông tin cá nhân</a> -->
+    <li (click)="$event.stopPropagation()">
+      <a class="dropdown-item" href="javascript:void(0)" (click)="changeLanguage('en')">
+        {{ 'English' | translate }}</a>
+
+    </li>
+    <li (click)="$event.stopPropagation()">
+      <a class="dropdown-item" href="javascript:void(0)" (click)="changeLanguage('kr')">
+        {{ 'Korean' | translate }}</a>
+    </li>
+    <li (click)="$event.stopPropagation()"><a class="dropdown-item" href="javascript:void(0)"
+        (click)="changeLanguage('vn')">
+        {{ 'Vietnamese' | translate }}</a></li>
+    <a class="dropdown-item" href="javascript:void(0)" (click)="logout()"><i class="fa fa-lock"></i>
+      {{ 'header.logout' | translate }}</a>
+    </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar [fixed]="true" [display]="'lg'">
+    <app-sidebar-nav [navItems]="listNav" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <app-breadcrumb></app-breadcrumb>
+    </ol>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div><!-- /.container-fluid -->
+  </main>
+</div>
+<app-footer>
+  <span><a href="#">Brush</a> &copy; 2020.</span>
+  <span class="ml-auto">Design by <a href="https://hitek.com.vn/" target="_blank">Hitek</a></span>
+</app-footer>

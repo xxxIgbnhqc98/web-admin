@@ -1,0 +1,120 @@
+<div class="animated fadeIn">
+  <form class="form-content" #formContent="ngForm">
+    <div class="row">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="fa fa-info"></i> {{'Information' | translate}}</strong>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="fullname">{{'fullname' | translate}}</label>
+              <input class="form-control" id="fullname" [placeholder]="'Enter fullname' | translate" type="text"
+                name="fullname" [(ngModel)]="fullname" required #fullnameControl="ngModel"
+                [ngClass]="{'is-invalid' : fullnameControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="fullnameControl.errors?.required">
+                {{'Please enter fullname.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">{{'User name' | translate}}</label>
+              <input class="form-control" id="username" [placeholder]="'enter username' | translate" type="text"
+                name="username" [(ngModel)]="username" required #usernameControl="ngModel"
+                [ngClass]="{'is-invalid' : usernameControl.errors?.required}" [disabled]="isEdit">
+              <div class="invalid-feedback" *ngIf="usernameControl.errors?.required">
+                {{'Please enter username.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <div *ngIf="!isEdit">
+                <label for="password_show">{{'Password' | translate}}</label>
+                <input class="form-control" id="password_show" [placeholder]="'enter password' | translate"
+                  type="password" name="password_show" [(ngModel)]="password_show" required
+                  #password_showControl="ngModel" [ngClass]="{'is-invalid' : password_showControl.errors?.required}">
+                <div class="invalid-feedback" *ngIf="password_showControl.errors?.required">
+                  {{'Please enter password' | translate}}
+                </div>
+              </div>
+              <div *ngIf="isEdit">
+                <span *ngIf="!editPass" class="btn btn-primary" (click)="changeStateEditPass()">Edit Password</span>
+                <label *ngIf="editPass" for="password_show">{{'Password' | translate}}</label>
+                <div *ngIf="editPass">
+                  <input class="form-control" id="password_show" [placeholder]="'enter password' | translate"
+                    type="password" name="password_show" [(ngModel)]="password_show" required
+                    #password_showControl="ngModel" [ngClass]="{'is-invalid' : password_showControl.errors?.required}">
+                  <div class="invalid-feedback" *ngIf="password_showControl.errors?.required">
+                    {{'Please enter password' | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">{{'Email' | translate}}</label>
+              <input class="form-control" id="email" [placeholder]="'enter email.' | translate" type="email"
+                name="email" [(ngModel)]="email" required #emailControl="ngModel"
+                [ngClass]="{'is-invalid' : emailControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="emailControl.errors?.required">
+                {{'Please enter email.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone">{{'Phone' | translate}}</label>
+              <input class="form-control" id="phone" [placeholder]="'enter phone.' | translate" type="text" name="phone"
+                [(ngModel)]="phone" required #phoneControl="ngModel"
+                [ngClass]="{'is-invalid' : phoneControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="phoneControl.errors?.required">
+                {{'Please enter phone.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="role">{{'type' | translate}}</label>
+              <select class="form-control" name="type" id="type" [(ngModel)]="type" required #typeControl="ngModel"
+                [ngClass]="{'is-invalid' : typeControl.errors?.required}">
+                <option [ngValue]="null">{{'Choose type' | translate}}</option>
+                <option value="OPERATOR">{{'Operator' | translate}}</option>
+                <option value="ADMIN">{{'Admin' | translate}}</option>
+                <option value="SUPERADMIN">{{'Super admin' | translate}}</option>
+                <option value="VISITOR">{{'Visitor' | translate}}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="typeControl.value == null">
+                {{'Please enter type' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="fa fa-picture-o"></i> {{'Avatar' | translate}}</strong>
+            <button class="pull-right btn btn-primary btn-upload-avatar" (click)="fileAvatar.click()"
+              *ngIf="!loadingUploadAvatar"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+              {{'Upload avatar' | translate}}</button>
+            <button class="pull-right btn btn-primary btn-upload-avatar" *ngIf="loadingUploadAvatar"><i
+                class="fa fa-spinner fa-spin"></i> {{'Uploading avatar' | translate}}</button>
+            <input id="fileAvatar" type="file" (change)="uploadAvatar($event)" #fileAvatar accept="image/*">
+          </div>
+          <div class="card-body">
+            <div class="avatar" [style.backgroundImage]="'url('+ avatar +')'" *ngIf="avatar && avatar !== null">
+              <span class="remove-avatar" (click)="removeAvatar()"><i class="fa fa-times"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-footer">
+            <button class="btn btn-success" *ngIf="!isEdit" data-style="expand-right" [ladda]='submitting'
+              (click)="submitAdd(formContent)">
+              <i class="fa fa-plus"></i> {{'Submit' | translate}}
+            </button>
+            <button class="btn btn-success" *ngIf="isEdit" data-style="expand-right" [ladda]='submitting'
+              (click)="submitUpdate(formContent)">
+              <i class="fa fa-save"></i> {{'Edit' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

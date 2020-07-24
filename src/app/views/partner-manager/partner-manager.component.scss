@@ -1,0 +1,85 @@
+/deep/ .animated {
+  .card {
+    .card-header {
+      .btn-action {
+        button {
+          margin: -7px 5px -7px 0;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    .card-body {
+      .apps {
+        .col-12 {
+          button {
+            margin-right: 5px;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+    #admin-list {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      .table {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+        thead{
+          tr{
+            th{
+              padding: 3px;
+              text-align: center;
+            }
+          }
+        }
+        tbody{
+          tr{
+            td{
+              padding: 3px;
+              text-align: center;
+              word-wrap: break-word;;
+            }
+          }
+        }
+        .setting{
+          .btn{
+            margin-bottom: .3125rem;
+            margin-right: .3125rem;
+            &:last-child{
+              margin-right: 0;
+            }
+          }
+        }
+        .approval{
+          .btn{
+            margin-bottom: .3125rem;
+            &:last-child{
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/deep/ #admin-list #data-table-grid .data-table-wrapper .data-table-box table {
+  width: 1200px;
+}
+/deep/ #admin-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(6) {
+  width: 295px;
+}
+/deep/ #admin-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(9) {
+  width: 130px;
+}
+/deep/ #admin-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(10) {
+  width: 130px;
+}

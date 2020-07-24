@@ -1,0 +1,36 @@
+.statistic-header{
+  width: 55%;
+  height: 100%;
+  .nav-item{
+    width: 25%;
+    height: 100%;
+    border-right: 1px solid #ddd;
+    .left{
+      width: 50%;
+      float: left;
+      padding: 0 10%;
+      line-height: 3em;
+    }
+    .right{
+      width: 50%;
+      float: left;
+      padding: 0 10%;
+      p{
+        margin-bottom: 0;
+        font-weight: bold;
+        .fa-mars{
+          color: #f06191;
+        }
+        .fa-venus{
+          color: #64b5f6;
+        }
+      }
+    }
+    .no-gender{
+      line-height: 3em;
+    }
+    &:first-child{
+      border-left: 1px solid #ddd;
+    }
+  }
+}

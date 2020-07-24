@@ -1,0 +1,180 @@
+<div class="animated fadeIn">
+  <form class="form-content" #formContent="ngForm">
+    <div class="row">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="fa fa-info"></i> {{'Information' | translate}}</strong>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="category_id">{{'Category' | translate}}</label>
+              <select name="category_id" [(ngModel)]="category_id" required #categoryControl="ngModel"
+                [ngClass]="{'is-invalid' : categoryControl.errors?.required}" id="" class="form-control input-control">
+                <option *ngFor="let item of categories" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="categoryControl.errors?.required">
+                {{'Please choose category.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="title">{{'Title' | translate}}</label>
+              <input class="form-control" id="title" [placeholder]="'enter title' | translate" type="text" name="title"
+                [(ngModel)]="title" required #titleControl="ngModel"
+                [ngClass]="{'is-invalid' : titleControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="titleControl.errors?.required">
+                {{'Please enter title.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="min_price">{{'Min price' | translate}}</label>
+              <input class="form-control" id="min_price" [placeholder]="'enter price' | translate" type="number" name="min_price"
+                [(ngModel)]="min_price" required #min_priceControl="ngModel"
+                [ngClass]="{'is-invalid' : min_priceControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="min_priceControl.errors?.required">
+                {{'Please enter price.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contact_phone">{{'Contact phone' | translate}}</label>
+              <input class="form-control" id="contact_phone" [placeholder]="'enter phone' | translate" type="number" name="contact_phone"
+                [(ngModel)]="contact_phone" required #contact_phoneControl="ngModel"
+                [ngClass]="{'is-invalid' : contact_phoneControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="contact_phoneControl.errors?.required">
+                {{'Please enter contact phone.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="start_time">{{'Start time - End time' | translate}}</label>
+              <select name="start_time" [(ngModel)]="start_time" required #start_timeControl="ngModel"
+                [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id="" class="form-control input-control">
+                <option *ngFor="let item of hours" value="{{ item }}">{{
+                  item
+                }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="start_timeControl.errors?.required">
+                {{'Please choose start time.' | translate}}
+              </div>
+              <select name="end_time" [(ngModel)]="end_time" required #end_timeControl="ngModel"
+                [ngClass]="{'is-invalid' : end_timeControl.errors?.required}" id="" class="form-control input-control">
+                <option *ngFor="let item of hours" value="{{ item }}">{{
+                  item
+                }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="end_timeControl.errors?.required">
+                {{'Please choose end time.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="tag">{{'Tag' | translate}}</label>
+              <form [formGroup]="form_tag" *ngIf="form_tag" (ngSubmit)="save()" (reset)="resetForm()">
+
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Tag'" [data]="tags" [(ngModel)]="tags_select" [settings]="settings"
+                  [formControl]="f.name" [disabled]="false" (onFilterChange)="onSave($event)"
+                  (onSelect)="onSave($event)"
+                  (onDeSelect)="onSave($event)" (onSelectAll)="onSave($event)"
+                  (onDeSelectAll)="onSave($event)">
+                </ng-multiselect-dropdown>
+                <span class="invalid-feedback" *ngIf="f?.name?.errors?.required">
+                  tag is required
+                </span>
+              </form>
+            </div>
+            <div class="form-group">
+              <label for="city_id">{{'City' | translate}}</label>
+              <select name="city_id" [(ngModel)]="city_id" required #cityControl="ngModel" (change)="listDistrict()"
+                [ngClass]="{'is-invalid' : cityControl.errors?.required}" id="" class="form-control input-control">
+                <option *ngFor="let item of cities" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="cityControl.errors?.required">
+                {{'Please choose city.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="district_id">{{'District' | translate}}</label>
+              <select name="district_id" [(ngModel)]="district_id" required #districtControl="ngModel" (change)="listWard()"
+                [ngClass]="{'is-invalid' : districtControl.errors?.required}" id="" class="form-control input-control">
+                <option *ngFor="let item of districts" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="districtControl.errors?.required">
+                {{'Please choose district.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ward_id">{{'Ward' | translate}}</label>
+              <select name="ward_id" [(ngModel)]="ward_id" required #wardControl="ngModel"
+                [ngClass]="{'is-invalid' : wardControl.errors?.required}" id="" class="form-control input-control">
+                <option *ngFor="let item of wards" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="wardControl.errors?.required">
+                {{'Please choose ward.' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address">{{'Address' | translate}}</label>
+              <input class="form-control" id="address" [placeholder]="'enter address' | translate" type="text" name="address"
+                [(ngModel)]="address" required #addressControl="ngModel"
+                [ngClass]="{'is-invalid' : addressControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="addressControl.errors?.required">
+                {{'Please enter address' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="fa fa-picture-o"></i> {{'Images' | translate}}</strong>
+            <button class="pull-right btn btn-primary btn-upload-avatar" (click)="fileAvatar.click()"
+              *ngIf="!loadingUploadAvatar"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+              {{'Upload Image' | translate}}</button>
+            <button class="pull-right btn btn-primary btn-upload-avatar" *ngIf="loadingUploadAvatar"><i
+                class="fa fa-spinner fa-spin"></i> {{'Uploading Image' | translate}}</button>
+            <input id="fileAvatar" type="file" (change)="uploadAvatar($event)" #fileAvatar accept="image/*">
+          </div>
+          <div class="card-body">
+            <div *ngFor="let item of images">
+              <div class="avatar" [style.backgroundImage]="'url('+ item +')'" *ngIf="item && item !== null">
+                <span class="remove-avatar" (click)="removeAvatar(item)"><i class="fa fa-times"></i></span>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="fa fa-picture-o"></i> {{'Description' | translate}}</strong>
+          </div>
+          <div class="card-body">
+            <quill-editor name="description" [(ngModel)]="description">
+            </quill-editor>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-footer">
+            <button class="btn btn-success" *ngIf="!isEdit" data-style="expand-right" [ladda]='submitting'
+              (click)="submitAdd(formContent)">
+              <i class="fa fa-plus"></i> {{'Submit' | translate}}
+            </button>
+            <button class="btn btn-success" *ngIf="isEdit" data-style="expand-right" [ladda]='submitting'
+              (click)="submitUpdate(formContent)">
+              <i class="fa fa-save"></i> {{'Edit' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
