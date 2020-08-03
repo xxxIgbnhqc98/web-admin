@@ -8,9 +8,18 @@
           </div>
           <div class="card-body">
             <div class="form-group">
+              <label for="thema_id">{{'Thema' | translate}}</label>
+              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id"
+                id="thema_id" class="form-control input-control">
+                <option *ngFor="let item of themas" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+            </div>
+            <div class="form-group">
               <label for="category_id">{{'Category' | translate}}</label>
               <select name="category_id" [(ngModel)]="category_id" required #categoryControl="ngModel"
-                [ngClass]="{'is-invalid' : categoryControl.errors?.required}" id="" class="form-control input-control">
+                [ngClass]="{'is-invalid' : categoryControl.errors?.required}" id="category_id" class="form-control input-control">
                 <option *ngFor="let item of categories" value="{{ item.id }}">{{
                   item.name
                 }}</option>

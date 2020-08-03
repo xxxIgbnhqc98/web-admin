@@ -365,11 +365,6 @@
             "name": "Banner list",
             "icon": "fa fa-list-ol",
             "url": "/banner/banner-list"
-          },
-          {
-            "name": "Add banner",
-            "icon": "fa fa-plus",
-            "url": "/banner/add"
           }
         ]
       },

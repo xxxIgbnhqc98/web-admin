@@ -28,6 +28,8 @@ export class AddShopComponent implements OnInit {
   title: string;
   images: any = [];
   category_id: string;
+  themas: any = [];
+  thema_id: string = null;
   tag_ids: any = [];
   tags: any = [];
   tags_select: any[] = []
@@ -69,7 +71,12 @@ export class AddShopComponent implements OnInit {
   }
   async ngOnInit() {
     this.route.params.subscribe(async (params) => {
+      
       this.id = params.id;
+      if (params.thema_id) {
+        this.thema_id = params.thema_id;
+
+      }
       if (this.id == null) {
         this.isEdit = false;
         this.setDefaultData();
@@ -80,21 +87,24 @@ export class AddShopComponent implements OnInit {
       if (this.isEdit) {
         await this.setData();
       }
+      console.log("log ",this.thema_id)
       const query: any = {
         fields: ["$all"],
         limit: 9999999
       }
-      this.categories = await this.apiService.category.getList({
+      this.themas = await this.apiService.thema.getList({
         query
       });
+      this.updateCateList();
+
       const dataTag = await this.apiService.tag.getList({
         query
       });
-      this.cities = await this.apiService.city.getList({
-        query
-      });
-      this.listDistrict();
-      this.listWard();
+      // this.cities = await this.apiService.city.getList({
+      //   query
+      // });
+      // this.listDistrict();
+      // this.listWard();
       this.tags = dataTag.map(item => {
         return {
           item_id: item.id,
@@ -190,7 +200,18 @@ export class AddShopComponent implements OnInit {
 
     this.router.navigate(['/shop/shop-list'], { relativeTo: this.route });
   }
-
+  async updateCateList() {
+    const query: any = {
+      fields: ["$all"],
+      limit: 9999999,
+      filter: {
+        thema_id: this.thema_id
+      }
+    }
+    this.categories = await this.apiService.category.getList({
+      query
+    });
+  }
   setDefaultData() {
     this.titleService.setTitle('Add new shop');
     this.title = null;
@@ -229,8 +250,9 @@ export class AddShopComponent implements OnInit {
   async setData() {
     try {
       const data = await this.apiService.shop.getItem(this.id, {
-        query: { fields: ['$all'] }
+        query: { fields: ['$all', { "category": ["$all"] }] }
       });
+      this.thema_id = data.category.thema_id
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;

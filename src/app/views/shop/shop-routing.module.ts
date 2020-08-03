@@ -25,7 +25,7 @@ const routes: Routes = [
         }
       },
       {
-        path: ':category_id/add',
+        path: ':thema_id/add',
         component: AddShopComponent,
         data: {
           title: 'Add new'

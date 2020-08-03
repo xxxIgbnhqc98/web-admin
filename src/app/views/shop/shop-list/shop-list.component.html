@@ -15,13 +15,13 @@
       <div class="row apps">
         <div class="col-12 search form-group">
           <div class="row">
-            <!-- <div class="col-2">
-              <select class="form-control" name="sex" [(ngModel)]="sex">
-                <option [ngValue]="null">{{'Choose gender' | translate}}</option>
-                <option value="MALE">{{'Male' | translate}}</option>
-                <option value="FEMALE">{{'Female' | translate}}</option>
+            <div class="col-2">
+              <select class="form-control" name="option_created_by_admin" [(ngModel)]="option_created_by_admin">
+                <option [ngValue]="null">{{'Created by' | translate}}</option>
+                <option value=TRUE>{{'Admin' | translate}}</option>
+                <option value=FALSE>{{'User' | translate}}</option>
               </select>
-            </div> -->
+            </div>
             <div class="col-2">
               <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
@@ -57,6 +57,11 @@
         <data-table-column [header]="'Category Name' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.category.name ? item.category.name : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Thema name' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.category.thema.name}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Min price' | translate">
@@ -99,10 +104,16 @@
         </data-table-column>
         <data-table-column [header]="'Event' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button (click)="openModalEvent(template2, item)" class="btn btn-primary">
-              <i *ngIf="item.events.length === 0">Add Event</i>
-              <i *ngIf="item.events.length > 0 && item.events[0].state !=='PENDING' ">Edit Event</i>
-              <i class="fa fa-spinner" *ngIf="item.events.length > 0 && item.events[0].state ==='PENDING' ">Pending</i>
+            <button *ngIf="item.events.length === 0" (click)="openModalEvent(template2, item)" class="btn btn-primary">
+              <i>Add Event</i>
+            </button>
+            <button *ngIf="item.events.length > 0 && item.events[0].state ==='PENDING' "
+              (click)="openModalEvent(template2, item)" class="btn btn-primary">
+              <i class="fa fa-spinner">Pending</i>
+            </button>
+            <button *ngIf="item.events.length > 0 && item.events[0].state !=='PENDING'"
+              (click)="openModalEvent(template2, item)" class="btn btn-danger">
+              <i>Edit Event</i>
             </button>
           </ng-template>
         </data-table-column>
@@ -243,8 +254,8 @@
           <i *ngIf="!event_id">{{ 'Add' | translate }}</i>
           <i *ngIf="event_id">{{ 'Update' | translate }}</i>
         </button>
-        <button style="margin-right: 2px;" *ngIf="state === 'PENDING'" type="submit" class="btn btn-success" data-style="expand-right"
-          [ladda]='submitting' (click)="setStateItem(event_id,'APPROVED')">
+        <button style="margin-right: 2px;" *ngIf="state === 'PENDING'" type="submit" class="btn btn-success"
+          data-style="expand-right" [ladda]='submitting' (click)="setStateItem(event_id,'APPROVED')">
           <i>{{ 'Approved' | translate }}</i>
         </button>
         <button *ngIf="state === 'PENDING'" type="submit" class="btn btn-danger" data-style="expand-right"

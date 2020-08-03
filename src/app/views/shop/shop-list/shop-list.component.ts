@@ -20,12 +20,13 @@ declare var swal: any;
 export class ShopListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "category": ["$all"] }, { "events": ["$all"] }];
+  itemFields: any = ['$all', { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
     filter: {
       state: "APPROVED"
     }
   };
+  option_created_by_admin: boolean = null;
   submitting: boolean = false;
   submittingUpdate: boolean = false;
   submittingSend: boolean = false;
@@ -352,7 +353,7 @@ export class ShopListComponent implements OnInit {
       //   this.submitting = false;
       //   return;
       // }
-      if (this.keyword === '') {
+      if (!this.keyword || this.keyword === '') {
         this.keyword = undefined;
       } else {
         if (this.keyword.length === 36) {
@@ -361,9 +362,9 @@ export class ShopListComponent implements OnInit {
           this.query.filter.title = { $iLike: `%${this.keyword}%` }
         }
       }
-      // if (this.sex !== null) {
-      //   this.query.filter.sex = this.sex;
-      // }
+      if (this.option_created_by_admin !== null) {
+        this.query.filter.created_by_admin = this.option_created_by_admin;
+      }
       await this.getItems();
       this.submitting = false;
     }, this.searchTimeOut);

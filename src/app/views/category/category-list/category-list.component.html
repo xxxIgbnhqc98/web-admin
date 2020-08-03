@@ -59,10 +59,10 @@
             <span>{{item.thema.name ? item.thema.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
-        <data-table-column [header]="'List' | translate">
+        <data-table-column [header]="'List Shop' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="getListShop(item)" class="btn btn-primary">
-              <i>List shop</i>
+              <i>{{item.shops.length}} shops</i>
             </button>
           </ng-template>
         </data-table-column>

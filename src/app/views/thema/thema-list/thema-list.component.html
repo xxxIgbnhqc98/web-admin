@@ -61,6 +61,13 @@
             </button>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Shop' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="addShop(item)" class="btn btn-primary">
+              <i>Add Shop</i>
+            </button>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Actions' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="editItem(item)" class="btn btn-primary" style="margin-right: 5px;">

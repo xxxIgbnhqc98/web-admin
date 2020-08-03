@@ -153,7 +153,7 @@ export class AddBannerComponent implements OnInit {
 
   async submitUpdate(form: NgForm) {
     this.submitting = true;
-    if (form.valid) {
+    if (form.valid && this.thumbnail) {
       await this.updateItem(form);
     } else {
       this.submitting = false;
@@ -163,7 +163,7 @@ export class AddBannerComponent implements OnInit {
 
   async submitAdd(form: NgForm) {
     this.submitting = true;
-    if (form.valid) {
+    if (form.valid && this.thumbnail) {
       await this.addItem(form);
     } else {
       this.alertFormNotValid();
