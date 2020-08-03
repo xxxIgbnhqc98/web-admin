@@ -8,6 +8,8 @@ import { ConfigService } from '../../../services/config/config.service';
 import { ShareDataService } from '../../../services/share-data/share-data-service';
 import { async } from '@angular/core/testing';
 import { html } from './../../../_html_de';
+declare var require: any;
+// const NodeGeocoder = require('node-geocoder');
 
 declare var $: any;
 declare let swal: any;
@@ -43,15 +45,19 @@ export class AddShopComponent implements OnInit {
   wards: any = [];
   description: string = html;
   loadingUploadAvatar: boolean = false;
+  loadingUploadImage: boolean = false;
+  theme_color: string = "#f44336"
   hours = [
     'AM 00:00', 'AM 01:00', 'AM 02:00', 'AM 03:00', 'AM 04:00', 'AM 05:00', 'AM 06:00', 'AM 07:00', 'AM 08:00', 'AM 09:00', 'AM 10:00', 'AM 11:00', 'PM 12:00', 'PM 13:00', 'PM 14:00', 'PM 15:00', 'PM 16:00', 'PM 17:00', 'PM 18:00', 'PM 19:00', 'PM 20:00', 'PM 21:00', 'PM 22:00', 'PM 23:00', 'PM 24:00'
   ]
   start_time: string = null;
   end_time: string = null;
+  badge_image: string = null;
   settings = {};
   public form_tag: FormGroup;
 
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
+  @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -227,6 +233,8 @@ export class AddShopComponent implements OnInit {
       });
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
+      this.theme_color = data.theme_color;
+      this.badge_image = data.badge_image;
       if (this.tag_ids) {
         for (let index = 0; index < this.tag_ids.length; index++) {
           const tag_id = this.tag_ids[index];
@@ -268,8 +276,8 @@ export class AddShopComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       this.opening_hours = this.start_time + ' ~ ' + this.end_time
-      const { category_id, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.update(this.id, { category_id, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id });
+      const { category_id, badge_image, theme_color, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.update(this.id, { category_id, theme_color, description, tag_ids, title, images, badge_image, min_price, opening_hours, contact_phone, address });
       // form.reset();
       this.alertSuccess();
       // this.backToList();
@@ -284,8 +292,8 @@ export class AddShopComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       this.opening_hours = this.start_time + ' ~ ' + this.end_time
-      const { category_id, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.add({ category_id, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id, verified: true });
+      const { category_id, badge_image, theme_color, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.add({ category_id, theme_color, description, tag_ids, title, images, badge_image, min_price, opening_hours, contact_phone, address, verified: true });
       form.reset();
       this.alertSuccess();
       // this.backToList();
@@ -330,11 +338,32 @@ export class AddShopComponent implements OnInit {
       console.log('Không úp được hình');
     }
   }
-
+  async getPosition() {
+    // const res = await geocoder.geocode(this.address);
+    console.log("@@$#  ", this.address)
+  }
   removeAvatar(image) {
     this.images = this.images.filter(function (item) {
       return item !== image
     })
+  }
+  uploadImage(fileInput) {
+    this.loadingUploadImage = true;
+    try {
+      const files = this.fileImageElementRef.nativeElement.files;
+      const file = files[0];
+      const result = this.apiService.fileUploader.uploadImage(file, 300)
+        .then(result => {
+          this.badge_image = result.url
+          this.loadingUploadImage = false;
+        });
+    } catch (err) {
+      console.log('Không úp được hình');
+    }
+  }
+
+  removeImage() {
+    this.badge_image = null
   }
   async listDistrict() {
     let fields: any = ["$all"];

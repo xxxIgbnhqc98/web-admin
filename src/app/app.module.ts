@@ -24,6 +24,9 @@ import { UserChangePasswordComponent } from './views/user-change-password/user-c
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from './shared';
+import { ToolBoxComponent } from './views/tool-box/tool-box.component';
+import { QuillModule } from 'ngx-quill';
+import { PolicyComponent } from './views/policy/policy.component';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -43,6 +46,7 @@ const APP_CONTAINERS = [
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    QuillModule,
     ChartsModule,
     ServicesModule,
     HttpClientModule,
@@ -63,6 +67,8 @@ const APP_CONTAINERS = [
     P404Component,
     P500Component,
     LoginComponent,
+    ToolBoxComponent,
+    PolicyComponent,
     UserChangePasswordComponent,
     
   ],

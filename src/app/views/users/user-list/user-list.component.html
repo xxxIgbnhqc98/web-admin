@@ -166,8 +166,12 @@
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
           (click)="submitAddTime(formContent)">
-          <i *ngIf="!post_expired_date">{{ 'Add' | translate }}</i>
-          <i *ngIf="post_expired_date">{{ 'Edit' | translate }}</i>
+          <i *ngIf="post_expired_date">{{ 'Add' | translate }}</i>
+          <i *ngIf="!post_expired_date">{{ 'Edit' | translate }}</i>
+        </button>
+        <button style="margin-left: 3px;" *ngIf="post_expired_date" type="submit" class="btn btn-success" data-style="expand-right" [ladda]='submitting'
+          (click)="submitEditTime(formContent)">
+          <i>{{ 'Edit' | translate }}</i>
         </button>
       </div>
     </div>

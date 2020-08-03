@@ -1,0 +1,28 @@
+<div class="app-body">
+    <main class="main d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <div class="card-group">
+                        <div class="card p-4">
+                            <div class="card-body">
+                                <form #loginForm="ngForm">
+                                    <quill-editor id="description" name="description" [(ngModel)]="description">
+                                    </quill-editor>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-primary" data-style="expand-right"
+                                                [ladda]='submitting' (click)="toHtml()">
+                                                submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

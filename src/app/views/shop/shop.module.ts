@@ -19,6 +19,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { QuillModule } from 'ngx-quill';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     NgMultiSelectDropDownModule,
     QuillModule,
     BsDatepickerModule.forRoot(),
+    ColorPickerModule
   ],
   declarations: [ShopListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent],
   providers: [

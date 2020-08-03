@@ -1,0 +1,129 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-search"></i> {{'Search' | translate}}
+      <div class="btn-action float-right">
+        <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
+          <i class="fa fa-cloud-download"></i> {{'Export excel' | translate}}
+        </button> -->
+        <!-- <button class="btn btn-info" routerLink="/link/add">
+          <i class="fa fa-plus"></i>{{'Add new' | translate}}
+        </button> -->
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row apps">
+        <div class="col-12 search form-group">
+          <div class="row">
+            <!-- <div class="col-2">
+              <select class="form-control" name="sex" [(ngModel)]="sex">
+                <option [ngValue]="null">{{'Choose gender' | translate}}</option>
+                <option value="MALE">{{'Male' | translate}}</option>
+                <option value="FEMALE">{{'Female' | translate}}</option>
+              </select>
+            </div> -->
+            <div class="col-2">
+              <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
+                [(ngModel)]="keyword">
+            </div>
+            <div class="col-3">
+              <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
+                  class="fa fa-search"></i> {{'Search' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-list"></i> {{'Setting list' | translate}}
+    </div>
+    <div class="card-body scroll-table" id="user-list">
+      <data-table id="data-table-grid" #itemsTable [indexColumnHeader]="'no' | translate" [items]="items | async"
+        [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
+        [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
+        [showReloading]="false">
+        
+        <data-table-column [header]="'Field' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.field ? item.field : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Value' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="openModalEditValue(template, item)" class="btn btn-primary">
+              <i>{{item.value}}</i>
+            </button>
+          </ng-template>
+        </data-table-column>
+        <!-- <data-table-column [header]="'Actions' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="editItem(item)" class="btn btn-primary" style="margin-right: 5px;">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button (click)="deleteItem(item)" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </data-table-column> -->
+      </data-table>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Edit' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">User ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item" *ngIf="field !== 'SHOP_LIST_BOARD_COLUMN'">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Value' | translate }}</span>
+              </div>
+              <select class="form-control" name="value" [(ngModel)]="value">
+                <option value="LATEST">LATEST</option>
+                <option value="RANDOM">RANDOM</option>
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-12 form-item" *ngIf="field === 'SHOP_LIST_BOARD_COLUMN'">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Value' | translate }}</span>
+              </div>
+              <input class="form-control" id="value" [placeholder]="'enter value' | translate" type="value" name="name"
+                [(ngModel)]="value" required #valueControl="ngModel"
+                [ngClass]="{'is-invalid' : valueControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="valueControl.errors?.required">
+                {{'Please enter value.' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitEdit(formContent)">
+          <i >{{ 'Edit' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

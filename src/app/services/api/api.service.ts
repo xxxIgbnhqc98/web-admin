@@ -15,6 +15,9 @@ import { District } from './crud/district';
 import { Ward } from './crud/ward';
 import { Event } from './crud/event';
 import { Link } from './crud/link';
+import { Banner } from './crud/banner';
+import { Setting } from './crud/setting';
+import { SettingUserPermission } from './crud/setting_user_permission';
 
 @Injectable()
 export class ApiService {
@@ -39,6 +42,11 @@ export class ApiService {
   district = new District(this);
   ward = new Ward(this);
   event = new Event(this);
+  banner = new Banner(this);
+  setting = new Setting(this);
+  settingUserPermission = new SettingUserPermission(this);
+
+
 
 
 

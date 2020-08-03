@@ -9,6 +9,8 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { UserChangePasswordComponent } from './views/user-change-password/user-change-password.component';
 import { AuthGuard } from './services/guards/auth.guard';
+import { ToolBoxComponent } from './views/tool-box/tool-box.component';
+import { PolicyComponent } from './views/policy/policy.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +37,20 @@ export const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login Page'
+    }
+  },
+  {
+    path: 'tool-box',
+    component: ToolBoxComponent,
+    data: {
+      title: 'tool box'
+    }
+  },
+  {
+    path: 'policy',
+    component: PolicyComponent,
+    data: {
+      title: 'Policy'
     }
   },
   {
@@ -77,9 +93,17 @@ export const routes: Routes = [
         loadChildren: './views/link/link.module#LinkModule'
       },
       {
+        path: 'banner',
+        loadChildren: './views/banner/banner.module#BannerModule'
+      },
+      {
         path: 'notification',
         loadChildren: './views/notification/notification.module#NotificationModule'
       },
+      {
+        path: 'setting',
+        loadChildren: './views/setting/setting.module#SettingModule'
+      }
     ]
   }
 ];

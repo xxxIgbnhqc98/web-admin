@@ -92,6 +92,27 @@ export class UserListComponent implements OnInit {
       this.submitting = false;
     }
   }
+  async submitEditTime(form: NgForm) {
+    this.submitting = true;
+    if (form.valid) {
+      try {
+        await this.apiService.user.update(this.id_update, {
+          post_expired_date: moment().valueOf() + (this.extra_day * 86400000)
+        });
+  
+        this.alertSuccess();
+        this.modalRef.hide()
+        this.submitting = false;
+        this.itemsTable.reloadItems();
+      } catch (error) {
+        this.alertErrorFromServer(error.error.message);
+        this.submitting = false;
+      }
+    } else {
+      this.alertFormNotValid();
+      this.submitting = false;
+    }
+  }
   async addItem(form: NgForm) {
     try {
       if (this.post_expired_date) {
