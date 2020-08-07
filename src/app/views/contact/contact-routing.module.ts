@@ -12,21 +12,21 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Contact'
+      title: 'Inquiry'
     },
     children: [
       {
         path: 'contact-list',
         component: ContactListComponent,
         data: {
-          title: 'Contact list'
+          title: 'Contact us'
         }
       },
       {
-        path: 'inquiry-list',
+        path: 'partnership-list',
         component: InquiryListComponent,
         data: {
-          title: 'Partnership inquiry list'
+          title: 'Partnership'
         }
       },
     ]

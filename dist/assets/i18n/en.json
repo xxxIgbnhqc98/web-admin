@@ -418,19 +418,19 @@
         "icon": "fa fa-lock"
       },
       {
-        "name": "Contact",
+        "name": "Inquiry",
         "url": "/contact",
         "icon": "fa fa-phone",
         "children": [
           {
-            "name": "Contact list",
+            "name": "Contact us",
             "icon": "fa fa-list-ol",
             "url": "/contact/contact-list"
           },
           {
-            "name": "Inquiry list",
+            "name": "Partnership",
             "icon": "fa fa-list-ol",
-            "url": "/contact/inquiry-list"
+            "url": "/contact/partnership-list"
           }
         ]
       },
