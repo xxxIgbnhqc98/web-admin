@@ -418,6 +418,23 @@
         "icon": "fa fa-lock"
       },
       {
+        "name": "Contact",
+        "url": "/contact",
+        "icon": "fa fa-phone",
+        "children": [
+          {
+            "name": "Contact list",
+            "icon": "fa fa-list-ol",
+            "url": "/contact/contact-list"
+          },
+          {
+            "name": "Inquiry list",
+            "icon": "fa fa-list-ol",
+            "url": "/contact/inquiry-list"
+          }
+        ]
+      },
+      {
         "name": "Push notification",
         "icon": "fa fa-bell",
         "url": "/notification",

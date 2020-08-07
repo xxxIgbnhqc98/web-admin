@@ -93,6 +93,10 @@ export const routes: Routes = [
         loadChildren: './views/link/link.module#LinkModule'
       },
       {
+        path: 'contact',
+        loadChildren: './views/contact/contact.module#ContactModule'
+      },
+      {
         path: 'banner',
         loadChildren: './views/banner/banner.module#BannerModule'
       },

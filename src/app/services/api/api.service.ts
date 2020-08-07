@@ -18,6 +18,7 @@ import { Link } from './crud/link';
 import { Banner } from './crud/banner';
 import { Setting } from './crud/setting';
 import { SettingUserPermission } from './crud/setting_user_permission';
+import { Contact } from './crud/contact';
 
 @Injectable()
 export class ApiService {
@@ -35,6 +36,7 @@ export class ApiService {
   user = new User(this);
   thema = new Thema(this);
   link = new Link(this);
+  contact = new Contact(this);
   category = new Category(this);
   shop = new Shop(this);
   tag = new Tag(this);

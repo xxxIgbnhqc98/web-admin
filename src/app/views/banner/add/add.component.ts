@@ -68,6 +68,13 @@ export class AddBannerComponent implements OnInit {
       timer: 2000,
     });
   }
+  alertUrlNotValid() {
+    return swal({
+      title: (this.configService.lang === 'en') ? 'Invalid URL' : ((this.configService.lang === 'vn') ? 'URL không hợp lệ' : 'Invalid URL'),
+      type: 'warning',
+      timer: 2000,
+    });
+  }
 
   alertErrorFromServer(message) {
     return swal({
@@ -153,11 +160,23 @@ export class AddBannerComponent implements OnInit {
 
   async submitUpdate(form: NgForm) {
     this.submitting = true;
-    if (form.valid && this.thumbnail) {
+    const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    console.log("coi coi ", pattern.test(this.url))
+    if (form.valid && this.thumbnail && pattern.test(this.url)) {
       await this.updateItem(form);
     } else {
+      if (!pattern.test(this.url)) {
+        this.alertUrlNotValid();
+      } else {
+        this.alertFormNotValid();
+      }
       this.submitting = false;
-      this.alertFormNotValid();
+
     }
   }
 

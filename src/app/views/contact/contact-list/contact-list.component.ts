@@ -12,15 +12,19 @@ import { DatePipe } from '@angular/common';
 
 declare var swal: any;
 @Component({
-  selector: 'app-setting-list',
-  templateUrl: 'setting-list.component.html',
-  styleUrls: ['./setting-list.component.scss']
+  selector: 'app-contact-list',
+  templateUrl: 'contact-list.component.html',
+  styleUrls: ['./contact-list.component.scss']
 })
-export class SettingListComponent implements OnInit {
+export class ContactListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all'];
-  query: any = {};
+  itemFields: any = ['$all', { "user": ["$all"] }];
+  query: any = {
+    filter: {
+      type: "IN_APP_ISSUES"
+    }
+  };
   submitting: boolean = false;
   submittingUpdate: boolean = false;
   submittingSend: boolean = false;
@@ -30,9 +34,6 @@ export class SettingListComponent implements OnInit {
   searchRef: any;
   modalRef: BsModalRef;
   searchTimeOut: number = 250;
-  id_update: string;
-  field: string;
-  value: string;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -49,39 +50,12 @@ export class SettingListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('Link list')
+    this.titleService.setTitle('Contact list')
   }
-  openModalEditValue(template: TemplateRef<any>, item) {
-    this.id_update = item.id
-    this.field = item.field
-    this.value = item.value
+  openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);
   }
-  async submitEdit(form: NgForm) {
-    this.submittingUpdate = true;
-    if (form.valid) {
-      await this.editValue(form);
-    } else {
-      this.alertFormNotValid();
-      this.submittingUpdate = false;
-    }
-  }
-  async editValue(form: NgForm) {
-    try {
 
-      await this.apiService.setting.update(this.id_update, {
-        value: this.value
-      });
-
-      this.alertSuccess();
-      this.modalRef.hide()
-      this.submittingUpdate = false;
-      this.itemsTable.reloadItems();
-    } catch (error) {
-      this.alertErrorFromServer(error.error.message);
-      this.submittingUpdate = false;
-    }
-  }
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),
@@ -147,12 +121,8 @@ export class SettingListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
-      this.items.next(await this.apiService.setting.getList({ query }));
-      let query1 = Object.assign({
-        fields: ["$all"]
-      }, this.query);
-      const countLink: any = await this.apiService.setting.count({ query: query1 })
-      this.itemCount = countLink;
+      this.items.next(await this.apiService.contact.getList({ query }));
+      this.itemCount = this.apiService.contact.pagination.totalItems;
       this.ref.detectChanges();
       return this.items;
     } catch (error) {
@@ -190,7 +160,7 @@ export class SettingListComponent implements OnInit {
       } catch (error) {
         return;
       }
-      await this.apiService.setting.delete(item.id);
+      await this.apiService.contact.delete(item.id);
       this.itemsTable.selectAllCheckbox = false;
       this.itemsTable.reloadItems();
       this.alertDeleteSuccess();
@@ -216,7 +186,7 @@ export class SettingListComponent implements OnInit {
         } else {
           this.query.filter.$and = [{
             $or: {
-              field: { $iLike: `%${this.field}%` }
+              content: { $iLike: `%${this.keyword}%` }
             }
           }]
         }
@@ -231,7 +201,7 @@ export class SettingListComponent implements OnInit {
   async exportAsXLSX() {
     try {
       this.loadingExportExcel = true;
-      const data = await this.apiService.setting.getList({
+      const data = await this.apiService.contact.getList({
         query: {
           limit: this.itemCount,
           fields: ['$all'],

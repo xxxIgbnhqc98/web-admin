@@ -9,8 +9,8 @@
           <div class="card-body">
             <div class="form-group">
               <label for="thema_id">{{'Thema' | translate}}</label>
-              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id"
-                id="thema_id" class="form-control input-control">
+              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
+                class="form-control input-control">
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name
                 }}</option>
@@ -19,7 +19,8 @@
             <div class="form-group">
               <label for="category_id">{{'Category' | translate}}</label>
               <select name="category_id" [(ngModel)]="category_id" required #categoryControl="ngModel"
-                [ngClass]="{'is-invalid' : categoryControl.errors?.required}" id="category_id" class="form-control input-control">
+                [ngClass]="{'is-invalid' : categoryControl.errors?.required}" id="category_id"
+                class="form-control input-control">
                 <option *ngFor="let item of categories" value="{{ item.id }}">{{
                   item.name
                 }}</option>
@@ -39,8 +40,8 @@
             </div>
             <div class="form-group">
               <label for="min_price">{{'Min price' | translate}}</label>
-              <input class="form-control" id="min_price" [placeholder]="'enter price' | translate" type="number" name="min_price"
-                [(ngModel)]="min_price" required #min_priceControl="ngModel"
+              <input class="form-control" id="min_price" [placeholder]="'enter price' | translate" type="number"
+                name="min_price" [(ngModel)]="min_price" required #min_priceControl="ngModel"
                 [ngClass]="{'is-invalid' : min_priceControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="min_priceControl.errors?.required">
                 {{'Please enter price.' | translate}}
@@ -48,8 +49,8 @@
             </div>
             <div class="form-group">
               <label for="contact_phone">{{'Contact phone' | translate}}</label>
-              <input class="form-control" id="contact_phone" [placeholder]="'enter phone' | translate" type="number" name="contact_phone"
-                [(ngModel)]="contact_phone" required #contact_phoneControl="ngModel"
+              <input class="form-control" id="contact_phone" [placeholder]="'enter phone' | translate" type="text"
+                name="contact_phone" [(ngModel)]="contact_phone" required #contact_phoneControl="ngModel"
                 [ngClass]="{'is-invalid' : contact_phoneControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="contact_phoneControl.errors?.required">
                 {{'Please enter contact phone.' | translate}}
@@ -58,7 +59,8 @@
             <div class="form-group">
               <label for="start_time">{{'Start time - End time' | translate}}</label>
               <select name="start_time" [(ngModel)]="start_time" required #start_timeControl="ngModel"
-                [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id="" class="form-control input-control">
+                [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id=""
+                class="form-control input-control">
                 <option *ngFor="let item of hours" value="{{ item }}">{{
                   item
                 }}</option>
@@ -80,11 +82,10 @@
               <label for="tag">{{'Tag' | translate}}</label>
               <form [formGroup]="form_tag" *ngIf="form_tag" (ngSubmit)="save()" (reset)="resetForm()">
 
-                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Tag'" [data]="tags" [(ngModel)]="tags_select" [settings]="settings"
-                  [formControl]="f.name" [disabled]="false" (onFilterChange)="onSave($event)"
-                  (onSelect)="onSave($event)"
-                  (onDeSelect)="onSave($event)" (onSelectAll)="onSave($event)"
-                  (onDeSelectAll)="onSave($event)">
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Tag'" [data]="tags"
+                  [(ngModel)]="tags_select" [settings]="settings" [formControl]="f.name" [disabled]="false"
+                  (onFilterChange)="onSave($event)" (onSelect)="onSave($event)" (onDeSelect)="onSave($event)"
+                  (onSelectAll)="onSave($event)" (onDeSelectAll)="onSave($event)">
                 </ng-multiselect-dropdown>
                 <span class="invalid-feedback" *ngIf="f?.name?.errors?.required">
                   tag is required
@@ -93,7 +94,8 @@
             </div>
             <div class="form-group">
               <label for="contact_phone">{{'Theme color' | translate}}</label>
-              <input class="form-control col-3" id="theme_color" [(colorPicker)]="theme_color" [style.background]="theme_color"/>
+              <input class="form-control col-3" id="theme_color" [(colorPicker)]="theme_color"
+                [style.background]="theme_color" />
             </div>
             <!-- <div class="form-group">
               <label for="city_id">{{'City' | translate}}</label>
@@ -133,8 +135,8 @@
             </div> -->
             <div class="form-group">
               <label for="address">{{'Address' | translate}}</label>
-              <input class="form-control" id="address" [placeholder]="'enter address' | translate" type="text" name="address"
-                [(ngModel)]="address" required #addressControl="ngModel"
+              <input class="form-control" id="address" [placeholder]="'enter address' | translate" type="text"
+                name="address" [(ngModel)]="address" required #addressControl="ngModel"
                 [ngClass]="{'is-invalid' : addressControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="addressControl.errors?.required">
                 {{'Please enter address' | translate}}
@@ -175,9 +177,10 @@
             <input id="fileImage" type="file" (change)="uploadImage($event)" #fileImage accept="image/*">
           </div>
           <div class="card-body">
-              <div class="avatar" [style.backgroundImage]="'url('+ badge_image +')'" *ngIf="badge_image && badge_image !== null">
-                <span class="remove-avatar" (click)="removeImage(badge_image)"><i class="fa fa-times"></i></span>
-              </div>
+            <div class="avatar" [style.backgroundImage]="'url('+ badge_image +')'"
+              *ngIf="badge_image && badge_image !== null">
+              <span class="remove-avatar" (click)="removeImage(badge_image)"><i class="fa fa-times"></i></span>
+            </div>
           </div>
         </div>
         <div class="card">

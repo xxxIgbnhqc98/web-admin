@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
               <label for="phone">{{'Phone' | translate}}</label>
-              <input class="form-control" id="phone" [placeholder]="'enter phone' | translate" type="text" name="phone"
+              <input class="form-control" id="phone" [placeholder]="'enter phone' | translate" type="number"  name="phone"  maxlength="12"
                 [(ngModel)]="phone" required #phoneControl="ngModel"
                 [ngClass]="{'is-invalid' : phoneControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="phoneControl.errors?.required">

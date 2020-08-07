@@ -261,7 +261,7 @@ export class ShopPendingListComponent implements OnInit {
       }
       await this.apiService.shop.update(item.id, { state: 'APPROVED' });
       this.itemsTable.reloadItems();
-      this.alertDeleteSuccess();
+      this.alertSuccess();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
     }
@@ -269,13 +269,13 @@ export class ShopPendingListComponent implements OnInit {
   async rejectedItem(item) {
     try {
       try {
-        await this.confirmAccept();
+        await this.confirmDeny();
       } catch (error) {
         return;
       }
       await this.apiService.shop.update(item.id, { state: 'REJECTED' });
       this.itemsTable.reloadItems();
-      this.alertDeleteSuccess();
+      this.alertSuccess();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
     }

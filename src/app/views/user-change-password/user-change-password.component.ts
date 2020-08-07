@@ -51,6 +51,7 @@ export class UserChangePasswordComponent implements OnInit {
       await this.authService.userGetPassword({ token: token.replace(/@hitek/g, '.'), new_password });
       form.reset();
       this.alertSuccess();
+      this.submitting = false;
     } catch (error) {
       this.submitting = false;
       this.alertErrorFormServer(error.error.message);

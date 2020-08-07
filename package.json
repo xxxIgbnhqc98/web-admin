@@ -61,6 +61,7 @@
     "mutationobserver-shim": "^0.3.2",
     "ng-multiselect-dropdown": "^0.2.3",
     "ng2-charts": "^1.6.0",
+    "ng2-validation": "^4.2.0",
     "ngx-bootstrap": "^3.0.1",
     "ngx-clipboard": "^12.3.0",
     "ngx-color-picker": "^8.2.0",

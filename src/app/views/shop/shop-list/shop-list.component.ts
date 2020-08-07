@@ -395,9 +395,19 @@ export class ShopListComponent implements OnInit {
   }
 
   getDateFromUnixTimestamp(unixtimestamp: any) {
-    return new Date(parseInt(unixtimestamp));
+    return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD")
   }
-
+  mathRemainingTime(unixtimestamp: any) {
+    // return new Date(parseInt(unixtimestamp));
+    console.log("@@@@ ", unixtimestamp - moment().valueOf())
+    return Math.floor((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
+  }
+  subTimeOpen1(time) {
+    return time.substring(0, time.indexOf("~"))
+  }
+  subTimeOpen2(time) {
+    return time.substring(time.indexOf("~") + 1, time.lenght)
+  }
   alertNotChooseSearchCondition() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please choose search condition and enter keyword' : ((this.configService.lang === 'vn') ? 'Vui lòng chọn điều kiện tìm kiếm và nhập từ khóa' : '검색 조건을 선택해주세요'),

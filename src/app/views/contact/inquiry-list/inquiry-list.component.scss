@@ -118,16 +118,6 @@
     }
   }
 }
-.modal-body-img{
-   
-  padding-top: 20px;
-     flex: 1 1 auto;
-    }
-.modal-body-img p img{
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
-}
 .modal-header{
   .setting{
     .btn{
@@ -140,70 +130,13 @@
     }
   }
 }
-.form-content {
-  .card-header {
-    .action{
-      margin-top: -7px;
-    }
-    .btn-upload-image {
-      position: absolute;
-      right: 5px;
-      top: 5px;
-    }
-    #fileImage {
-      display: none;
-      opacity: 0;
-    }
-  }
-  .card-body {
-    .row {
-      .form-item {
-        margin-bottom: 1rem;
-        .input-group{
-          .input-group-prepend{
-            .input-group-text{
-              width: 130px;
-            }
-            select{
-              border-radius: 0;
-            }
-          }
-        }
-      }
-      .col-md-2 {
-        .image {
-          padding-left: 15px;
-          width: 100px;
-          position: relative;
-          margin: 10px 8px 0 15px;
-          float: left;
-          display: inline-block;
-          vertical-align: top;
-          height: 100px;
-          background-size: contain;
-          background-position: 50%;
-          background-repeat: no-repeat;
-          background-color: #fff;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          .remove-image {
-            position: absolute;
-            right: 5px;
-            cursor: pointer;
-            top: 0px;
-          }
-        }
-      }
-    }
-  }
-}
 /deep/ .modal-content {
   width: 765px;
   margin-left: -100px;
 }
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
-  width: 1300px;
+  width: 1200px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(8) {
-  width: 100px;
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
+  width: 185px;
 }

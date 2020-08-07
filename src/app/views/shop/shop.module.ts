@@ -20,6 +20,7 @@ import { QuillModule } from 'ngx-quill';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { CustomFormsModule } from 'ng2-validation'
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     NgMultiSelectDropDownModule,
     QuillModule,
     BsDatepickerModule.forRoot(),
-    ColorPickerModule
+    ColorPickerModule,
+    CustomFormsModule
   ],
   declarations: [ShopListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent],
   providers: [

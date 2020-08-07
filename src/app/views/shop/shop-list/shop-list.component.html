@@ -64,6 +64,17 @@
             <span>{{item.category.thema.name}}</span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Start date - End Date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{ item.started_date ? getDateFromUnixTimestamp(item.started_date):"No info" }}<br></span>
+            <span>{{ item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" }}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Remaining date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + "days"):"Expired" }}</span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Min price' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.min_price ? item.min_price : 'No info' | translate}}</span>
@@ -71,7 +82,8 @@
         </data-table-column>
         <data-table-column [header]="'Opening hours' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.opening_hours ? item.opening_hours : 'No info' | translate}}</span>
+            <span>{{item.opening_hours ? subTimeOpen1(item.opening_hours) : 'No info' | translate}}<br></span>
+            <span>{{item.opening_hours ? subTimeOpen2(item.opening_hours) : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Contact phone' | translate">
@@ -81,7 +93,7 @@
         </data-table-column>
         <data-table-column [header]="'Address' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.address ? (item.address + ' '+ (item.short_address ? item.short_address  : 'No info'))  : 'No info' | translate}}</span>
+            <span>{{item.address ? item.address  : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'List Image' | translate">
