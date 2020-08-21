@@ -15,6 +15,7 @@ import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { SharedModule } from '../../shared';
 import { AddLinkComponent } from './add/add.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ForbiddenWordListComponent } from './forbidden-word-list/forbidden-word-list.component';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     NgxInfiniteScrollerModule,
 
   ],
-  declarations: [SettingListComponent, AddLinkComponent,SettingUserPermissionListComponent],
+  declarations: [SettingListComponent, AddLinkComponent, SettingUserPermissionListComponent, ForbiddenWordListComponent],
   providers: [
     ExcelService,
     DatePipe

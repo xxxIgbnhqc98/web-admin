@@ -1,0 +1,87 @@
+/deep/ table td,
+/deep/ table th {
+  text-align: center;
+}
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 1px #e1e6ef;
+}
+/deep/ .input-group input + .input-group-addon {
+  margin-left: 0;
+}
+/deep/ data-table-header {
+  display: none;
+}
+.btn {
+  margin-bottom: 0;
+}
+.visitor-chart {
+  display: block;
+  margin-bottom: 50px;
+}
+#icon-calendar {
+  position: absolute;
+  right: 22px;
+  top: 6px;
+}
+/deep/ .ngx-pagination{
+  padding:  0;
+}
+/deep/ .form-check-label{
+  padding-left: 0;
+}
+.table {
+  margin-bottom: 0;
+}
+.table thead th,
+.table thead td {
+  font-weight: 600;
+  color: #374767;
+}
+.table thead th,
+.table tbody tr th {
+  border: 1px solid #e1e6ef;
+}
+.table tbody tr td,
+.table thead tr td {
+  border-right: 1px solid #ddd;
+  text-align: center;
+  padding: 12px;
+}
+.table tbody tr td:last-child {
+  border-right: 0;
+}
+.table tbody tr th {
+  text-align: center;
+}
+@media only screen and (max-width: 1403px) {
+  .search-bar .btn-app button {
+    padding: 0.5rem 0.6rem;
+  }
+}
+@media only screen and (max-width: 1364px) {
+  .search-bar .btn-app button {
+    padding: 0.5rem 0.5rem;
+  }
+}
+@media only screen and (max-width: 1325px) {
+  .search-bar .btn-app button {
+    padding: 0.5rem 0.4rem;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .search-bar .btn-app {
+    padding: 0;
+  }
+  .search-bar .btn-app button {
+    padding: 0.5rem 0.7rem;
+  }
+}
+@media only screen and (max-width: 376px) {
+  .search-bar .btn-app {
+    padding: 0;
+  }
+  .search-bar .btn-app button {
+    padding: 0.5rem 0.5rem;
+  }
+}

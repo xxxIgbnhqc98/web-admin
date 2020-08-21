@@ -23,10 +23,10 @@ export class ShopListComponent implements OnInit {
   itemFields: any = ['$all', { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
     filter: {
-      state: "APPROVED"
+      // state: { $in: ["APPROVED", "PENDING"] }
     }
   };
-  option_created_by_admin: boolean = null;
+  option_search: string = 'id';
   submitting: boolean = false;
   submittingUpdate: boolean = false;
   submittingSend: boolean = false;
@@ -50,6 +50,9 @@ export class ShopListComponent implements OnInit {
   currentDate: Date = new Date();
   value_of_day: any = [];
   state: string = null;
+  id_update: string = null;
+  expired_date: number;
+  extra_days: number = 30;
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
@@ -84,6 +87,36 @@ export class ShopListComponent implements OnInit {
     this.link_map = `https://maps.google.com/maps?q=${user.latitude},${user.longitude}&output=embed`
     console.log("@@@ ", this.link_map)
 
+  }
+  openModalAddTime(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.expired_date = item.expired_date;
+    this.modalRef = this.modalService.show(template);
+  }
+  async submitAddTime(form: NgForm) {
+    this.submitting = true;
+    if (form.valid) {
+      try {
+        const date: number = moment().valueOf()
+        if (this.expired_date < date) {
+          this.expired_date = date
+        }
+        await this.apiService.shop.update(this.id_update, {
+          expired_date: parseInt(this.expired_date.toString()) + (this.extra_days * 86400000)
+        });
+
+        this.alertSuccess();
+        this.modalRef.hide()
+        this.submitting = false;
+        this.itemsTable.reloadItems();
+      } catch (error) {
+        this.alertErrorFromServer(error.error.message);
+        this.submitting = false;
+      }
+    } else {
+      this.alertFormNotValid();
+      this.submitting = false;
+    }
   }
   openModalEvent(template: TemplateRef<any>, item) {
     this.shop_id_event = item.id
@@ -135,6 +168,21 @@ export class ShopListComponent implements OnInit {
     } else {
       this.alertFormNotValid();
       this.submitting = false;
+    }
+  }
+  async submitDeleteEvent(form: NgForm) {
+    try {
+      try {
+        await this.confirmDelete();
+      } catch (error) {
+        return;
+      }
+      await this.apiService.event.delete(this.event_id);
+      this.modalRef.hide()
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
     }
   }
   async addItem(form: NgForm) {
@@ -327,9 +375,16 @@ export class ShopListComponent implements OnInit {
     }
   }
   async deleteItem(item) {
+    console.log("lenght ",item.events.lenght)
     try {
       try {
-        await this.confirmDelete();
+        if (item.events.length > 0) {
+          this.alertErrorFromServer((this.configService.lang === 'en') ? 'There is a EVENT linked to Post you want to delete, Please delete EVENT first!' : ((this.configService.lang === 'vn') ? 'Có một sự kiện được liên kết với Bài đăng mà bạn muốn xóa. Vui lòng xóa EVENT trước!' : '삭제하려는 상점과 연동된 이벤트가 있습니다. 해당 이벤트를 먼저 삭제하여 주시기 바랍니다!'));
+          return;
+       
+        } else {
+          await this.confirmDelete();
+        }
       } catch (error) {
         return;
       }
@@ -344,7 +399,7 @@ export class ShopListComponent implements OnInit {
   async search() {
     this.submitting = true;
     this.query.filter = {
-      state: "APPROVED"
+      // state: { $in: ["APPROVED", "PENDING"] }
     }
     if (this.searchRef) { clearTimeout(this.searchRef); }
     this.searchRef = setTimeout(async () => {
@@ -352,18 +407,30 @@ export class ShopListComponent implements OnInit {
       //   this.alertNotChooseSearchCondition();
       //   this.submitting = false;
       //   return;
+      // // }
+      // if (!this.keyword || this.keyword === '') {
+      //   this.keyword = undefined;
+      // } else {
+      //   if (this.keyword.length === 36) {
+      //     this.query.filter.id = this.keyword;
+      //   } else {
+      //     this.query.filter.title = { $iLike: `%${this.keyword}%` }
+      //   }
       // }
-      if (!this.keyword || this.keyword === '') {
-        this.keyword = undefined;
-      } else {
+      if (this.option_search === 'id') {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
           this.query.filter.title = { $iLike: `%${this.keyword}%` }
         }
-      }
-      if (this.option_created_by_admin !== null) {
-        this.query.filter.created_by_admin = this.option_created_by_admin;
+      } else if (this.option_search === 'nickname') {
+        this.itemFields = ['$all', { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      } else if (this.option_search === 'gmail') {
+        this.itemFields = ['$all', { "user": ["$all", { "$filter": { email: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      } else if (this.option_search === 'title') {
+        this.query.filter.title = { $iLike: `%${this.keyword}%` }
+      } else if (this.option_search === 'phone_number') {
+        this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
       }
       await this.getItems();
       this.submitting = false;
@@ -399,7 +466,6 @@ export class ShopListComponent implements OnInit {
   }
   mathRemainingTime(unixtimestamp: any) {
     // return new Date(parseInt(unixtimestamp));
-    console.log("@@@@ ", unixtimestamp - moment().valueOf())
     return Math.floor((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
   }
   subTimeOpen1(time) {

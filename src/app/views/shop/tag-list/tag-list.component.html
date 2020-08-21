@@ -97,7 +97,7 @@
 <ng-template #template2>
   <form class="form-horizontal form-content" #formContent="ngForm">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{ 'Add video' | translate }}</h4>
+      <h4 class="modal-title pull-left">{{ 'Add Tag' | translate }}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -121,9 +121,9 @@
               </div>
               <input type="text" id="name" class="form-control" name="name" [(ngModel)]="name" #nameControl="ngModel"
                 [ngClass]="{'is-valid' : !nameControl.errors?.required, 'is-invalid' : nameControl.errors?.required}"
-                required placeholder="Title video">
+                required placeholder="Title Tag">
               <div class="invalid-feedback" *ngIf="nameControl.errors?.required">
-                Please enter name.
+                Please enter Tag.
               </div>
             </div>
           </div>

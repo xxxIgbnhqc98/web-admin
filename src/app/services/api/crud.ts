@@ -47,6 +47,7 @@ export class CrudAPI<T> extends BaseAPI {
   items: BehaviorSubject<T[]>;
   pagination: ICrudPagination;
   localBrandName: string;
+  count_random_20_shop: number;
   hashCache: {
     [hash: string]: {
       pagination: ICrudPagination
@@ -79,7 +80,7 @@ export class CrudAPI<T> extends BaseAPI {
 
   async getList(options?: CrudOptions): Promise<T[]> {
     options = _.merge({}, this.options, options);
-    console.log("@#$%^ qr",options.query)
+    console.log("@#$%^ qr", options.query)
     const setting = {
       method: 'GET',
       uri: this.apiUrl(),
@@ -100,6 +101,7 @@ export class CrudAPI<T> extends BaseAPI {
     if (options.reload) {
       this.pagination = pagination.body.pagination;
       this.pagination.totalItems = results.body.results.objects.count || 0;
+      this.count_random_20_shop = results.body.results.objects.count_random_20_shop
       this.hashCache[hashedQuery] = {
         pagination: this.pagination,
         items: rows

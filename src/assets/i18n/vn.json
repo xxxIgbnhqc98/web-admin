@@ -330,6 +330,13 @@
   "Reward": "Thưởng",
   "Refund": "Hoàn trả",
   "Number of update": "Số lượng cập nhật",
+  "Page view": "Lượt xem trang",
+  "Partnership inquiry": "Thắc mắc về quan hệ đối tác",
+  "New post": "Bài mới",
+  "Reply": "Trả lời",
+  "Period statistic": "Thống kê thời kỳ",
+  "Monthly view": "Chế độ xem hàng tháng",
+  "Daily view": "Chế độ xem hàng ngày",
   "nav": {
     "nav_items": [
       {
@@ -341,6 +348,29 @@
             "name": "Danh sách người dùng",
             "icon": "fa fa-list-ol",
             "url": "/users/user-list"
+          }
+        ]
+      },
+      {
+        "name": "Board",
+        "url": "/board",
+        "icon": "fa fa-list-alt",
+        "children": [
+          {
+            "name": "How to use",
+            "url": "/board/how-to-use"
+          },
+          {
+            "name": "Policy",
+            "url": "/board/policy"
+          },
+          {
+            "name": "Terms of service",
+            "url": "/board/terms-of-service"
+          },
+          {
+            "name": "Location Based Services",
+            "url": "/board/location-based-services"
           }
         ]
       },
@@ -418,6 +448,23 @@
         "icon": "fa fa-lock"
       },
       {
+        "name": "Yêu cầu",
+        "url": "/contact",
+        "icon": "fa fa-phone",
+        "children": [
+          {
+            "name": "Liên hệ",
+            "icon": "fa fa-list-ol",
+            "url": "/contact/contact-list"
+          },
+          {
+            "name": "đối tác",
+            "icon": "fa fa-list-ol",
+            "url": "/contact/partnership-list"
+          }
+        ]
+      },
+      {
         "name": "Gửi thông báo",
         "icon": "fa fa-bell",
         "url": "/notification",
@@ -443,6 +490,38 @@
             "name": "Setting list",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-list"
+          },
+          {
+            "name": "Setting user permission list",
+            "icon": "fa fa-list-ol",
+            "url": "/setting/setting-user-permission-list"
+          },
+          {
+            "name": "Forbidden word list",
+            "icon": "fa fa-list-ol",
+            "url": "/setting/forbidden-word-list"
+          }
+        ]
+      },
+      {
+        "name": "Statistic",
+        "url": "/statistic",
+        "icon": "fa fa-bar-chart",
+        "children": [
+          {
+            "name": "Favorite post statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/favorite-post"
+          },
+          {
+            "name": "Period statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/period"
+          },
+          {
+            "name": "Traffic statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/traffic"
           }
         ]
       }

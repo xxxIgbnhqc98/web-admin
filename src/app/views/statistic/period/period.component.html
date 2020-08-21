@@ -1,0 +1,90 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-search"></i> {{'Search' | translate}}
+        </div>
+        <div class="card-body">
+            <div class="row apps">
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-5">
+                            <select class="form-control" name="type" [(ngModel)]="type">
+                                <option value="day">{{ 'Daily view' | translate }}</option>
+                                <option value="month">{{ 'Monthly view' | translate }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5" *ngIf="type === 'month'">
+                    <div class="row">
+                        <div class="col-5">
+                            <select class="form-control" name="type_of_month" (change)="getStatisticPeriod()"
+                                [(ngModel)]="type_of_month">
+                                <option value="1_month">{{ 'Last 1 month' | translate }}</option>
+                                <option value="3_month">{{ 'Last 3 months' | translate }}</option>
+                                <option value="6_month">{{ 'Last 6 months' | translate }}</option>
+                                <option value="12_month">{{ 'Last 12 months' | translate }}</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" *ngIf="type === 'day'">
+                    <div class="form-group row">
+                        <div class="col-6" style="display: flex;">
+                            <input type="text" class="form-control input-control"
+                                [placeholder]="'From - To' | translate" bsDaterangepicker placement="bottom"
+                                name="value_of_day" [(ngModel)]="value_of_day" [bsConfig]="{
+                            rangeInputFormat: 'YYYY-MM-DD',
+                            dateInputFormat: 'YYYY-MM-DD'
+                          }" placement="right" (change)="getStatisticPeriod()" />
+                            <span id="icon-calendar">
+                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4" *ngIf="value_of_day[1]">
+                            <button class="btn btn-primary"
+                                (click)="getStatisticPeriod()">{{ 'Search' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-list"></i> {{'Period statistic' | translate}}
+        </div>
+        <div class="card-body" id="admin-list">
+            <table ngClass="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">{{ 'Date' | translate }}</th>
+                        <th class="text-center">{{ 'Page view' | translate }}</th>
+                        <th class="text-center">{{ 'Visitor' | translate }}</th>
+                        <th class="text-center">{{ 'New member' | translate }}</th>
+                        <th class="text-center">{{ 'Partnership inquiry' | translate }}</th>
+                        <th class="text-center">{{ 'New post' | translate }}</th>
+                        <th class="text-center">{{ 'Reply' | translate }}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listStatisticPeriod ">
+                        <th>{{item.time}}</th>
+                        <th>{{item.page_view_count | number}}</th>
+                        <th>{{item.visitor_count | number}}</th>
+                        <th>{{item.new_member_count | number}}</th>
+                        <th>{{item.partnership_inquiry_count | number}}</th>
+                        <th>{{item.new_post_count | number}}</th>
+                        <th>{{item.reply_count | number}}</th>
+
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <div class="text-center pagination-footer">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div> -->
+        </div>
+    </div>
+</div>

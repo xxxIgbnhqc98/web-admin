@@ -38,7 +38,7 @@
                 {{'Please enter title.' | translate}}
               </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="min_price">{{'Min price' | translate}}</label>
               <input class="form-control" id="min_price" [placeholder]="'enter price' | translate" type="number"
                 name="min_price" [(ngModel)]="min_price" required #min_priceControl="ngModel"
@@ -46,7 +46,7 @@
               <div class="invalid-feedback" *ngIf="min_priceControl.errors?.required">
                 {{'Please enter price.' | translate}}
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="contact_phone">{{'Contact phone' | translate}}</label>
               <input class="form-control" id="contact_phone" [placeholder]="'enter phone' | translate" type="text"
@@ -157,7 +157,7 @@
             <input id="fileAvatar" type="file" (change)="uploadAvatar($event)" #fileAvatar accept="image/*">
           </div>
           <div class="card-body">
-            <div *ngFor="let item of images">
+            <div *ngFor="let item of thumbnails">
               <div class="avatar" [style.backgroundImage]="'url('+ item +')'" *ngIf="item && item !== null">
                 <span class="remove-avatar" (click)="removeAvatar(item)"><i class="fa fa-times"></i></span>
               </div>

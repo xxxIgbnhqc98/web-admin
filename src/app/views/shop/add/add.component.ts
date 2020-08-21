@@ -27,6 +27,7 @@ export class AddShopComponent implements OnInit {
   submitting: boolean = false;
   title: string;
   images: any = [];
+  thumbnails: any = [];
   category_id: string;
   themas: any = [];
   thema_id: string = null;
@@ -34,7 +35,6 @@ export class AddShopComponent implements OnInit {
   tags: any = [];
   tags_select: any[] = []
   categories: any
-  min_price: number;
   opening_hours: string;
   contact_phone: string;
   address: string;
@@ -71,7 +71,7 @@ export class AddShopComponent implements OnInit {
   }
   async ngOnInit() {
     this.route.params.subscribe(async (params) => {
-      
+
       this.id = params.id;
       if (params.thema_id) {
         this.thema_id = params.thema_id;
@@ -87,7 +87,7 @@ export class AddShopComponent implements OnInit {
       if (this.isEdit) {
         await this.setData();
       }
-      console.log("log ",this.thema_id)
+      console.log("log ", this.thema_id)
       const query: any = {
         fields: ["$all"],
         limit: 9999999
@@ -182,7 +182,7 @@ export class AddShopComponent implements OnInit {
 
   alertErrorFromServer(message) {
     return swal({
-      title: message,
+      title: (message === "검색한 상점주소가 확인되지 않습니다. 정확한 주소정보를 입력해주세요") ? ((this.configService.lang === 'en') ? 'your shop address not found, please check that your address, city, ward, district are matched!' : ((this.configService.lang === 'vn') ? 'Không tìm thấy địa chỉ cửa hàng của bạn, vui lòng kiểm tra xem địa chỉ, thành phố, phường, quận của bạn có khớp nhau không!' : '검색한 상점주소가 확인되지 않습니다. 정확한 주소정보를 입력해주세요')) : message,
       type: 'warning',
       timer: 2000,
     });
@@ -216,7 +216,7 @@ export class AddShopComponent implements OnInit {
     this.titleService.setTitle('Add new shop');
     this.title = null;
     this.images = [];
-    this.min_price = null;
+    this.thumbnails = []
     this.category_id = null
     this.opening_hours = null;
     this.contact_phone = null;
@@ -233,7 +233,6 @@ export class AddShopComponent implements OnInit {
       tag_ids: this.tag_ids,
       name: this.title,
       images: this.images,
-      min_price: this.min_price,
       opening_hours: this.opening_hours,
       contact_phone: this.contact_phone,
       address: this.address,
@@ -243,7 +242,8 @@ export class AddShopComponent implements OnInit {
       ward_id: this.ward_id,
       start_time: this.start_time,
       end_time: this.end_time,
-      description: this.description
+      description: this.description,
+      thumbnails: this.thumbnails
     };
   }
 
@@ -257,6 +257,7 @@ export class AddShopComponent implements OnInit {
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
       this.badge_image = data.badge_image;
+      this.thumbnails = data.thumbnails;
       if (this.tag_ids) {
         for (let index = 0; index < this.tag_ids.length; index++) {
           const tag_id = this.tag_ids[index];
@@ -276,7 +277,6 @@ export class AddShopComponent implements OnInit {
       if (!this.images) {
         this.images = []
       }
-      this.min_price = data.min_price;
       this.opening_hours = data.opening_hours;
       this.contact_phone = data.contact_phone;
       this.address = data.address;
@@ -298,8 +298,8 @@ export class AddShopComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       this.opening_hours = this.start_time + ' ~ ' + this.end_time
-      const { category_id, badge_image, theme_color, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.update(this.id, { category_id, theme_color, description, tag_ids, title, images, badge_image, min_price, opening_hours, contact_phone, address });
+      const { category_id, thumbnails, badge_image, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address });
       // form.reset();
       this.alertSuccess();
       // this.backToList();
@@ -314,8 +314,8 @@ export class AddShopComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       this.opening_hours = this.start_time + ' ~ ' + this.end_time
-      const { category_id, badge_image, theme_color, description, tag_ids, title, images, min_price, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.add({ category_id, theme_color, description, tag_ids, title, images, badge_image, min_price, opening_hours, contact_phone, address, verified: true });
+      const { category_id, badge_image, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true });
       form.reset();
       this.alertSuccess();
       // this.backToList();
@@ -351,9 +351,10 @@ export class AddShopComponent implements OnInit {
     try {
       const files = this.fileAvatarElementRef.nativeElement.files;
       const file = files[0];
-      const result = this.apiService.fileUploader.uploadImage(file, 300)
+      const result = this.apiService.fileUploader.uploadImage2(file, 300, 1980)
         .then(result => {
-          this.images.push(result.url)
+          this.images.push(result.high_quality_images[0].url)
+          this.thumbnails.push(result.low_quality_images[0].url)
           this.loadingUploadAvatar = false;
         });
     } catch (err) {
@@ -367,6 +368,9 @@ export class AddShopComponent implements OnInit {
   removeAvatar(image) {
     this.images = this.images.filter(function (item) {
       return item !== image
+    })
+    this.thumbnails = this.thumbnails.filter(function (item) {
+      return item !== image.replace("1980", "300")
     })
   }
   uploadImage(fileInput) {

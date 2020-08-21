@@ -330,6 +330,13 @@
   "Reward": "리워드",
   "Refund": "환불",
   "Number of update": "업데이트 횟수",
+  "Page view": "페이지뷰",
+  "Partnership inquiry": "제휴문의",
+  "New post": "신규상점",
+  "Reply": "댓글",
+  "Period statistic": "기간 통계",
+  "Monthly view": "월간보기",
+  "Daily view": "일일보기",
   "nav": {
     "nav_items": [
       {
@@ -341,6 +348,29 @@
             "name": "회원 리스트",
             "icon": "fa fa-list-ol",
             "url": "/users/user-list"
+          }
+        ]
+      },
+      {
+        "name": "Board",
+        "url": "/board",
+        "icon": "fa fa-list-alt",
+        "children": [
+          {
+            "name": "How to use",
+            "url": "/board/how-to-use"
+          },
+          {
+            "name": "Policy",
+            "url": "/board/policy"
+          },
+          {
+            "name": "Terms of service",
+            "url": "/board/terms-of-service"
+          },
+          {
+            "name": "Location Based Services",
+            "url": "/board/location-based-services"
           }
         ]
       },
@@ -418,6 +448,23 @@
         "icon": "fa fa-lock"
       },
       {
+        "name": "문의사항",
+        "url": "/contact",
+        "icon": "fa fa-phone",
+        "children": [
+          {
+            "name": "고객센터",
+            "icon": "fa fa-list-ol",
+            "url": "/contact/contact-list"
+          },
+          {
+            "name": "제휴문의",
+            "icon": "fa fa-list-ol",
+            "url": "/contact/partnership-list"
+          }
+        ]
+      },
+      {
         "name": "푸시알림",
         "icon": "fa fa-bell",
         "url": "/notification",
@@ -443,6 +490,38 @@
             "name": "Setting list",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-list"
+          },
+          {
+            "name": "Setting user permission list",
+            "icon": "fa fa-list-ol",
+            "url": "/setting/setting-user-permission-list"
+          },
+          {
+            "name": "Forbidden word list",
+            "icon": "fa fa-list-ol",
+            "url": "/setting/forbidden-word-list"
+          }
+        ]
+      },
+      {
+        "name": "Statistic",
+        "url": "/statistic",
+        "icon": "fa fa-bar-chart",
+        "children": [
+          {
+            "name": "Favorite post statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/favorite-post"
+          },
+          {
+            "name": "Period statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/period"
+          },
+          {
+            "name": "Traffic statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/traffic"
           }
         ]
       }

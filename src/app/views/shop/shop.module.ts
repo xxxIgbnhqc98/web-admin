@@ -21,6 +21,8 @@ import { TagListComponent } from './tag-list/tag-list.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CustomFormsModule } from 'ng2-validation'
+import { ShopBannerListComponent } from './shop-banner-list/shop-banner-list.component';
+import { recommendationAreaListComponent } from './recommendation-area/recommendation-area-list.component';
 
 
 @NgModule({
@@ -43,7 +45,7 @@ import { CustomFormsModule } from 'ng2-validation'
     ColorPickerModule,
     CustomFormsModule
   ],
-  declarations: [ShopListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent],
+  declarations: [ShopListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent],
   providers: [
     ExcelService,
     DatePipe

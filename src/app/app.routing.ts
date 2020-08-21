@@ -10,7 +10,7 @@ import { LoginComponent } from './views/login/login.component';
 import { UserChangePasswordComponent } from './views/user-change-password/user-change-password.component';
 import { AuthGuard } from './services/guards/auth.guard';
 import { ToolBoxComponent } from './views/tool-box/tool-box.component';
-import { PolicyComponent } from './views/policy/policy.component';
+import { ContentComponent } from './views/content/content.component';
 
 export const routes: Routes = [
   {
@@ -47,10 +47,10 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'policy',
-    component: PolicyComponent,
+    path: 'content/:type',
+    component: ContentComponent,
     data: {
-      title: 'Policy'
+      title: 'Policies'
     }
   },
   {
@@ -107,7 +107,15 @@ export const routes: Routes = [
       {
         path: 'setting',
         loadChildren: './views/setting/setting.module#SettingModule'
-      }
+      },
+      {
+        path: 'board',
+        loadChildren: './views/board/board.module#BoardModule'
+      },
+      {
+        path: 'statistic',
+        loadChildren: './views/statistic/statistic.module#StatisticModule'
+      },
     ]
   }
 ];

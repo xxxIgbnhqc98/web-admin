@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SettingListComponent } from './setting-list/setting-list.component';
 import { AddLinkComponent } from './add/add.component';
 import { SettingUserPermissionListComponent } from './setting-user-permission-list/setting-user-permission-list.component';
+import { ForbiddenWordListComponent } from './forbidden-word-list/forbidden-word-list.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,13 @@ const routes: Routes = [
         component: SettingUserPermissionListComponent,
         data: {
           title: 'setting user permission list'
+        }
+      },
+      {
+        path: 'forbidden-word-list',
+        component: ForbiddenWordListComponent,
+        data: {
+          title: 'Forbidden word list'
         }
       }
     ]

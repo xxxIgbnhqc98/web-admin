@@ -1,0 +1,165 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-list"></i> {{ 'Forbidden word list' | translate }}
+          <div class="btn-action float-right">
+            <button class="btn btn-info" (click)="openModal3(template3)">
+              <i class="fa fa-plus"></i>{{'Add new' | translate}}
+            </button>
+          </div>
+          <!-- <button class="pull-right btn btn-primary btn-upload-image" *ngIf="!loadingUploadExcel"
+                      (click)="fileUpload.click()">
+                      <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                      {{ 'category.edit_videos_by_excel_file' | translate }}
+                  </button>
+                  <button class="pull-right btn btn-primary btn-upload-image" *ngIf="loadingUploadExcel">
+                      <i class="fa fa-spinner fa-spin"></i>{{ 'category.updating' | translate }}
+                  </button>
+                  <a style="margin-right: 2px;" class="pull-right btn btn-primary btn-upload-image"
+                      href='https://harumusic.kr:8766/api/v1/file/get/harumusic-excel-template.xlsx'>
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                      {{ 'category.download_excel_template_file' | translate }}
+                  </a>
+                  <input id="fileUpload" type="file"
+                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                      (change)="uploadFile($event)" #fileUpload hidden> -->
+        </div>
+        <div class="card-body">
+          <!-- <data-table id="data-table-grid" #itemsTable indexColumnHeader="No." [items]="items | async"
+                      [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
+                      [selectColumn]="true" [multiSelect]="true" [substituteRows]="false" [selectOnRowClick]="true"
+                      [showReloading]="false">
+                      <data-table-column property="name" header="Name">
+                          <ng-template #dataTableCell let-item="item">
+                              <span>{{item.video.title ? item.video.title : ''}}</span>
+                          </ng-template>
+                      </data-table-column>
+                      <data-table-column property="video_url" header="Video URL">
+                          <ng-template #dataTableCell let-item="item">
+                              <button type="button" class="btn btn-primary"
+                                  (click)="openModal(template, item.video.url)">Play Video
+                              </button>
+                          </ng-template>
+                      </data-table-column>
+                      <data-table-column header="Thumbnail">
+                          <ng-template #dataTableCell let-item="item">
+                              <p lazy-load-images>
+                                  <img height="50px"
+                                      [attr.data-src]="item.video.thumbnail_src ? item.video.thumbnail_src : thumbDefault"
+                                      onerror="this.src='http://www.breeze-animation.com/app/uploads/2013/06/icon-product-gray.png'">
+                              </p>
+                          </ng-template>
+                      </data-table-column>
+                      <data-table-column header="Edit|Delete">
+                          <ng-template #dataTableCell let-item="item">
+                              <button (click)="editItem(item.video)" class="btn btn-primary" style="margin-right: 5px;">
+                                  <i class="fa fa-edit"></i>
+                              </button>
+                          </ng-template>
+                      </data-table-column>
+                  </data-table> -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>{{ 'Forbidden word' | translate }}</th>
+                <th>{{ 'Edit' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-template ngFor let-item [ngForOf]="forbidden_words" let-i="index">
+                <tr>
+                  <td>{{item}}</td>
+                  <td>
+                    <button (click)="openModal2(template2, item)" class="btn btn-primary"
+                      style="margin-right: 5px;">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button (click)="deleteWord(item)" class="btn btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template2>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Edit word' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Word' | translate }}</span>
+              </div>
+              <input type="text" id="word" class="form-control" name="word" [(ngModel)]="word" #wordControl="ngModel"
+                [ngClass]="{'is-valid' : !wordControl.errors?.required, 'is-invalid' : wordControl.errors?.required}"
+                required placeholder="word">
+              <div class="invalid-feedback" *ngIf="wordControl.errors?.required">
+                Please enter word.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitEdit(formContent)">
+          <i class="fa fa-save"></i> {{ 'Save' | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #template3>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Add word' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Word' | translate }}</span>
+              </div>
+              <input type="text" id="word" class="form-control" name="word" [(ngModel)]="word" #wordControl="ngModel"
+                [ngClass]="{'is-valid' : !wordControl.errors?.required, 'is-invalid' : wordControl.errors?.required}"
+                required placeholder="word">
+              <div class="invalid-feedback" *ngIf="wordControl.errors?.required">
+                Please enter word.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitAdd(formContent)">
+          <i class="fa fa-save"></i> {{ 'Add' | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

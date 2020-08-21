@@ -206,6 +206,11 @@ export class ThemaListComponent implements OnInit {
       relativeTo: this.route
     });
   }
+  editBanner(item) {
+    this.router.navigate([`/shop/edit-banner/${item.id}`], {
+      relativeTo: this.route
+    });
+  }
   async alertDeleteSuccess() {
     return await swal({
       title: 'Delete successful',

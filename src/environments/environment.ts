@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   host: 'https://kormassage.kr:9877',
   //host: 'http://localhost:9877',
   version: 'v1',

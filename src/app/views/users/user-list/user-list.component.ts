@@ -46,6 +46,7 @@ export class UserListComponent implements OnInit {
   id_update: string;
   extra_day: number = 30;
   post_expired_date: number;
+  account_type: string = null;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -99,7 +100,7 @@ export class UserListComponent implements OnInit {
         await this.apiService.user.update(this.id_update, {
           post_expired_date: moment().valueOf() + (this.extra_day * 86400000)
         });
-  
+
         this.alertSuccess();
         this.modalRef.hide()
         this.submitting = false;
@@ -304,19 +305,21 @@ export class UserListComponent implements OnInit {
       } else {
         switch (this.fieldSearch) {
           case null:
-            console.log("@!#$% ,", this.keyword.length)
-            if (this.keyword.length === 36) {
-              this.query.filter = { id: this.keyword };
-            } else {
-              this.query.filter.$and = [{
-                $or: {
-                  nickname: { $iLike: `%${this.keyword}%` },
-                  email: { $iLike: `%${this.keyword}%` },
-                  phone: { $iLike: `%${this.keyword}%` },
-                  username: { $iLike: `%${this.keyword}%` }
-                }
-              }]
+            if (this.keyword) {
+              if (this.keyword.length === 36) {
+                this.query.filter = { id: this.keyword };
+              } else {
+                this.query.filter.$and = [{
+                  $or: {
+                    nickname: { $iLike: `%${this.keyword}%` },
+                    email: { $iLike: `%${this.keyword}%` },
+                    phone: { $iLike: `%${this.keyword}%` },
+                    username: { $iLike: `%${this.keyword}%` }
+                  }
+                }]
+              }
             }
+
             break;
           case 'phone':
             let array = this.keyword.split('');
@@ -350,9 +353,9 @@ export class UserListComponent implements OnInit {
             break;
         }
       }
-      // if (this.sex !== null) {
-      //   this.query.filter.sex = this.sex;
-      // }
+      if (this.account_type !== null) {
+        this.query.filter.account_type = this.account_type;
+      }
       await this.getItems();
       this.submitting = false;
     }, this.searchTimeOut);

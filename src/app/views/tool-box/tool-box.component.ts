@@ -9,7 +9,9 @@ import { html } from '../../_html_de';
 declare var swal: any;
 @Component({
   selector: 'app-dashboard',
-  templateUrl: 'tool-box.component.html'
+  templateUrl: 'tool-box.component.html',
+  styleUrls: ['./tool-box.component.scss']
+
 })
 export class ToolBoxComponent implements OnInit {
   submitting: boolean = false;
@@ -27,7 +29,7 @@ export class ToolBoxComponent implements OnInit {
 
     // Only trust messages from the below origin.
     // if (message.origin !== '*') return;
-    console.log("@@@ ", message.data)
+    console.log(message.data)
     if (message.data.type !== "webpackWarnings") {
       this.description = message.data.html ||  message.data
     } else {
@@ -40,6 +42,8 @@ export class ToolBoxComponent implements OnInit {
   }
   toHtml() {
     window.postMessage(this.description, '*')
+    parent.postMessage(this.description, '*')
+
   }
   toDashboard() {
     this.router.navigate(['users']);

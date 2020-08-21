@@ -24,13 +24,14 @@
                 <option value="nickname">{{'Nickname' | translate}}</option>
               </select>
             </div>
-            <!-- <div class="col-2">
-              <select class="form-control" name="sex" [(ngModel)]="sex">
-                <option [ngValue]="null">{{'Choose gender' | translate}}</option>
-                <option value="MALE">{{'Male' | translate}}</option>
-                <option value="FEMALE">{{'Female' | translate}}</option>
+            <div class="col-3">
+              <select class="form-control" name="account_type" [(ngModel)]="account_type">
+                <option [ngValue]=null>{{'Choose account type' | translate}}</option>
+                <option value="BIZ_USER">{{'BIZ user' | translate}}</option>
+                <option value="FREE_USER">{{'FREE user' | translate}}</option>
+                <option value="PAID_USER">{{'PAID user' | translate}}</option>
               </select>
-            </div> -->
+            </div>
             <div class="col-2">
               <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
@@ -106,7 +107,15 @@
             <span>{{item.post_limit ? item.post_limit : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Post status' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>Active post: {{item.current_active_post}}<br></span>
+            <span>Pending post: {{item.current_pending_post}}<br></span>
+            <span>Rejected post: {{item.current_rejected_post}}<br></span>
+            <span>Expired post: {{item.current_expired_post}}</span>
 
+          </ng-template>
+        </data-table-column>
         <!-- <data-table-column [header]="'Gender' | translate" property="sex">
         </data-table-column> -->
         <!-- <data-table-column header="Paypal account">
@@ -169,8 +178,8 @@
           <i *ngIf="post_expired_date">{{ 'Add' | translate }}</i>
           <i *ngIf="!post_expired_date">{{ 'Edit' | translate }}</i>
         </button>
-        <button style="margin-left: 3px;" *ngIf="post_expired_date" type="submit" class="btn btn-success" data-style="expand-right" [ladda]='submitting'
-          (click)="submitEditTime(formContent)">
+        <button style="margin-left: 3px;" *ngIf="post_expired_date" type="submit" class="btn btn-success"
+          data-style="expand-right" [ladda]='submitting' (click)="submitEditTime(formContent)">
           <i>{{ 'Edit' | translate }}</i>
         </button>
       </div>

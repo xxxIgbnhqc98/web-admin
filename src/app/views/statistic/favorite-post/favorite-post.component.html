@@ -1,0 +1,48 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-search"></i> {{'Search' | translate}}
+    </div>
+    <div class="card-body">
+      <div class="row apps">
+        <div class="col-8 search form-group">
+          <div class="row">
+            <div class="col-3">
+              <select class="form-control" name="type" (change)="changeTypeSearch()" [(ngModel)]="type">
+                <option value="TODAY">Today</option>
+                <option value="LAST_A_WEEK">Last a week</option>
+                <option value="LAST_A_MONTH">Last a month</option>
+                <option value="LAST_THREE_MONTHS">Last three months</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-list"></i> {{'Favorite post statistic' | translate}}
+    </div>
+    <div class="card-body" id="admin-list">
+      <data-table id="data-table-grid" #itemsTable [indexColumnHeader]="'no' | translate" [items]="items | async"
+        [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
+        [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="true"
+        [showReloading]="false">
+        <data-table-column [header]="'Title of video' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.title ?item.title: ''}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Views' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span *ngIf="type === 'TODAY'">{{item.view_daily}}</span>
+            <span *ngIf="type === 'LAST_A_WEEK'">{{item.view_weekly}}</span>
+            <span *ngIf="type === 'LAST_A_MONTH'">{{item.view_monthly}}</span>
+            <span *ngIf="type === 'LAST_THREE_MONTHS'">{{item.view_last_3_months}}</span>
+          </ng-template>
+        </data-table-column>
+      </data-table>
+    </div>
+  </div>
+</div>

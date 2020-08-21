@@ -26,7 +26,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from './shared';
 import { ToolBoxComponent } from './views/tool-box/tool-box.component';
 import { QuillModule } from 'ngx-quill';
-import { PolicyComponent } from './views/policy/policy.component';
+import { ContentComponent } from './views/content/content.component';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -68,7 +68,7 @@ const APP_CONTAINERS = [
     P500Component,
     LoginComponent,
     ToolBoxComponent,
-    PolicyComponent,
+    ContentComponent,
     UserChangePasswordComponent,
     
   ],

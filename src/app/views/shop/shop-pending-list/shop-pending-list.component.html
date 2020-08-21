@@ -6,22 +6,24 @@
         <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
           <i class="fa fa-cloud-download"></i> {{'Export excel' | translate}}
         </button> -->
-        <button class="btn btn-info" (click)="addNew()">
+        <!-- <button class="btn btn-info" (click)="addNew()">
           <i class="fa fa-plus"></i>{{'Add new' | translate}}
-        </button>
+        </button> -->
       </div>
     </div>
     <div class="card-body">
       <div class="row apps">
         <div class="col-12 search form-group">
           <div class="row">
-            <!-- <div class="col-2">
-              <select class="form-control" name="sex" [(ngModel)]="sex">
-                <option [ngValue]="null">{{'Choose gender' | translate}}</option>
-                <option value="MALE">{{'Male' | translate}}</option>
-                <option value="FEMALE">{{'Female' | translate}}</option>
+            <div class="col-2">
+             <select class="form-control" name="option_search" [(ngModel)]="option_search">
+                <option value="id">{{'ID code' | translate}}</option>
+                <option value="nickname">{{'Nickname' | translate}}</option>
+                <option value="gmail">{{'Gmail' | translate}}</option>
+                <option value="title">{{'Title' | translate}}</option>
+                <option value="phone_number">{{'Phone number' | translate}}</option>
               </select>
-            </div> -->
+            </div>
             <div class="col-2">
               <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
@@ -59,11 +61,11 @@
             <span>{{item.category.name ? item.category.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
-        <data-table-column [header]="'Min price' | translate">
+        <!-- <data-table-column [header]="'Min price' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.min_price ? item.min_price : 'No info' | translate}}</span>
           </ng-template>
-        </data-table-column>
+        </data-table-column> -->
         <data-table-column [header]="'Opening hours' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.opening_hours ? item.opening_hours : 'No info' | translate}}</span>
@@ -99,7 +101,7 @@
         </data-table-column>
         <data-table-column [header]="'Actions' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button (click)="acceptItem(item)" class="btn btn-primary" style="margin-bottom: 5px;">
+            <button (click)="openModalApprove(templateApprove, item)" class="btn btn-primary" style="margin-bottom: 5px;">
               <i>Approved</i>
             </button>
             <button (click)="rejectedItem(item)" class="btn btn-danger">
@@ -139,4 +141,44 @@
       style="border:0;" allowfullscreen=""></iframe>
 
   </div>
+</ng-template>
+<ng-template #templateApprove>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Approved' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Shop ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Extra days' | translate }}</span>
+              </div>
+              <input type="number" (change)="check_extra_day()" min="30" max="180" id="extra_days" class="form-control" name="extra_days" [(ngModel)]="extra_days"
+                #nameControl="ngModel">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submittingApprove'
+          (click)="acceptItem(formContent)">
+          <i>{{ 'Approved' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
 </ng-template>

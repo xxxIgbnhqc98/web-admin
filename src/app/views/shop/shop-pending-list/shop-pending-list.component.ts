@@ -9,6 +9,7 @@ import { ExcelService } from '../../../services/excel/excel.service';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
+import * as moment from "moment";
 
 declare var swal: any;
 @Component({
@@ -28,6 +29,7 @@ export class ShopPendingListComponent implements OnInit {
   submitting: boolean = false;
   submittingUpdate: boolean = false;
   submittingSend: boolean = false;
+  submittingApprove: boolean = false;
   keyword: string;
   columm_update: string
   fieldSearch: string = null;
@@ -38,7 +40,11 @@ export class ShopPendingListComponent implements OnInit {
   category_id: string;
   admin_message: string;
   zoom_image: string;
-  link_map:string;
+  link_map: string;
+  id_update: string = null;
+  expired_date: number;
+  extra_days: number = 30;
+  option_search: string = "id";
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -68,6 +74,11 @@ export class ShopPendingListComponent implements OnInit {
     this.link_map = `https://maps.google.com/maps?q=${user.latitude},${user.longitude}&output=embed`
     console.log("@@@ ", this.link_map)
 
+  }
+  openModalApprove(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.expired_date = item.expired_date;
+    this.modalRef = this.modalService.show(template);
   }
   alertFormNotValid() {
     return swal({
@@ -252,19 +263,45 @@ export class ShopPendingListComponent implements OnInit {
       this.alertErrorFromServer(error.error.message);
     }
   }
-  async acceptItem(item) {
-    try {
+  async acceptItem(form: NgForm) {
+    this.submittingApprove = true;
+    if (form.valid) {
       try {
-        await this.confirmAccept();
+        await this.apiService.shop.update(this.id_update, {
+          expired_date: moment().valueOf() + (this.extra_days * 86400000),
+          state: 'APPROVED'
+        });
+        this.alertSuccess();
+        this.modalRef.hide()
+        this.submittingApprove = false;
+        this.itemsTable.reloadItems();
       } catch (error) {
-        return;
+        this.alertErrorFromServer(error.error.message);
+        this.submittingApprove = false;
       }
-      await this.apiService.shop.update(item.id, { state: 'APPROVED' });
-      this.itemsTable.reloadItems();
-      this.alertSuccess();
+    } else {
+      this.alertFormNotValid();
+      this.submittingApprove = false;
+    }
+    try {
+      // try {
+      //   await this.confirmAccept();
+      // } catch (error) {
+      //   return;
+      // }
+
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
     }
+  }
+  check_extra_day() {
+    if (this.extra_days > 180) {
+      this.extra_days = 180
+    }
+    if (this.extra_days < 30) {
+      this.extra_days = 30
+    }
+    console.log("@@@ ", this.extra_days)
   }
   async rejectedItem(item) {
     try {
@@ -292,14 +329,20 @@ export class ShopPendingListComponent implements OnInit {
       //   this.submitting = false;
       //   return;
       // }
-      if (this.keyword === '') {
-        this.keyword = undefined;
-      } else {
+      if (this.option_search === 'id') {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
-          this.query.filter.name = { $iLike: `%${this.keyword}%` }
+          this.query.filter.title = { $iLike: `%${this.keyword}%` }
         }
+      } else if (this.option_search === 'nickname') {
+        this.itemFields = ['$all', { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      } else if (this.option_search === 'gmail') {
+        this.itemFields = ['$all', { "user": ["$all", { "$filter": { email: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      } else if (this.option_search === 'title') {
+        this.query.filter.title = { $iLike: `%${this.keyword}%` }
+      } else if (this.option_search === 'phone_number') {
+        this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
       }
       // if (this.sex !== null) {
       //   this.query.filter.sex = this.sex;

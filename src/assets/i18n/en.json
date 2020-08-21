@@ -330,6 +330,13 @@
   "Reward": "Reward",
   "Refund": "Refund",
   "Number of update": "Number of update",
+  "Page view": "Page view",
+  "Partnership inquiry": "Partnership inquiry",
+  "New post": "New post",
+  "Reply": "Reply",
+  "Period statistic": "Period statistic",
+  "Monthly view": "Monthly view",
+  "Daily view": "Daily view",
   "nav": {
     "nav_items": [
       {
@@ -341,6 +348,29 @@
             "name": "User list",
             "icon": "fa fa-list-ol",
             "url": "/users/user-list"
+          }
+        ]
+      },
+      {
+        "name": "Board",
+        "url": "/board",
+        "icon": "fa fa-list-alt",
+        "children": [
+          {
+            "name": "How to use",
+            "url": "/board/how-to-use"
+          },
+          {
+            "name": "Policy",
+            "url": "/board/policy"
+          },
+          {
+            "name": "Terms of service",
+            "url": "/board/terms-of-service"
+          },
+          {
+            "name": "Location Based Services",
+            "url": "/board/location-based-services"
           }
         ]
       },
@@ -399,6 +429,11 @@
             "name": "Shop list",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-list"
+          },
+          {
+            "name": "Recommendation area list",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/recommendation-area"
           },
           {
             "name": "Add Shop",
@@ -465,6 +500,33 @@
             "name": "Setting user permission list",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-user-permission-list"
+          },
+          {
+            "name": "Forbidden word list",
+            "icon": "fa fa-list-ol",
+            "url": "/setting/forbidden-word-list"
+          }
+        ]
+      },
+      {
+        "name": "Statistic",
+        "url": "/statistic",
+        "icon": "fa fa-bar-chart",
+        "children": [
+          {
+            "name": "Favorite post statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/favorite-post"
+          },
+          {
+            "name": "Period statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/period"
+          },
+          {
+            "name": "Traffic statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/traffic"
           }
         ]
       }

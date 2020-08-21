@@ -4,6 +4,8 @@ import { ShopListComponent } from './shop-list/shop-list.component';
 import { AddShopComponent } from './add/add.component';
 import { ShopPendingListComponent } from './shop-pending-list/shop-pending-list.component';
 import { TagListComponent } from './tag-list/tag-list.component';
+import { ShopBannerListComponent } from './shop-banner-list/shop-banner-list.component';
+import { recommendationAreaListComponent } from './recommendation-area/recommendation-area-list.component';
 
 const routes: Routes = [
   {
@@ -29,6 +31,13 @@ const routes: Routes = [
         component: AddShopComponent,
         data: {
           title: 'Add new'
+        }
+      },
+      {
+        path: 'edit-banner/:thema_id',
+        component: ShopBannerListComponent,
+        data: {
+          title: 'Edit banner'
         }
       },
       {
@@ -64,6 +73,13 @@ const routes: Routes = [
         component: ShopPendingListComponent,
         data: {
           title: 'shop pending list'
+        }
+      },
+      {
+        path: 'recommendation-area',
+        component: recommendationAreaListComponent,
+        data: {
+          title: 'Recommendation area'
         }
       }
     ]
