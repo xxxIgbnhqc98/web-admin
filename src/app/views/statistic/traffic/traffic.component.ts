@@ -53,44 +53,44 @@ export class TrafficComponent implements OnInit {
 
         // }
       };
-      const res: any = await this.apiService.statistic.getStatisticPeriod(body);
+      const res: any = await this.apiService.statistic.getStatisticTraffic(body);
       console.log('bambi log coi thu cai res ne', res);
       const statistic = [...res];
       this.listStatisticTraffic = statistic
-      this.listStatisticTraffic = [
-        {
-          index: 0,
-          month: "01/2020",
-          data: [
-            {
-              index: 0,
-              date: "01/01/2020",
-              visitor_count: 1
-            },
-            {
-              index: 1,
-              date: "02/01/2020",
-              visitor_count: 4
-            }
-          ]
-        },
-        {
-          index: 1,
-          month: "02/2020",
-          data: [
-            {
-              index: 0,
-              date: "01/02/2020",
-              visitor_count: 5
-            },
-            {
-              index: 1,
-              date: "02/02/2020",
-              visitor_count: 14
-            }
-          ]
-        },
-      ]
+      // this.listStatisticTraffic = [
+      //   {
+      //     index: 0,
+      //     month: "01/2020",
+      //     data: [
+      //       {
+      //         index: 0,
+      //         date: "01/01/2020",
+      //         visitor_count: 1
+      //       },
+      //       {
+      //         index: 1,
+      //         date: "02/01/2020",
+      //         visitor_count: 4
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     index: 1,
+      //     month: "02/2020",
+      //     data: [
+      //       {
+      //         index: 0,
+      //         date: "01/02/2020",
+      //         visitor_count: 5
+      //       },
+      //       {
+      //         index: 1,
+      //         date: "02/02/2020",
+      //         visitor_count: 14
+      //       }
+      //     ]
+      //   },
+      // ]
       this.listStatisticTrafficOfMonth = this.listStatisticTraffic[this.month].data
 
     } catch (err) {

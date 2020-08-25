@@ -522,6 +522,11 @@
             "name": "Period statistic",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/period"
+          },
+          {
+            "name": "Traffic statistic",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/traffic"
           }
         ]
       }
