@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FavoritePostComponent } from './favorite-post/favorite-post.component';
 import { PeriodComponent } from './period/period.component';
 import { TrafficComponent } from './traffic/traffic.component';
+import { VisitorPageviewomponent } from './visitor-pageview/visitor-pageview.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,13 @@ const routes: Routes = [
         component: TrafficComponent,
         data: {
           title: 'traffic'
+        }
+      },
+      {
+        path: 'visitor-pageview',
+        component: VisitorPageviewomponent,
+        data: {
+          title: 'Visitor & pageview'
         }
       }
     ]

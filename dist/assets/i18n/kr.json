@@ -337,6 +337,13 @@
   "Period statistic": "기간 통계",
   "Monthly view": "월간보기",
   "Daily view": "일일보기",
+  "Favorite post statistic": "즐겨 찾는 게시물 통계",
+  "Views": "조회수",
+  "Title of Post": "상점제목",
+  "Today": "금일",
+  "Last a week": "지난 1주일",
+  "Last a month": "지난 1개월",
+  "Last three months": "지난 3개월",
   "nav": {
     "nav_items": [
       {
@@ -522,6 +529,11 @@
             "name": "Traffic statistic",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/traffic"
+          },
+          {
+            "name": "Visitor & Page view",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/visitor-pageview"
           }
         ]
       }

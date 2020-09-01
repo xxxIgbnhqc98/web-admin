@@ -337,6 +337,13 @@
   "Period statistic": "Period statistic",
   "Monthly view": "Monthly view",
   "Daily view": "Daily view",
+  "Favorite post statistic": "Favorite post statistic",
+  "Views": "Views",
+  "Title of Post": "Title of Post",
+  "Today": "Today",
+  "Last a week": "Last a week",
+  "Last a month": "Last a month",
+  "Last three months": "Last three months",
   "nav": {
     "nav_items": [
       {
@@ -527,6 +534,11 @@
             "name": "Traffic statistic",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/traffic"
+          },
+          {
+            "name": "Visitor & Page view",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/visitor-pageview"
           }
         ]
       }

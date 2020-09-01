@@ -53,7 +53,8 @@
         </data-table-column>
         <data-table-column [header]="'User' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.user ? item.user.nickname : 'No info' | translate}}</span>
+            <span *ngIf="item.user">{{item.user.nickname}}</span>
+            <span *ngIf="!item.user" style="color:red">{{'Non-member' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Phone' | translate">

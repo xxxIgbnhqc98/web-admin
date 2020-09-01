@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
               <label for="thema_name">{{'Thema' | translate}}</label>
-              <select name="thema_id" [(ngModel)]="thema_id" required #thema_idControl="ngModel"
+              <select name="thema_id" [(ngModel)]="thema_id" required #thema_idControl="ngModel" (change)="changeThema();"
                 [ngClass]="{'is-invalid' : thema_idControl.errors?.required}" id="" class="form-control input-control">
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name

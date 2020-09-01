@@ -17,6 +17,7 @@ import { PeriodComponent } from './period/period.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TrafficComponent } from './traffic/traffic.component';
+import { VisitorPageviewomponent } from './visitor-pageview/visitor-pageview.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { TrafficComponent } from './traffic/traffic.component';
     BsDatepickerModule.forRoot(),
     NgxPaginationModule
   ],
-  declarations: [FavoritePostComponent, PeriodComponent, TrafficComponent],
+  declarations: [FavoritePostComponent, PeriodComponent, TrafficComponent, VisitorPageviewomponent],
   providers: [
     ExcelService,
     DatePipe

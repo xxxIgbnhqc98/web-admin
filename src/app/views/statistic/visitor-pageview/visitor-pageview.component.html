@@ -1,0 +1,225 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-search"></i> {{'Search' | translate}}
+        </div>
+        <div class="card-body">
+            <div class="row apps">
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-5">
+                            <select class="form-control" name="type" [(ngModel)]="type"
+                                (change)="getStatisticVisitorViewPage();getStatisticAverageVisitor();">
+                                <option value="visitor">{{ 'Visitor' | translate }}</option>
+                                <option value="page_view">{{ 'Page view' | translate }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-5" *ngIf="type === 'month'">
+                    <div class="row">
+                        <div class="col-5">
+                            <select class="form-control" name="type_of_month" (change)="getStatisticPeriod()"
+                                [(ngModel)]="type_of_month">
+                                <option value="1_month">{{ 'Last 1 month' | translate }}</option>
+                                <option value="3_month">{{ 'Last 3 months' | translate }}</option>
+                                <option value="6_month">{{ 'Last 6 months' | translate }}</option>
+                                <option value="12_month">{{ 'Last 12 months' | translate }}</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-list"></i> {{'Average monthly statistic' | translate}}
+        </div>
+        <div class="card-body" id="admin-list">
+            <table ngClass="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">{{ 'Year' | translate }}</th>
+                        <th class="text-center">{{ 'Jan' | translate }}</th>
+                        <th class="text-center">{{ 'Feb' | translate }}</th>
+                        <th class="text-center">{{ 'Mar' | translate }}</th>
+                        <th class="text-center">{{ 'Apr' | translate }}</th>
+                        <th class="text-center">{{ 'May' | translate }}</th>
+                        <th class="text-center">{{ 'June' | translate }}</th>
+                        <th class="text-center">{{ 'July' | translate }}</th>
+                        <th class="text-center">{{ 'Aug' | translate }}</th>
+                        <th class="text-center">{{ 'Sep' | translate }}</th>
+                        <th class="text-center">{{ 'Oct' | translate }}</th>
+                        <th class="text-center">{{ 'Nov' | translate }}</th>
+                        <th class="text-center">{{ 'Dec' | translate }}</th>
+                        <th class="text-center">{{ 'Monthly Average' | translate }}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listStatisticAverage ">
+                        <th>{{item.year? item.year : 0}}</th>
+                        <th *ngFor="let month of [0,1,2,3,4,5,6,7,8,9,10,11] ">{{item.data[month].number}}</th>
+                        <th>{{item.monthly_average}}</th>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <div class="text-center pagination-footer">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div> -->
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-list"></i> {{'Average Daily statistic' | translate}}
+        </div>
+        <div class="card-body" id="admin-list">
+            <table ngClass="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">{{ 'Year' | translate }}</th>
+                        <th class="text-center">{{ 'Jan' | translate }}</th>
+                        <th class="text-center">{{ 'Feb' | translate }}</th>
+                        <th class="text-center">{{ 'Mar' | translate }}</th>
+                        <th class="text-center">{{ 'Apr' | translate }}</th>
+                        <th class="text-center">{{ 'May' | translate }}</th>
+                        <th class="text-center">{{ 'June' | translate }}</th>
+                        <th class="text-center">{{ 'July' | translate }}</th>
+                        <th class="text-center">{{ 'Aug' | translate }}</th>
+                        <th class="text-center">{{ 'Sep' | translate }}</th>
+                        <th class="text-center">{{ 'Oct' | translate }}</th>
+                        <th class="text-center">{{ 'Nov' | translate }}</th>
+                        <th class="text-center">{{ 'Dec' | translate }}</th>
+                        <th class="text-center">{{ 'Monthly Average' | translate }}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listStatisticAverage ">
+                        <th>{{item.year? item.year : 0}}</th>
+                        <th *ngFor="let month of [0,1,2,3,4,5,6,7,8,9,10,11] ">{{item.data[month].average}}</th>
+                        <th>{{item.daily_average}}</th>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <div class="text-center pagination-footer">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div> -->
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-list"></i> {{'Daily statistic' | translate}}
+        </div>
+        <div class="card-body" id="admin-list">
+            <div class="col-5">
+                <div class="row">
+                    <div class="col-5">
+                        <select class="form-control" name="year" (change)="getStatisticVisitorViewPage()"
+                            [(ngModel)]="year">
+                            <option *ngFor="let item of years " value="{{item}}">{{ item }}</option>
+                        </select>
+                    </div>
+                    <div class="col-5">
+                        <select class="form-control" name="month" (change)="getStatisticVisitorViewPage()"
+                            [(ngModel)]="month">
+                            <option *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12] " value="{{item}}">{{ item }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <table ngClass="table" style="overflow-x: auto;
+            white-space: nowrap;">
+                <thead>
+                    <tr>
+                        <th class="text-center">{{ 'Sun' | translate }}</th>
+                        <th class="text-center">{{ 'Mon' | translate }}</th>
+                        <th class="text-center">{{ 'Tue' | translate }}</th>
+                        <th class="text-center">{{ 'Web' | translate }}</th>
+                        <th class="text-center">{{ 'Thurs' | translate }}</th>
+                        <th class="text-center">{{ 'Fri' | translate }}</th>
+                        <th class="text-center">{{ 'Sat' | translate }}</th>
+                        <th class="text-center">{{ 'Weekly sum' | translate }}</th>
+                        <th class="text-center">{{ 'Weekly average' | translate }}</th>
+                        <th class="text-center">{{ 'Increase & Decrease' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listStatisticDaily ">
+                        <th>
+                            <p *ngIf="checkInMonth(item.data[0].time)">{{item.data[0].time}}</p>
+                            <p *ngIf="!checkInMonth(item.data[0].time)" style="color:#e4e5e6">{{item.data[0].time}}</p>
+                            <p *ngIf="checkInMonth(item.data[0].time)">{{item.data[0].number}}</p>
+                            <p *ngIf="!checkInMonth(item.data[0].time)" style="color:#e4e5e6">{{item.data[0].number}}
+                            </p>
+                        </th>
+                        <th>
+                            <p *ngIf="checkInMonth(item.data[1].time)">{{item.data[1].time}}</p>
+                            <p *ngIf="!checkInMonth(item.data[1].time)" style="color:#e4e5e6">{{item.data[1].time}}</p>
+                            <p *ngIf="checkInMonth(item.data[1].time)">{{item.data[1].number}}</p>
+                            <p *ngIf="!checkInMonth(item.data[1].time)" style="color:#e4e5e6">{{item.data[1].number}}
+                            </p>
+                        </th>
+                        <th>
+                            <p *ngIf="checkInMonth(item.data[2].time)">{{item.data[2].time}}</p>
+                            <p *ngIf="!checkInMonth(item.data[2].time)" style="color:#e4e5e6">{{item.data[2].time}}</p>
+                            <p *ngIf="checkInMonth(item.data[2].time)">{{item.data[2].number}}</p>
+                            <p *ngIf="!checkInMonth(item.data[2].time)" style="color:#e4e5e6">{{item.data[2].number}}
+                            </p>
+                        </th>
+                        <th>
+                            <p *ngIf="checkInMonth(item.data[3].time)">{{item.data[3].time}}</p>
+                            <p *ngIf="!checkInMonth(item.data[3].time)" style="color:#e4e5e6">{{item.data[3].time}}</p>
+                            <p *ngIf="checkInMonth(item.data[3].time)">{{item.data[3].number}}</p>
+                            <p *ngIf="!checkInMonth(item.data[3].time)" style="color:#e4e5e6">{{item.data[3].number}}
+                            </p>
+                        </th>
+                        <th>
+                            <p *ngIf="checkInMonth(item.data[4].time)">{{item.data[4].time}}</p>
+                            <p *ngIf="!checkInMonth(item.data[4].time)" style="color:#e4e5e6">{{item.data[4].time}}</p>
+                            <p *ngIf="checkInMonth(item.data[4].time)">{{item.data[4].number}}</p>
+                            <p *ngIf="!checkInMonth(item.data[4].time)" style="color:#e4e5e6">{{item.data[4].number}}
+                            </p>
+                        </th>
+                        <th>
+                            <p *ngIf="checkInMonth(item.data[5].time)">{{item.data[5].time}}</p>
+                            <p *ngIf="!checkInMonth(item.data[5].time)" style="color:#e4e5e6">{{item.data[5].time}}</p>
+                            <p *ngIf="checkInMonth(item.data[5].time)">{{item.data[5].number}}</p>
+                            <p *ngIf="!checkInMonth(item.data[5].time)" style="color:#e4e5e6">{{item.data[5].number}}
+                            </p>
+                        </th>
+                        <th>
+                            <p *ngIf="checkInMonth(item.data[6].time)">{{item.data[6].time}}</p>
+                            <p *ngIf="!checkInMonth(item.data[6].time)" style="color:#e4e5e6">{{item.data[6].time}}</p>
+                            <p *ngIf="checkInMonth(item.data[6].time)">{{item.data[6].number}}</p>
+                            <p *ngIf="!checkInMonth(item.data[6].time)" style="color:#e4e5e6">{{item.data[6].number}}
+                            </p>
+                        </th>
+                        <th>
+                            <p style="margin-top: 26px;">{{item.number? item.number : 0}}</p>
+                        </th>
+                        <th>
+                            <p style="margin-top: 26px;">{{item.average? item.average : 0}}</p>
+                        </th>
+                        <th>
+                            <p *ngIf="(item.difference >= 0) else decrease" style="color:red; margin-top: 26px;">
+                                ↑{{item.difference? item.difference : 0}}</p>
+                            <ng-template #decrease>
+                                <p style="color:blue;margin-top: 26px;">
+                                    ↓{{item.difference? item.difference : 0}}</p>
+                            </ng-template>
+
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <div class="text-center pagination-footer">
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div> -->
+        </div>
+    </div>
+</div>

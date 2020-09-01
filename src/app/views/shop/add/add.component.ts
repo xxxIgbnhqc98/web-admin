@@ -50,7 +50,7 @@ export class AddShopComponent implements OnInit {
   loadingUploadImage: boolean = false;
   theme_color: string = "#f44336"
   hours = [
-    'AM 00:00', 'AM 01:00', 'AM 02:00', 'AM 03:00', 'AM 04:00', 'AM 05:00', 'AM 06:00', 'AM 07:00', 'AM 08:00', 'AM 09:00', 'AM 10:00', 'AM 11:00', 'PM 12:00', 'PM 13:00', 'PM 14:00', 'PM 15:00', 'PM 16:00', 'PM 17:00', 'PM 18:00', 'PM 19:00', 'PM 20:00', 'PM 21:00', 'PM 22:00', 'PM 23:00', 'PM 24:00'
+    '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
   ]
   start_time: string = null;
   end_time: string = null;
@@ -284,8 +284,8 @@ export class AddShopComponent implements OnInit {
       this.city_id = data.city_id;
       this.district_id = data.district_id;
       this.ward_id = data.ward_id;
-      this.start_time = data.opening_hours.substring(0, 8);
-      this.end_time = data.opening_hours.substring(11, data.opening_hours.lenght);
+      this.start_time = data.opening_hours.substring(0, 5);
+      this.end_time = data.opening_hours.substring(6, data.opening_hours.lenght);
       this.description = data.description
       this.titleService.setTitle(this.title);
     } catch (err) {
@@ -297,7 +297,7 @@ export class AddShopComponent implements OnInit {
 
   async updateItem(form: NgForm) {
     try {
-      this.opening_hours = this.start_time + ' ~ ' + this.end_time
+      this.opening_hours = this.start_time + '~' + this.end_time
       const { category_id, thumbnails, badge_image, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
       await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address });
       // form.reset();
@@ -313,7 +313,7 @@ export class AddShopComponent implements OnInit {
 
   async addItem(form: NgForm) {
     try {
-      this.opening_hours = this.start_time + ' ~ ' + this.end_time
+      this.opening_hours = this.start_time + '~' + this.end_time
       const { category_id, badge_image, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
       await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true });
       form.reset();

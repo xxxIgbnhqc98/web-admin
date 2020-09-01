@@ -8,7 +8,7 @@
                 <div class="col-5">
                     <div class="row">
                         <div class="col-5">
-                            <select class="form-control" name="type" [(ngModel)]="type">
+                            <select class="form-control" name="type" [(ngModel)]="type"(change)="getStatisticPeriod()">
                                 <option value="day">{{ 'Daily view' | translate }}</option>
                                 <option value="month">{{ 'Monthly view' | translate }}</option>
                             </select>
@@ -18,33 +18,27 @@
                 <div class="col-5" *ngIf="type === 'month'">
                     <div class="row">
                         <div class="col-5">
-                            <select class="form-control" name="type_of_month" (change)="getStatisticPeriod()"
-                                [(ngModel)]="type_of_month">
-                                <option value="1_month">{{ 'Last 1 month' | translate }}</option>
-                                <option value="3_month">{{ 'Last 3 months' | translate }}</option>
-                                <option value="6_month">{{ 'Last 6 months' | translate }}</option>
-                                <option value="12_month">{{ 'Last 12 months' | translate }}</option>
-
+                            <select class="form-control" name="year" (change)="getStatisticPeriod()"
+                                [(ngModel)]="year">
+                                <option *ngFor="let item of years " value="{{item}}">{{ item }}</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-6" *ngIf="type === 'day'">
-                    <div class="form-group row">
-                        <div class="col-6" style="display: flex;">
-                            <input type="text" class="form-control input-control"
-                                [placeholder]="'From - To' | translate" bsDaterangepicker placement="bottom"
-                                name="value_of_day" [(ngModel)]="value_of_day" [bsConfig]="{
-                            rangeInputFormat: 'YYYY-MM-DD',
-                            dateInputFormat: 'YYYY-MM-DD'
-                          }" placement="right" (change)="getStatisticPeriod()" />
-                            <span id="icon-calendar">
-                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-                            </span>
+                    <div class="row">
+                        <div class="col-5">
+                            <select class="form-control" name="year" (change)="getStatisticPeriod()"
+                                [(ngModel)]="year">
+                                <option *ngFor="let item of years " value="{{item}}">{{ item }}</option>
+                            </select>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-md-4" *ngIf="value_of_day[1]">
-                            <button class="btn btn-primary"
-                                (click)="getStatisticPeriod()">{{ 'Search' | translate }}</button>
+                        <div class="col-5">
+                            <select class="form-control" name="month" (change)="getStatisticPeriod()"
+                                [(ngModel)]="month">
+                                <option *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12] " value="{{item}}">{{ item }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>

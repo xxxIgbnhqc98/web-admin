@@ -92,7 +92,7 @@
 
           </ng-template>
         </data-table-column>
-        <data-table-column [header]="'Post expired date' | translate">
+        <!-- <data-table-column [header]="'Post expired date' | translate">
           <ng-template #dataTableCell let-item="item">
             <button *ngIf="item.post_expired_date" (click)="openModalAddTime(template, item)" class="btn btn-primary">
               <i>{{item.post_expired_date?(getDateFromUnixTimestamp(item.post_expired_date)| date :"yyyy/MM/dd":'+9'):'No info'}}</i>
@@ -101,7 +101,7 @@
               <i>Set expired time</i>
             </button>
           </ng-template>
-        </data-table-column>
+        </data-table-column> -->
         <data-table-column [header]="'Post Limit' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.post_limit ? item.post_limit : 'No info' | translate}}</span>

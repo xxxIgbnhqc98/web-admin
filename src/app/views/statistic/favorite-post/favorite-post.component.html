@@ -9,10 +9,10 @@
           <div class="row">
             <div class="col-3">
               <select class="form-control" name="type" (change)="changeTypeSearch()" [(ngModel)]="type">
-                <option value="TODAY">Today</option>
-                <option value="LAST_A_WEEK">Last a week</option>
-                <option value="LAST_A_MONTH">Last a month</option>
-                <option value="LAST_THREE_MONTHS">Last three months</option>
+                <option value="TODAY">{{'Today' | translate}}</option>
+                <option value="LAST_A_WEEK">{{'Last a week' | translate}}</option>
+                <option value="LAST_A_MONTH">{{'Last a month' | translate}}</option>
+                <option value="LAST_THREE_MONTHS">{{'Last three months' | translate}}</option>
               </select>
             </div>
           </div>
@@ -29,7 +29,7 @@
         [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
         [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="true"
         [showReloading]="false">
-        <data-table-column [header]="'Title of video' | translate">
+        <data-table-column [header]="'Title of Post' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.title ?item.title: ''}}</span>
           </ng-template>

@@ -19,7 +19,7 @@ declare var swal: any;
 export class CategoryListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all", { "$filter": { "state": "APPROVED" } }] }];
+  itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all"] }];
   query: any = {
     filter: {
 
@@ -160,11 +160,17 @@ export class CategoryListComponent implements OnInit {
         fields: this.itemFields
       }, this.query);
       this.items.next(await this.apiService.category.getList({ query }));
-      let query1 = Object.assign({
-        fields: ["$all"]
-      }, this.query);
-      const countLink: any = await this.apiService.category.count({ query: query1 })
+      console.log("$@#$@# ", this.items)
+      const countLink: any = await this.apiService.category.count({
+        query: {
+          fields: ['$all'],
+          filter: {
+            thema_id: this.thema_id
+          }
+        }
+      })
       this.itemCount = countLink
+      console.log("@#@!#$ ", this.itemCount)
       this.ref.detectChanges();
       return this.items;
     } catch (error) {

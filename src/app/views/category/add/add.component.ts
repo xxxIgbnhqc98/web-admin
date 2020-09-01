@@ -149,7 +149,7 @@ export class AddCategoryComponent implements OnInit {
       await this.apiService.category.add({ thema_id, name });
       form.reset();
       this.alertSuccess();
-      this.backToList();
+      // this.backToList();
       this.submitting = false;
     } catch (error) {
       this.alertErrorFromServer(error.error.message);

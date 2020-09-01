@@ -201,7 +201,25 @@ export class AddLinkComponent implements OnInit {
       this.backToList();
     }
   }
-
+  async changeThema() {
+    this.category_ids = [];
+    this.categories_select = [];
+    const dataCate = await this.apiService.category.getList({
+      query: {
+        fields: ["$all"],
+        filter: {
+          thema_id: this.thema_id
+        }
+      }
+    });
+    this.categories = dataCate.map(item => {
+      return {
+        item_id: item.id,
+        item_text: item.name
+      }
+    });
+    console.log("@!#$@$@3 ", dataCate)
+  }
   async updateItem(form: NgForm) {
     try {
       const { name, image, thema_id, route_link, category_ids } = this;

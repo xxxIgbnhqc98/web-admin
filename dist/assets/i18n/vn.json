@@ -337,6 +337,13 @@
   "Period statistic": "Thống kê thời kỳ",
   "Monthly view": "Chế độ xem hàng tháng",
   "Daily view": "Chế độ xem hàng ngày",
+  "Favorite post statistic": "Thống kê bài viết yêu thích",
+  "Views": "Lượt xem",
+  "Title of Post": "Tiêu đề bài viết",
+  "Today": "Hôm nay",
+  "Last a week": "Tuần gần nhất",
+  "Last a month": "Tháng gần nhất",
+  "Last three months": "3 Tháng gần nhất",
   "nav": {
     "nav_items": [
       {
@@ -522,6 +529,11 @@
             "name": "Traffic statistic",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/traffic"
+          },
+          {
+            "name": "Visitor & Page view",
+            "icon": "fa fa-bar-chart",
+            "url": "/statistic/visitor-pageview"
           }
         ]
       }
