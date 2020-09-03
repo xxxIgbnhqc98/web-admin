@@ -102,6 +102,7 @@ export class ShopListComponent implements OnInit {
           this.expired_date = date
         }
         await this.apiService.shop.update(this.id_update, {
+          state: "APPROVED",
           expired_date: parseInt(this.expired_date.toString()) + (this.extra_days * 86400000)
         });
 
@@ -375,13 +376,13 @@ export class ShopListComponent implements OnInit {
     }
   }
   async deleteItem(item) {
-    console.log("lenght ",item.events.lenght)
+    console.log("lenght ", item.events.lenght)
     try {
       try {
         if (item.events.length > 0) {
           this.alertErrorFromServer((this.configService.lang === 'en') ? 'There is a EVENT linked to Post you want to delete, Please delete EVENT first!' : ((this.configService.lang === 'vn') ? 'Có một sự kiện được liên kết với Bài đăng mà bạn muốn xóa. Vui lòng xóa EVENT trước!' : '삭제하려는 상점과 연동된 이벤트가 있습니다. 해당 이벤트를 먼저 삭제하여 주시기 바랍니다!'));
           return;
-       
+
         } else {
           await this.confirmDelete();
         }
