@@ -76,7 +76,7 @@
           <ng-template #dataTableCell let-item="item">
             <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + " days"):"Expired" }}</span>
             <button (click)="openModalAddTime(templateAddTime, item)" class="btn btn-primary">
-              <i>Add</i>
+              <i>{{'Add' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>
@@ -127,15 +127,15 @@
         <data-table-column [header]="'Event' | translate">
           <ng-template #dataTableCell let-item="item">
             <button *ngIf="item.events.length === 0" (click)="openModalEvent(template2, item)" class="btn btn-primary">
-              <i>Add Event</i>
+              <i>{{'Add Event' | translate}}</i>
             </button>
             <button *ngIf="item.events.length > 0 && item.events[0].state ==='PENDING' "
               (click)="openModalEvent(template2, item)" class="btn btn-primary">
-              <i class="fa fa-spinner">Pending</i>
+              <i class="fa fa-spinner">{{'Pending' | translate}}<</i>
             </button>
             <button *ngIf="item.events.length > 0 && item.events[0].state !=='PENDING'"
               (click)="openModalEvent(template2, item)" class="btn btn-danger">
-              <i>Edit Event</i>
+              <i>{{'Edit Event' | translate}}<</i>
             </button>
           </ng-template>
         </data-table-column>
@@ -143,11 +143,11 @@
           <ng-template #dataTableCell let-item="item">
             <button *ngIf="!checkSelect(item.id)" (click)="addShop(item.id)" class="btn btn-success"
               style="margin-right: 5px;">
-              <i>selected</i>
+              <i>{{'selected' | translate}}</i>
             </button>
             <button *ngIf="checkSelect(item.id)" (click)="removeShop(item.id)" class="btn btn-danger"
               style="margin-right: 5px;">
-              <i>unchecked</i>
+              <i>{{'unchecked' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>

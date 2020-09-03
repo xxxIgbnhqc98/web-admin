@@ -82,7 +82,7 @@
               <label for="tag">{{'Tag' | translate}}</label>
               <form [formGroup]="form_tag" *ngIf="form_tag" (ngSubmit)="save()" (reset)="resetForm()">
 
-                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Tag'" [data]="tags"
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Tag' | translate" [data]="tags"
                   [(ngModel)]="tags_select" [settings]="settings" [formControl]="f.name" [disabled]="false"
                   (onFilterChange)="onSave($event)" (onSelect)="onSave($event)" (onDeSelect)="onSave($event)"
                   (onSelectAll)="onSave($event)" (onDeSelectAll)="onSave($event)">
