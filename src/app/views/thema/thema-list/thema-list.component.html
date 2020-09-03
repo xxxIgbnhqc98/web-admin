@@ -57,17 +57,17 @@
         <data-table-column [header]="'List' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="getListCate(item)" class="btn btn-primary">
-              <i>List category</i>
+              <i>{{'List category' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Shop' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="addShop(item)" class="btn btn-primary">
-              <i>Add Shop</i>
+              <i>{{'Add Shop' | translate}}</i>
             </button>
             <button style="margin-left:2px;" (click)="editBanner(item)" class="btn btn-warning">
-              <i>Edit Banner</i>
+              <i>{{'Edit Banner' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>

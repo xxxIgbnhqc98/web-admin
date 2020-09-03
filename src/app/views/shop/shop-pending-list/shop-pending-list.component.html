@@ -102,10 +102,10 @@
         <data-table-column [header]="'Actions' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="openModalApprove(templateApprove, item)" class="btn btn-primary" style="margin-bottom: 5px;">
-              <i>Approved</i>
+              <i>{{'Approved' | translate}}</i>
             </button>
             <button (click)="rejectedItem(item)" class="btn btn-danger">
-              <i>Rejected</i>
+              <i>{{'Rejected' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>

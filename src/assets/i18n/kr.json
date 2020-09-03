@@ -126,6 +126,7 @@
   "Real time Location": "실시간 장소",
   "Matching history": "매칭 과거내역",
   "Choose search condition": "검색조건을 선택하세요",
+  "Choose account type": "계정 타입을 선택하세요",
   "Cancel by system": "시스템에 의한 취소",
   "Delay by Host/Guest": "호스트/게스트에 의한 딜레이",
   "Deny/Cancel by Host/Guest": "호스트/게스트에 의한 거부",
@@ -188,8 +189,8 @@
   "Please enter full infomation": "모든 내역을 빠짐없이 입력하세요",
   "System setting": "시스템 세팅",
   "System setting list": "시스템 세팅 리스트",
-  "Field": "Field",
-  "Value": "Value",
+  "Field": "필드",
+  "Value": "값",
   "ID password setting": "ID 패스워드 관리",
   "Logo setting": "로고 세팅",
   "Term of service": "이용약관",
@@ -344,6 +345,94 @@
   "Last a week": "지난 1주일",
   "Last a month": "지난 1개월",
   "Last three months": "지난 3개월",
+  "Login type - Account type": "로그인 타입 - 계정 타입",
+  "Company name": "회사 명",
+  "Post Limit": "상점 등록가능 수",
+  "Post status": "상점 상태",
+  "Policy": "정책",
+  "Terms of service": "이용약관",
+  "Location based services.": "위치기반 서비스 이용약관",
+  "Image": "이미지",
+  "Thema": "테마",
+  "Route": "경로",
+  "Categories": "카테고리",
+  "enter name": "이름을 입력하세요",
+  "Choose route": "경로를 선택하세요",
+  "Bulletin board": "게시판",
+  "Distance order board": "거리순 게시판",
+  "Event board": "이벤트 게시판",
+  "Shop list board": "상점목록 게시판",
+  "Category": "카테고리",
+  "Select Category": "카테고리를 선택하세요",
+  "Upload Image": "이미지 올리기",
+  "List": "리스트",
+  "Shop": "상점",
+  "Please enter name.": "이름을 입력하세요",
+  "Category Name": "카테고리 이름",
+  "Opening hours": "영업시간",
+  "Contact phone": "연락처",
+  "Location": "위치",
+  "Approved": "승인완료",
+  "Rejected": "거부",
+  "Start date End Date": "시작시간 - 종료시간",
+  "Remaining date": "유효 이용기간",
+  "Add": "추가하기",
+  "Edit Event": "이벤트 수정하기",
+  "Add Event": "이벤트 추가히기",
+  "Tag": "태그",
+  "Select Tag": "Select Tag",
+  "Description": "세부내역",
+  "Badge image": "배지 이미지",
+  "Please enter contact phone.": "연락처를 입력하세요.",
+  "Please choose category.": "카테고리를 선택하세요.",
+  "Please choose start time.": "영업시작시간을 선택하세요.",
+  "Please choose end time.": "영업종료시간을 선택하세요.",
+  "Theme color": "테마 컬러",
+  "Start time - End time": "시작시간 - 종료시간",
+  "Inquiry list": "문의사항 목록",
+  "Contact list": "연락처 리스트",
+  "Setting list": "설정 목록",
+  "Setting user permission list": "회원 접근권한 설정",
+  "User type": "회원타입",
+  "Boards": "게시판",
+  "Forbidden word list": "금칙어 리스트",
+  "Forbidden word": "금칙어",
+  "Traffic statistic": "트레픽 통계",
+  "Average monthly statistic": "평균 월단위 통계",
+  "Year": "년",
+  "Jan": "1월",
+  "Feb": "2월",
+  "Mar": "3월",
+  "Apr": "4월",
+  "May": "5월",
+  "June": "6월",
+  "July": "7월",
+  "Aug": "8월",
+  "Sep": "9월",
+  "Oct": "10월",
+  "Nov": "11월",
+  "Dec": "12월",
+  "Monthly Average": "월평균",
+  "Daily statistic": "일단위 통계",
+  "Sun": "일요일",
+  "Mon": "월요일",
+  "Tue": "화요일",
+  "Web": "수요일",
+  "Thurs": "목요일",
+  "Fri": "금요일",
+  "Sat": "토요일",
+  "Weekly sum": "주간 합계",
+  "Weekly average": "주간 평균",
+  "Increase & Decrease": "증감",
+  "shop list": "회원 리스트",
+  "Banner list": "배너 목록",
+  "Thema list": "테마 목록",
+  "Event": "이벤트",
+  "Add Shop": "상점 추가하기",
+  "Edit Banner": "배너 편집하기",
+  "List category": "카테고리 보기",
+  "Average Daily statistic": "평균 일단위 통계",
+  "Link list": "링크 목록",
   "nav": {
     "nav_items": [
       {
@@ -359,91 +448,91 @@
         ]
       },
       {
-        "name": "Board",
+        "name": "게시판",
         "url": "/board",
         "icon": "fa fa-list-alt",
         "children": [
           {
-            "name": "How to use",
+            "name": "사용방법",
             "url": "/board/how-to-use"
           },
           {
-            "name": "Policy",
+            "name": "정책",
             "url": "/board/policy"
           },
           {
-            "name": "Terms of service",
+            "name": "이용약관",
             "url": "/board/terms-of-service"
           },
           {
-            "name": "Location Based Services",
+            "name": "위치기반 서비스 이용약관",
             "url": "/board/location-based-services"
           }
         ]
       },
       {
-        "name": "Link",
+        "name": "링크",
         "url": "/link",
         "icon": "fa fa-link",
         "children": [
           {
-            "name": "Link list",
+            "name": "링크 목록",
             "icon": "fa fa-list-ol",
             "url": "/link/link-list"
           }
         ]
       },
       {
-        "name": "Banner",
+        "name": "배너",
         "url": "/banner",
         "icon": "fa fa-picture-o",
         "children": [
           {
-            "name": "Banner list",
+            "name": "배너 목록",
             "icon": "fa fa-list-ol",
             "url": "/banner/banner-list"
           }
         ]
       },
       {
-        "name": "Thema",
+        "name": "테마",
         "url": "/thema",
         "icon": "fa fa-book",
         "children": [
           {
-            "name": "Thema list",
+            "name": "테마 목록",
             "icon": "fa fa-list-ol",
             "url": "/thema/thema-list"
           },
           {
-            "name": "Add Thema",
+            "name": "테마 추가하기",
             "icon": "fa fa-plus",
             "url": "/thema/add"
           }
         ]
       },
       {
-        "name": "Shop",
+        "name": "상점",
         "url": "/thema",
         "icon": "fa fa-home",
         "children": [
           {
-            "name": "Shop pending list",
+            "name": "상점 심사중 목록",
             "icon": "fa fa-tasks",
             "url": "/shop/shop-pending-list"
           },
           {
-            "name": "Shop list",
+            "name": "상점 목록",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-list"
           },
           {
-            "name": "Add Shop",
+            "name": "상점 추가하기",
             "icon": "fa fa-plus",
             "url": "/shop/add"
           },
           {
-            "name": "Tag list",
+            "name": "태그 리스트",
             "icon": "fa fa-list-ol",
             "url": "/shop/tag-list"
           }
@@ -489,49 +578,49 @@
         ]
       },
       {
-        "name": "Setting",
+        "name": "설정",
         "url": "/setting",
         "icon": "fa fa-cogs",
         "children": [
           {
-            "name": "Setting list",
+            "name": "설정 목록",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-list"
           },
           {
-            "name": "Setting user permission list",
+            "name": "회원 접근권한 설정",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-user-permission-list"
           },
           {
-            "name": "Forbidden word list",
+            "name": "금칙어 리스트",
             "icon": "fa fa-list-ol",
             "url": "/setting/forbidden-word-list"
           }
         ]
       },
       {
-        "name": "Statistic",
+        "name": "통계",
         "url": "/statistic",
         "icon": "fa fa-bar-chart",
         "children": [
           {
-            "name": "Favorite post statistic",
+            "name": "인기 상점 통계",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/favorite-post"
           },
           {
-            "name": "Period statistic",
+            "name": "기간별 통계",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/period"
           },
           {
-            "name": "Traffic statistic",
+            "name": "트레픽 통계",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/traffic"
           },
           {
-            "name": "Visitor & Page view",
+            "name": "방문자 & 페이지 뷰",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/visitor-pageview"
           }
