@@ -91,9 +91,9 @@ export class AddCategoryComponent implements OnInit {
     });
   }
 
-  backToList() {
-    if (this.thema_id) {
-      this.router.navigate(['/category/category-list/', this.thema_id], { relativeTo: this.route });
+  backToList(thema_id?: string) {
+    if (thema_id) {
+      this.router.navigate(['/category/category-list/', thema_id], { relativeTo: this.route });
     } else {
       this.router.navigate(['/category/category-list'], { relativeTo: this.route });
     }
@@ -120,6 +120,8 @@ export class AddCategoryComponent implements OnInit {
       this.name = data.name;
       this.thema_id = data.thema_id
       this.titleService.setTitle(this.name);
+      console.log("@#$@#$@ ",this.thema_id)
+
     } catch (err) {
       console.log('err: ', err);
       try { await this.alertItemNotFound(); } catch (err) { }
@@ -131,10 +133,10 @@ export class AddCategoryComponent implements OnInit {
     try {
       const { name } = this;
       await this.apiService.category.update(this.id, { name });
-      form.reset();
       this.alertSuccess();
-      this.backToList();
+      this.backToList(this.thema_id);
       this.submitting = false;
+      form.reset();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
       this.submitting = false;
@@ -149,7 +151,7 @@ export class AddCategoryComponent implements OnInit {
       await this.apiService.category.add({ thema_id, name });
       form.reset();
       this.alertSuccess();
-      // this.backToList();
+      this.backToList(thema_id);
       this.submitting = false;
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
