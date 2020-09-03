@@ -298,6 +298,9 @@ export class AddShopComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       this.opening_hours = this.start_time + '~' + this.end_time
+      this.images = this.thumbnails.map(item => {
+        return item.replace("300", "1980")
+      });
       const { category_id, thumbnails, badge_image, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
       await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address });
       // form.reset();
@@ -314,6 +317,9 @@ export class AddShopComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       this.opening_hours = this.start_time + '~' + this.end_time
+      this.images = this.thumbnails.map(item => {
+        return item.replace("300", "1980")
+      });
       const { category_id, badge_image, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
       await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true });
       form.reset();
@@ -366,12 +372,10 @@ export class AddShopComponent implements OnInit {
     console.log("@@$#  ", this.address)
   }
   removeAvatar(image) {
-    this.images = this.images.filter(function (item) {
+    this.thumbnails = this.thumbnails.filter(function (item) {
       return item !== image
     })
-    this.thumbnails = this.thumbnails.filter(function (item) {
-      return item !== image.replace("1980", "300")
-    })
+
   }
   uploadImage(fileInput) {
     this.loadingUploadImage = true;
