@@ -41,6 +41,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'add/:id/:category_id',
+        component: AddShopComponent,
+        data: {
+          title: 'Edit'
+        }
+      },
+      {
         path: 'add/:id',
         component: AddShopComponent,
         data: {

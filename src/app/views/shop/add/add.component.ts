@@ -28,6 +28,9 @@ export class AddShopComponent implements OnInit {
   title: string;
   images: any = [];
   thumbnails: any = [];
+  params_category_id: string;
+  params_thema_id: string;
+
   category_id: string;
   themas: any = [];
   thema_id: string = null;
@@ -78,7 +81,10 @@ export class AddShopComponent implements OnInit {
       this.id = params.id;
       if (params.thema_id) {
         this.thema_id = params.thema_id;
-
+        this.params_thema_id = params.thema_id;
+      }
+      if (params.category_id) {
+        this.params_category_id = params.category_id;
       }
       if (this.id == null) {
         this.isEdit = false;
@@ -208,8 +214,16 @@ export class AddShopComponent implements OnInit {
   }
 
   backToList() {
+    if (this.params_category_id) {
+      this.router.navigate([`/shop/shop-list/${this.params_category_id}`], { relativeTo: this.route });
 
-    this.router.navigate(['/shop/shop-list'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['/shop/shop-list'], { relativeTo: this.route });
+    }
+  }
+  backToThema() {
+    this.router.navigate(['/thema/thema-list'], { relativeTo: this.route });
+
   }
   async updateCateList() {
     const query: any = {
@@ -314,9 +328,10 @@ export class AddShopComponent implements OnInit {
       });
       const { category_id, thumbnails, badge_image, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
       await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address });
-      // form.reset();
       this.alertSuccess();
-      // this.backToList();
+      this.backToList();
+      form.reset();
+
       this.submitting = false;
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
@@ -335,7 +350,11 @@ export class AddShopComponent implements OnInit {
       await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true });
       form.reset();
       this.alertSuccess();
-      // this.backToList();
+      if (this.params_thema_id) {
+        this.backToThema();
+      } else {
+        this.backToList();
+      }
       this.submitting = false;
     } catch (error) {
       this.alertErrorFromServer(error.error.message);

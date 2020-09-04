@@ -315,9 +315,15 @@ export class ShopListComponent implements OnInit {
     }
   }
   editItem(item) {
-    this.router.navigate(['/shop/add/', item.id], {
-      relativeTo: this.route
-    });
+    if (this.category_id) {
+      this.router.navigate([`/shop/add/${item.id}/${this.category_id}`,], {
+        relativeTo: this.route
+      });
+    } else {
+      this.router.navigate(['/shop/add/', item.id], {
+        relativeTo: this.route
+      });
+    }
   }
   getListShop(item) {
     this.router.navigate(['/shop/list/', item.id], {
