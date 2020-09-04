@@ -207,14 +207,14 @@ export class ShopPendingListComponent implements OnInit {
   }
   async alertDeleteSuccess() {
     return await swal({
-      title: 'Delete successful',
+      title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
       type: 'success',
       timer: 1000,
     });
   }
   async confirmDelete() {
     return await swal({
-      title: 'Delete',
+      title: (this.configService.lang === 'en') ? 'DELETE' : ((this.configService.lang === 'vn') ? 'Xóa' : '삭제'),
       text: (this.configService.lang === 'en') ? 'Are you sure you want to delete?' : ((this.configService.lang === 'vn') ? 'Bạn có chắc chắn muốn xóa không?' : '삭제를 진행할까요?'),
       type: 'warning',
       showCancelButton: true,
@@ -238,7 +238,7 @@ export class ShopPendingListComponent implements OnInit {
   }
   async confirmDeny() {
     return await swal({
-      title: 'REJECTED',
+      title: (this.configService.lang === 'en') ? 'REJECTED' : ((this.configService.lang === 'vn') ? 'Từ chối' : '거부'),
       text: (this.configService.lang === 'en') ? 'Are you sure you want to rejected?' : ((this.configService.lang === 'vn') ? 'Bạn có muốn từ chối không' : '거부 하시겠습니까?'),
       type: 'warning',
       showCancelButton: true,

@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../services/api/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ConfigService } from '../../../services/config/config.service';
+
 declare var swal: any;
 @Component({
   selector: 'app-favorite-post',
@@ -31,6 +33,7 @@ export class FavoritePostComponent implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public titleService: Title,
+    private configService: ConfigService,
   ) { }
 
   async ngOnInit() {
@@ -86,7 +89,7 @@ export class FavoritePostComponent implements OnInit {
 
   async alertDeleteSuccess() {
     return await swal({
-      title: 'Delete successful',
+      title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
       type: 'success',
       timer: 1000,
     });

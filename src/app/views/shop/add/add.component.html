@@ -68,7 +68,7 @@
               <div class="invalid-feedback" *ngIf="start_timeControl.errors?.required">
                 {{'Please choose start time.' | translate}}
               </div>
-              <select name="end_time" [(ngModel)]="end_time" required #end_timeControl="ngModel" (change)="onChangeEndTime($event)"
+              <select name="end_time" [(ngModel)]="end_time" required #end_timeControl="ngModel"
                 [disabled]="start_time === null" [ngClass]="{'is-invalid' : end_timeControl.errors?.required}" id=""
                 class="form-control input-control">
                 <option *ngFor="let item of hours1" value="{{ item }}">{{

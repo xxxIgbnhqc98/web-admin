@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api/api.service';
 declare let swal: any;
 import * as moment from "moment";
+import { ConfigService } from '../../../services/config/config.service';
+
 
 @Component({
   selector: 'app-period',
@@ -27,7 +29,9 @@ export class PeriodComponent implements OnInit {
     private router: Router,
     public apiService: ApiService,
     private route: ActivatedRoute,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private configService: ConfigService,
+
   ) {
 
   }
@@ -65,7 +69,8 @@ export class PeriodComponent implements OnInit {
       this.listStatisticPeriod = statistic
       let total: any = {
         "index": this.listStatisticPeriod.length + 1,
-        "time": "Total",
+        "time": (this.configService.lang === 'en') ? 'Total'
+        : ((this.configService.lang === 'vn') ? 'Tổng' : '총'),
         "page_view_count": 0,
         "visitor_count": 0,
         "new_member_count": 0,
@@ -76,7 +81,8 @@ export class PeriodComponent implements OnInit {
       for (let i = 0; i < this.listStatisticPeriod.length; i++) {
         total = {
           "index": this.listStatisticPeriod.length + 1,
-          "time": "Total",
+          "time": (this.configService.lang === 'en') ? 'Total'
+          : ((this.configService.lang === 'vn') ? 'Tổng' : '총'),
           "page_view_count": total.page_view_count + this.listStatisticPeriod[i].page_view_count,
           "visitor_count": total.visitor_count + this.listStatisticPeriod[i].visitor_count,
           "new_member_count": total.new_member_count + this.listStatisticPeriod[i].new_member_count,

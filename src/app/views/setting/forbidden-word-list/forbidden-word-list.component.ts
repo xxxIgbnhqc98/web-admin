@@ -217,7 +217,7 @@ export class ForbiddenWordListComponent implements OnInit {
   }
   async alertDeleteSuccess() {
     return await swal({
-      title: 'Delete successful',
+      title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
       type: 'success',
       timer: 1000,
     });

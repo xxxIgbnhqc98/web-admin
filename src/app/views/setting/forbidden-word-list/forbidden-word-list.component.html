@@ -111,9 +111,9 @@
               </div>
               <input type="text" id="word" class="form-control" name="word" [(ngModel)]="word" #wordControl="ngModel"
                 [ngClass]="{'is-valid' : !wordControl.errors?.required, 'is-invalid' : wordControl.errors?.required}"
-                required placeholder="word">
+                required [placeholder]="'word' | translate">
               <div class="invalid-feedback" *ngIf="wordControl.errors?.required">
-                Please enter word.
+                {{ 'Please enter word.' | translate }}
               </div>
             </div>
           </div>
@@ -146,9 +146,9 @@
               </div>
               <input type="text" id="word" class="form-control" name="word" [(ngModel)]="word" #wordControl="ngModel"
                 [ngClass]="{'is-valid' : !wordControl.errors?.required, 'is-invalid' : wordControl.errors?.required}"
-                required placeholder="word">
+                required [placeholder]="'word' | translate">
               <div class="invalid-feedback" *ngIf="wordControl.errors?.required">
-                Please enter word.
+                {{ 'Please enter word.' | translate }}
               </div>
             </div>
           </div>

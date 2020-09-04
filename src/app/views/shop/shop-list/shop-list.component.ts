@@ -20,7 +20,7 @@ declare var swal: any;
 export class ShopListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+  itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
     filter: {
       // state: { $in: ["APPROVED", "PENDING"] }
@@ -53,6 +53,7 @@ export class ShopListComponent implements OnInit {
   id_update: string = null;
   expired_date: number;
   extra_days: number = 30;
+  expiration_date: any;
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
@@ -78,6 +79,10 @@ export class ShopListComponent implements OnInit {
       }
     });
   }
+  onChangeDate(event) {
+    console.log('event12eihiuhg', event)
+  }
+
   openModalZoomImage(template: TemplateRef<any>, item) {
     this.modalRef = this.modalService.show(template);
     this.zoom_image = item
@@ -121,6 +126,7 @@ export class ShopListComponent implements OnInit {
   }
   openModalEvent(template: TemplateRef<any>, item) {
     this.shop_id_event = item.id
+    this.expiration_date = item.expired_date
     if (item.events.length === 0) {
       this.title_event = null;
       this.description = null;
@@ -158,17 +164,22 @@ export class ShopListComponent implements OnInit {
     });
   }
   async submitAddEvent(form: NgForm) {
-    this.submitting = true;
-    if (form.valid) {
-      if (!this.event_id) {
-        await this.addItem(form);
+    const time = moment(form.value.value_of_day[1]).valueOf()
+    if(time < this.expiration_date){
+      this.submitting = true;
+      if (form.valid) {
+        if (!this.event_id) {
+          await this.addItem(form);
+        } else {
+          await this.updateItem(form);
+  
+        }
       } else {
-        await this.updateItem(form);
-
+        this.alertFormNotValid();
+        this.submitting = false;
       }
-    } else {
-      this.alertFormNotValid();
-      this.submitting = false;
+    }else{
+      this.alertFailedDate()
     }
   }
   async submitDeleteEvent(form: NgForm) {
@@ -224,7 +235,13 @@ export class ShopListComponent implements OnInit {
       this.submitting = false;
       this.itemsTable.reloadItems();
     } catch (error) {
-      this.alertErrorFromServer(error.error.message);
+      if (error.error.message === 'your event end time cannot bigger than shop expiration date.') {
+        const msg = (this.configService.lang === 'en') ? 'The end time of event can\'t be later than the end time of Post.'
+          : ((this.configService.lang === 'vn') ? 'Thời gian kết thúc sự kiện không thể trễ hơn thời gian kết thúc của bài đăng' : '이벤트만료일은  상점만료일을 초과하여 설정할 수  없습니다.')
+        this.alertErrorFromServer(msg);
+      } else {
+        this.alertErrorFromServer(error.error.message);
+      }
       this.submitting = false;
     }
   }
@@ -293,6 +310,14 @@ export class ShopListComponent implements OnInit {
       timer: 2000,
     });
   }
+  alertFailedDate() {
+    this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
+    return swal({
+      title: (this.configService.lang === 'en') ? 'End date of event cannot be greater than remaining date of shop' : ((this.configService.lang === 'vn') ? 'Thất bại' : 'Failed'),
+      type: 'success',
+      timer: 3000,
+    });
+  }
 
   alertFailed() {
     return swal({
@@ -337,14 +362,14 @@ export class ShopListComponent implements OnInit {
   }
   async alertDeleteSuccess() {
     return await swal({
-      title: 'Delete successful',
+      title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
       type: 'success',
       timer: 1000,
     });
   }
   async confirmDelete() {
     return await swal({
-      title: 'Delete',
+      title: (this.configService.lang === 'en') ? 'DELETE' : ((this.configService.lang === 'vn') ? 'Xóa' : '삭제'),
       text: (this.configService.lang === 'en') ? 'Are you sure you want to delete?' : ((this.configService.lang === 'vn') ? 'Bạn có chắc chắn muốn xóa không?' : '삭제를 진행할까요?'),
       type: 'warning',
       showCancelButton: true,

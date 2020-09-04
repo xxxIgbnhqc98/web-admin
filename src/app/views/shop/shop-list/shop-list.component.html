@@ -46,9 +46,10 @@
         [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
         [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
         [showReloading]="false">
-        <data-table-column [header]="'ID code' | translate">
+        <data-table-column [header]="'Nickname' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span ngxClipboard [cbContent]="item.id" (cbOnSuccess)="alertCopied(item.id)">{{item.id}}</span>
+            <span ngxClipboard [cbContent]="item.id"
+              (cbOnSuccess)="alertCopied(item.id)">{{item.user ? item.user.nickname : 'No infor' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Title' | translate">
@@ -68,13 +69,13 @@
         </data-table-column>
         <data-table-column [header]="'Start date End Date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{ item.start_date ? getDateFromUnixTimestamp(item.start_date):"No info" }}<br></span>
-            <span>{{ item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" }}</span>
+            <span>{{ item.start_date ? getDateFromUnixTimestamp(item.start_date):"No info" | translate}}<br></span>
+            <span>{{ item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Remaining date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + " days"):"Expired" }}</span>
+            <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + " days"):"Expired" | translate }}</span>
             <button (click)="openModalAddTime(templateAddTime, item)" class="btn btn-primary">
               <i>{{'Add' | translate}}</i>
             </button>
@@ -126,7 +127,8 @@
         </data-table-column>
         <data-table-column [header]="'Event' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="item.events.length === 0" (click)="openModalEvent(template2, item)" class="btn btn-primary">
+            <button *ngIf="item.events.length === 0" (click)="openModalEvent(template2, item)" class="btn btn-primary"
+              [disabled]="mathRemainingTime(item.expired_date) < 0">
               <i>{{'Add Event' | translate}}</i>
             </button>
             <button *ngIf="item.events.length > 0 && item.events[0].state ==='PENDING' "
@@ -210,9 +212,9 @@
               <input type="text" id="title_event" class="form-control" name="title_event" [(ngModel)]="title_event"
                 #title_eventControl="ngModel"
                 [ngClass]="{'is-valid' : !title_eventControl.errors?.required, 'is-invalid' : title_eventControl.errors?.required}"
-                required placeholder="Title event">
+                required [placeholder]="'Title event' | translate">
               <div class="invalid-feedback" *ngIf="title_eventControl.errors?.required">
-                Please enter title.
+                {{ 'Please enter title.' | translate }}
               </div>
             </div>
           </div>
@@ -224,9 +226,9 @@
               <input type="text" id="description" class="form-control" name="description" [(ngModel)]="description"
                 #descriptionControl="ngModel"
                 [ngClass]="{'is-valid' : !descriptionControl.errors?.required, 'is-invalid' : descriptionControl.errors?.required}"
-                required placeholder="Event description">
+                required [placeholder]="'Event description' | translate">
               <div class="invalid-feedback" *ngIf="descriptionControl.errors?.required">
-                Please enter description.
+                {{ 'Please enter description.' | translate }}
               </div>
             </div>
           </div>
@@ -243,7 +245,7 @@
                   dateInputFormat: 'YYYY-MM-DD'
                 }" placement="right" />
               <div class="invalid-feedback" *ngIf="value_of_dayControl.errors?.required">
-                Please enter Start time and end time.
+                {{ 'Please enter Start time and end time.' | translate}}
               </div>
             </div>
           </div>
@@ -276,8 +278,8 @@
           <i *ngIf="!event_id">{{ 'Add' | translate }}</i>
           <i *ngIf="event_id">{{ 'Update' | translate }}</i>
         </button>
-        <button style="margin-left: 2px;" *ngIf="state !== 'PENDING' && event_id" type="submit" class="btn btn-danger" data-style="expand-right"
-          [ladda]='submitting' (click)="submitDeleteEvent(formContent)">
+        <button style="margin-left: 2px;" *ngIf="state !== 'PENDING' && event_id" type="submit" class="btn btn-danger"
+          data-style="expand-right" [ladda]='submitting' (click)="submitDeleteEvent(formContent)">
           <i *ngIf="event_id">{{ 'Delete' | translate }}</i>
         </button>
         <button style="margin-right: 2px;" *ngIf="state === 'PENDING'" type="submit" class="btn btn-success"

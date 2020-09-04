@@ -121,9 +121,9 @@
               </div>
               <input type="text" id="name" class="form-control" name="name" [(ngModel)]="name" #nameControl="ngModel"
                 [ngClass]="{'is-valid' : !nameControl.errors?.required, 'is-invalid' : nameControl.errors?.required}"
-                required placeholder="Title Tag">
+                required [placeholder]="'Title Tag' | translate">
               <div class="invalid-feedback" *ngIf="nameControl.errors?.required">
-                Please enter Tag.
+                {{ 'Please enter Tag.' | translate }}
               </div>
             </div>
           </div>

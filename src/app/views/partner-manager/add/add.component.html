@@ -50,7 +50,7 @@
             </div>
             <div class="form-group">
               <label for="email">{{'Email' | translate}}</label>
-              <input class="form-control" id="email" [placeholder]="'enter email.' | translate" type="email"
+              <input class="form-control" id="email" [placeholder]="'enter email' | translate" type="email"
                 name="email" [(ngModel)]="email" required #emailControl="ngModel"
                 [ngClass]="{'is-invalid' : emailControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="emailControl.errors?.required">
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group">
               <label for="phone">{{'Phone' | translate}}</label>
-              <input class="form-control" id="phone" [placeholder]="'enter phone.' | translate" type="text" name="phone"
+              <input class="form-control" id="phone" [placeholder]="'enter phone' | translate" type="text" name="phone"
                 [(ngModel)]="phone" required #phoneControl="ngModel"
                 [ngClass]="{'is-invalid' : phoneControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="phoneControl.errors?.required">

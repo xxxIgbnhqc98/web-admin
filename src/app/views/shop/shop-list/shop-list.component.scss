@@ -202,11 +202,41 @@
   margin-left: -100px;
 }
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
-  width: 1300px;
+  width: 1500px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(4) {
+  width: 100px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
+  width: 100px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(6) {
+  width: 100px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(7) {
+  width: 100px;
 }
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(8) {
   width: 100px;
 }
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(9) {
+  width: 80px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(10) {
+  width: 100px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(11) {
+  width: 100px;
+}
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(12) {
-  width: 110px;
+  width: 100px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(13) {
+  width: 80px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(14) {
+  width: 120px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(15) {
+  width: 100px;
 }
