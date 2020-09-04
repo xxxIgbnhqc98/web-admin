@@ -5,7 +5,7 @@
 
 export const environment = {
   production: true,
-  host: 'https://kormassage.kr:9877',
+  host: 'https://server.kormassage.kr:9877',
   version: 'v1',
   firebase: {
     apiKey: "AIzaSyAQcH8BRO7NR9BtQDuUiNi2dWl-SX1pGBY",

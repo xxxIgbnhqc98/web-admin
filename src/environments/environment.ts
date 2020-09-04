@@ -5,7 +5,7 @@
 
 export const environment = {
   production: true,
-  host: 'https://kormassage.kr:9877',
+  host: 'https://server.kormassage.kr:9877',
   //host: 'http://localhost:9877',
   version: 'v1',
   firebase: {
