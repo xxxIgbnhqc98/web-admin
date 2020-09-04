@@ -59,8 +59,8 @@
             <div class="form-group">
               <label for="start_time">{{'Start time - End time' | translate}}</label>
               <select name="start_time" [(ngModel)]="start_time" required #start_timeControl="ngModel"
-                [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id=""
-                class="form-control input-control">
+                [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id="" class="form-control input-control"
+                (change)="onChangeStartTime($event)">
                 <option *ngFor="let item of hours" value="{{ item }}">{{
                   item
                 }}</option>
@@ -68,9 +68,10 @@
               <div class="invalid-feedback" *ngIf="start_timeControl.errors?.required">
                 {{'Please choose start time.' | translate}}
               </div>
-              <select name="end_time" [(ngModel)]="end_time" required #end_timeControl="ngModel"
-                [ngClass]="{'is-invalid' : end_timeControl.errors?.required}" id="" class="form-control input-control">
-                <option *ngFor="let item of hours" value="{{ item }}">{{
+              <select name="end_time" [(ngModel)]="end_time" required #end_timeControl="ngModel" (change)="onChangeEndTime($event)"
+                [disabled]="start_time === null" [ngClass]="{'is-invalid' : end_timeControl.errors?.required}" id=""
+                class="form-control input-control">
+                <option *ngFor="let item of hours1" value="{{ item }}">{{
                   item
                 }}</option>
               </select>

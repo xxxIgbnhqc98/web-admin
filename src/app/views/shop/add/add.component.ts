@@ -52,6 +52,9 @@ export class AddShopComponent implements OnInit {
   hours = [
     '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
   ]
+  hours1 = [
+    '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
+  ]
   start_time: string = null;
   end_time: string = null;
   badge_image: string = null;
@@ -142,6 +145,14 @@ export class AddShopComponent implements OnInit {
     });
 
   }
+  onChangeStartTime(event) {
+    this.hours1 = [
+      '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
+    ]
+    const index = this.hours.indexOf(event.target.value) + 1
+    this.hours1 = this.hours1.splice(index)
+  }
+
   resetForm() {
     this.setForm();
     this.multiSelect.toggleSelectAll();
