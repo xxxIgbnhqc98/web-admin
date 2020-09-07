@@ -54,6 +54,7 @@ export class ShopListComponent implements OnInit {
   expired_date: number;
   extra_days: number = 30;
   expiration_date: any;
+  start_date: any;
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
@@ -127,6 +128,7 @@ export class ShopListComponent implements OnInit {
   openModalEvent(template: TemplateRef<any>, item) {
     this.shop_id_event = item.id
     this.expiration_date = item.expired_date
+    this.start_date = item.start_date
     if (item.events.length === 0) {
       this.title_event = null;
       this.description = null;
@@ -164,21 +166,22 @@ export class ShopListComponent implements OnInit {
     });
   }
   async submitAddEvent(form: NgForm) {
-    const time = moment(form.value.value_of_day[1]).valueOf()
-    if(time < this.expiration_date){
+    const time_end = moment(form.value.value_of_day[1]).valueOf()
+    const time_start = moment(form.value.value_of_day[0]).valueOf()
+    if (time_end < this.expiration_date && time_start > this.start_date) {
       this.submitting = true;
       if (form.valid) {
         if (!this.event_id) {
           await this.addItem(form);
         } else {
           await this.updateItem(form);
-  
+
         }
       } else {
         this.alertFormNotValid();
         this.submitting = false;
       }
-    }else{
+    } else {
       this.alertFailedDate()
     }
   }
@@ -313,8 +316,8 @@ export class ShopListComponent implements OnInit {
   alertFailedDate() {
     this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
     return swal({
-      title: (this.configService.lang === 'en') ? 'End date of event cannot be greater than remaining date of shop' : ((this.configService.lang === 'vn') ? 'Thất bại' : 'Failed'),
-      type: 'success',
+      title: (this.configService.lang === 'en') ? 'The event period is available only within advertising period of relevant shop' : ((this.configService.lang === 'vn') ? 'Thời gian sự kiện chỉ có sẵn trong khoảng thời gian quảng cáo của cửa hàng có liên quan' : '이벤트 기간은  관련 상점 광고기간 내에만 설정가능합니다.'),
+      type: 'warning',
       timer: 3000,
     });
   }
