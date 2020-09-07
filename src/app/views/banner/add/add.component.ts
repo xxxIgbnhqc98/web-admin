@@ -70,7 +70,7 @@ export class AddBannerComponent implements OnInit {
   }
   alertUrlNotValid() {
     return swal({
-      title: (this.configService.lang === 'en') ? 'Invalid URL' : ((this.configService.lang === 'vn') ? 'URL không hợp lệ' : 'Invalid URL'),
+      title: (this.configService.lang === 'en') ? 'Invalid URL' : ((this.configService.lang === 'vn') ? 'URL không hợp lệ' : 'Invalid 유효하지 않은 url'),
       type: 'warning',
       timer: 2000,
     });
