@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
+import { max } from 'rxjs/operators';
 
 declare var swal: any;
 @Component({
@@ -110,6 +111,37 @@ export class ShopListComponent implements OnInit {
         await this.apiService.shop.update(this.id_update, {
           state: "APPROVED",
           expired_date: parseInt(this.expired_date.toString()) + (this.extra_days * 86400000)
+        });
+
+        this.alertSuccess();
+        this.modalRef.hide()
+        this.submitting = false;
+        this.itemsTable.reloadItems();
+      } catch (error) {
+        this.alertErrorFromServer(error.error.message);
+        this.submitting = false;
+      }
+    } else {
+      this.alertFormNotValid();
+      this.submitting = false;
+    }
+  }
+  openModalSubTime(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.expired_date = item.expired_date;
+    this.modalRef = this.modalService.show(template);
+  }
+  async submitSubTime(form: NgForm) {
+    this.submitting = true;
+    if (form.valid) {
+      try {
+        const max_day = Math.round((this.expired_date - moment().valueOf()) / 86400000)
+        console.log("@@@@ n ",max_day)
+        if(this.extra_days > max_day){
+          this.extra_days = max_day
+        }
+        await this.apiService.shop.update(this.id_update, {
+          expired_date: parseInt(this.expired_date.toString()) - (this.extra_days * 86400000)
         });
 
         this.alertSuccess();

@@ -1,0 +1,51 @@
+.animated {
+  .form-content {
+    .row {
+      .col-6 {
+        .card {
+          .card-header {
+            input[type="file"] {
+              display: none;
+            }
+            button {
+              margin: -7px 0;
+            }
+          }
+          .card-body {
+            .avatar {
+              padding-left: 15px;
+              width: 100px;
+              position: relative;
+              margin: 10px 8px 0 15px;
+              float: left;
+              display: inline-block;
+              vertical-align: top;
+              height: 100px;
+              background-size: contain;
+              background-position: 50%;
+              background-repeat: no-repeat;
+              background-color: #fff;
+              border: 1px solid #ddd;
+              border-radius: 4px;
+              .remove-avatar {
+                position: absolute;
+                right: 5px;
+                cursor: pointer;
+                top: 0px;
+              }
+            }
+          }
+        }
+      }
+      .col-12{
+        .card{
+          .card-footer{
+            button{
+              margin: -7px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -75,9 +75,12 @@
         </data-table-column>
         <data-table-column [header]="'Remaining date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + ("days" | translate) ):"Expired" | translate }}</span>
-            <button (click)="openModalAddTime(templateAddTime, item)" class="btn btn-primary">
-              <i>{{'Add' | translate}}</i>
+            <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + " days"):"Expired" | translate }}</span><br>
+            <button style="margin-right: 2px;" (click)="openModalAddTime(templateAddTime, item)" class="btn btn-danger">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button *ngIf="mathRemainingTime(item.expired_date) > 0" (click)="openModalSubTime(templateSubTime, item)" class="btn btn-primary">
+              <i class="fa fa-minus"></i>
             </button>
           </ng-template>
         </data-table-column>
@@ -330,6 +333,47 @@
         <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
           (click)="submitAddTime(formContent)">
           <i>{{ 'Add' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateSubTime>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Sub time' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">User ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Sub days' | translate }}</span>
+              </div>
+              <input type="text" id="extra_days" class="form-control" name="extra_days" [(ngModel)]="extra_days"
+                #nameControl="ngModel">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitSubTime(formContent)">
+          <i>{{ 'Sub' | translate }}</i>
         </button>
       </div>
     </div>

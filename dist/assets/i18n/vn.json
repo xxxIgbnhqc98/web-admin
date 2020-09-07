@@ -180,7 +180,7 @@
   "Please enter password": "Hãy nhập mật khẩu",
   "enter email.": "Nhập email",
   "Please enter email.": "Hãy nhập email",
-  "enter phone.": "Nhập số điện thoại",
+  "enter phone": "Nhập số điện thoại",
   "Please enter phone.": "Hãy nhập số điện thoại",
   "choose type.": "Chọn vai trò",
   "Please choose type.": "Hãy chọn vai trò",
@@ -344,6 +344,136 @@
   "Last a week": "Tuần gần nhất",
   "Last a month": "Tháng gần nhất",
   "Last three months": "3 Tháng gần nhất",
+  "Login type - Account type": "Cách thức đăng nhập - Loại tài khoản",
+  "Company name": "Tên công ty",
+  "Post Limit": "Giới hạn bài đăng",
+  "Post status": "Trạng tháy bài đăng",
+  "Policy": "Chính sách",
+  "Terms of service": "Điều khoản dịch vụ",
+  "Location based services.": "Dịch vụ dựa trên địa điểm",
+  "Image": "Ảnh",
+  "Thema": "Chủ đề",
+  "Route": "Lộ trình",
+  "Categories": "Thể loại",
+  "enter name": "Nhập tên",
+  "Choose route": "Chọn lộ trình",
+  "Bulletin board": "Bulletin board",
+  "Distance order board": "Distance order board",
+  "Event board": "Event board",
+  "Shop list board": "Shop list board",
+  "Category": "Thể loại",
+  "Select Category": "Chọn thể loại",
+  "Upload Image": "Đăng ảnh",
+  "List": "Danh sách",
+  "Shop": "Cửa hàng",
+  "Category Name": "Tên danh mục",
+  "Opening hours": "Giờ mở cửa",
+  "Please enter name.": "Vui lòng nhập tên.",
+  "Contact phone": "Số điện thoại liên lạc",
+  "Location": "Vị trí",
+  "Approved": "Chấp nhận",
+  "Rejected": "Từ chối",
+  "Start date End Date": "Thời gian bắt đầu - Thời gian kết thúc",
+  "Remaining date": "Ngày còn lại",
+  "Add": "Thêm",
+  "Edit Event": "Điều chỉnh sự kiện",
+  "Add Event": "Thêm sự kiện",
+  "Tag": "Nhãn",
+  "Select Tag": "Chọn nhãn",
+  "Description": "Miêu tả",
+  "Badge image": "Hình ảnh huy hiệu",
+  "Please enter contact phone.": "Vui lòng nhập số điện thoại liên lạc.",
+  "Please choose category.": "Vui lòng chọn thể loại.",
+  "Please choose start time.": "Vui lòng chọn thời gian bắt đầu.",
+  "Please choose end time.": "Vui lòng chọn thời gian kết thúc.",
+  "Theme color": "Màu chủ đề",
+  "Start time - End time": "Thời gian bắt đầu - Thời gian kết thúc",
+  "Inquiry list": "Danh sách yêu cầu",
+  "Contact list": "Danh sách liên lạc",
+  "Setting list": "Danh sách cài đặt",
+  "Setting user permission list": "Danh sách cài đặt quyền người dùng",
+  "User type": "Loại người dùng",
+  "Forbidden word list": "Danh sách từ bị cấm",
+  "Forbidden word": "Từ bị cấm",
+  "Traffic statistic": "Thống kê lưu lượng",
+  "Average monthly statistic": "Thống kê trung bình mỗi tháng",
+  "Year": "Năm",
+  "Jan": "Tháng 1",
+  "Feb": "Tháng 2",
+  "Mar": "Tháng 3",
+  "Apr": "Tháng 4",
+  "May": "Tháng 5",
+  "June": "Tháng 6",
+  "July": "Tháng 7",
+  "Aug": "Tháng 8",
+  "Sep": "Tháng 9",
+  "Oct": "Tháng 10",
+  "Nov": "Tháng 11",
+  "Dec": "Tháng 12",
+  "Monthly Average": "Trung bình mỗi tháng",
+  "Daily statistic": "Thống kê mỗi ngày",
+  "Sun": "Chủ nhật",
+  "Mon": "Thứ hai",
+  "Tue": "Thứ ba",
+  "Web": "Thứ tư",
+  "Thurs": "Thứ năm",
+  "Fri": "Thứ sáu",
+  "Sat": "Thứ bảy",
+  "Weekly sum": "Tổng mỗi tuần",
+  "Weekly average": "Trung bình mỗi tuần",
+  "Increase & Decrease": "Tăng & Giảm",
+  "shop list": "Danh sách cửa hàng",
+  "Banner list": "Danh sách Banner",
+  "Thema list": "Danh sách chủ đề",
+  "Event": "Sự kiện",
+  "Add Shop": "Thêm cửa hàng",
+  "Edit Banner": "Chỉnh sửa Banner",
+  "List category": "Danh sách chủ đề",
+  "Average Daily statistic": "Thống kê trung bình mỗi ngày",
+  "Link list": "Danh sách kiên kết",
+  "Active post": "Bài đăng đang hoạt đông",
+  "Pending post": "Bài đăng đang chờ xử lý",
+  "Rejected post": "Bài đăng bị từ chối",
+  "Expired post": "Bài đăng đã hết hạn",
+  "Choose account type": "Chọn loại tài khoản",
+  "Tag list": "Danh sách nhãn",
+  "Account type": "Loại tài khoản",
+  "Biz User": "Biz User",
+  "Free User": "Free User",
+  "Paid User": "Paid User",
+  "Post limit": "Giới hạn bài đăng",
+  "Show shop tag": "Hiển thị nhãn cửa hàng",
+  "Username": "Tên tài khoản",
+  "Yes": "Yes",
+  "Thema Name": "Tên chủ đề",
+  "List Shop": "Danh sách của hàng",
+  "selected": "Đã chọn",
+  "unchecked": "Chưa được kiểm tra",
+  "Pending": "Đang chờ sử lý",
+  "shops": "shops",
+  "Upload Thumbnail": "Đăng Thumbnail",
+  "enter url": "Nhập URL",
+  "Please enter url.": "Vui long nhập URL",
+  "enter title": "Nhập tiêu đề",
+  "Please enter title.": "VUi lòng nhập tiêu đề",
+  "Extra days": "Thêm ngày",
+  "Phone number": "Số điện thoại",
+  "Word": "Từ vựng",
+  "word": "từ vựng",
+  "Please enter word.": "Vui lòng nhập từ vựng.",
+  "Add word": "Thêm từ vựng",
+  "Edit word": "Chỉng sửa từ vựng",
+  "Title event": "Tiêu đề sự kiện",
+  "Event description": "Miêu tả sự kiện",
+  "Please enter description.": "Vui lòng nhập miêu tả.",
+  "Expired": "Hết hạn",
+  "Upload image": "Đăng ảnh",
+  "Start - end": "Bắt đầu - Kết thúc",
+  "Update": "Cập nhập",
+  "Title Tag": "Tiêu đề nhãn",
+  "Please enter Tag.": "Vui lòng nhập nhãn.",
+  "Add Tag": "Thêm nhãn",
+  "Please enter Start time and end time.": "Vui lòng nhập thời gian bắt đầu và thời gian kết thúc.",
   "nav": {
     "nav_items": [
       {
@@ -359,35 +489,35 @@
         ]
       },
       {
-        "name": "Board",
+        "name": "Bảng",
         "url": "/board",
         "icon": "fa fa-list-alt",
         "children": [
           {
-            "name": "How to use",
+            "name": "Cách sử dụng",
             "url": "/board/how-to-use"
           },
           {
-            "name": "Policy",
+            "name": "Chính sách",
             "url": "/board/policy"
           },
           {
-            "name": "Terms of service",
+            "name": "Điều khoản dịch vụ",
             "url": "/board/terms-of-service"
           },
           {
-            "name": "Location Based Services",
+            "name": "Dịch vụ dựa trên địa điểm",
             "url": "/board/location-based-services"
           }
         ]
       },
       {
-        "name": "Link",
+        "name": "Liên kết",
         "url": "/link",
         "icon": "fa fa-link",
         "children": [
           {
-            "name": "Link list",
+            "name": "Danh sách liên kết",
             "icon": "fa fa-list-ol",
             "url": "/link/link-list"
           }
@@ -399,51 +529,51 @@
         "icon": "fa fa-picture-o",
         "children": [
           {
-            "name": "Banner list",
+            "name": "Danh sách Banner",
             "icon": "fa fa-list-ol",
             "url": "/banner/banner-list"
           }
         ]
       },
       {
-        "name": "Thema",
+        "name": "Chủ đề",
         "url": "/thema",
         "icon": "fa fa-book",
         "children": [
           {
-            "name": "Thema list",
+            "name": "Danh sách chủ đề",
             "icon": "fa fa-list-ol",
             "url": "/thema/thema-list"
           },
           {
-            "name": "Add Thema",
+            "name": "Thêm chủ đề",
             "icon": "fa fa-plus",
             "url": "/thema/add"
           }
         ]
       },
       {
-        "name": "Shop",
+        "name": "Cửa hàng",
         "url": "/thema",
         "icon": "fa fa-home",
         "children": [
           {
-            "name": "Shop pending list",
+            "name": "Danh sách cửa hàng đang chờ xử lý",
             "icon": "fa fa-tasks",
             "url": "/shop/shop-pending-list"
           },
           {
-            "name": "Shop list",
+            "name": "Danh sách cửa hàng",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-list"
           },
           {
-            "name": "Add Shop",
+            "name": "Thêm cửa hàng",
             "icon": "fa fa-plus",
             "url": "/shop/add"
           },
           {
-            "name": "Tag list",
+            "name": "Danh sách nhãn",
             "icon": "fa fa-list-ol",
             "url": "/shop/tag-list"
           }
@@ -465,7 +595,7 @@
             "url": "/contact/contact-list"
           },
           {
-            "name": "đối tác",
+            "name": "Đối tác",
             "icon": "fa fa-list-ol",
             "url": "/contact/partnership-list"
           }
@@ -489,49 +619,49 @@
         ]
       },
       {
-        "name": "Setting",
+        "name": "Cài đặt",
         "url": "/setting",
         "icon": "fa fa-cogs",
         "children": [
           {
-            "name": "Setting list",
+            "name": "Danh sách cài đặt",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-list"
           },
           {
-            "name": "Setting user permission list",
+            "name": "Danh sách cài đặt quyền người dùng",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-user-permission-list"
           },
           {
-            "name": "Forbidden word list",
+            "name": "Danh sách từ bị cấm",
             "icon": "fa fa-list-ol",
             "url": "/setting/forbidden-word-list"
           }
         ]
       },
       {
-        "name": "Statistic",
+        "name": "Thống kế",
         "url": "/statistic",
         "icon": "fa fa-bar-chart",
         "children": [
           {
-            "name": "Favorite post statistic",
+            "name": "Thống kê bài đăng yêu thích",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/favorite-post"
           },
           {
-            "name": "Period statistic",
+            "name": "Thống kế theo thời kỳ",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/period"
           },
           {
-            "name": "Traffic statistic",
+            "name": "Thống kê lưu lượng",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/traffic"
           },
           {
-            "name": "Visitor & Page view",
+            "name": "Khách tham quan & Lượt xem trang",
             "icon": "fa fa-bar-chart",
             "url": "/statistic/visitor-pageview"
           }

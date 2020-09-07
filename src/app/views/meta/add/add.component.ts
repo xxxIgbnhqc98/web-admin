@@ -1,32 +1,28 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Md5 } from 'ts-md5/dist/md5';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config/config.service';
 import { ShareDataService } from '../../../services/share-data/share-data-service';
-import { async } from '@angular/core/testing';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-
 declare var $: any;
 declare let swal: any;
 
 @Component({
-  selector: 'app-add-banner',
+  selector: 'app-add-meta',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
-export class AddBannerComponent implements OnInit {
-  @ViewChild('multiSelect') multiSelect;
-
+export class AddMetaComponent implements OnInit {
   id: any;
   isEdit: boolean = false;
   submitting: boolean = false;
-  title: string;
-  thumbnail: string;
+  name: string;
+  seo_id: string;
+  content: string;
+  themas: any = [];
   loadingUploadAvatar: boolean = false;
-  url: string;
-  phone: string;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
 
   constructor(private route: ActivatedRoute,
@@ -40,7 +36,19 @@ export class AddBannerComponent implements OnInit {
   async ngOnInit() {
     this.route.params.subscribe(async (params) => {
       this.id = params.id;
+      this.seo_id = params.seo_id;
+      
+      // const query: any = {
+      //   fields: ["$all"],
+      //   limit: 9999999
+      // }
+      // this.themas = await this.apiService.thema.getList({
+      //   query
+      // });
       if (this.id == null) {
+        if(!this.seo_id){
+          this.backToSeoList();
+        }
         this.isEdit = false;
         this.setDefaultData();
       } else {
@@ -51,6 +59,9 @@ export class AddBannerComponent implements OnInit {
         this.setData();
       }
     });
+  }
+  backToSeoList(seo_id?: string) {
+    this.router.navigate(['/seo/seo-list'], { relativeTo: this.route });
   }
 
   alertSuccess() {
@@ -64,13 +75,6 @@ export class AddBannerComponent implements OnInit {
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),
-      type: 'warning',
-      timer: 2000,
-    });
-  }
-  alertUrlNotValid() {
-    return swal({
-      title: (this.configService.lang === 'en') ? 'Invalid URL' : ((this.configService.lang === 'vn') ? 'URL không hợp lệ' : 'Invalid 유효하지 않은 url'),
       type: 'warning',
       timer: 2000,
     });
@@ -92,35 +96,35 @@ export class AddBannerComponent implements OnInit {
     });
   }
 
-  backToList() {
-    this.router.navigate(['/banner/banner-list'], { relativeTo: this.route });
+  backToList(seo_id?: string) {
+    if (seo_id) {
+      this.router.navigate(['/meta/meta-list/', seo_id], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['/meta/meta-list'], { relativeTo: this.route });
+    }
   }
 
   setDefaultData() {
-    this.titleService.setTitle('Add new banner');
-    this.title = null;
-    this.url = null;
-    this.thumbnail = null
-    this.phone = null
-
+    this.titleService.setTitle('Add new thema');
+    this.name = null;
+    this.content = null;
+    this.seo_id = this.seo_id
     return {
-      title: this.title,
-      thumbnail: this.thumbnail,
-      url: this.url,
-      phone: this.phone,
+      name: this.name,
+      content: this.content,
+      seo_id: this.seo_id
     };
   }
 
   async setData() {
     try {
-      const data = await this.apiService.banner.getItem(this.id, {
+      const data = await this.apiService.meta.getItem(this.id, {
         query: { fields: ['$all'] }
       });
-      this.title = data.title;
-      this.url = data.url;
-      this.thumbnail = data.thumbnail;
-      this.phone = data.phone;
-      this.titleService.setTitle(this.title);
+      this.content = data.content;
+      this.name = data.name;
+      this.seo_id = data.seo_id
+      this.titleService.setTitle(this.name);
     } catch (err) {
       console.log('err: ', err);
       try { await this.alertItemNotFound(); } catch (err) { }
@@ -130,12 +134,12 @@ export class AddBannerComponent implements OnInit {
 
   async updateItem(form: NgForm) {
     try {
-      const { title, url, phone, thumbnail } = this;
-      await this.apiService.banner.update(this.id, { title, url, phone, thumbnail });
-      form.reset();
+      const { name, content, seo_id } = this;
+      await this.apiService.meta.update(this.id, { name, content });
       this.alertSuccess();
-      this.backToList();
+      this.backToList(this.seo_id);
       this.submitting = false;
+      form.reset();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
       this.submitting = false;
@@ -146,11 +150,11 @@ export class AddBannerComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
-      const { title, url, phone, thumbnail } = this;
-      await this.apiService.banner.add({ title, url, phone, thumbnail });
+      const { content, seo_id, name } = this;
+      await this.apiService.meta.add({ content, seo_id, name });
       form.reset();
       this.alertSuccess();
-      this.backToList();
+      this.backToList(seo_id);
       this.submitting = false;
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
@@ -160,30 +164,17 @@ export class AddBannerComponent implements OnInit {
 
   async submitUpdate(form: NgForm) {
     this.submitting = true;
-    const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    console.log("coi coi ", pattern.test(this.url))
-    if (form.valid && this.thumbnail && pattern.test(this.url)) {
-    // if (form.valid && this.thumbnail && this.url) {
+    if (form.valid) {
       await this.updateItem(form);
     } else {
-      if (!pattern.test(this.url)) {
-        this.alertUrlNotValid();
-      } else {
-        this.alertFormNotValid();
-      }
       this.submitting = false;
-
+      this.alertFormNotValid();
     }
   }
 
   async submitAdd(form: NgForm) {
     this.submitting = true;
-    if (form.valid && this.thumbnail) {
+    if (form.valid) {
       await this.addItem(form);
     } else {
       this.alertFormNotValid();
@@ -191,22 +182,22 @@ export class AddBannerComponent implements OnInit {
     }
   }
 
-  uploadAvatar(fileInput) {
-    this.loadingUploadAvatar = true;
-    try {
-      const files = this.fileAvatarElementRef.nativeElement.files;
-      const file = files[0];
-      const result = this.apiService.fileUploader.uploadImage(file, 300)
-        .then(result => {
-          this.thumbnail = result.url;
-          this.loadingUploadAvatar = false;
-        });
-    } catch (err) {
-      console.log('Không úp được hình');
-    }
-  }
+  // uploadAvatar(fileInput) {
+  //   this.loadingUploadAvatar = true;
+  //   try {
+  //     const files = this.fileAvatarElementRef.nativeElement.files;
+  //     const file = files[0];
+  //     const result = this.apiService.fileUploader.uploadImage(file, 300)
+  //       .then(result => {
+  //         this.avatar = result.url;
+  //         this.loadingUploadAvatar = false;
+  //       });
+  //   } catch (err) {
+  //     console.log('Không úp được hình');
+  //   }
+  // }
 
-  removeAvatar() {
-    this.thumbnail = null;
-  }
+  // removeAvatar() {
+  //   this.avatar = null;
+  // }
 }

@@ -21,6 +21,9 @@ import { SettingUserPermission } from './crud/setting_user_permission';
 import { Contact } from './crud/contact';
 import { Content } from './crud/content';
 import { Statistic } from './crud/statistic';
+import { Seo } from './crud/seo';
+import { Meta } from './crud/meta';
+
 
 @Injectable()
 export class ApiService {
@@ -48,6 +51,8 @@ export class ApiService {
   event = new Event(this);
   banner = new Banner(this);
   setting = new Setting(this);
+  seo = new Seo(this);
+  meta = new Meta(this);
   content = new Content(this);
   settingUserPermission = new SettingUserPermission(this);
   statistic = new Statistic(this);
