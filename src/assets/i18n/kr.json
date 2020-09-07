@@ -467,14 +467,16 @@
   "Title event": "이벤트 제목",
   "Event description": "이벤트 세부내역",
   "Please enter description.": "이벤트 세부내역을 입력하세요",
-  "Expired": "Expired",
+  "Expired": "만료",
   "Upload image": "썸네일 업로드하기",
   "Start - end": "시작일 - 종료일",
   "Update": "업데이트",
   "Title Tag": "태그제목",
   "Please enter Tag.": "태그를 입력하세요",
   "Add Tag": "태그를 추가하세요",
-  "Please enter Start time and end time.": "Please enter Start time and end time.",
+  "Please enter Start time and end time.": "시작일과 종료일을 입력해 주세요.",
+  "days": " 일",
+  "Non-member": "비회원",
   "nav": {
     "nav_items": [
       {
