@@ -116,6 +116,14 @@ export const routes: Routes = [
         path: 'statistic',
         loadChildren: './views/statistic/statistic.module#StatisticModule'
       },
+      {
+        path: 'seo',
+        loadChildren: './views/seo/seo.module#SeoModule'
+      },
+      {
+        path: 'meta',
+        loadChildren: './views/meta/meta.module#MetaModule'
+      }
     ]
   }
 ];
