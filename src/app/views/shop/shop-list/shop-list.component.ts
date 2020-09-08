@@ -56,6 +56,14 @@ export class ShopListComponent implements OnInit {
   extra_days: number = 30;
   expiration_date: any;
   start_date: any;
+  // 
+  start_date_1: Date;
+  start_time_1: any = '12:00';
+  expiration_date_1: Date;
+  expiration_time_1: any = '12:00';
+  start_time_unix_timestamp: number;
+  expiration_time_unix_timestamp: number;
+  // 
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
@@ -135,9 +143,15 @@ export class ShopListComponent implements OnInit {
     this.submitting = true;
     if (form.valid) {
       try {
+<<<<<<< HEAD
         const max_day = Math.ceil((this.expired_date - moment().valueOf()) / 86400000)
         console.log("@@@@ n ",max_day)
         if(this.extra_days > max_day){
+=======
+        const max_day = Math.round((this.expired_date - moment().valueOf()) / 86400000)
+        console.log("@@@@ n ", max_day)
+        if (this.extra_days > max_day) {
+>>>>>>> 9408caf63dedd99c244190d1b554ec89edcb7a71
           this.extra_days = max_day
         }
         await this.apiService.shop.update(this.id_update, {
@@ -167,6 +181,12 @@ export class ShopListComponent implements OnInit {
       this.images_event = [];
       this.value_of_day = [this.currentDate, this.currentDate];
       this.event_id = null
+      // 
+      this.start_date_1 = null;
+      this.expiration_date_1 = null;
+      this.start_time_1 = '12:00';
+      this.expiration_time_1 = '12:00';
+      // 
     } else {
       this.title_event = item.events[0].title
       this.description = item.events[0].description
@@ -174,6 +194,12 @@ export class ShopListComponent implements OnInit {
       this.images_event = item.events[0].images
       this.event_id = item.events[0].id
       this.state = item.events[0].state
+      // 
+      this.start_date_1 = new Date(parseInt(item.events[0].start_time));
+      this.expiration_date_1 = new Date(parseInt(item.events[0].end_time));
+      this.start_time_1 =moment(parseInt(item.events[0].start_time)).format("HH:mm")
+      this.expiration_time_1 = moment(parseInt(item.events[0].end_time)).format("HH:mm")
+      // 
     }
     this.modalRef = this.modalService.show(template);
   }
@@ -198,10 +224,43 @@ export class ShopListComponent implements OnInit {
     });
   }
   async submitAddEvent(form: NgForm) {
-    const time_end = moment(form.value.value_of_day[1]).valueOf()
-    const time_start = moment(form.value.value_of_day[0]).valueOf()
-    if (time_end < this.expiration_date && time_start > this.start_date) {
+    // const time_end = moment(form.value.value_of_day[1]).valueOf()
+    // const time_start = moment(form.value.value_of_day[0]).valueOf()    
+    // const temp_exp_date = moment(+this.expiration_date).format('L')
+    // const temp_str_date = moment(+this.start_date).format('L')
+    // const exp_date = moment(temp_exp_date).valueOf()
+    // const str_date = moment(temp_str_date).valueOf()
+    // 
+    let start_hour = 0;
+    let start_minute = 0;
+    let expiration_hour = 0;
+    let expiration_minute = 0;
+    if (this.start_time_1.split(':').length > 0) {
+      start_hour = this.start_time_1.split(':')[0];
+    }
+    if (this.start_time_1.split(':').length > 1) {
+      start_minute = this.start_time_1.split(':')[1];
+    }
+    if (this.expiration_time_1.split(':').length > 0) {
+      expiration_hour = this.expiration_time_1.split(':')[0];
+    }
+    if (this.expiration_time_1.split(':').length > 1) {
+      expiration_minute = this.expiration_time_1.split(':')[1];
+    }
+    this.start_time_unix_timestamp = new Date(this.start_date_1.getFullYear(), this.start_date_1.getMonth(),
+      this.start_date_1.getDate(), start_hour, start_minute, 0).getTime();
+    this.expiration_time_unix_timestamp = new Date(this.expiration_date_1.getFullYear(), this.expiration_date_1.getMonth(),
+      this.expiration_date_1.getDate(), expiration_hour, expiration_minute, 0).getTime();
+    if(this.start_time_unix_timestamp >= this.expiration_time_unix_timestamp){
+      this.alertFailedStartEndTime()
+      this.submitting = false;
+      return;
+    }
+    // 
+    // if (time_end <= exp_date || time_start >= str_date) {
+    if (this.expiration_time_unix_timestamp <= this.expiration_date && this.start_time_unix_timestamp >= this.start_date) {
       this.submitting = true;
+      console.log(form)
       if (form.valid) {
         if (!this.event_id) {
           await this.addItem(form);
@@ -239,8 +298,10 @@ export class ShopListComponent implements OnInit {
         description: this.description,
         images: this.images_event,
         state: "APPROVED",
-        start_time: moment(this.value_of_day[0]).valueOf(),
-        end_time: moment(this.value_of_day[1]).valueOf(),
+        start_time: this.start_time_unix_timestamp,
+        end_time: this.expiration_time_unix_timestamp,
+        // start_time: moment(this.value_of_day[0]).valueOf(),
+        // end_time: moment(this.value_of_day[1]).valueOf(),
         shop_id: this.shop_id_event,
         created_by_admin: true
       });
@@ -260,8 +321,10 @@ export class ShopListComponent implements OnInit {
         description: this.description,
         images: this.images_event,
         // state: "APPROVED",
-        start_time: moment(this.value_of_day[0]).valueOf(),
-        end_time: moment(this.value_of_day[1]).valueOf(),
+        start_time: this.start_time_unix_timestamp,
+        end_time: this.expiration_time_unix_timestamp,
+        // start_time: moment(this.value_of_day[0]).valueOf(),
+        // end_time: moment(this.value_of_day[1]).valueOf(),
         shop_id: this.shop_id_event,
         created_by_admin: true
       });
@@ -349,6 +412,14 @@ export class ShopListComponent implements OnInit {
     this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
     return swal({
       title: (this.configService.lang === 'en') ? 'The event period is available only within advertising period of relevant shop' : ((this.configService.lang === 'vn') ? 'Thời gian sự kiện chỉ có sẵn trong khoảng thời gian quảng cáo của cửa hàng có liên quan' : '이벤트 기간은  관련 상점 광고기간 내에만 설정가능합니다.'),
+      type: 'warning',
+      timer: 3000,
+    });
+  }
+  alertFailedStartEndTime() {
+    this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
+    return swal({
+      title: (this.configService.lang === 'en') ? 'Start Time must be earlier than End time' : ((this.configService.lang === 'vn') ? 'Thời gian bắt đầu sự kiện phải sớm hơn thời gian kết thúc sự kiện' : '시작시간은  종료시간보다 늦을 수 없습니다.'),
       type: 'warning',
       timer: 3000,
     });
@@ -529,7 +600,7 @@ export class ShopListComponent implements OnInit {
   }
 
   getDateFromUnixTimestamp(unixtimestamp: any) {
-    return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD")
+    return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD HH:MM A")
   }
   mathRemainingTime(unixtimestamp: any) {
     // return new Date(parseInt(unixtimestamp));

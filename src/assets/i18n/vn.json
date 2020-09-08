@@ -476,6 +476,8 @@
   "Please enter Start time and end time.": "Vui lòng nhập thời gian bắt đầu và thời gian kết thúc.",
   "days": " ngày",
   "Non-member": "Không phải thành viên",
+  "Start time": "Thời gian bắt đầu",
+  "End time": "Thời gian kết thúc",
   "nav": {
     "nav_items": [
       {
