@@ -602,8 +602,12 @@ export class ShopListComponent implements OnInit {
   }
   mathRemainingTime(unixtimestamp: any) {
     // return new Date(parseInt(unixtimestamp));
-    return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)) + 1
+    return (unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)
   }
+  ceilRemainingTime(unixtimestamp: any){
+    return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
+  }
+
   subTimeOpen1(time) {
     return time.substring(0, time.indexOf("~"))
   }

@@ -48,8 +48,7 @@
         [showReloading]="false">
         <data-table-column [header]="'Nickname' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span ngxClipboard [cbContent]="item.id"
-              (cbOnSuccess)="alertCopied(item.id)">{{item.user ? item.user.nickname : 'No infor' | translate}}</span>
+            <span>{{item.user ? item.user.nickname : 'No infor' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Title' | translate">
@@ -75,7 +74,7 @@
         </data-table-column>
         <data-table-column [header]="'Remaining date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + " days"):"Expired" | translate }}</span><br>
+            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) + " days"):"Expired" | translate }}</span><br>
             <button style="margin-right: 2px;" (click)="openModalAddTime(templateAddTime, item)" class="btn btn-danger">
               <i class="fa fa-plus"></i>
             </button>
@@ -208,7 +207,7 @@
                 #event_idControl="ngModel">
             </div>
           </div>
-          <div class="col-md-12 form-item">
+          <div class="col-md-12 form-item" hidden>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Title' | translate }}</span>

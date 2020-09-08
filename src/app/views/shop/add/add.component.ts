@@ -8,6 +8,8 @@ import { ConfigService } from '../../../services/config/config.service';
 import { ShareDataService } from '../../../services/share-data/share-data-service';
 import { async } from '@angular/core/testing';
 import { html } from './../../../_html_de';
+import { BehaviorSubject } from 'rxjs';
+
 declare var require: any;
 // const NodeGeocoder = require('node-geocoder');
 
@@ -76,6 +78,11 @@ export class AddShopComponent implements OnInit {
     public shareDataService: ShareDataService) {
   }
   async ngOnInit() {
+    // ////////////////
+    document.getElementById("myDropdown").classList.add("hide");
+    await this.getListUser();
+    console.log('listUser', this.listUser)
+    // ///////////////////
     this.route.params.subscribe(async (params) => {
 
       this.id = params.id;
@@ -151,6 +158,139 @@ export class AddShopComponent implements OnInit {
     });
 
   }
+  // ////////////////////////
+  isShowingCategoryDropDown: boolean = false
+  user_id: string;
+  lastSubmitSingerId: string;
+  loading_api: boolean = false;
+  // listUser: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  listUser: any = [];
+  listUserFiltered: any = [];
+  listDuplicateImages: any = [];
+  query: any = {
+    fields: ["$all"],
+    filter: {
+      account_type: "BIZ_USER"
+    }
+  };
+  getUserNickNameFromId(id) {
+    let name = '';
+    if (this.listUser) {
+      this.listUser.forEach(user => {
+        if (user.id === id) {
+          name = user.nickname;
+        }
+      });
+    }
+    return name;
+  }
+  async filterFunction(keyword: string) {
+    if (!keyword || keyword.length === 0) {
+      this.listUserFiltered = this.listUser;
+      return;
+    }
+    const newFilteredUserList = [];
+    try {
+      if (keyword.length === 36) {
+        this.query.filter.id = keyword
+      } else {
+        this.query.filter.nickname = { $iLike: `%${keyword}%` }
+      }
+      this.listUser = await this.apiService.user.getList({ query: this.query })
+    } catch (error) {
+    }
+    console.log('listUser', this.listUser)
+    if (this.listUser.length) {
+      this.listUser.forEach(user => {
+        if (user.id === keyword || user.nickname.toUpperCase().indexOf(keyword.toUpperCase()) > -1) {
+          newFilteredUserList.push(user);
+        }
+      });
+    }
+
+    this.listUserFiltered = newFilteredUserList;
+    console.log('listUserFiltered', this.listUserFiltered)
+
+  }
+
+  closeDropdownUser() {
+    document.getElementById("myDropdown").classList.remove("show");
+    document.getElementById("myDropdown").classList.add("hide");
+  }
+  onUserSearch() {
+    const input: any = document.getElementById("myInput");
+    this.filterFunction(input.value);
+  }
+  onUserClick(user) {
+    this.user_id = user.id;
+
+    // if (this.type_category !== 'GERNE') {
+    //     this.listSelectedCategoryIds = [];
+    //     this.type_category = 'GERNE';
+    //     this.getListCate(this.type_category);
+    //     this.release_date = null;
+    // }
+    document.getElementById("myDropdown").classList.remove("show");
+  }
+  // async onChangeName() {
+  //   this.listDuplicateImages = [];
+  //   const qr: any = {
+  //       limit: 5,
+  //       fields: ['avartar'],
+  //       filter: { name: this.name }
+  //   }
+  //   if (this.user_id) {
+  //       qr.filter.user_id = this.user_id
+  //   }
+  //   console.log("@@@## ", this.user_id)
+  //   const all_singer_with_the_same_name = await this.apiService.album.getList({
+  //       query: qr
+  //   });
+
+  //   this.listDuplicateImages = all_singer_with_the_same_name.map((album: any) => {
+  //       console.log("@#$% ", album.thumbnail)
+  //       return album.thumbnail;
+  //   });
+  // }
+  async getListUser() {
+    try {
+      this.loading_api = true;
+      this.listUser = await this.apiService.user.getList({
+        query: {
+          fields: ['$all'], filter: {
+            account_type: "BIZ_USER"
+          }, page: 1, limit: 50, order: [["created_at_unix_timestamp", "desc"]]
+        }
+      })
+      this.ref.detectChanges();
+      this.loading_api = false;
+    } catch (error) {
+      this.loading_api = false;
+    }
+  }
+  showDropdown() {
+    if (this.isShowingCategoryDropDown) {
+      return;
+    }
+
+    document.getElementById("myDropdown").classList.add("show");
+    document.getElementById("user_id").blur();
+    document.getElementById("myInput").focus();
+
+    // Auto scroll to the previous chosen singer_id
+    if (this.lastSubmitSingerId && this.lastSubmitSingerId !== '') {
+      setTimeout(() => {
+        const singerItem: any = document.getElementById('singer_' + this.lastSubmitSingerId);
+        const singerWrapper: any = document.getElementById('singerListWrapper');
+        singerWrapper.scrollTop = singerItem.offsetTop - 100;
+      }, 500);
+    }
+
+    setTimeout(() => {
+      this.filterFunction(""); //Show all singers
+    }, 100);
+  }
+  // //////////////////////////////
   onChangeStartTime(event) {
     this.hours1 = [
       '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
@@ -347,7 +487,7 @@ export class AddShopComponent implements OnInit {
         return item.replace("300", "1980")
       });
       const { category_id, badge_image, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true });
+      await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true, user_id: this.user_id });
       form.reset();
       this.alertSuccess();
       if (this.params_thema_id) {
