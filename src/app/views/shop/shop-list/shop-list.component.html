@@ -264,7 +264,7 @@
               <input #start_dateController="ngModel"
                 [ngClass]="{'is-valid' : !start_dateController.errors?.required, 'is-invalid' : start_dateController.errors?.required}"
                 required type="text" class="form-control input-control" bsDatepicker placement="bottom"
-                [placeholder]="'Please choose start time.' | translate" name="value_of_day" [(ngModel)]="start_date_1"
+                [placeholder]="'Please choose start time.' | translate" name="start_date_1" [(ngModel)]="start_date_1"
                 [bsConfig]="{
                   dateInputFormat: 'YYYY-MM-DD'
                 }" placement="right" />

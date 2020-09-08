@@ -49,7 +49,7 @@ export class ShopListComponent implements OnInit {
   shop_id_event: string;
   event_id: string;
   currentDate: Date = new Date();
-  value_of_day: any = [];
+  // value_of_day: any = [];
   state: string = null;
   id_update: string = null;
   expired_date: number;
@@ -173,7 +173,7 @@ export class ShopListComponent implements OnInit {
       this.title_event = null;
       this.description = null;
       this.images_event = [];
-      this.value_of_day = [this.currentDate, this.currentDate];
+      // this.value_of_day = [this.currentDate, this.currentDate];
       this.event_id = null
       // 
       this.start_date_1 = null;
@@ -184,7 +184,7 @@ export class ShopListComponent implements OnInit {
     } else {
       this.title_event = item.events[0].title
       this.description = item.events[0].description
-      this.value_of_day = [new Date(parseInt(item.events[0].start_time)), new Date(parseInt(item.events[0].end_time))];
+      // this.value_of_day = [new Date(parseInt(item.events[0].start_time)), new Date(parseInt(item.events[0].end_time))];
       this.images_event = item.events[0].images
       this.event_id = item.events[0].id
       this.state = item.events[0].state
@@ -241,6 +241,9 @@ export class ShopListComponent implements OnInit {
     if (this.expiration_time_1.split(':').length > 1) {
       expiration_minute = this.expiration_time_1.split(':')[1];
     }
+    console.log('213123123123123',this.start_time_unix_timestamp)
+    console.log('@@@@@@@',this.start_date)
+    console.log('########',this.expiration_date)
     this.start_time_unix_timestamp = new Date(this.start_date_1.getFullYear(), this.start_date_1.getMonth(),
       this.start_date_1.getDate(), start_hour, start_minute, 0).getTime();
     this.expiration_time_unix_timestamp = new Date(this.expiration_date_1.getFullYear(), this.expiration_date_1.getMonth(),
@@ -333,6 +336,7 @@ export class ShopListComponent implements OnInit {
         this.alertErrorFromServer(msg);
       } else {
         this.alertErrorFromServer(error.error.message);
+        console.log(error.error.message);
       }
       this.submitting = false;
     }
@@ -403,7 +407,7 @@ export class ShopListComponent implements OnInit {
     });
   }
   alertFailedDate() {
-    this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
+    // this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
     return swal({
       title: (this.configService.lang === 'en') ? 'The event period is available only within advertising period of relevant shop' : ((this.configService.lang === 'vn') ? 'Thời gian sự kiện chỉ có sẵn trong khoảng thời gian quảng cáo của cửa hàng có liên quan' : '이벤트 기간은  관련 상점 광고기간 내에만 설정가능합니다.'),
       type: 'warning',
@@ -411,7 +415,7 @@ export class ShopListComponent implements OnInit {
     });
   }
   alertFailedStartEndTime() {
-    this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
+    // this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
     return swal({
       title: (this.configService.lang === 'en') ? 'Start Time must be earlier than End time' : ((this.configService.lang === 'vn') ? 'Thời gian bắt đầu sự kiện phải sớm hơn thời gian kết thúc sự kiện' : '시작시간은  종료시간보다 늦을 수 없습니다.'),
       type: 'warning',
@@ -594,7 +598,7 @@ export class ShopListComponent implements OnInit {
   }
 
   getDateFromUnixTimestamp(unixtimestamp: any) {
-    return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD HH:MM A")
+    return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD hh:mm A")
   }
   mathRemainingTime(unixtimestamp: any) {
     // return new Date(parseInt(unixtimestamp));
