@@ -1,29 +1,15 @@
-<div class="app-body">
-    <main class="main d-flex align-items-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 mx-auto">
-                    <div class="card-group">
-                        <div class="card p-4">
-                            <div class="card-body">
+                        <div class="card p-6">
                                 <form #loginForm="ngForm">
                                     <quill-editor id="description" name="description" [(ngModel)]="description">
                                     </quill-editor>
                                     <div class="row">
                                         <div class="col-12"
                                             style="display: flex;justify-content: center;align-items: center;">
-                                            <button type="button" class="btn btn-primary" data-style="expand-right"
+                                            <button style="margin: 2px;" type="button" class="btn btn-primary" data-style="expand-right"
                                                 [ladda]='submitting' (click)="toHtml()">
                                                 입력하기
                                             </button>
                                         </div>
                                     </div>
                                 </form>
-                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-</div>

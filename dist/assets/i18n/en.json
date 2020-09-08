@@ -374,7 +374,7 @@
   "Location": "Location",
   "Approved": "Approved",
   "Rejected": "Rejected",
-  "Start date End Date": "Start time End time",
+  "Start date End Date": "Start time\nEnd time",
   "Remaining date": "Remaining date",
   "Add": "Add",
   "Edit Event": "Edit Event",
@@ -474,6 +474,8 @@
   "Please enter Tag.": "Please enter Tag.",
   "Add Tag": "Add Tag",
   "Please enter Start time and end time.": "Please enter Start time and end time.",
+  "days": " days",
+  "Non-member": "Non-member",
   "nav": {
     "nav_items": [
       {
