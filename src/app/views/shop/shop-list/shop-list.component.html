@@ -79,7 +79,8 @@
             <button style="margin-right: 2px;" (click)="openModalAddTime(templateAddTime, item)" class="btn btn-danger">
               <i class="fa fa-plus"></i>
             </button>
-            <button *ngIf="mathRemainingTime(item.expired_date) > 0" (click)="openModalSubTime(templateSubTime, item)" class="btn btn-primary">
+            <button *ngIf="mathRemainingTime(item.expired_date) > 0" (click)="openModalSubTime(templateSubTime, item)"
+              class="btn btn-primary">
               <i class="fa fa-minus"></i>
             </button>
           </ng-template>
@@ -236,7 +237,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item">
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Start - end' | translate }}</span>
               </div>
@@ -250,7 +251,55 @@
               <div class="invalid-feedback" *ngIf="value_of_dayControl.errors?.required">
                 {{ 'Please enter Start time and end time.' | translate}}
               </div>
+            </div> -->
+            <!--  -->
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Start time' | translate }}</span>
+              </div>
+              <!-- <input class="form-control input-control" [placeholder]="'Please choose start time.' | translate"
+                bsDatepicker placement="bottom" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" #start_dateController="ngModel"
+                [ngClass]="{'is-valid' : !start_dateController.errors?.required, 'is-invalid' : start_dateController.errors?.required}"
+                [(ngModel)]="start_date_1" name="start_date_1" required/> -->
+              <input #start_dateController="ngModel"
+                [ngClass]="{'is-valid' : !start_dateController.errors?.required, 'is-invalid' : start_dateController.errors?.required}"
+                required type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose start time.' | translate" name="value_of_day" [(ngModel)]="start_date_1"
+                [bsConfig]="{
+                  dateInputFormat: 'YYYY-MM-DD'
+                }" placement="right" />
+
+              <input step="900" type="time" class="form-control input-control" required #startTimeController="ngModel"
+                [ngClass]="{'is-valid' : !startTimeController.errors?.required, 'is-invalid' : startTimeController.errors?.required}"
+                [placeholder]="'expiration_time' | translate" placement="bottom" [(ngModel)]="start_time_1"
+                name="start_time_1" />
+              <div class="invalid-feedback" *ngIf="start_dateController.errors?.required || startTimeController.errors?.required" >
+                {{ 'Please choose start time.' | translate }}
+              </div>
             </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'End time' | translate }}</span>
+              </div>
+              <input #expiration_dateController="ngModel"
+                [ngClass]="{'is-valid' : !expiration_dateController.errors?.required, 'is-invalid' : expiration_dateController.errors?.required}"
+                required type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose end time.' | translate" name="expiration_date_1"
+                [(ngModel)]="expiration_date_1" [bsConfig]="{
+                  dateInputFormat: 'YYYY-MM-DD'
+                }" placement="right" />
+              <input step="900" type="time" class="form-control input-control" required
+                #expirationTimeController="ngModel"
+                [ngClass]="{'is-valid' : !expirationTimeController.errors?.required, 'is-invalid' : expirationTimeController.errors?.required}"
+                [placeholder]="'expiration_time' | translate" placement="bottom" [(ngModel)]="expiration_time_1"
+                name="expiration_time_1" />
+                <div class="invalid-feedback" *ngIf="expiration_dateController.errors?.required || expirationTimeController.errors?.required" >
+                  {{ 'Please choose end time.' | translate }}
+                </div>
+            </div>
+            <!--  -->
           </div>
           <div class="card-header" style="position: relative;">
             <i class="fa fa-picture-o"></i> {{ 'Images' | translate }}

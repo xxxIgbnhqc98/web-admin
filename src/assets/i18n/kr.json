@@ -477,6 +477,8 @@
   "Please enter Start time and end time.": "시작일과 종료일을 입력해 주세요.",
   "days": " 일",
   "Non-member": "비회원",
+  "Start time": "시작시간",
+  "End time": "종료시간",
   "nav": {
     "nav_items": [
       {
