@@ -143,15 +143,9 @@ export class ShopListComponent implements OnInit {
     this.submitting = true;
     if (form.valid) {
       try {
-<<<<<<< HEAD
         const max_day = Math.ceil((this.expired_date - moment().valueOf()) / 86400000)
         console.log("@@@@ n ",max_day)
         if(this.extra_days > max_day){
-=======
-        const max_day = Math.round((this.expired_date - moment().valueOf()) / 86400000)
-        console.log("@@@@ n ", max_day)
-        if (this.extra_days > max_day) {
->>>>>>> 9408caf63dedd99c244190d1b554ec89edcb7a71
           this.extra_days = max_day
         }
         await this.apiService.shop.update(this.id_update, {
