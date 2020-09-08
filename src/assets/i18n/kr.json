@@ -479,6 +479,8 @@
   "Non-member": "비회원",
   "Start time": "시작시간",
   "End time": "종료시간",
+  "Please choose thema.": "테마를 선택해주세요.",
+  "Please enter route": "경로를 선택해주세요.",
   "nav": {
     "nav_items": [
       {

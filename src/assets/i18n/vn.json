@@ -478,6 +478,8 @@
   "Non-member": "Không phải thành viên",
   "Start time": "Thời gian bắt đầu",
   "End time": "Thời gian kết thúc",
+  "Please choose thema.": "Vui lòng chọn chủ để.",
+  "Please enter route": "Vui lòng chọn lộ trình.",
   "nav": {
     "nav_items": [
       {

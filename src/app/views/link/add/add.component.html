@@ -46,7 +46,7 @@
               <label for="category">{{'Category' | translate}}</label>
               <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
 
-                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Category'" [data]="categories" [(ngModel)]="categories_select" [settings]="settings"
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Category' | translate" [data]="categories" [(ngModel)]="categories_select" [settings]="settings"
                   [formControl]="f.name" [disabled]="false" (onFilterChange)="onSave($event)"
                   (onSelect)="onSave($event)"
                   (onDeSelect)="onSave($event)" (onSelectAll)="onSave($event)"
