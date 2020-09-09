@@ -79,7 +79,7 @@
         </data-table-column>
         <data-table-column [header]="'Remaining date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) + " days"):"Expired" | translate }}</span><br>
+            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) + ("days"|translate)):"Expired" | translate }}</span><br>
             <button style="margin-right: 2px;" (click)="openModalAddTime(templateAddTime, item)" class="btn btn-danger">
               <i class="fa fa-plus"></i>
             </button>

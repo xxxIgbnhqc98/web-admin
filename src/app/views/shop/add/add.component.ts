@@ -486,7 +486,7 @@ export class AddShopComponent implements OnInit {
         return item.replace("300", "1980")
       });
       const { category_id, thumbnails, badge_image, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address });
+      await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
