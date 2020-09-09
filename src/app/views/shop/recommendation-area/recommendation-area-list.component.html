@@ -46,9 +46,14 @@
         [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
         [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
         [showReloading]="false">
-        <data-table-column [header]="'ID code' | translate">
+        <data-table-column [header]="'ID' | translate">
           <ng-template #dataTableCell let-item="item">
             <span ngxClipboard [cbContent]="item.id" (cbOnSuccess)="alertCopied(item.id)">{{item.id}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Nickname' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.user ? item.user.nickname : 'No infor' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Title' | translate">
@@ -72,11 +77,23 @@
             <span>{{ item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" }}</span>
           </ng-template>
         </data-table-column>
-        <data-table-column [header]="'Remaining date' | translate">
+        <!-- <data-table-column [header]="'Remaining date' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{(mathRemainingTime(item.expired_date) > 0) ? (mathRemainingTime(item.expired_date) + " days"):"Expired" }}</span>
             <button (click)="openModalAddTime(templateAddTime, item)" class="btn btn-primary">
               <i>Add</i>
+            </button>
+          </ng-template>
+        </data-table-column> -->
+        <data-table-column [header]="'Remaining date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) + ("days"|translate)):"Expired" | translate }}</span><br>
+            <button style="margin-right: 2px;" (click)="openModalAddTime(templateAddTime, item)" class="btn btn-danger">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button *ngIf="mathRemainingTime(item.expired_date) > 0" (click)="openModalSubTime(templateSubTime, item)"
+              class="btn btn-primary">
+              <i class="fa fa-minus"></i>
             </button>
           </ng-template>
         </data-table-column>
@@ -233,7 +250,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item">
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Start - end' | translate }}</span>
               </div>
@@ -245,10 +262,60 @@
                   dateInputFormat: 'YYYY-MM-DD'
                 }" placement="right" />
               <div class="invalid-feedback" *ngIf="value_of_dayControl.errors?.required">
-                Please enter Start time and end time.
+                {{ 'Please enter Start time and end time.' | translate}}
+              </div>
+            </div> -->
+            <!--  -->
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Start time' | translate }}</span>
+              </div>
+              <!-- <input class="form-control input-control" [placeholder]="'Please choose start time.' | translate"
+                bsDatepicker placement="bottom" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" #start_dateController="ngModel"
+                [ngClass]="{'is-valid' : !start_dateController.errors?.required, 'is-invalid' : start_dateController.errors?.required}"
+                [(ngModel)]="start_date_1" name="start_date_1" required/> -->
+              <input #start_dateController="ngModel"
+                [ngClass]="{'is-valid' : !start_dateController.errors?.required, 'is-invalid' : start_dateController.errors?.required}"
+                required type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose start time.' | translate" name="start_date_1" [(ngModel)]="start_date_1"
+                [bsConfig]="{
+                  dateInputFormat: 'YYYY-MM-DD'
+                }" placement="right" />
+
+              <input step="900" type="time" class="form-control input-control" required #startTimeController="ngModel"
+                [ngClass]="{'is-valid' : !startTimeController.errors?.required, 'is-invalid' : startTimeController.errors?.required}"
+                [placeholder]="'expiration_time' | translate" placement="bottom" [(ngModel)]="start_time_1"
+                name="start_time_1" />
+              <div class="invalid-feedback"
+                *ngIf="start_dateController.errors?.required || startTimeController.errors?.required">
+                {{ 'Please choose start time.' | translate }}
               </div>
             </div>
           </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'End time' | translate }}</span>
+              </div>
+              <input #expiration_dateController="ngModel"
+                [ngClass]="{'is-valid' : !expiration_dateController.errors?.required, 'is-invalid' : expiration_dateController.errors?.required}"
+                required type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose end time.' | translate" name="expiration_date_1"
+                [(ngModel)]="expiration_date_1" [bsConfig]="{
+                  dateInputFormat: 'YYYY-MM-DD'
+                }" placement="right" />
+              <input step="900" type="time" class="form-control input-control" required
+                #expirationTimeController="ngModel"
+                [ngClass]="{'is-valid' : !expirationTimeController.errors?.required, 'is-invalid' : expirationTimeController.errors?.required}"
+                [placeholder]="'expiration_time' | translate" placement="bottom" [(ngModel)]="expiration_time_1"
+                name="expiration_time_1" />
+              <div class="invalid-feedback"
+                *ngIf="expiration_dateController.errors?.required || expirationTimeController.errors?.required">
+                {{ 'Please choose end time.' | translate }}
+              </div>
+            </div>
+          </div>
+
           <div class="card-header" style="position: relative;">
             <i class="fa fa-picture-o"></i> {{ 'Images' | translate }}
             <button class="pull-right btn btn-primary btn-upload-image" (click)="fileImage.click()"
@@ -290,6 +357,49 @@
     </div>
   </form>
 </ng-template>
+
+<ng-template #templateSubTime>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Sub time' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">User ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Sub days' | translate }}</span>
+              </div>
+              <input type="text" id="extra_days" class="form-control" name="extra_days" [(ngModel)]="extra_days"
+                #nameControl="ngModel">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitSubTime(formContent)">
+          <i>{{ 'Sub' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
 <ng-template #templateAddTime>
   <form class="form-horizontal form-content" #formContent="ngForm">
     <div class="modal-header">
