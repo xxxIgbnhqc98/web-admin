@@ -221,7 +221,14 @@ export class AddShopComponent implements OnInit {
     const input: any = document.getElementById("myInput");
     this.filterFunction(input.value);
   }
-  onUserClick(user) {
+  async onUserClick(user) {
+    if (this.user_id && this.user_id !== user.id) {
+      try {
+        await this.confirChangeUser();
+      } catch (error) {
+        return;
+      }
+    }
     this.user_id = user.id;
 
     // if (this.type_category !== 'GERNE') {
@@ -329,6 +336,17 @@ export class AddShopComponent implements OnInit {
     });
   }
 
+  async confirChangeUser() {
+    return await swal({
+      text: (this.configService.lang === 'en') ? 'Are you sure to change the owner of shop?' : ((this.configService.lang === 'vn') ? 'Bạn có chắc chắn thay đổi chủ sở hữu của cửa hàng' : '상점주를 변경하시겠습니까?'),
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: (this.configService.lang === 'en') ? 'Confirm' : ((this.configService.lang === 'vn') ? 'Xác nhận' : '확인'),
+      cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
+    });
+  }
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),
@@ -417,6 +435,7 @@ export class AddShopComponent implements OnInit {
       const data = await this.apiService.shop.getItem(this.id, {
         query: { fields: ['$all', { "category": ["$all"] }] }
       });
+      this.user_id = data.user_id
       this.thema_id = data.category.thema_id
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
