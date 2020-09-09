@@ -148,6 +148,12 @@
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
   width: 1300px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
-  width: 185px;
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(4) {
+  width: 150px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(6) {
+  width: 150px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(11) {
+  width: 150px;
 }

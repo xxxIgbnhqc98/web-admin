@@ -51,9 +51,19 @@
             <span ngxClipboard [cbContent]="item.id" (cbOnSuccess)="alertCopied(item.id)">{{item.id}}</span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Nickname' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.user ? item.user.nickname : 'No infor' | translate}}</span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Title' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.title ? item.title : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Thema' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.category.thema.name ? item.category.thema.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Category Name' | translate">

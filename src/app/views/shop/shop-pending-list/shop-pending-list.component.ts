@@ -20,7 +20,7 @@ declare var swal: any;
 export class ShopPendingListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "category": ["$all"] }];
+  itemFields: any = ['$all', { "category": ["$all", { "thema": ["$all"] }] }, { "user": ["$all"] }];
   query: any = {
     filter: {
       state: "PENDING"
