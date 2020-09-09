@@ -196,7 +196,7 @@ export class AddBannerComponent implements OnInit {
     try {
       const files = this.fileAvatarElementRef.nativeElement.files;
       const file = files[0];
-      const result = this.apiService.fileUploader.uploadImage(file, 300)
+      const result = this.apiService.fileUploader.uploadImage(file, 1024)
         .then(result => {
           this.thumbnail = result.url;
           this.loadingUploadAvatar = false;

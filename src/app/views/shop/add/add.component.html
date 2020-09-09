@@ -18,8 +18,7 @@
                 <div style="clear: both;"></div>
                 <input style="margin-top: 15px; width: 100%" type="text" placeholder="Search.." id="myInput"
                   (keyup)="onUserSearch()">
-                <div id="singerListWrapper" style="overflow: scroll; height: 200px;"
-                  [ngClass]="{'hidden' : loading_api, 'opacity-load-more' : load_more}">
+                <div id="singerListWrapper" style="overflow: scroll; height: 200px;">
                   <div [id]="item.id" *ngFor="let item of listUserFiltered" (click)="onUserClick(item);onChangeName()"
                     [ngClass]="this.lastSubmitSingerId === item.id ? 'checked' : ''">
                     <img height="80px" width="80px" style="object-fit: cover; margin: 5px;"
