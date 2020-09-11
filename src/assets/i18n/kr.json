@@ -481,6 +481,8 @@
   "End time": "종료시간",
   "Please choose thema.": "테마를 선택해주세요.",
   "Please enter route": "경로를 선택해주세요.",
+  "Please search member with ID , ID code, and Nckname": "ID, ID code 또는 닉네임으로 회원정보를 검색할 수 있습니다 ",
+
   "nav": {
     "nav_items": [
       {
@@ -575,7 +577,7 @@
             "url": "/shop/shop-list"
           },
           {
-            "name": "Recommendation area list",
+            "name": "추천업체 목록",
             "icon": "fa fa-list-ol",
             "url": "/shop/recommendation-area"
           },
