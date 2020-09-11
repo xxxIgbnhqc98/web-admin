@@ -54,11 +54,11 @@
         [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
         [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
         [showReloading]="false">
-        <data-table-column [header]="'ID code' | translate">
+        <!-- <data-table-column [header]="'ID' | translate">
           <ng-template #dataTableCell let-item="item">
             <span ngxClipboard [cbContent]="item.id" (cbOnSuccess)="alertCopied(item.id)">{{item.id}}</span>
           </ng-template>
-        </data-table-column>
+        </data-table-column> -->
         <data-table-column [header]="'Login type - Account type' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.login_type}}</span><span>{{item.account_type ?' - '+ item.account_type:''}}</span>
