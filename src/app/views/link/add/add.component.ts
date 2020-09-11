@@ -228,6 +228,11 @@ export class AddLinkComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       const { name, image, thema_id, route_link, category_ids, index } = this;
+      if(index < 0){
+        this.alertErrorFromServer("Index can not be negative");
+        this.submitting = false;
+        return;
+      }
       await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids, index });
       form.reset();
       this.alertSuccess();
@@ -244,6 +249,11 @@ export class AddLinkComponent implements OnInit {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
       const { name, image, thema_id, route_link, category_ids, index } = this;
+      if(index < 0){
+        this.alertErrorFromServer("Index can not be negative");
+        this.submitting = false;
+        return;
+      }
       await this.apiService.link.add({ name, image, thema_id, route: route_link, category_ids, index });
       form.reset();
       this.alertSuccess();
