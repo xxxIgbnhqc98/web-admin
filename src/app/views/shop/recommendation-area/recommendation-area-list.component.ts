@@ -93,7 +93,10 @@ export class recommendationAreaListComponent implements OnInit {
   }
   openModalZoomImage(template: TemplateRef<any>, item) {
     this.modalRef = this.modalService.show(template);
-    this.zoom_image = item
+    this.zoom_image = item.replace('300', '1024')
+  }
+  replaceImage(event) {
+    this.zoom_image = this.zoom_image.replace('1024', '300')
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);

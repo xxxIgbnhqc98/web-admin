@@ -370,7 +370,13 @@ export class AddShopComponent implements OnInit {
       timer: 2000,
     });
   }
-
+  alertErrorFromServerOwner(message) {
+    return swal({
+      title: (this.configService.lang === 'en') ? 'Please remove relevant Event before transferring the ownership' : ((this.configService.lang === 'vn') ? 'Vui lòng xóa Sự kiện có liên quan trước khi chuyển quyền sở hữu' : '상점 소유권을 이전하기 위해서는 관련 이벤트를 삭제해야 합니다.'),
+      type: 'warning',
+      timer: 2000,
+    });
+  }
   alertItemNotFound() {
     swal({
       title: 'No information found',
@@ -491,7 +497,7 @@ export class AddShopComponent implements OnInit {
     try {
       this.opening_hours = this.start_time + '~' + this.end_time
       this.images = this.thumbnails.map(item => {
-        return item.replace("300", "1980")
+        return item.replace("300", "1024")
       });
       const { category_id, thumbnails, badge_image, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
       await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, user_id: this.user_id });
@@ -501,7 +507,11 @@ export class AddShopComponent implements OnInit {
 
       this.submitting = false;
     } catch (error) {
-      this.alertErrorFromServer(error.error.message);
+      if (error.error.message === "Please remove relevant Event before transferring the ownership") {
+        this.alertErrorFromServerOwner(error.error.message);
+      } else {
+        this.alertErrorFromServer(error.error.message);
+      }
       this.submitting = false;
     }
   }
@@ -511,7 +521,7 @@ export class AddShopComponent implements OnInit {
     try {
       this.opening_hours = this.start_time + '~' + this.end_time
       this.images = this.thumbnails.map(item => {
-        return item.replace("300", "1980")
+        return item.replace("300", "1024")
       });
       const { category_id, badge_image, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
       await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true, user_id: this.user_id });
@@ -554,7 +564,7 @@ export class AddShopComponent implements OnInit {
     try {
       const files = this.fileAvatarElementRef.nativeElement.files;
       const file = files[0];
-      const result = this.apiService.fileUploader.uploadImage2(file, 300, 1980)
+      const result = this.apiService.fileUploader.uploadImage2(file, 300, 1024)
         .then(result => {
           this.images.push(result.high_quality_images[0].url)
           this.thumbnails.push(result.low_quality_images[0].url)

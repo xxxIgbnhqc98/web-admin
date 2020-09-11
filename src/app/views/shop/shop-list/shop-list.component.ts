@@ -95,7 +95,10 @@ export class ShopListComponent implements OnInit {
 
   openModalZoomImage(template: TemplateRef<any>, item) {
     this.modalRef = this.modalService.show(template);
-    this.zoom_image = item
+    this.zoom_image = item.replace('300', '1024')
+  }
+  replaceImage(event) {
+    this.zoom_image = this.zoom_image.replace('1024', '300')
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);
@@ -252,7 +255,7 @@ export class ShopListComponent implements OnInit {
     //   return;
     // }
     // 
-  
+
     if (time_end <= exp_date && time_start >= str_date) {
       // if (this.expiration_time_unix_timestamp <= this.expiration_date && this.start_time_unix_timestamp >= this.start_date) {
       this.submitting = true;

@@ -94,7 +94,10 @@ export class ShopBannerListComponent implements OnInit {
   }
   openModalZoomImage(template: TemplateRef<any>, item) {
     this.modalRef = this.modalService.show(template);
-    this.zoom_image = item
+    this.zoom_image = item.replace('300', '1024')
+  }
+  replaceImage(event) {
+    this.zoom_image = this.zoom_image.replace('1024', '300')
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);
@@ -159,7 +162,7 @@ export class ShopBannerListComponent implements OnInit {
     // return new Date(parseInt(unixtimestamp));
     return (unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)
   }
-  ceilRemainingTime(unixtimestamp: any){
+  ceilRemainingTime(unixtimestamp: any) {
     return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
   }
   async alertConfirmUnBlock() {
