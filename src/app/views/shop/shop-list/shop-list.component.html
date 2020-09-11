@@ -241,7 +241,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item">
-            <!-- <div class="input-group">
+            <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Start - end' | translate }}</span>
               </div>
@@ -255,16 +255,12 @@
               <div class="invalid-feedback" *ngIf="value_of_dayControl.errors?.required">
                 {{ 'Please enter Start time and end time.' | translate}}
               </div>
-            </div> -->
+            </div>
             <!--  -->
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Start time' | translate }}</span>
               </div>
-              <!-- <input class="form-control input-control" [placeholder]="'Please choose start time.' | translate"
-                bsDatepicker placement="bottom" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" #start_dateController="ngModel"
-                [ngClass]="{'is-valid' : !start_dateController.errors?.required, 'is-invalid' : start_dateController.errors?.required}"
-                [(ngModel)]="start_date_1" name="start_date_1" required/> -->
               <input #start_dateController="ngModel"
                 [ngClass]="{'is-valid' : !start_dateController.errors?.required, 'is-invalid' : start_dateController.errors?.required}"
                 required type="text" class="form-control input-control" bsDatepicker placement="bottom"
@@ -302,7 +298,7 @@
                 <div class="invalid-feedback" *ngIf="expiration_dateController.errors?.required || expirationTimeController.errors?.required" >
                   {{ 'Please choose end time.' | translate }}
                 </div>
-            </div>
+            </div> -->
             <!--  -->
           </div>
           <div class="card-header" style="position: relative;">
