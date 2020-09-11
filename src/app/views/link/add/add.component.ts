@@ -24,6 +24,7 @@ export class AddLinkComponent implements OnInit {
   submitting: boolean = false;
   name: string;
   image: string;
+  index: number;
   loadingUploadAvatar: boolean = false;
   themas: any = []
   thema_id: string;
@@ -162,13 +163,15 @@ export class AddLinkComponent implements OnInit {
     this.thema_id = null
     this.route_link = null
     this.category_ids = [];
+    this.index = null;
 
     return {
       name: this.name,
       avatar: this.image,
       thema_id: this.thema_id,
       route_link: this.route_link,
-      category_ids: this.category_ids
+      category_ids: this.category_ids,
+      index: this.index
     };
   }
 
@@ -181,7 +184,9 @@ export class AddLinkComponent implements OnInit {
       this.name = data.name;
       this.thema_id = data.thema_id;
       this.route_link = data.route;
-
+      // 
+      this.index = data.index
+      // 
       if (data.categories.length !== 0) {
         for (let index = 0; index < data.categories.length; index++) {
           const cate = data.categories[index];
@@ -222,8 +227,8 @@ export class AddLinkComponent implements OnInit {
   }
   async updateItem(form: NgForm) {
     try {
-      const { name, image, thema_id, route_link, category_ids } = this;
-      await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids });
+      const { name, image, thema_id, route_link, category_ids, index } = this;
+      await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids, index });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -238,8 +243,8 @@ export class AddLinkComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
-      const { name, image, thema_id, route_link, category_ids } = this;
-      await this.apiService.link.add({ name, image, thema_id, route: route_link, category_ids });
+      const { name, image, thema_id, route_link, category_ids, index } = this;
+      await this.apiService.link.add({ name, image, thema_id, route: route_link, category_ids, index });
       form.reset();
       this.alertSuccess();
       this.backToList();

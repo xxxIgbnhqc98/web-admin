@@ -227,9 +227,7 @@
                 <span class="input-group-text">{{ 'Title' | translate }}</span>
               </div>
               <input type="text" id="title_event" class="form-control" name="title_event" [(ngModel)]="title_event"
-                #title_eventControl="ngModel"
-                [ngClass]="{'is-valid' : !title_eventControl.errors?.required, 'is-invalid' : title_eventControl.errors?.required}"
-                required placeholder="Title event">
+                #title_eventControl="ngModel" placeholder="Title event">
               <div class="invalid-feedback" *ngIf="title_eventControl.errors?.required">
                 Please enter title.
               </div>

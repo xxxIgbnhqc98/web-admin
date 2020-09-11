@@ -253,11 +253,7 @@ export class ShopListComponent implements OnInit {
     //   return;
     // }
     // 
-    if (time_start >= time_end) {
-      this.alertFailedStartEndTime()
-      this.submitting = false;
-      return;
-    }
+  
     if (time_end <= exp_date && time_start >= str_date) {
       // if (this.expiration_time_unix_timestamp <= this.expiration_date && this.start_time_unix_timestamp >= this.start_date) {
       this.submitting = true;
@@ -295,7 +291,7 @@ export class ShopListComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       await this.apiService.event.add({
-        title: this.title_event,
+        // title: this.title_event,
         description: this.description,
         images: this.images_event,
         state: "APPROVED",

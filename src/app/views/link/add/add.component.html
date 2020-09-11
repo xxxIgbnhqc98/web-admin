@@ -42,6 +42,17 @@
                 {{'Please enter route' | translate}}
               </div>
             </div>
+            <!--  -->
+            <div class="form-group">
+              <label for="name">{{'Index' | translate}}</label>
+              <input class="form-control" id="index" [placeholder]="'enter index' | translate" type="text" name="index"
+                [(ngModel)]="index" required #indexControl="ngModel"
+                [ngClass]="{'is-invalid' : indexControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="indexControl.errors?.required">
+                {{'Please enter index.' | translate}}
+              </div>
+            </div>
+            <!--  -->
             <div class="form-group">
               <label for="category">{{'Category' | translate}}</label>
               <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">

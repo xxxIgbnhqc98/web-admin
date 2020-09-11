@@ -68,7 +68,7 @@ export class LinkListComponent implements OnInit {
       [sortBy, sortAsc ? 'ASC' : 'DESC']
     ] : null;
     if (!sortBy && !sortAsc) {
-      this.query.order = [['updated_at', 'DESC']]
+      this.query.order = [['index', 'ASC']]
     }
     await this.getItems();
   }
