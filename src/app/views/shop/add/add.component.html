@@ -16,7 +16,7 @@
                 <span (click)="closeDropdownUser()"
                   style="float: right; font-size: 25px; width: 25px; height: 25px; cursor: pointer;;">x</span>
                 <div style="clear: both;"></div>
-                <input style="margin-top: 15px; width: 100%" type="text" placeholder="Search.." id="myInput"
+                <input style="margin-top: 15px; width: 100%" type="text" placeholder="ID, ID code and Nickname" id="myInput"
                   (keyup)="onUserSearch()">
                 <div id="singerListWrapper" style="overflow: scroll; height: 200px;">
                   <div [id]="item.id" *ngFor="let item of listUserFiltered" (click)="onUserClick(item);onChangeName()"
