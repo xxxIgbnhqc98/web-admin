@@ -160,11 +160,11 @@
           <ng-template #dataTableCell let-item="item">
             <button *ngIf="!item.is_random_20_shop" (click)="addShop(item.id)" class="btn btn-success"
               style="margin-right: 5px;">
-              <i>selected</i>
+              <i>{{'selected' | translate}}</i>
             </button>
             <button *ngIf="item.is_random_20_shop" (click)="removeShop(item.id)" class="btn btn-danger"
               style="margin-right: 5px;">
-              <i>unchecked</i>
+              <i>{{'unchecked' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>

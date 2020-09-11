@@ -575,6 +575,11 @@
             "url": "/shop/shop-list"
           },
           {
+            "name": "Recommendation area list",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/recommendation-area"
+          },
+          {
             "name": "상점 추가하기",
             "icon": "fa fa-plus",
             "url": "/shop/add"

@@ -574,6 +574,11 @@
             "url": "/shop/shop-list"
           },
           {
+            "name": "Cửa hàng đề xuất",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/recommendation-area"
+          },
+          {
             "name": "Thêm cửa hàng",
             "icon": "fa fa-plus",
             "url": "/shop/add"
