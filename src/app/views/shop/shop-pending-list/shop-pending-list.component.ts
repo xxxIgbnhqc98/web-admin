@@ -294,6 +294,38 @@ export class ShopPendingListComponent implements OnInit {
       this.alertErrorFromServer(error.error.message);
     }
   }
+  async acceptItemOld(item: any) {
+    try {
+      await this.apiService.shop.update(item.id, {
+        state: 'APPROVED'
+      });
+      this.alertSuccess();
+      this.itemsTable.reloadItems();
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
+    }
+
+  }
+  checkExpire(item: any) {
+    if (item.expired_date) {
+      const time: number = (parseInt(item.expired_date) - moment().valueOf()) / (24 * 60 * 60 * 1000)
+      if (time >= 0) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
+
+  }
+  mathRemainingTime(unixtimestamp: any) {
+    // return new Date(parseInt(unixtimestamp));
+    return (unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)
+  }
+  ceilRemainingTime(unixtimestamp: any) {
+    return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
+  }
   check_extra_day() {
     if (this.extra_days > 180) {
       this.extra_days = 180

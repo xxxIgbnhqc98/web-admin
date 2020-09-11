@@ -111,7 +111,10 @@
         </data-table-column>
         <data-table-column [header]="'Actions' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button (click)="openModalApprove(templateApprove, item)" class="btn btn-primary" style="margin-bottom: 5px;">
+            <button *ngIf="!checkExpire(item)" (click)="openModalApprove(templateApprove, item)" class="btn btn-primary" style="margin-bottom: 5px;">
+              <i>{{'Approved' | translate}}</i>
+            </button>
+            <button *ngIf="checkExpire(item)" (click)="acceptItemOld(item)" class="btn btn-primary" style="margin-bottom: 5px;">
               <i>{{'Approved' | translate}}</i>
             </button>
             <button (click)="rejectedItem(item)" class="btn btn-danger">

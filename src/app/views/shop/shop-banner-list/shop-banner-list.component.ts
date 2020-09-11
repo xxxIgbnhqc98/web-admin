@@ -155,7 +155,13 @@ export class ShopBannerListComponent implements OnInit {
       timer: 2000,
     });
   }
-
+  mathRemainingTime(unixtimestamp: any) {
+    // return new Date(parseInt(unixtimestamp));
+    return (unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)
+  }
+  ceilRemainingTime(unixtimestamp: any){
+    return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
+  }
   async alertConfirmUnBlock() {
     return await swal({
       title: (this.configService.lang === 'en') ? 'Are you sure to unblock this user?' : ((this.configService.lang === 'vn') ? 'Gỡ bỏ hình phạt' : '패널티 해제하기'),
@@ -500,9 +506,6 @@ export class ShopBannerListComponent implements OnInit {
 
   getDateFromUnixTimestamp(unixtimestamp: any) {
     return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD")
-  }
-  mathRemainingTime(unixtimestamp: any) {
-    return Math.floor((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
   }
   subTimeOpen1(time) {
     return time.substring(0, time.indexOf("~"))
