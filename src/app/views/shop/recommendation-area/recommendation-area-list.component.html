@@ -48,7 +48,7 @@
         [showReloading]="false">
         <data-table-column [header]="'ID' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span ngxClipboard [cbContent]="item.id" (cbOnSuccess)="alertCopied(item.id)">{{item.id}}</span>
+            <span>{{(item.user && item.user.username) ? item.user.username : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Nickname' | translate">

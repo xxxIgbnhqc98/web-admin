@@ -195,6 +195,14 @@ export class AddShopComponent implements OnInit {
         this.query.filter.id = keyword
       } else {
         this.query.filter.nickname = { $iLike: `%${keyword}%` }
+        this.query.filter = {
+          '$or': [
+            {
+              nickname: { $iLike: `%${keyword}%` }
+            },
+            { username: { $iLike: `%${keyword}%` } },
+          ]
+        }
       }
       this.listUser = await this.apiService.user.getList({ query: this.query })
     } catch (error) {
@@ -202,7 +210,7 @@ export class AddShopComponent implements OnInit {
     console.log('listUser', this.listUser)
     if (this.listUser.length) {
       this.listUser.forEach(user => {
-        if (user.id === keyword || user.nickname.toUpperCase().indexOf(keyword.toUpperCase()) > -1) {
+        if (user.username.toUpperCase().indexOf(keyword.toUpperCase()) > -1 || user.id === keyword || user.nickname.toUpperCase().indexOf(keyword.toUpperCase()) > -1) {
           newFilteredUserList.push(user);
         }
       });
