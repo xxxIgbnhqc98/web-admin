@@ -267,7 +267,7 @@ export class ShopPendingListComponent implements OnInit {
     this.submittingApprove = true;
     if (form.valid) {
       try {
-        await this.apiService.shop.update(this.id_update, {
+        await this.apiService.shop.editReTime(this.id_update, {
           expired_date: moment().valueOf() + (this.extra_days * 86400000),
           state: 'APPROVED'
         });

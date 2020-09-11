@@ -113,7 +113,7 @@ export class ShopBannerListComponent implements OnInit {
         if (this.expired_date < date) {
           this.expired_date = date
         }
-        await this.apiService.shop.update(this.id_update, {
+        await this.apiService.shop.editReTime(this.id_update, {
           expired_date: parseInt(this.expired_date.toString()) + (this.extra_days * 86400000)
         });
 
