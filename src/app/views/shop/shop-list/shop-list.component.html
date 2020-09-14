@@ -115,10 +115,10 @@
         </data-table-column> -->
         <data-table-column [header]="'List Image' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span *ngIf="item.images === null || item.images.length === 0">
+            <span *ngIf="item.thumbnails === null || item.thumbnails.length === 0">
               {{'No info' | translate}}
             </span>
-            <span *ngFor="let item of item.images" lazy-load-images style="float: left; margin-left: 2px;">
+            <span *ngFor="let item of item.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
               <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
                 onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
             </span>
@@ -176,7 +176,7 @@
 
       <p lazy-load-images>
         <img [attr.data-src]="zoom_image"
-          onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+          (error)="replaceImage($event)" onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
       </p>
     </div>
   </div>

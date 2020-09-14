@@ -75,7 +75,7 @@
 
       <p lazy-load-images>
         <img [attr.data-src]="zoom_image"
-          onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+          (error)="replaceImage($event)" onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
       </p>
     </div>
   </div>
