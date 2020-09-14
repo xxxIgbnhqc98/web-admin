@@ -26,6 +26,7 @@ export class AddUserComponent implements OnInit {
   account_type: string;
   post_limit: number;
   post_limit_min: number;
+  memo: string;
   show_shop_tag: boolean = false;
   loadingUploadAvatar: boolean = false;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
@@ -98,6 +99,7 @@ export class AddUserComponent implements OnInit {
     this.phone = null;
     this.avatar = null;
     this.username = null;
+    this.memo = null;
     this.post_limit = 1;
     this.post_limit_min = 1;
 
@@ -107,6 +109,7 @@ export class AddUserComponent implements OnInit {
       phone: this.phone,
       avatar: this.avatar,
       username: this.username,
+      memo: this.memo,
       post_limit: this.post_limit,
       post_limit_min: this.post_limit_min
 
@@ -126,6 +129,7 @@ export class AddUserComponent implements OnInit {
       this.account_type = data.account_type;
       this.post_limit = data.post_limit;
       this.show_shop_tag = data.show_shop_tag;
+      this.memo = data.memo;
       this.post_limit_min = data.current_active_post + data.current_pending_post;
       this.titleService.setTitle(this.nickname);
     } catch (err) {
@@ -141,8 +145,8 @@ export class AddUserComponent implements OnInit {
   }
   async updateItem(form: NgForm) {
     try {
-      const { account_type, post_limit,show_shop_tag } = this;
-      await this.apiService.user.update(this.id, { account_type, post_limit,show_shop_tag });
+      const { account_type, post_limit,show_shop_tag, memo } = this;
+      await this.apiService.user.update(this.id, { account_type, post_limit,show_shop_tag, memo });
       form.reset();
       this.alertSuccess();
       this.backToList();

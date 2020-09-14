@@ -233,6 +233,11 @@ export class AddLinkComponent implements OnInit {
         this.submitting = false;
         return;
       }
+      if(index > 12){
+        this.alertErrorFromServer("Index can not be greater than 12")
+        this.submitting = false;
+        return;
+      }
       await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids, index });
       form.reset();
       this.alertSuccess();
@@ -251,6 +256,11 @@ export class AddLinkComponent implements OnInit {
       const { name, image, thema_id, route_link, category_ids, index } = this;
       if(index < 0){
         this.alertErrorFromServer("Index can not be negative");
+        this.submitting = false;
+        return;
+      }
+      if(index > 12){
+        this.alertErrorFromServer("Index can not be greater than 12")
         this.submitting = false;
         return;
       }

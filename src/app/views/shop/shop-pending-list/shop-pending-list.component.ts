@@ -61,7 +61,7 @@ export class ShopPendingListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('Category list')
+    this.titleService.setTitle('Shop Pending list')
     this.route.params.subscribe(params => {
       this.category_id = params.thema_id;
       if (this.category_id) {
@@ -349,6 +349,62 @@ export class ShopPendingListComponent implements OnInit {
       this.alertErrorFromServer(error.error.message);
     }
   }
+  async rejectAllItem() {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      try {
+        await this.confirmDeny();
+      } catch (err) {
+        return;
+      }
+      await this.apiService.shop.rejectAll(ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
+  async approveAllItem() {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      try {
+        await this.confirmDeny();
+      } catch (err) {
+        return;
+      }
+      await this.apiService.shop.approveAll(ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
   async search() {
     this.submitting = true;
     this.query.filter = {
@@ -365,7 +421,7 @@ export class ShopPendingListComponent implements OnInit {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
-          this.query.filter.title = { $iLike: `%${this.keyword}%` }
+          this.itemFields = ['$all', { "user": ["$all", { "$filter": { username: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
         }
       } else if (this.option_search === 'nickname') {
         this.itemFields = ['$all', { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];

@@ -464,7 +464,7 @@ export class ShopBannerListComponent implements OnInit {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
-          this.query.filter.title = { $iLike: `%${this.keyword}%` }
+          this.itemFields = ['$all', { "user": ["$all", { "$filter": { username: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
         }
       } else if (this.option_search === 'nickname') {
         this.itemFields = ['$all', { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
