@@ -3,6 +3,9 @@
     <div class="card-header">
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
+        <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="deleteAll()">
+          <i class="fa fa-trash"></i>{{'Delete' | translate}}
+        </button>
         <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
           <i class="fa fa-cloud-download"></i> {{'Export excel' | translate}}
         </button> -->
@@ -18,7 +21,7 @@
             <div class="col-3">
               <select class="form-control" name="fieldSearch" [(ngModel)]="fieldSearch">
                 <option [ngValue]="null">{{'Choose search condition' | translate}} </option>
-                <option value="id">{{'ID code' | translate}}</option>
+                <option value="id">{{'ID' | translate}}</option>
                 <option value="email">{{'Email' | translate}}</option>
                 <option value="phone">{{'Mobile phone' | translate}}</option>
                 <option value="nickname">{{'Nickname' | translate}}</option>
@@ -116,8 +119,8 @@
 
           </ng-template>
         </data-table-column>
-        <!-- <data-table-column [header]="'Gender' | translate" property="sex">
-        </data-table-column> -->
+        <data-table-column [header]="'Memo' | translate">
+        </data-table-column>
         <!-- <data-table-column header="Paypal account">
         </data-table-column> -->
         <data-table-column [header]="'Actions' | translate">
