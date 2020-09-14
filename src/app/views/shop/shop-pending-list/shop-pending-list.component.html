@@ -6,7 +6,7 @@
         <button class="btn btn-primary" [disabled]="!itemsTable.selectedRows.length" (click)="approveAllItem()">
           {{'Approved' | translate}}
         </button>
-        <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="rejectedItem()">
+        <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="rejectAllItem()">
           {{'Rejected' | translate}}
         </button>
         <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
