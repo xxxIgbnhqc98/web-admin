@@ -193,7 +193,7 @@ export class ShopBannerListComponent implements OnInit {
   }
   async addItem(form: NgForm) {
     try {
-      await this.apiService.event.add({
+      await this.apiService.event.addEvent({
         title: this.title_event,
         description: this.description,
         images: this.images_event,
