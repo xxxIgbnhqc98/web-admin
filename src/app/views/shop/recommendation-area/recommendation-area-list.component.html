@@ -258,7 +258,7 @@
                 name="value_of_day" [(ngModel)]="value_of_day" [bsConfig]="{
                   rangeInputFormat: 'YYYY-MM-DD',
                   dateInputFormat: 'YYYY-MM-DD'
-                }" placement="right" />
+                }" placement="right" onkeydown="return false"/>
               <div class="invalid-feedback" *ngIf="value_of_dayControl.errors?.required">
                 {{ 'Please enter Start time and end time.' | translate}}
               </div>

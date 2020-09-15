@@ -255,6 +255,11 @@ export class ShopListComponent implements OnInit {
     //   return;
     // }
     // 
+    if (time_start > time_end) {
+      this.alertFailedStartEndTime()
+      this.submitting = false;
+      return;
+    }
 
     if (time_end <= exp_date && time_start >= str_date) {
       // if (this.expiration_time_unix_timestamp <= this.expiration_date && this.start_time_unix_timestamp >= this.start_date) {
@@ -417,7 +422,7 @@ export class ShopListComponent implements OnInit {
     });
   }
   alertFailedStartEndTime() {
-    this.value_of_day = [moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
+    this.value_of_day = [new Date(), new Date()]
     return swal({
       title: (this.configService.lang === 'en') ? 'Start Time must be earlier than End time' : ((this.configService.lang === 'vn') ? 'Thời gian bắt đầu sự kiện phải sớm hơn thời gian kết thúc sự kiện' : '시작시간은  종료시간보다 늦을 수 없습니다.'),
       type: 'warning',

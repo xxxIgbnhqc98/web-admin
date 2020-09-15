@@ -217,6 +217,12 @@ export class recommendationAreaListComponent implements OnInit {
     //   return;
     // }
     // 
+    if (time_start > time_end) {
+      this.alertFailedStartEndTime()
+      this.submitting = false;
+      return;
+    }
+
     if (time_end <= exp_date && time_start >= str_date) {
     // if (this.expiration_time_unix_timestamp <= this.expiration_date && this.start_time_unix_timestamp >= this.start_date) {
       this.submitting = true;

@@ -3,9 +3,6 @@
     <div class="card-header">
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
-        <button class="btn btn-primary" [disabled]="!itemsTable.selectedRows.length" (click)="approveAllItem()">
-          {{'Approved' | translate}}
-        </button>
         <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="rejectedItem()">
           {{'Rejected' | translate}}
         </button>
