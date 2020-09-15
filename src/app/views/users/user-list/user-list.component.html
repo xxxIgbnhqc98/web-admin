@@ -120,6 +120,9 @@
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Memo' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.memo ? item.memo : 'No info' | translate}}</span>
+          </ng-template>
         </data-table-column>
         <!-- <data-table-column header="Paypal account">
         </data-table-column> -->

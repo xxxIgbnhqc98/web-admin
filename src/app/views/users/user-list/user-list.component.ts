@@ -63,6 +63,7 @@ export class UserListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    console.log(this.items)
     this.titleService.setTitle('User list')
   }
   openModal(template: TemplateRef<any>, user) {
