@@ -3,7 +3,7 @@
     <div class="card-header">
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
-        <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="rejectedItem()">
+        <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="rejectAllItem()">
           {{'Rejected' | translate}}
         </button>
         <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">

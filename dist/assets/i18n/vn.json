@@ -480,6 +480,8 @@
   "End time": "Thời gian kết thúc",
   "Please choose thema.": "Vui lòng chọn chủ để.",
   "Please enter route": "Vui lòng chọn lộ trình.",
+  "Please search member with ID , ID code, and Nckname": "Vui lòng nhập ID, ID code và Nickname để tìm kiếm thành viên",
+
   "nav": {
     "nav_items": [
       {
@@ -572,6 +574,11 @@
             "name": "Danh sách cửa hàng",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-list"
+          },
+          {
+            "name": "Cửa hàng đề xuất",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/recommendation-area"
           },
           {
             "name": "Thêm cửa hàng",
