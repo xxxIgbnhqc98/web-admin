@@ -593,6 +593,11 @@
         ]
       },
       {
+        "name": "Post",
+        "url": "/bulletin",
+        "icon": "fa fa-sticky-note-o"
+      },
+      {
         "name": "Partner manager & Admin",
         "url": "/partner-manager",
         "icon": "fa fa-lock"

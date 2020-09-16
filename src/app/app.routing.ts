@@ -123,6 +123,10 @@ export const routes: Routes = [
       {
         path: 'meta',
         loadChildren: './views/meta/meta.module#MetaModule'
+      },
+      {
+        path: 'bulletin',
+        loadChildren: './views/bulletin/bulletin.module#BulletinModule'
       }
     ]
   }
