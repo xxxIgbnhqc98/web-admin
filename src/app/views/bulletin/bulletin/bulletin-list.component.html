@@ -113,7 +113,7 @@
                 <p><b>{{item.user.nickname}} </b>{{item.content}}</p>
                 <img *ngIf="item.thumbnail" [src]="item.thumbnail" alt="" style="width: 100%;">
                 <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
-                  (click)="deleteComment(itemC)" class="fa fa-trash"></i></span>
+                  (click)="deleteComment(item)" class="fa fa-trash"></i></span>
               </div>
             </div>
             <div style="margin-left: 50px;">
