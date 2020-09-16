@@ -181,8 +181,8 @@
                     width: 100%;">
 
       <p lazy-load-images>
-        <img [attr.data-src]="zoom_image"
-          (error)="replaceImage($event)" onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+        <img [attr.data-src]="zoom_image" (error)="replaceImage($event)"
+          onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
       </p>
     </div>
   </div>
@@ -249,7 +249,7 @@
           </div>
           <div class="col-md-12 form-item">
             <div class="input-group">
-              <div class="input-group-prepend">
+              <!-- <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Start - end' | translate }}</span>
               </div>
               <input #value_of_dayControl="ngModel"
@@ -261,6 +261,20 @@
                 }" placement="right" onkeydown="return false"/>
               <div class="invalid-feedback" *ngIf="value_of_dayControl.errors?.required">
                 {{ 'Please enter Start time and end time.' | translate}}
+              </div> -->
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'End time' | translate }}</span>
+              </div>
+              <input #expiration_dateController="ngModel"
+                [ngClass]="{'is-valid' : !expiration_dateController.errors?.required, 'is-invalid' : expiration_dateController.errors?.required}"
+                required type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose end time.' | translate" name="expiration_date_1"
+                [(ngModel)]="expiration_date_1" [bsConfig]="{
+                  dateInputFormat: 'YYYY-MM-DD'
+                }" placement="right" onkeydown="return false" />
+              <div class="invalid-feedback"
+                *ngIf="expiration_dateController.errors?.required || expiration_dateController.errors?.required">
+                {{ 'Please choose start time.' | translate }}
               </div>
             </div>
             <!--  -->

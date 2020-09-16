@@ -175,24 +175,24 @@ export class ShopListComponent implements OnInit {
       this.title_event = null;
       this.description = null;
       this.images_event = [];
-      this.value_of_day = [this.currentDate, this.currentDate];
+      // this.value_of_day = [this.currentDate, this.currentDate];
       this.event_id = null
       // 
-      // this.start_date_1 = null;
-      // this.expiration_date_1 = null;
+      this.start_date_1 = this.currentDate;
+      this.expiration_date_1 = this.currentDate;
       // this.start_time_1 = '12:00';
       // this.expiration_time_1 = '12:00';
       // 
     } else {
       this.title_event = item.events[0].title
       this.description = item.events[0].description
-      this.value_of_day = [new Date(parseInt(item.events[0].start_time)), new Date(parseInt(item.events[0].end_time))];
+      // this.value_of_day = [new Date(parseInt(item.events[0].start_time)), new Date(parseInt(item.events[0].end_time))];
       this.images_event = item.events[0].images
       this.event_id = item.events[0].id
       this.state = item.events[0].state
       // 
-      // this.start_date_1 = new Date(parseInt(item.events[0].start_time));
-      // this.expiration_date_1 = new Date(parseInt(item.events[0].end_time));
+      this.start_date_1 = new Date(parseInt(item.events[0].start_time));
+      this.expiration_date_1 = new Date(parseInt(item.events[0].end_time));
       // this.start_time_1 =moment(parseInt(item.events[0].start_time)).format("HH:mm")
       // this.expiration_time_1 = moment(parseInt(item.events[0].end_time)).format("HH:mm")
       // 
@@ -220,8 +220,8 @@ export class ShopListComponent implements OnInit {
     });
   }
   async submitAddEvent(form: NgForm) {
-    const time_end = moment(form.value.value_of_day[1]).valueOf()
-    const time_start = moment(form.value.value_of_day[0]).valueOf()
+    // const time_end = moment(form.value.value_of_day[1]).valueOf()
+    // const time_start = moment(form.value.value_of_day[0]).valueOf()
     const temp_exp_date = moment(+this.expiration_date).format('L')
     const temp_str_date = moment(+this.start_date).format('L')
     const exp_date = moment(temp_exp_date).valueOf()
@@ -255,14 +255,18 @@ export class ShopListComponent implements OnInit {
     //   return;
     // }
     // 
-    if (time_start > time_end) {
-      this.alertFailedStartEndTime()
-      this.submitting = false;
-      return;
-    }
+    this.expiration_time_unix_timestamp = moment(this.expiration_date_1).valueOf()
+    let temp_start_time = moment().format('L')
+    this.start_time_unix_timestamp = moment(temp_start_time).valueOf()
 
-    if (time_end <= exp_date && time_start >= str_date) {
+
+    if (this.expiration_time_unix_timestamp <= exp_date && this.start_time_unix_timestamp >= str_date) {
       // if (this.expiration_time_unix_timestamp <= this.expiration_date && this.start_time_unix_timestamp >= this.start_date) {
+      if (this.start_time_unix_timestamp > this.expiration_time_unix_timestamp) {
+        this.alertFailedStartEndTime()
+        this.submitting = false;
+        return;
+      }
       this.submitting = true;
       console.log(form)
       if (form.valid && this.images_event.length > 0) {
@@ -303,9 +307,9 @@ export class ShopListComponent implements OnInit {
         images: this.images_event,
         state: "APPROVED",
         // start_time: this.start_time_unix_timestamp,
-        // end_time: this.expiration_time_unix_timestamp,
-        start_time: moment(this.value_of_day[0]).valueOf(),
-        end_time: moment(this.value_of_day[1]).valueOf(),
+        end_time: this.expiration_time_unix_timestamp,
+        start_time: moment().valueOf(),
+        // end_time: moment(this.value_of_day[1]).valueOf(),
         shop_id: this.shop_id_event,
         created_by_admin: true
       });
@@ -319,6 +323,7 @@ export class ShopListComponent implements OnInit {
     }
   }
   async updateItem(form: NgForm) {
+    console.log(this.value_of_day)
     try {
       await this.apiService.event.update(this.event_id, {
         title: this.title_event,
@@ -326,9 +331,9 @@ export class ShopListComponent implements OnInit {
         images: this.images_event,
         // state: "APPROVED",
         // start_time: this.start_time_unix_timestamp,
-        // end_time: this.expiration_time_unix_timestamp,
-        start_time: moment(this.value_of_day[0]).valueOf(),
-        end_time: moment(this.value_of_day[1]).valueOf(),
+        end_time: this.expiration_time_unix_timestamp,
+        start_time: moment().valueOf(),
+        // end_time: moment(this.value_of_day[1]).valueOf(),
         shop_id: this.shop_id_event,
         created_by_admin: true
       });
