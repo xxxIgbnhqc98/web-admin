@@ -72,7 +72,7 @@
         </data-table-column>
         <data-table-column [header]="'User Permission' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.route ? item.route : 'No info' | translate}}</span>
+            <span *ngFor="let item of item.accessible_user_type">{{item}}<br></span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Categories' | translate">

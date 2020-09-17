@@ -31,7 +31,10 @@ export class AddLinkComponent implements OnInit {
   route_link: string = null;
   category_ids: any = [];
   categories: any = [];
-  categories_select: any[] = []
+  categories_select: any[] = [];
+  user_types_ids: any = [];
+  user_types: any = [];
+  user_types_select: any = [];
   settings = {};
   public form: FormGroup;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
@@ -45,6 +48,24 @@ export class AddLinkComponent implements OnInit {
     public shareDataService: ShareDataService) {
   }
   async ngOnInit() {
+    this.user_types = [
+      {
+        item_id: 'BIZ_USER',
+        item_text: 'BIZ_USER'
+      },
+      {
+        item_id: 'FREE_USER',
+        item_text: 'FREE_USER'
+      },
+      {
+        item_id: 'NON_MEMBER',
+        item_text: 'NON_MEMBER'
+      },
+      {
+        item_id: 'PAID_USER',
+        item_text: 'PAID_USER'
+      }
+    ]
     this.route.params.subscribe(async (params) => {
       this.id = params.id;
       if (this.id == null) {
@@ -100,26 +121,36 @@ export class AddLinkComponent implements OnInit {
     this.setForm();
     this.multiSelect.toggleSelectAll();
   }
+
   setForm() {
     this.form = new FormGroup({
-      name: new FormControl(this.categories, Validators.required)
+      name: new FormControl(this.categories, Validators.required),
+      user_type: new FormControl(this.user_types, Validators.required)
     });
   }
+
   save() {
     this.category_ids = []
+    this.user_types_ids = []
     console.log("tag ", this.form.value)
     this.form.value.name.forEach(async (element) => {
       await this.category_ids.push(element.item_id)
     });
-    console.log("tag 2", this.category_ids)
+    this.form.value.user_type.forEach(async (element) => {
+      await this.user_types_ids.push(element)
+    });
+    console.log("tag 2", this.user_types_ids)
 
   }
+
+
   public onSave(items: any) {
     this.save();
   }
   get f() {
     return this.form.controls;
   }
+
   alertSuccess() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Successfully!' : ((this.configService.lang === 'vn') ? 'Thành công!' : '성공'),
@@ -186,7 +217,18 @@ export class AddLinkComponent implements OnInit {
       this.route_link = data.route;
       // 
       this.index = data.index
-      // 
+      if (data.accessible_user_type.length !== 0) {
+        for (let index = 0; index < data.accessible_user_type.length; index++) {
+          const user_type = data.accessible_user_type[index];
+          this.user_types_select.push({
+            item_text: user_type,
+            item_id: user_type
+          })
+        }
+      } else {
+        this.user_types_select = []
+      }
+
       if (data.categories.length !== 0) {
         for (let index = 0; index < data.categories.length; index++) {
           const cate = data.categories[index];
@@ -227,18 +269,19 @@ export class AddLinkComponent implements OnInit {
   }
   async updateItem(form: NgForm) {
     try {
-      const { name, image, thema_id, route_link, category_ids, index } = this;
-      if(index < 0){
+      const { name, image, thema_id, route_link, category_ids, index, user_types_ids } = this;
+      console.log('#######',user_types_ids)
+      if (index < 0) {
         this.alertErrorFromServer("Index can not be negative");
         this.submitting = false;
         return;
       }
-      if(index > 12){
+      if (index > 12) {
         this.alertErrorFromServer("Index can not be greater than 12")
         this.submitting = false;
         return;
       }
-      await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids, index });
+      await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids, index, accessible_user_type: user_types_ids });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -254,12 +297,12 @@ export class AddLinkComponent implements OnInit {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
       const { name, image, thema_id, route_link, category_ids, index } = this;
-      if(index < 0){
+      if (index < 0) {
         this.alertErrorFromServer("Index can not be negative");
         this.submitting = false;
         return;
       }
-      if(index > 12){
+      if (index > 12) {
         this.alertErrorFromServer("Index can not be greater than 12")
         this.submitting = false;
         return;

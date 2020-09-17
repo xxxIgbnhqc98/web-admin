@@ -52,6 +52,20 @@
                 {{'Please enter the order of link.' | translate}}
               </div>
             </div>
+            <div class="form-group">
+              <label for="category">{{'User Type' | translate}}</label>
+              <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select User type'" [data]="user_types" [(ngModel)]="user_types_select" [settings]="settings"
+                  [formControl]="f.user_type" [disabled]="false" (onFilterChange)="onSave($event)"
+                  (onSelect)="onSave($event)"
+                  (onDeSelect)="onSave($event)" (onSelectAll)="onSave($event)"
+                  (onDeSelectAll)="onSave($event)">
+                </ng-multiselect-dropdown>
+                <span class="invalid-feedback" *ngIf="f?.name?.errors?.required">
+                  User Type is required
+                </span>
+              </form>
+            </div>
             <!--  -->
             <div class="form-group">
               <label for="category">{{'Category' | translate}}</label>

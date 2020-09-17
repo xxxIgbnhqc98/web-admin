@@ -18,8 +18,10 @@ declare var swal: any;
 })
 export class LinkListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  userPermision: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
   itemFields: any = ['$all', { "thema": ["$all"] }, { "categories": ["$all", { "category": ["$all"] }] }];
+  itemFields1: any = ['$all'];
   query: any = {};
   submitting: boolean = false;
   submittingUpdate: boolean = false;
@@ -47,8 +49,12 @@ export class LinkListComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('Link list')
-    console.log(this.items)
-
+    let query = Object.assign({
+      fields: this.itemFields1
+    }, this.query);
+    this.userPermision.next(await this.apiService.settingUserPermission.getList({ query }));
+    console.log(this.userPermision)
+    console.log('aaaa',this.items)
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);
