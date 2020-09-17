@@ -54,6 +54,11 @@
             <span>{{item.name ? item.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Thema Color' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span [style.background]="item.theme_color" class="btn" style="width: 70px; height: 35px;"></span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Thema Name' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.thema.name ? item.thema.name : 'No info' | translate}}</span>

@@ -22,6 +22,7 @@ export class AddCategoryComponent implements OnInit {
   avatar: string;
   thema_id: string;
   thema_name: string;
+  theme_color: string = "#f44336"
   themas: any = [];
   loadingUploadAvatar: boolean = false;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
@@ -120,7 +121,7 @@ export class AddCategoryComponent implements OnInit {
       this.name = data.name;
       this.thema_id = data.thema_id
       this.titleService.setTitle(this.name);
-      console.log("@#$@#$@ ",this.thema_id)
+      console.log("@#$@#$@ ", this.thema_id)
 
     } catch (err) {
       console.log('err: ', err);
@@ -129,10 +130,38 @@ export class AddCategoryComponent implements OnInit {
     }
   }
 
+  rgb2hex(orig) {
+    var a, isPercent,
+      rgb = orig.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
+      alpha = (rgb && rgb[4] || "").trim(),
+      hex = rgb ? "#" +
+        (rgb[1] | 1 << 8).toString(16).slice(1) +
+        (rgb[2] | 1 << 8).toString(16).slice(1) +
+        (rgb[3] | 1 << 8).toString(16).slice(1) : orig;
+    if (alpha !== "") {
+      isPercent = alpha.indexOf("%") > -1;
+      a = parseFloat(alpha);
+      if (!isPercent && a >= 0 && a <= 1) {
+        a = Math.round(255 * a);
+      } else if (isPercent && a >= 0 && a <= 100) {
+        a = Math.round(255 * a / 100)
+      } else {
+        a = "";
+      }
+    }
+    if (a) {
+      hex += (a | 1 << 8).toString(16).slice(1);
+    }
+    return hex;
+  }
+
   async updateItem(form: NgForm) {
     try {
-      const { name } = this;
-      await this.apiService.category.update(this.id, { name });
+      let { name, theme_color } = this;
+      if (theme_color.match('rgba')) {
+        theme_color = this.rgb2hex(theme_color)
+      }
+      await this.apiService.category.update(this.id, { name, theme_color });
       this.alertSuccess();
       this.backToList(this.thema_id);
       this.submitting = false;
@@ -147,8 +176,11 @@ export class AddCategoryComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
-      const { thema_id, name } = this;
-      await this.apiService.category.add({ thema_id, name });
+      let { thema_id, name, theme_color } = this;
+      if (theme_color.match('rgba')) {
+        theme_color = this.rgb2hex(theme_color)
+      }
+      await this.apiService.category.add({ thema_id, name, theme_color });
       form.reset();
       this.alertSuccess();
       this.backToList(thema_id);

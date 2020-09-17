@@ -13,6 +13,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { SharedModule } from '../../shared';
 import { AddCategoryComponent } from './add/add.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { AddCategoryComponent } from './add/add.component';
     CategoryRoutingModule,
     ModalModule.forRoot(),
     NgxInfiniteScrollerModule,
+    ColorPickerModule
 
   ],
   declarations: [CategoryListComponent, AddCategoryComponent],
