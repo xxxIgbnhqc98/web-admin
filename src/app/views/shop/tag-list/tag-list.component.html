@@ -51,6 +51,11 @@
             <span>{{item.name ? item.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Thema' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.thema ? item.thema.name : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Actions' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="openModal2(template2,item)" class="btn btn-primary" style="margin-right: 5px;">
@@ -74,8 +79,8 @@
                     width: 100%;">
 
       <p lazy-load-images>
-        <img [attr.data-src]="zoom_image"
-          (error)="replaceImage($event)" onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+        <img [attr.data-src]="zoom_image" (error)="replaceImage($event)"
+          onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
       </p>
     </div>
   </div>
@@ -127,13 +132,27 @@
               </div>
             </div>
           </div>
+          <br />
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{'Thema' | translate}}</span>
+              </div>
+              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
+                class="form-control input-control">
+                <option *ngFor="let item of themas" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
           (click)="submitAdd(formContent)">
-          <i *ngIf="!id_update">{{ 'Add' | translate }}</i> 
-          <i *ngIf="id_update">{{ 'Edit' | translate }}</i> 
+          <i *ngIf="!id_update">{{ 'Add' | translate }}</i>
+          <i *ngIf="id_update">{{ 'Edit' | translate }}</i>
         </button>
       </div>
     </div>

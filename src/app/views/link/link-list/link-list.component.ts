@@ -47,6 +47,8 @@ export class LinkListComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('Link list')
+    console.log(this.items)
+
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);

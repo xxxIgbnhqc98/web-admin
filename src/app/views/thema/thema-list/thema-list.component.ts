@@ -201,6 +201,11 @@ export class ThemaListComponent implements OnInit {
       relativeTo: this.route
     });
   }
+  getListTag(item) {
+    this.router.navigate(['/shop/tag-list/', item.id], {
+      relativeTo: this.route
+    });
+  }
   addShop(item) {
     this.router.navigate([`/shop/${item.id}/add`], {
       relativeTo: this.route

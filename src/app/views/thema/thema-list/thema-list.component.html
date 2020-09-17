@@ -54,6 +54,13 @@
             <span>{{item.name ? item.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Tags' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="getListTag(item)" class="btn btn-primary">
+              <i>{{'List tags' | translate}}</i>
+            </button>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'List' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="getListCate(item)" class="btn btn-primary">

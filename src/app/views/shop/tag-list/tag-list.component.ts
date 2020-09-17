@@ -9,6 +9,7 @@ import { ExcelService } from '../../../services/excel/excel.service';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
+import { async } from '@angular/core/testing';
 
 declare var swal: any;
 @Component({
@@ -19,7 +20,7 @@ declare var swal: any;
 export class TagListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all'];
+  itemFields: any = ['$all', { 'thema': ['$all'] }];
   query: any = {
     filter: {
     }
@@ -35,6 +36,13 @@ export class TagListComponent implements OnInit {
   searchRef: any;
   modalRef: BsModalRef;
   searchTimeOut: number = 250;
+  thema_id: string = null;
+  // 
+  id: string;
+  params_thema_id: string;
+  isEdit: boolean;
+  themas: any = [];
+  // 
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -51,8 +59,47 @@ export class TagListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    console.log(this.items)
     this.titleService.setTitle('Tag list')
+    this.route.params.subscribe(async (params) => {
+      this.id = params.id;
+      if (params.thema_id) {
+        this.thema_id = params.thema_id;
+        this.params_thema_id = params.thema_id;
+      }
+
+      console.log("log ", this.thema_id)
+      const query: any = {
+        fields: ["$all"],
+        limit: 9999999
+      }
+      this.themas = await this.apiService.thema.getList({
+        query
+      });
+    });
   }
+  async setData() {
+    try {
+      const data = await this.apiService.tag.getItem(this.id_update, {
+        query: { fields: ['$all'] }
+      });
+      this.thema_id = data.thema_id
+    } catch (err) {
+      console.log('err: ', err);
+    }
+  }
+  setDefaultData() {
+    this.titleService.setTitle('Add new shop');
+    this.name = null;
+    this.id_update = null;
+    this.thema_id = null;
+    return {
+      id_update: this.id_update,
+      name: this.name,
+      thema_id: this.thema_id
+    };
+  }
+
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),
@@ -60,13 +107,13 @@ export class TagListComponent implements OnInit {
       timer: 2000,
     });
   }
-  openModal2(template: TemplateRef<any>, item?: any) {
+  async openModal2(template: TemplateRef<any>, item?: any) {
     if (item) {
-      this.name = item.name
       this.id_update = item.id
+      this.name = item.name
+      await this.setData();
     } else {
-      this.name = null
-      this.id_update = null
+      this.setDefaultData()
     }
     this.modalRef = this.modalService.show(template);
   }
@@ -94,16 +141,16 @@ export class TagListComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       if (this.id_update) {
-        await this.apiService.tag.update(this.id_update, { name: this.name });
+        await this.apiService.tag.update(this.id_update, { name: this.name, thema_id: this.thema_id });
 
       } else {
-        await this.apiService.tag.add({ name: this.name });
+        await this.apiService.tag.add({ name: this.name, thema_id: this.thema_id });
       }
       form.reset();
       this.alertSuccess();
       this.submitting = false;
       this.modalRef.hide()
-
+      this.itemsTable.reloadItems();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
       this.submitting = false;
@@ -271,7 +318,7 @@ export class TagListComponent implements OnInit {
   async search() {
     this.submitting = true;
     this.query.filter = {
-      
+
     }
     if (this.searchRef) { clearTimeout(this.searchRef); }
     this.searchRef = setTimeout(async () => {
@@ -285,7 +332,7 @@ export class TagListComponent implements OnInit {
         } else {
           this.query.filter.name = { $iLike: `%${this.keyword}%` }
         }
-      } 
+      }
       // if (this.sex !== null) {
       //   this.query.filter.sex = this.sex;
       // }

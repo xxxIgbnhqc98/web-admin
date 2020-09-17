@@ -70,6 +70,11 @@
             <span>{{item.route ? item.route : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'User Permission' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.route ? item.route : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Categories' | translate">
           <ng-template #dataTableCell let-item="item">
             <span *ngFor="let item of item.categories">{{item.category.name}}<br></span>

@@ -43,7 +43,7 @@
               <label for="post_limit">{{'Memo' | translate}}</label>
               <input class="form-control" id="memo" type="text" name="memo" [(ngModel)]="memo">
             </div>
-            <div class="input-group">
+            <div class="input-group" *ngIf="account_type === 'BIZ_USER'">
 
               <label for="role">{{'Show shop tag' | translate}}</label>
               <div class="form-check form-check-inline mr-1 ml-3">
