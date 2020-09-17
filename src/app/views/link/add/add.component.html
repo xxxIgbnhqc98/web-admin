@@ -44,12 +44,12 @@
             </div>
             <!--  -->
             <div class="form-group">
-              <label for="name">{{'Index' | translate}}</label>
-              <input class="form-control" id="index" [placeholder]="'enter index' | translate" type="number" name="index"
+              <label for="name">{{'The order of link' | translate}}</label>
+              <input class="form-control" id="index" [placeholder]="'Enter the order of link' | translate" type="number" name="index"
                 [(ngModel)]="index" required #indexControl="ngModel" min="0"
                 [ngClass]="{'is-invalid' : indexControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="indexControl.errors?.required">
-                {{'Please enter index.' | translate}}
+                {{'Please enter the order of link.' | translate}}
               </div>
             </div>
             <!--  -->

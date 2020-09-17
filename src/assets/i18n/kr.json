@@ -483,6 +483,9 @@
   "Please enter route": "경로를 선택해주세요.",
   "Please search member with ID , ID code, and Nckname": "ID, ID code 또는 닉네임으로 회원정보를 검색할 수 있습니다 ",
   "Tag Name": "태그 제목",
+  "The order of link": "게시판 링크 순위",
+  "Enter the order of link": "링크의 순위를 입력하세요",
+  "Please enter the order of link.": "링크의 순위를 입력하세요.",
   "nav": {
     "nav_items": [
       {

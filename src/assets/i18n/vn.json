@@ -482,6 +482,9 @@
   "Please enter route": "Vui lòng chọn lộ trình.",
   "Please search member with ID , ID code, and Nckname": "Vui lòng nhập ID, ID code và Nickname để tìm kiếm thành viên",
   "Tag Name": "Tên nhãn",
+  "The order of link": "Thứ tự của liên kết",
+  "Enter the order of link": "Nhập thứ tự của liên kết",
+  "Please enter the order of link.": "Vui lòng nhập thứ tự của liên kết.",
   "nav": {
     "nav_items": [
       {
