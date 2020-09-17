@@ -596,6 +596,11 @@
         ]
       },
       {
+        "name": "Bài đăng",
+        "url": "/bulletin",
+        "icon": "fa fa-sticky-note-o"
+      },
+      {
         "name": "Tài khoản quản lý",
         "url": "/partner-manager",
         "icon": "fa fa-lock"

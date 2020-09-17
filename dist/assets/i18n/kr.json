@@ -378,7 +378,7 @@
   "Remaining date": "유효 기간",
   "Add": "추가하기",
   "Edit Event": "이벤트\n수정하기",
-  "Add Event": "이벤트\n추가하기", 
+  "Add Event": "이벤트\n추가하기",
   "Tag": "태그",
   "Select Tag": "태그를 선택하세요",
   "Description": "세부내역",
@@ -482,7 +482,7 @@
   "Please choose thema.": "테마를 선택해주세요.",
   "Please enter route": "경로를 선택해주세요.",
   "Please search member with ID , ID code, and Nckname": "ID, ID code 또는 닉네임으로 회원정보를 검색할 수 있습니다 ",
-
+  "Tag Name": "태그 제목",
   "nav": {
     "nav_items": [
       {
@@ -592,6 +592,11 @@
             "url": "/shop/tag-list"
           }
         ]
+      },
+      {
+        "name": "올리기",
+        "url": "/bulletin",
+        "icon": "fa fa-sticky-note-o"
       },
       {
         "name": "파트너 관리자 & 어드민 계정",

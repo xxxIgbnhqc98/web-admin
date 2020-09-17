@@ -23,6 +23,8 @@ import { Content } from './crud/content';
 import { Statistic } from './crud/statistic';
 import { Seo } from './crud/seo';
 import { Meta } from './crud/meta';
+import { Bulletin } from './crud/bulletin';
+import { Comment } from './crud/comment';
 
 
 @Injectable()
@@ -56,6 +58,9 @@ export class ApiService {
   content = new Content(this);
   settingUserPermission = new SettingUserPermission(this);
   statistic = new Statistic(this);
+  bulletin = new Bulletin(this);
+  comment = new Comment(this);
+
 
 
 

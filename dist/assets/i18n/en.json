@@ -481,6 +481,7 @@
   "Please choose thema.": "Please choose thema.",
   "Please enter route": "Please enter route.",
   "Please search member with ID , ID code, and Nckname": "Please search member with ID , ID code, and Nickname",
+  "Tag Name": "Tag Name",
   "nav": {
     "nav_items": [
       {
@@ -590,6 +591,11 @@
             "url": "/shop/tag-list"
           }
         ]
+      },
+      {
+        "name": "Post",
+        "url": "/bulletin",
+        "icon": "fa fa-sticky-note-o"
       },
       {
         "name": "Partner manager & Admin",
