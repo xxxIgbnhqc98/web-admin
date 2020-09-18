@@ -59,6 +59,8 @@ export class ThemaListComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('Thema list')
+   
+
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);

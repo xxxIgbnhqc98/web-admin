@@ -69,6 +69,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'tag-list/:thema_id',
+        component: TagListComponent,
+        data: {
+          title: 'tag list'
+        }
+      },
+      {
         path: 'shop-list/:category_id',
         component: ShopListComponent,
         data: {

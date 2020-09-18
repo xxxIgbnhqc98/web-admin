@@ -653,11 +653,6 @@
             "url": "/setting/setting-list"
           },
           {
-            "name": "회원 접근권한 설정",
-            "icon": "fa fa-list-ol",
-            "url": "/setting/setting-user-permission-list"
-          },
-          {
             "name": "금칙어 리스트",
             "icon": "fa fa-list-ol",
             "url": "/setting/forbidden-word-list"

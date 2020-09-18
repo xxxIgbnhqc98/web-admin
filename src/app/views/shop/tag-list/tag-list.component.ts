@@ -62,6 +62,10 @@ export class TagListComponent implements OnInit {
     console.log(this.items)
     this.titleService.setTitle('Tag list')
     this.route.params.subscribe(async (params) => {
+      this.thema_id = params.thema_id;
+      if (this.thema_id) {
+        this.query.filter.thema_id = this.thema_id
+      }
       this.id = params.id;
       if (params.thema_id) {
         this.thema_id = params.thema_id;

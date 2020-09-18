@@ -652,11 +652,6 @@
             "url": "/setting/setting-list"
           },
           {
-            "name": "Setting user permission list",
-            "icon": "fa fa-list-ol",
-            "url": "/setting/setting-user-permission-list"
-          },
-          {
             "name": "Forbidden word list",
             "icon": "fa fa-list-ol",
             "url": "/setting/forbidden-word-list"

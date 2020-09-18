@@ -652,11 +652,6 @@
             "url": "/setting/setting-list"
           },
           {
-            "name": "Danh sách cài đặt quyền người dùng",
-            "icon": "fa fa-list-ol",
-            "url": "/setting/setting-user-permission-list"
-          },
-          {
             "name": "Danh sách từ bị cấm",
             "icon": "fa fa-list-ol",
             "url": "/setting/forbidden-word-list"
