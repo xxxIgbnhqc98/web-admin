@@ -25,6 +25,7 @@ import { Seo } from './crud/seo';
 import { Meta } from './crud/meta';
 import { Bulletin } from './crud/bulletin';
 import { Comment } from './crud/comment';
+import { Review } from './crud/review';
 
 
 @Injectable()
@@ -60,11 +61,6 @@ export class ApiService {
   statistic = new Statistic(this);
   bulletin = new Bulletin(this);
   comment = new Comment(this);
-
-
-
-
-
-
+  review = new Review(this);
   pushNotification = new PushNotification(this);
 }

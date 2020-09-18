@@ -11,6 +11,7 @@ import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
 import { max } from 'rxjs/operators';
+declare var $: any;
 
 declare var swal: any;
 @Component({
@@ -63,6 +64,14 @@ export class ShopListComponent implements OnInit {
   expiration_time_1: any = '12:00';
   start_time_unix_timestamp: number;
   expiration_time_unix_timestamp: number;
+  loading_api: boolean = false;
+  page_list_reviews: number = 1;
+  listReviewOfConversation: any = [];
+  shop_id: string;
+  limit_list_reviews: number = 10;
+  count_list_reviews: number = 0;
+  load_more: boolean = false;
+
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
@@ -136,6 +145,103 @@ export class ShopListComponent implements OnInit {
       this.submitting = false;
     }
   }
+  // Review
+
+  async getListReviewOfConversation(template, item) {
+    try {
+      this.loading_api = true;
+      this.page_list_reviews = 1;
+      this.shop_id = item.id
+
+      this.modalRef = this.modalService.show(template);
+      this.listReviewOfConversation = await this.apiService.review.getList({
+        query: {
+          fields: ['$all', { 'user': ['$all', '$paranoid'] }, { 'review_childs': ['$all', { 'user': ['$all', '$paranoid'] }] }],
+          filter: { shop_id: this.shop_id, parent_id: null },
+          order: [['created_at_unix_timestamp', 'DESC']],
+          limit: this.limit_list_reviews,
+          page: this.page_list_reviews
+        }
+      });
+      this.listReviewOfConversation.reverse();
+      this.count_list_reviews = this.apiService.review.pagination.totalItems;
+      this.ref.detectChanges();
+      await this.autoScroll();
+      this.loading_api = false;
+    } catch (error) {
+      this.loading_api = false;
+    }
+  }
+  async autoScroll() {
+    $(document).ready(function () {
+      var itemList = document.getElementById("msg_history");
+      itemList.scrollTop = itemList.scrollHeight;
+    })
+  }
+  async onScrollDown() {
+    this.load_more = true;
+    await this.loadMoreListReview();
+    this.load_more = false;
+  }
+  async loadMoreListReview() {
+    try {
+      if (this.listReviewOfConversation.length < this.count_list_reviews) {
+        this.page_list_reviews = this.page_list_reviews + 1;
+        const res = await this.apiService.review.getList({
+          query: {
+            fields: ['$all', { 'user': ['$all', '$paranoid'] }, { 'review_childs': ['$all', { 'user': ['$all', '$paranoid'] }] }],
+            filter: { shop_id: this.shop_id, parent_id: null },
+            order: [['created_at_unix_timestamp', 'DESC']],
+            limit: this.limit_list_reviews,
+            page: this.page_list_reviews
+          }
+        });
+        const old_res: any = this.listReviewOfConversation.reverse();
+        this.listReviewOfConversation = [...old_res, ...res];
+        this.listReviewOfConversation.reverse();
+      }
+    } catch (error) {
+
+    }
+  }
+  async deleteReview(item) {
+    try {
+      try {
+        await this.confirmDelete();
+      } catch (error) {
+        return;
+      }
+      await this.apiService.review.delete(item.id);
+      this.reloadAfterDeleteReview();
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
+    }
+  }
+  async reloadAfterDeleteReview() {
+    try {
+      this.loading_api = true;
+      this.page_list_reviews = 1;
+      this.listReviewOfConversation = await this.apiService.review.getList({
+        query: {
+          fields: ['$all', { 'user': ['$all', '$paranoid'] }, { 'review_childs': ['$all', { 'user': ['$all', '$paranoid'] }] }],
+          filter: { shop_id: this.shop_id, parent_id: null },
+          order: [['created_at_unix_timestamp', 'DESC']],
+          limit: this.limit_list_reviews,
+          page: this.page_list_reviews
+        }
+      });
+      this.listReviewOfConversation.reverse();
+      this.count_list_reviews = this.apiService.review.pagination.totalItems;
+      this.ref.detectChanges();
+      await this.autoScroll();
+      this.loading_api = false;
+    } catch (error) {
+      this.loading_api = false;
+    }
+  }
+  // ////////////////
   openModalSubTime(template: TemplateRef<any>, item) {
     this.id_update = item.id
     this.expired_date = item.expired_date;

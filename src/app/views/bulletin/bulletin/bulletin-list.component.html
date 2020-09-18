@@ -59,7 +59,7 @@
             </span>
           </ng-template>
         </data-table-column>
-        <data-table-column [header]="'Conment' | translate">
+        <data-table-column [header]="'Comment' | translate">
           <ng-template #dataTableCell let-item="item">
             <span (click)="getListCommentOfConversation(templateComment,item)"
               class="btn btn-primary">{{item.comment}}</span>

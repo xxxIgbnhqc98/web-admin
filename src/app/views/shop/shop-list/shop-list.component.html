@@ -66,7 +66,7 @@
         </data-table-column>
         <data-table-column [header]="'Thema' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.category.thema.name}}</span>
+            <span>{{ item.category.thema ? item.category.thema.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Category' | translate">
@@ -122,6 +122,12 @@
               <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
                 onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
             </span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Comment' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span (click)="getListReviewOfConversation(templateComment,item)"
+              class="btn btn-primary">{{item.comment}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Status' | translate">
@@ -439,4 +445,59 @@
       </div>
     </div>
   </form>
+</ng-template>
+
+<ng-template #templateComment>
+  <div class="modal-header">
+    <h4 class="modal-title">{{'List comments' | translate}}</h4>
+    <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="mesgs">
+      <div class="text-center" *ngIf="loading_api">
+        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+      </div>
+      <div class="text-center load-more" *ngIf="load_more">
+        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+      </div>
+      <div id="msg_history" class="msg_history search-results"
+        [ngClass]="{'hidden' : loading_api, 'opacity-load-more' : load_more}" ngxInfiniteScroller
+        strategy="scrollingToBoth" (onScrollDown)="onScrollDown()">
+        <ng-template ngFor let-item [ngForOf]="listReviewOfConversation" let-i="index" [ngForTrackBy]="trackByFn">
+          <div class="incoming_msg">
+            <div class="incoming_msg_img">
+              <img [src]="item.user !== null && item.user.avatar !== null ? item.user.avatar : thumbDefault">
+            </div>
+            <div class="received_msg">
+              <div class="received_withd_msg">
+                <p><b>{{item.user.nickname}} </b>{{item.content}}</p>
+                <img *ngIf="item.thumbnail" [src]="item.thumbnail" alt="" style="width: 100%;">
+                <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
+                  (click)="deleteReview(item)" class="fa fa-trash"></i></span>
+              </div>
+            </div>
+            <div style="margin-left: 50px;">
+              <div *ngFor="let itemC of item.review_childs">
+                <div class="incoming_msg">
+                  <div class="incoming_msg_img">
+                    <img [src]="itemC.user !== null && itemC.user.avatar !== null ? itemC.user.avatar : thumbDefault">
+                  </div>
+                  <div class="received_msg">
+                    <div class="received_withd_msg">
+                      <p><b>{{itemC.user.nickname}} </b>{{itemC.content}}</p>
+                      <img *ngIf="itemC.thumbnail" [src]="itemC.thumbnail" alt="" style="width: 100%;">
+                      <span class="time_date">{{itemC.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
+                          (click)="deleteReview(itemC)" class="fa fa-trash"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </ng-template>
