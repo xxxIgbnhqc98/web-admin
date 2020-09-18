@@ -106,26 +106,34 @@
         <ng-template ngFor let-item [ngForOf]="listCommentOfConversation" let-i="index" [ngForTrackBy]="trackByFn">
           <div class="incoming_msg">
             <div class="incoming_msg_img">
-              <img [src]="item.user !== null && item.user.avatar !== null ? item.user.avatar : thumbDefault">
+              <img [src]="item.user !== null && item.user.avatar !== null ? item.user.avatar : thumbDefault"
+                onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                style="width: 100%;">
             </div>
             <div class="received_msg">
               <div class="received_withd_msg">
                 <p><b>{{item.user.nickname}} </b>{{item.content}}</p>
-                <img *ngIf="item.thumbnail" [src]="item.thumbnail" alt="" style="width: 100%;">
+                <img *ngIf="item.thumbnail" [src]="item.thumbnail"
+                  onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                  style="width: 100%;">
                 <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
-                  (click)="deleteComment(item)" class="fa fa-trash"></i></span>
+                    (click)="deleteComment(item)" class="fa fa-trash"></i></span>
               </div>
             </div>
             <div style="margin-left: 50px;">
               <div *ngFor="let itemC of item.comment_childs">
                 <div class="incoming_msg">
                   <div class="incoming_msg_img">
-                    <img [src]="itemC.user !== null && itemC.user.avatar !== null ? itemC.user.avatar : thumbDefault">
+                    <img [src]="itemC.user !== null && itemC.user.avatar !== null ? itemC.user.avatar : thumbDefault"
+                      onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                      style="width: 100%;">
                   </div>
                   <div class="received_msg">
                     <div class="received_withd_msg">
                       <p><b>{{itemC.user.nickname}} </b>{{itemC.content}}</p>
-                      <img *ngIf="itemC.thumbnail" [src]="itemC.thumbnail" alt="" style="width: 100%;">
+                      <img *ngIf="itemC.thumbnail" [src]="itemC.thumbnail"
+                        onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                        style="width: 100%;">
                       <span class="time_date">{{itemC.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
                           (click)="deleteComment(itemC)" class="fa fa-trash"></i></span>
                     </div>

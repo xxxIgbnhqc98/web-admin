@@ -483,6 +483,11 @@
   "Please enter route": "경로를 선택해주세요.",
   "Please search member with ID , ID code, and Nckname": "ID, ID code 또는 닉네임으로 회원정보를 검색할 수 있습니다 ",
   "Tag Name": "태그 제목",
+  "The order of link": "게시판 링크 순위",
+  "Enter the order of link": "링크의 순위를 입력하세요",
+  "Please enter the order of link.": "링크의 순위를 입력하세요.",
+  "Conment": "댓글",
+  "List comments": "댓글목록",
   "nav": {
     "nav_items": [
       {
@@ -646,11 +651,6 @@
             "name": "설정 목록",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-list"
-          },
-          {
-            "name": "회원 접근권한 설정",
-            "icon": "fa fa-list-ol",
-            "url": "/setting/setting-user-permission-list"
           },
           {
             "name": "금칙어 리스트",

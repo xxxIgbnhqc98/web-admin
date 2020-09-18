@@ -482,6 +482,11 @@
   "Please enter route": "Vui lòng chọn lộ trình.",
   "Please search member with ID , ID code, and Nckname": "Vui lòng nhập ID, ID code và Nickname để tìm kiếm thành viên",
   "Tag Name": "Tên nhãn",
+  "The order of link": "Thứ tự của liên kết",
+  "Enter the order of link": "Nhập thứ tự của liên kết",
+  "Please enter the order of link.": "Vui lòng nhập thứ tự của liên kết.",
+  "Conment": "Bình luận",
+  "List comments": "Danh sách bình luận",
   "nav": {
     "nav_items": [
       {
@@ -645,11 +650,6 @@
             "name": "Danh sách cài đặt",
             "icon": "fa fa-list-ol",
             "url": "/setting/setting-list"
-          },
-          {
-            "name": "Danh sách cài đặt quyền người dùng",
-            "icon": "fa fa-list-ol",
-            "url": "/setting/setting-user-permission-list"
           },
           {
             "name": "Danh sách từ bị cấm",
