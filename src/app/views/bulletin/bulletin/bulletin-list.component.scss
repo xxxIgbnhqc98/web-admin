@@ -22,7 +22,7 @@
         }
       }
     }
-    #user-list {
+    #bulletin-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -69,7 +69,7 @@
         }
       }
     }
-    #user-list {
+    #bulletin-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -141,13 +141,13 @@
     }
   }
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
+/deep/ #bulletin-list #data-table-grid .data-table-wrapper .data-table-box table {
   width: 1200px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
+/deep/ #bulletin-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
   width: 185px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(8) {
+/deep/ #bulletin-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(8) {
   width: 185px;
 }
 .inbox_msg {

@@ -22,7 +22,7 @@
         }
       }
     }
-    #user-list {
+    #shop-banner-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -69,7 +69,7 @@
         }
       }
     }
-    #user-list {
+    #shop-banner-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -201,9 +201,9 @@
   width: 765px;
   margin-left: -100px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
+/deep/ #shop-banner-list #data-table-grid .data-table-wrapper .data-table-box table {
   width: 1300px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(8) {
+/deep/ #shop-banner-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(8) {
   width: 100px;
 }

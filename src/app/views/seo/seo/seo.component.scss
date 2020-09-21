@@ -22,7 +22,7 @@
         }
       }
     }
-    #user-list {
+    #seo-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -69,7 +69,7 @@
         }
       }
     }
-    #user-list {
+    #seo-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -134,9 +134,9 @@
   width: 765px;
   margin-left: -100px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
+/deep/ #seo-list #data-table-grid .data-table-wrapper .data-table-box table {
   width: 1200px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
+/deep/ #seo-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
   width: 185px;
 }
