@@ -22,7 +22,7 @@
         }
       }
     }
-    #user-list {
+    #setting-user-permission-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -69,7 +69,7 @@
         }
       }
     }
-    #user-list {
+    #setting-user-permission-list {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -134,9 +134,9 @@
   width: 765px;
   margin-left: -100px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
+/deep/ #setting-user-permission-list #data-table-grid .data-table-wrapper .data-table-box table {
   width: 1200px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
+/deep/ #setting-user-permission-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
   width: 185px;
 }
