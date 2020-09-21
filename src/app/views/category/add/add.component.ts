@@ -121,7 +121,7 @@ export class AddCategoryComponent implements OnInit {
       this.name = data.name;
       this.thema_id = data.thema_id
       this.titleService.setTitle(this.name);
-      console.log("@#$@#$@ ", this.thema_id)
+      this.theme_color = data.theme_color
 
     } catch (err) {
       console.log('err: ', err);
