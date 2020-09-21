@@ -77,7 +77,7 @@
         </data-table-column>
         <data-table-column [header]="'Categories' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span *ngFor="let item of item.categories">{{item.category.name}}<br></span>
+            <span *ngFor="let item of item.categories">{{item.category ? item.category.name : 'No info' | translate}}<br></span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Actions' | translate">
