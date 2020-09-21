@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 declare var $: any;
-
+import * as _ from 'lodash';
 declare var swal: any;
 @Component({
   selector: 'app-bulletin-list',
@@ -280,7 +280,10 @@ export class BulletinComponent implements OnInit {
           page: this.page_list_comments
         }
       });
-      this.listCommentOfConversation.reverse();
+      this.listCommentOfConversation.forEach(element => {
+        element.comment_childs = _.orderBy(element.comment_childs, ['created_at_unix_timestamp'], ['asc']);
+      });
+      // this.listCommentOfConversation.reverse();
       this.count_list_comments = this.apiService.comment.pagination.totalItems;
       this.ref.detectChanges();
       await this.autoScroll();
@@ -305,7 +308,10 @@ export class BulletinComponent implements OnInit {
           page: this.page_list_comments
         }
       });
-      this.listCommentOfConversation.reverse();
+      this.listCommentOfConversation.forEach(element => {
+        element.comment_childs = _.orderBy(element.comment_childs, ['created_at_unix_timestamp'], ['asc']);
+      });
+      // this.listCommentOfConversation.reverse();
       this.count_list_comments = this.apiService.comment.pagination.totalItems;
       this.ref.detectChanges();
       await this.autoScroll();
@@ -339,9 +345,12 @@ export class BulletinComponent implements OnInit {
             page: this.page_list_comments
           }
         });
-        const old_res: any = this.listCommentOfConversation.reverse();
+        this.listCommentOfConversation.forEach(element => {
+          element.comment_childs = _.orderBy(element.comment_childs, ['created_at_unix_timestamp'], ['asc']);
+        });
+        const old_res: any = this.listCommentOfConversation
         this.listCommentOfConversation = [...old_res, ...res];
-        this.listCommentOfConversation.reverse();
+        // this.listCommentOfConversation.reverse();
       }
     } catch (error) {
 

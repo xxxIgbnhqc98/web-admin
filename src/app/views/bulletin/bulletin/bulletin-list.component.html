@@ -116,7 +116,7 @@
                 <img *ngIf="item.thumbnail" [src]="item.thumbnail"
                   onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
                   style="width: 100%;">
-                <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
+                <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm': '+0' }} <i
                     (click)="deleteComment(item)" class="fa fa-trash"></i></span>
               </div>
             </div>
@@ -134,7 +134,7 @@
                       <img *ngIf="itemC.thumbnail" [src]="itemC.thumbnail"
                         onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
                         style="width: 100%;">
-                      <span class="time_date">{{itemC.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
+                      <span class="time_date">{{itemC.created_at | date :'yyyy/MM/dd HH:mm': '+0' }} <i
                           (click)="deleteComment(itemC)" class="fa fa-trash"></i></span>
                     </div>
                   </div>
