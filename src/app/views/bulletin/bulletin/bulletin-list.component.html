@@ -9,18 +9,31 @@
       <div class="row apps">
         <div class="col-12 search form-group">
           <div class="row">
-            <!-- <div class="col-2">
-              <select class="form-control" name="sex" [(ngModel)]="sex">
-                <option [ngValue]="null">{{'Choose gender' | translate}}</option>
-                <option value="MALE">{{'Male' | translate}}</option>
-                <option value="FEMALE">{{'Female' | translate}}</option>
+            <div class="col-4">
+              <label for="category_id">{{'Thema' | translate}}</label>
+              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
+                class="form-control input-control">
+                <option *ngFor="let item of themas" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
               </select>
-            </div> -->
-            <div class="col-2">
+            </div>
+            <div class="col-4">
+              <label for="category_id">{{'Category' | translate}}</label>
+              <select name="category_id" [(ngModel)]="category_id" #categoryControl="ngModel" id="category_id"
+                class="form-control input-control">
+                <option *ngFor="let item of categories" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+            </div>
+            <div class="col-3">
+              <label for="category_id">{{'Nickname' | translate}}</label>
               <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
             </div>
-            <div class="col-3">
+            <div class="col-2">
+              <br>
               <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
                   class="fa fa-search"></i> {{'Search' | translate}}</button>
             </div>
@@ -41,6 +54,16 @@
         <data-table-column [header]="'Nickname' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.user ? item.user.nickname : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Thema' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.category ? item.category.thema.name : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Category' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.category ? item.category.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Content' | translate">
@@ -65,7 +88,13 @@
               class="btn btn-primary">{{item.comment}}</span>
           </ng-template>
         </data-table-column>
-
+        <data-table-column [header]="'Actions' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="deleteItem(item)" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </data-table-column>
       </data-table>
     </div>
   </div>

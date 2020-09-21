@@ -20,7 +20,7 @@ declare var swal: any;
 export class BulletinComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "user": ["$all"] }];
+  itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }];
   query: any = {};
   submitting: boolean = false;
   listCommentOfConversation: any = [];
@@ -39,6 +39,10 @@ export class BulletinComponent implements OnInit {
   load_more: boolean = false;
   loading_api: boolean = false;
   limit_list_comments: number = 10;
+  themas: any;
+  thema_id: string;
+  category_id: string;
+  categories: any;
   count_list_comments: number = 0;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
@@ -57,6 +61,28 @@ export class BulletinComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('Bulletin list')
+    const query: any = {
+      fields: ["$all"],
+      limit: 9999999,
+      filter: {
+        // thema_id: this.thema_id
+      }
+    }
+    this.themas = await this.apiService.thema.getList({
+      query
+    });
+  }
+  async updateCateList() {
+    const query: any = {
+      fields: ["$all"],
+      limit: 9999999,
+      filter: {
+        thema_id: this.thema_id
+      }
+    }
+    this.categories = await this.apiService.category.getList({
+      query
+    });
   }
   openComment(template: TemplateRef<any>, user) {
     this.post_id = user.id
@@ -130,7 +156,7 @@ export class BulletinComponent implements OnInit {
       }, this.query);
       this.items.next(await this.apiService.bulletin.getList({ query }));
       let query1 = Object.assign({
-        fields: ["$all"]
+        fields: ["$all", { "user": ["$all"] }]
       }, this.query);
       const countLink: any = await this.apiService.bulletin.count({ query: query1 })
       this.itemCount = countLink;
@@ -204,7 +230,7 @@ export class BulletinComponent implements OnInit {
       //   this.submitting = false;
       //   return;
       // }
-      if (this.keyword === '') {
+      if (!this.keyword || this.keyword === '') {
         this.keyword = undefined;
       } else {
         if (this.keyword.length === 36) {
@@ -212,14 +238,15 @@ export class BulletinComponent implements OnInit {
         } else {
           this.query.filter.$and = [{
             $or: {
-              content: { $iLike: `%${this.keyword}%` }
+              content: { $iLike: `%${this.keyword}%` },
+              "$user.nickname$": { $iLike: `%${this.keyword}%` },
             }
           }]
         }
       }
-      // if (this.sex !== null) {
-      //   this.query.filter.sex = this.sex;
-      // }
+      if (this.category_id !== null) {
+        this.query.filter.category_id = this.category_id;
+      }
       await this.getItems();
       this.submitting = false;
     }, this.searchTimeOut);
