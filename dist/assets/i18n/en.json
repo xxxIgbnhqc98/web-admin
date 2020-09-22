@@ -434,6 +434,7 @@
   "Link list": "Link list",
   "Active post": "Active post",
   "Pending post": "Pending post",
+  "Recommend post": "Recommend post",
   "Rejected post": "Rejected post",
   "Expired post": "Expired post",
   "Tag list": "Tag list",
@@ -579,6 +580,11 @@
             "name": "Shop list",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-list"
+          },
+          {
+            "name": "Shop expried list",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/shop-expired-list"
           },
           {
             "name": "Recommendation area list",
