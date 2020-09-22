@@ -32,10 +32,12 @@
               <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
             </div>
-            <div class="col-2">
+            <div class="col-4">
               <br>
               <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
                   class="fa fa-search"></i> {{'Search' | translate}}</button>
+              <button class="btn btn-warning" (click)="resetSearch()" data-style="expand-left"><i
+                  class="fa fa-refresh"></i> {{'Reset' | translate}}</button>
             </div>
           </div>
         </div>
@@ -51,6 +53,11 @@
         [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
         [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
         [showReloading]="false">
+        <data-table-column [header]="'Date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.created_at | date :'yyyy/MM/dd': '+0' }}</span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Nickname' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.user ? item.user.nickname : 'No info' | translate}}</span>

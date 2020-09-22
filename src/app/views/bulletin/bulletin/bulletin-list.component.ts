@@ -84,6 +84,10 @@ export class BulletinComponent implements OnInit {
       query
     });
   }
+  resetSearch() {
+    this.thema_id = null;
+    this.category_id = null;
+  }
   openComment(template: TemplateRef<any>, user) {
     this.post_id = user.id
     this.modalRef = this.modalService.show(template);
