@@ -6,6 +6,7 @@ import { ShopPendingListComponent } from './shop-pending-list/shop-pending-list.
 import { TagListComponent } from './tag-list/tag-list.component';
 import { ShopBannerListComponent } from './shop-banner-list/shop-banner-list.component';
 import { recommendationAreaListComponent } from './recommendation-area/recommendation-area-list.component';
+import { ShopExpiredListComponent } from './shop-expired-list/shop-expired-list.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,13 @@ const routes: Routes = [
         component: ShopListComponent,
         data: {
           title: 'shop list'
+        }
+      },
+      {
+        path: 'shop-expired-list',
+        component: ShopExpiredListComponent,
+        data: {
+          title: 'shop expired list'
         }
       },
       {

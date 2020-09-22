@@ -7,6 +7,7 @@ import { LaddaModule } from 'angular2-ladda';
 import { ExcelService } from '../../services/excel/excel.service';
 import { ShopListComponent } from './shop-list/shop-list.component';
 import { ShopPendingListComponent } from './shop-pending-list/shop-pending-list.component';
+import { ShopExpiredListComponent } from './shop-expired-list/shop-expired-list.component';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LazyLoadImagesModule } from 'ngx-lazy-load-images';
@@ -45,7 +46,7 @@ import { recommendationAreaListComponent } from './recommendation-area/recommend
     ColorPickerModule,
     CustomFormsModule
   ],
-  declarations: [ShopListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent],
+  declarations: [ShopListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent, ShopExpiredListComponent],
   providers: [
     ExcelService,
     DatePipe

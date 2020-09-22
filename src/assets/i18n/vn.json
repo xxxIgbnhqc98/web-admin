@@ -582,6 +582,11 @@
             "url": "/shop/shop-list"
           },
           {
+            "name": "Shop expried list",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/shop-expired-list"
+          },
+          {
             "name": "Cửa hàng đề xuất",
             "icon": "fa fa-list-ol",
             "url": "/shop/recommendation-area"

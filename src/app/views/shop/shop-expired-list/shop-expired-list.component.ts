@@ -16,16 +16,16 @@ declare var $: any;
 declare var swal: any;
 @Component({
   selector: 'app-shop-list',
-  templateUrl: 'shop-list.component.html',
-  styleUrls: ['./shop-list.component.scss']
+  templateUrl: 'shop-expired-list.component.html',
+  styleUrls: ['./shop-expired-list.component.scss']
 })
-export class ShopListComponent implements OnInit {
+export class ShopExpiredListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
   itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
     filter: {
-      // state: { $in: ["APPROVED", "PENDING"] }
+      state: { $in: ["EXPIRED"] }
     }
   };
   option_search: string = 'id';
@@ -91,7 +91,7 @@ export class ShopListComponent implements OnInit {
 
   async ngOnInit() {
     console.log(this.items)
-    this.titleService.setTitle('Shop list')
+    this.titleService.setTitle('Shop expired list')
     this.route.params.subscribe(params => {
       this.category_id = params.category_id;
       if (this.category_id) {

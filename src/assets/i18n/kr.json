@@ -583,6 +583,11 @@
             "url": "/shop/shop-list"
           },
           {
+            "name": "Shop expried list",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/shop-expired-list"
+          },
+          {
             "name": "추천업체 목록",
             "icon": "fa fa-list-ol",
             "url": "/shop/recommendation-area"
