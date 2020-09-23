@@ -6,6 +6,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config/config.service';
 import { ShareDataService } from '../../../services/share-data/share-data-service';
+import * as moment from 'moment'
 declare var $: any;
 declare let swal: any;
 
@@ -29,6 +30,7 @@ export class AddUserComponent implements OnInit {
   memo: string;
   show_shop_tag: boolean = false;
   loadingUploadAvatar: boolean = false;
+  paid_user_expiration_date: any;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
 
   constructor(private route: ActivatedRoute,
@@ -87,6 +89,13 @@ export class AddUserComponent implements OnInit {
       timer: 2000
     });
   }
+  alertExpDate() {
+    return swal({
+      title: 'Expiration date must be earlier than Current date',
+      type: 'warning',
+      timer: 2000
+    });
+  }
 
   backToList() {
     this.router.navigate(['/users/user-list'], { relativeTo: this.route });
@@ -102,6 +111,7 @@ export class AddUserComponent implements OnInit {
     this.memo = null;
     this.post_limit = 1;
     this.post_limit_min = 1;
+    this.paid_user_expiration_date = new Date()
 
     return {
       email: this.email,
@@ -111,8 +121,8 @@ export class AddUserComponent implements OnInit {
       username: this.username,
       memo: this.memo,
       post_limit: this.post_limit,
-      post_limit_min: this.post_limit_min
-
+      post_limit_min: this.post_limit_min,
+      paid_user_expiration_date: this.paid_user_expiration_date
     };
   }
 
@@ -131,6 +141,8 @@ export class AddUserComponent implements OnInit {
       this.show_shop_tag = data.show_shop_tag;
       this.memo = data.memo;
       this.post_limit_min = data.current_active_post + data.current_pending_post;
+      this.paid_user_expiration_date = data.paid_user_expiration_date !== null ?
+        new Date(parseInt(data.paid_user_expiration_date)) : new Date();
       this.titleService.setTitle(this.nickname);
     } catch (err) {
       console.log('err: ', err);
@@ -145,8 +157,15 @@ export class AddUserComponent implements OnInit {
   }
   async updateItem(form: NgForm) {
     try {
-      const { account_type, post_limit,show_shop_tag, memo } = this;
-      await this.apiService.user.update(this.id, { account_type, post_limit,show_shop_tag, memo });
+      if (moment(this.paid_user_expiration_date).valueOf() < moment().hour(0).minute(0).second(0).valueOf()) {
+        this.alertExpDate();
+        this.submitting = false;
+        this.paid_user_expiration_date = new Date()
+        return;
+      }
+      this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
+      const { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
+      await this.apiService.user.update(this.id, { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
       form.reset();
       this.alertSuccess();
       this.backToList();

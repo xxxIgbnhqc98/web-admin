@@ -39,6 +39,20 @@
                 {{'Please enter price.' | translate}}
               </div>
             </div>
+            <div class="form-group" *ngIf="account_type === 'PAID_USER'">
+              <label for="paid_user_expiration_date">{{'Expiration date of Paid user' | translate}}</label>
+              <input #expiration_dateController="ngModel"
+                [ngClass]="{'is-valid' : !expiration_dateController.errors?.required, 'is-invalid' : expiration_dateController.errors?.required}"
+                required type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose expiration date.' | translate" name="paid_user_expiration_date"
+                [(ngModel)]="paid_user_expiration_date" [bsConfig]="{
+                dateInputFormat: 'YYYY-MM-DD'
+              }" placement="right" onkeydown="return false" />
+              <div class="invalid-feedback"
+                *ngIf="expiration_dateController.errors?.required || expiration_dateController.errors?.required">
+                {{ 'Please choose expiration date.' | translate }}
+              </div>
+            </div>
             <div class="form-group">
               <label for="post_limit">{{'Memo' | translate}}</label>
               <input class="form-control" id="memo" type="text" name="memo" [(ngModel)]="memo">
