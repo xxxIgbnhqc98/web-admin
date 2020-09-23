@@ -13,6 +13,8 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { SharedModule } from './../../shared';
 import { AddUserComponent } from './add/add.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 
 @NgModule({
@@ -28,7 +30,7 @@ import { AddUserComponent } from './add/add.component';
     UsersRoutingModule,
     ModalModule.forRoot(),
     NgxInfiniteScrollerModule,
-
+    BsDatepickerModule.forRoot()
   ],
   declarations: [UserListComponent, AddUserComponent],
   providers: [
