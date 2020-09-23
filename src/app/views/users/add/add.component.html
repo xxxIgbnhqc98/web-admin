@@ -20,10 +20,12 @@
               <label for="role">{{'Account type' | translate}}</label>
               <select class="form-control" name="account_type" id="account_type" [(ngModel)]="account_type" required
                 #account_typeControl="ngModel" [ngClass]="{'is-invalid' : account_typeControl.errors?.required}">
-                <option [ngValue]="null">{{'Choose account type' | translate}}</option>
-                <option value="BIZ_USER">{{'Biz User' | translate}}</option>
-                <option value="FREE_USER">{{'Free User' | translate}}</option>
-                <option value="PAID_USER">{{'Paid User' | translate}}</option>
+                <option [ngValue]="null" *ngIf="account_type !== 'BIZ_USER'">{{'Choose account type' | translate}}</option>
+                <option value="BIZ_USER" *ngIf="account_type === 'BIZ_USER'">{{'Biz User' | translate}}</option>
+                <option value="FREE_USER" *ngIf="account_type !== 'BIZ_USER'">{{'Free User' | translate}}
+                </option>
+                <option value="PAID_USER" *ngIf="account_type !== 'BIZ_USER'">{{'Paid User' | translate}}
+                </option>
               </select>
               <div class="invalid-feedback" *ngIf="account_typeControl.value == null">
                 {{'Please enter Account type' | translate}}

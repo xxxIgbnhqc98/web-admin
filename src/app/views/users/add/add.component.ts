@@ -165,7 +165,7 @@ export class AddUserComponent implements OnInit {
       }
       this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
       const { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
-      await this.apiService.user.update(this.id, { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+      await this.apiService.user.update(this.id, { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date});
       form.reset();
       this.alertSuccess();
       this.backToList();
