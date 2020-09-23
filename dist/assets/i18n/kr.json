@@ -435,6 +435,7 @@
   "Link list": "링크 목록",
   "Active post": "광고중 상점",
   "Pending post": "보류중 상점",
+  "Recommend post": "추천목록 상점",
   "Rejected post": "거부된 상점",
   "Expired post": "만료된 상점",
   "Tag list": "태그 리스트",
@@ -580,6 +581,11 @@
             "name": "상점 목록",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-list"
+          },
+          {
+            "name": "Shop expried list",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/shop-expired-list"
           },
           {
             "name": "추천업체 목록",
