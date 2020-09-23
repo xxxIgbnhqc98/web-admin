@@ -74,18 +74,30 @@ export class AddLinkComponent implements OnInit {
       } else {
         this.isEdit = true;
       }
-
-      if (this.isEdit) {
-        this.setData();
-      }
       const query: any = {
         fields: ["$all"],
         limit: 9999999
       }
+      let dataCate
+      if (this.isEdit) {
+        await this.setData();
+        dataCate = await this.apiService.category.getList({
+          query: {
+            fields: ["$all"],
+            filter: {
+              thema_id: this.thema_id
+            },
+            limit: 9999999
+          }
+        });
+
+      } else {
+        dataCate = await this.apiService.category.getList({
+          query
+        });
+      }
+
       this.themas = await this.apiService.thema.getList({
-        query
-      });
-      const dataCate = await this.apiService.category.getList({
         query
       });
       this.categories = dataCate.map(item => {
@@ -94,7 +106,6 @@ export class AddLinkComponent implements OnInit {
           item_text: item.name
         }
       });
-
       this.settings = {
         singleSelection: false,
         idField: 'item_id',
@@ -270,7 +281,7 @@ export class AddLinkComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       const { name, image, thema_id, route_link, category_ids, index, user_types_ids } = this;
-      console.log('#######',user_types_ids)
+      console.log('#######', user_types_ids)
       if (index < 0) {
         this.alertErrorFromServer("Index can not be negative");
         this.submitting = false;
