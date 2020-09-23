@@ -489,6 +489,7 @@
   "Please enter the order of link.": "링크의 순위를 입력하세요.",
   "Comment": "댓글",
   "List comments": "댓글목록",
+  "Expiration date of Paid user": "유료회원등급 만료일",
   "nav": {
     "nav_items": [
       {
