@@ -101,7 +101,7 @@
             </span>
             <span *ngFor="let item of item.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
               <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
-                onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+                onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
             </span>
           </ng-template>
         </data-table-column>
@@ -139,7 +139,7 @@
 
       <p lazy-load-images>
         <img [attr.data-src]="zoom_image"
-          (error)="replaceImage($event)" onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+          (error)="replaceImage($event)" onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
       </p>
     </div>
   </div>

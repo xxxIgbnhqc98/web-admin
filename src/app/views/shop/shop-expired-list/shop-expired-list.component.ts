@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
-import { max } from 'rxjs/operators';
+import * as _ from 'lodash';
 declare var $: any;
 
 declare var swal: any;
@@ -164,7 +164,12 @@ export class ShopExpiredListComponent implements OnInit {
           page: this.page_list_reviews
         }
       });
-      this.listReviewOfConversation.reverse();
+      this.listReviewOfConversation.forEach(element => {
+        element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
+      });
+      console.log('listReviewOfConversation', this.listReviewOfConversation)
+
+      // this.listReviewOfConversation.reverse();
       this.count_list_reviews = this.apiService.review.pagination.totalItems;
       this.ref.detectChanges();
       await this.autoScroll();
@@ -197,9 +202,12 @@ export class ShopExpiredListComponent implements OnInit {
             page: this.page_list_reviews
           }
         });
-        const old_res: any = this.listReviewOfConversation.reverse();
+        this.listReviewOfConversation.forEach(element => {
+          element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
+        });
+        const old_res: any = this.listReviewOfConversation;
         this.listReviewOfConversation = [...old_res, ...res];
-        this.listReviewOfConversation.reverse();
+        // this.listReviewOfConversation.reverse();
       }
     } catch (error) {
 
@@ -233,7 +241,10 @@ export class ShopExpiredListComponent implements OnInit {
           page: this.page_list_reviews
         }
       });
-      this.listReviewOfConversation.reverse();
+      this.listReviewOfConversation.forEach(element => {
+        element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
+      });
+      // this.listReviewOfConversation.reverse();
       this.count_list_reviews = this.apiService.review.pagination.totalItems;
       this.ref.detectChanges();
       await this.autoScroll();

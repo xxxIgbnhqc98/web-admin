@@ -490,6 +490,11 @@
   "Comment": "댓글",
   "List comments": "댓글목록",
   "Expiration date of Paid user": "유료회원등급 만료일",
+  "Add advertising date": "유효 광고일 추가하기",
+  "Decrease advertising date": "유효광고일 줄이기",
+  "Days to decrease": "광고단축일",
+  "Decrease": "단축하기",
+  "Memo": "메모",
   "nav": {
     "nav_items": [
       {
@@ -584,7 +589,7 @@
             "url": "/shop/shop-list"
           },
           {
-            "name": "Shop expried list",
+            "name": "상점만료 목록",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-expired-list"
           },

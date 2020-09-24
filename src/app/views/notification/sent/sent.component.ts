@@ -13,7 +13,7 @@ declare let swal: any;
   styleUrls: ['./sent.component.scss']
 })
 export class SentPushNotificationComponent implements OnInit {
-  thumbDefault: string = 'https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png';
+  thumbDefault: string = 'https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png';
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
   itemFields: any = ['$all'];

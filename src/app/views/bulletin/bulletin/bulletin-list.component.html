@@ -88,7 +88,7 @@
             </span>
             <span *ngFor="let item of item.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
               <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
-                onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+                onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
             </span>
           </ng-template>
         </data-table-column>
@@ -119,7 +119,7 @@
 
       <p lazy-load-images>
         <img [attr.data-src]="zoom_image" (error)="replaceImage($event)"
-          onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+          onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
       </p>
     </div>
   </div>
@@ -146,14 +146,14 @@
           <div class="incoming_msg">
             <div class="incoming_msg_img">
               <img [src]="item.user !== null && item.user.avatar !== null ? item.user.avatar : thumbDefault"
-                onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'"
                 style="width: 100%;">
             </div>
             <div class="received_msg">
               <div class="received_withd_msg">
                 <p><b>{{item.user.nickname}} </b>{{item.content}}</p>
                 <img *ngIf="item.thumbnail" [src]="item.thumbnail"
-                  onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                  onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'"
                   style="width: 100%;">
                 <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm': '+0' }} <i
                     (click)="deleteComment(item)" class="fa fa-trash"></i></span>
@@ -164,14 +164,14 @@
                 <div class="incoming_msg">
                   <div class="incoming_msg_img">
                     <img [src]="itemC.user !== null && itemC.user.avatar !== null ? itemC.user.avatar : thumbDefault"
-                      onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                      onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'"
                       style="width: 100%;">
                   </div>
                   <div class="received_msg">
                     <div class="received_withd_msg">
                       <p><b>{{itemC.user.nickname}} </b>{{itemC.content}}</p>
                       <img *ngIf="itemC.thumbnail" [src]="itemC.thumbnail"
-                        onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                        onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'"
                         style="width: 100%;">
                       <span class="time_date">{{itemC.created_at | date :'yyyy/MM/dd HH:mm': '+0' }} <i
                           (click)="deleteComment(itemC)" class="fa fa-trash"></i></span>

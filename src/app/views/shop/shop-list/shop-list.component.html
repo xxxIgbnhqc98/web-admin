@@ -66,12 +66,12 @@
         </data-table-column>
         <data-table-column [header]="'Thema' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{ item.category.thema ? item.category.thema.name : 'No info' | translate}}</span>
+            <span>{{ (item.category && item.category.thema) ? item.category.thema.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Category' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.category.name ? item.category.name : 'No info' | translate}}</span>
+            <span>{{item.category ? item.category.name : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Start date End Date' | translate">
@@ -144,15 +144,15 @@
         </data-table-column>
         <data-table-column [header]="'Event' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="item.events.length === 0" (click)="openModalEvent(template2, item)" class="btn btn-primary"
-              [disabled]="mathRemainingTime(item.expired_date) < 0">
+            <button *ngIf="item.events && item.events.length === 0" (click)="openModalEvent(template2, item)"
+              class="btn btn-primary" [disabled]="mathRemainingTime(item.expired_date) < 0">
               <i>{{'Add Event' | translate}}</i>
             </button>
-            <button *ngIf="item.events.length > 0 && item.events[0].state ==='PENDING' "
+            <button *ngIf="item.events && (item.events.length > 0 && item.events[0].state ==='PENDING')"
               (click)="openModalEvent(template2, item)" class="btn btn-primary">
               <i class="fa fa-spinner">Pending</i>
             </button>
-            <button *ngIf="item.events.length > 0 && item.events[0].state !=='PENDING'"
+            <button *ngIf="item.events && (item.events.length > 0 && item.events[0].state !=='PENDING')"
               (click)="openModalEvent(template2, item)" class="btn btn-danger">
               <i>{{'Edit Event' | translate}}</i>
             </button>
@@ -367,7 +367,7 @@
 <ng-template #templateAddTime>
   <form class="form-horizontal form-content" #formContent="ngForm">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{ 'Add time' | translate }}</h4>
+      <h4 class="modal-title pull-left">{{ 'Add advertising date' | translate }}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -408,7 +408,7 @@
 <ng-template #templateSubTime>
   <form class="form-horizontal form-content" #formContent="ngForm">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{ 'Sub time' | translate }}</h4>
+      <h4 class="modal-title pull-left">{{ 'Decrease advertising date' | translate }}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -428,7 +428,7 @@
           <div class="col-md-12 form-item">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text">{{ 'Sub days' | translate }}</span>
+                <span class="input-group-text">{{ 'Days to decrease' | translate }}</span>
               </div>
               <input type="text" id="extra_days" class="form-control" name="extra_days" [(ngModel)]="extra_days"
                 #nameControl="ngModel">
@@ -440,7 +440,7 @@
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
           (click)="submitSubTime(formContent)">
-          <i>{{ 'Sub' | translate }}</i>
+          <i>{{ 'Decrease' | translate }}</i>
         </button>
       </div>
     </div>
@@ -468,14 +468,15 @@
           <div class="incoming_msg">
             <div class="incoming_msg_img">
               <img [src]="item.user !== null && item.user.avatar !== null ? item.user.avatar : thumbDefault"
-                onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'"
                 style="width: 100%;">
             </div>
             <div class="received_msg">
               <div class="received_withd_msg">
-                <p><b>{{item.user.nickname}} </b>{{item.content}}</p>
+                <p><b>{{item.user.nickname}} </b>{{item.content}}<i *ngIf="item.private"
+                    class="fa fa-lock float-right"></i></p>
                 <img *ngIf="item.thumbnail" [src]="item.thumbnail"
-                  onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
+                  onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'"
                   style="width: 100%;">
                 <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm:ss' }} <i
                     (click)="deleteReview(item)" class="fa fa-trash"></i></span>
@@ -491,7 +492,8 @@
                   </div>
                   <div class="received_msg">
                     <div class="received_withd_msg">
-                      <p><b>{{itemC.user.nickname}} </b>{{itemC.content}}</p>
+                      <p><b>{{itemC.user.nickname}} </b>{{itemC.content}}<i *ngIf="itemC.private"
+                          class="fa fa-lock float-right"></i></p>
                       <img *ngIf="itemC.thumbnail" [src]="itemC.thumbnail"
                         onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
                         style="width: 100%;">

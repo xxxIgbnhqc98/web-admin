@@ -51,7 +51,7 @@
         <data-table-column [header]="'Avatar' | translate">
           <ng-template #dataTableCell let-item="item">
             <img *ngIf="item.avatar" height="50px" [src]="item.avatar ? item.avatar : thumbDefault"
-              onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+              onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
           </ng-template>
         </data-table-column>
         <data-table-column property="fullname" [header]="'fullname' | translate">

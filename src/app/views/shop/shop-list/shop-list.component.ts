@@ -168,6 +168,8 @@ export class ShopListComponent implements OnInit {
       this.listReviewOfConversation.forEach(element => {
         element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
       });
+      console.log('listReviewOfConversation', this.listReviewOfConversation)
+
       // this.listReviewOfConversation.reverse();
       this.count_list_reviews = this.apiService.review.pagination.totalItems;
       this.ref.detectChanges();
@@ -204,9 +206,9 @@ export class ShopListComponent implements OnInit {
         this.listReviewOfConversation.forEach(element => {
           element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
         });
-        const old_res: any = this.listReviewOfConversation.reverse();
+        const old_res: any = this.listReviewOfConversation;
         this.listReviewOfConversation = [...old_res, ...res];
-        this.listReviewOfConversation.reverse();
+        // this.listReviewOfConversation.reverse();
       }
     } catch (error) {
 
@@ -264,8 +266,11 @@ export class ShopListComponent implements OnInit {
       try {
         const max_day = Math.ceil((this.expired_date - moment().valueOf()) / 86400000)
         console.log("@@@@ n ", max_day)
-        if (this.extra_days > max_day) {
-          this.extra_days = max_day
+        if (this.extra_days >= max_day) {
+          this.extra_days = max_day - 1
+          this.alertSubTime();
+          this.submitting = false;
+          return;
         }
         await this.apiService.shop.editReTime(this.id_update, {
           expired_date: parseInt(this.expired_date.toString()) - (this.extra_days * 86400000)
@@ -323,7 +328,13 @@ export class ShopListComponent implements OnInit {
       timer: 2000,
     });
   }
-
+  alertSubTime(){
+    return swal({
+      title: (this.configService.lang === 'en') ? 'The date to decrease can\'t be bigger than remaining date' : ((this.configService.lang === 'vn') ? 'Ngày giảm không được lớn hơn ngày còn lại' : '광고단축일은  남은 광고기간보다 크게 설정할 수 없습니다.'),
+      type: 'warning',
+      timer: 2000,
+    });
+  }
   async alertConfirmUnBlock() {
     return await swal({
       title: (this.configService.lang === 'en') ? 'Are you sure to unblock this user?' : ((this.configService.lang === 'vn') ? 'Gỡ bỏ hình phạt' : '패널티 해제하기'),

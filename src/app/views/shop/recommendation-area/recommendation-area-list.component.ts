@@ -604,8 +604,11 @@ export class recommendationAreaListComponent implements OnInit {
       try {
         const max_day = Math.ceil((this.expired_date - moment().valueOf()) / 86400000)
         console.log("@@@@ n ", max_day)
-        if (this.extra_days > max_day) {
-          this.extra_days = max_day
+        if (this.extra_days >= max_day) {
+          this.extra_days = max_day - 1
+          this.alertSubTime();
+          this.submitting = false;
+          return;
         }
         await this.apiService.shop.editReTime(this.id_update, {
           expired_date: parseInt(this.expired_date.toString()) - (this.extra_days * 86400000)
@@ -649,6 +652,13 @@ export class recommendationAreaListComponent implements OnInit {
   alertLimit() {
     return swal({
       title: "Only a maximum of 20 shops can be selected",
+      type: 'warning',
+      timer: 2000,
+    });
+  }
+  alertSubTime() {
+    return swal({
+      title: 'Sub days can\'t be greater than Remaining date',
       type: 'warning',
       timer: 2000,
     });
