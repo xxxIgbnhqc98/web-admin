@@ -10,7 +10,8 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
-import { max } from 'rxjs/operators';
+import * as _ from 'lodash';
+
 declare var $: any;
 
 declare var swal: any;
@@ -164,7 +165,10 @@ export class ShopListComponent implements OnInit {
           page: this.page_list_reviews
         }
       });
-      this.listReviewOfConversation.reverse();
+      this.listReviewOfConversation.forEach(element => {
+        element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
+      });
+      // this.listReviewOfConversation.reverse();
       this.count_list_reviews = this.apiService.review.pagination.totalItems;
       this.ref.detectChanges();
       await this.autoScroll();
@@ -196,6 +200,9 @@ export class ShopListComponent implements OnInit {
             limit: this.limit_list_reviews,
             page: this.page_list_reviews
           }
+        });
+        this.listReviewOfConversation.forEach(element => {
+          element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
         });
         const old_res: any = this.listReviewOfConversation.reverse();
         this.listReviewOfConversation = [...old_res, ...res];
@@ -233,7 +240,10 @@ export class ShopListComponent implements OnInit {
           page: this.page_list_reviews
         }
       });
-      this.listReviewOfConversation.reverse();
+      this.listReviewOfConversation.forEach(element => {
+        element.review_childs = _.orderBy(element.review_childs, ['created_at_unix_timestamp'], ['asc']);
+      });
+      // this.listReviewOfConversation.reverse();
       this.count_list_reviews = this.apiService.review.pagination.totalItems;
       this.ref.detectChanges();
       await this.autoScroll();

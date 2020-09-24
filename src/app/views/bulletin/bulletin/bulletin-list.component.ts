@@ -255,6 +255,34 @@ export class BulletinComponent implements OnInit {
       this.submitting = false;
     }, this.searchTimeOut);
   }
+  async deleteAll() {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      try {
+        await this.confirmDelete();
+      } catch (err) {
+        return;
+      }
+      await this.apiService.bulletin.deleteAll(ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
   async exportAsXLSX() {
     try {
       this.loadingExportExcel = true;

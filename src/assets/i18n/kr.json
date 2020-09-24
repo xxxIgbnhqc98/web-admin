@@ -606,7 +606,7 @@
         ]
       },
       {
-        "name": "올리기",
+        "name": "게시판",
         "url": "/bulletin",
         "icon": "fa fa-sticky-note-o"
       },
