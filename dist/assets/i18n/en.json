@@ -376,7 +376,7 @@
   "Rejected": "Rejected",
   "Start date End Date": "Start time\nEnd time",
   "Remaining date": "Remaining date",
-  "Add": "Add",
+  "Add": "ADD",
   "Edit Event": "Edit Event",
   "Add Event": "Add Event",
   "Tag": "Tag",
@@ -454,7 +454,7 @@
   "shops": "shops",
   "Upload Thumbnail": "Upload Thumbnail",
   "enter url": "enter url",
-  "Please enter url.": "please enter url",
+  "Please enter url.": "please entFer url",
   "enter title": "enter title",
   "Please enter title.": "Please enter title",
   "Extra days": "Extra days",
@@ -488,6 +488,12 @@
   "Please enter the order of link.": "Please enter the order of link.",
   "Comment": "Comment",
   "List comments": "List comments",
+  "Expiration date of Paid user": "Expiration date of Paid user",
+  "Add advertising date": "Add advertising date",
+  "Decrease advertising date": "Decrease advertising date",
+  "Days to decrease": "Days to decrease",
+  "Decrease": "DCREASE",
+  "Memo": "Memo",
   "nav": {
     "nav_items": [
       {

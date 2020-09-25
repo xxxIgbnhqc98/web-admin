@@ -488,6 +488,12 @@
   "Please enter the order of link.": "Vui lòng nhập thứ tự của liên kết.",
   "Comment": "Bình luận",
   "List comments": "Danh sách bình luận",
+  "Expiration date of Paid user": "Ngày hết hạn của Paid User",
+  "Add advertising date": "Thêm ngày quảng cáo",
+  "Decrease advertising date": "Giảm ngày quảng cáo",
+  "Days to decrease": "Số ngày giảm",
+  "Decrease": "Giảm bớt",
+  "Memo": "Bản ghi nhớ",
   "nav": {
     "nav_items": [
       {
