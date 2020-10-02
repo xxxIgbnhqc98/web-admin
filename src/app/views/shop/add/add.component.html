@@ -83,7 +83,7 @@
               <label for="start_time">{{'Start time - End time' | translate}}</label>
               <select name="start_time" [(ngModel)]="start_time" required #start_timeControl="ngModel"
                 [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id="" class="form-control input-control"
-                (change)="onChangeStartTime($event)">
+                >
                 <option *ngFor="let item of hours" value="{{ item }}">{{
                   item
                 }}</option>
