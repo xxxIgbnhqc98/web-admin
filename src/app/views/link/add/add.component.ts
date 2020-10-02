@@ -226,6 +226,7 @@ export class AddLinkComponent implements OnInit {
       this.name = data.name;
       this.thema_id = data.thema_id;
       this.route_link = data.route;
+      this.user_types_ids = data.accessible_user_type;
       // 
       this.index = data.index
       if (data.accessible_user_type.length !== 0) {

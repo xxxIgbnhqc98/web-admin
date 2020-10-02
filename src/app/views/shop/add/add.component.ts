@@ -113,20 +113,7 @@ export class AddShopComponent implements OnInit {
       });
       this.updateCateList();
 
-      const dataTag = await this.apiService.tag.getList({
-        query
-      });
-      // this.cities = await this.apiService.city.getList({
-      //   query
-      // });
-      // this.listDistrict();
-      // this.listWard();
-      this.tags = dataTag.map(item => {
-        return {
-          item_id: item.id,
-          item_text: item.name
-        }
-      });
+      
       // this.tags_select = [
       //   {item_text: "Parking lot", item_id: "1558a660-bf58-11ea-a3ea-5d37b467b530"},
       //   {item_text: "Wifi", item_id: "184abd40-bf58-11ea-a3ea-5d37b467b530"},
@@ -407,6 +394,20 @@ export class AddShopComponent implements OnInit {
     }
     this.categories = await this.apiService.category.getList({
       query
+    });
+    const dataTag = await this.apiService.tag.getList({
+      query
+    });
+    // this.cities = await this.apiService.city.getList({
+    //   query
+    // });
+    // this.listDistrict();
+    // this.listWard();
+    this.tags = dataTag.map(item => {
+      return {
+        item_id: item.id,
+        item_text: item.name
+      }
     });
   }
   setDefaultData() {
