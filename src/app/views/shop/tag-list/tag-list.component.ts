@@ -133,6 +133,34 @@ export class TagListComponent implements OnInit {
       cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
     });
   }
+  async deleteAll() {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      try {
+        await this.confirmDelete();
+      } catch (err) {
+        return;
+      }
+      await this.apiService.tag.deleteAll(ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
   async submitAdd(form: NgForm) {
     this.submitting = true;
     if (form.valid) {
