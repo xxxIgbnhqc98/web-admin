@@ -15,14 +15,14 @@ const routes: Routes = [
       title: 'Users'
     },
     children: [
-      // {
-      //   path: 'add',
-      //   component: AddUserComponent,
-      //   data: {
-      //     title: 'Add new'
-      //   }
-      // },
-       {
+      {
+        path: 'add',
+        component: AddUserComponent,
+        data: {
+          title: 'Add new'
+        }
+      },
+      {
         path: 'add/:id',
         component: AddUserComponent,
         data: {

@@ -601,11 +601,6 @@
             "name": "Thêm cửa hàng",
             "icon": "fa fa-plus",
             "url": "/shop/add"
-          },
-          {
-            "name": "Danh sách nhãn",
-            "icon": "fa fa-list-ol",
-            "url": "/shop/tag-list"
           }
         ]
       },
