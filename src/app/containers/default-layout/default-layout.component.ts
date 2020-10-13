@@ -5,6 +5,9 @@ import { AuthService } from '../../services/auth/auth.service';
 import { ApiService } from '../../services/api/api.service';
 import { ShareDataService } from '../../services/share-data/share-data-service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import jwt_decode from 'jwt-decode';
+// import { moment } from 'ngx-bootstrap/chronos/test/chain';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-dashboard',
@@ -60,6 +63,33 @@ export class DefaultLayoutComponent implements OnInit {
   }
   async ngOnInit() {
     this.fullname = this.configService.fullname;
+    try {
+      const data = await this.apiService.employee.getItem(this.configService.id, {
+        query: { fields: ['$all'] }
+      });
+      try {
+        const decodeToken = await jwt_decode(this.configService.token.slice(7, this.configService.token.length));
+        if ((new Date(decodeToken.exp)).getTime() <= (Date.now())) {
+          this.logout()
+        }
+      }
+      catch (Error) {
+        this.logout()
+      }
+      console.log("@@@ ", data)
+      console.log("@@@ u", this.configService.username)
+      console.log("@@@ p", this.configService.password)
+      if (data) {
+        await this.authService.employeeLogin({ username: this.configService.username, password: this.configService.password });
+      }
+      // try {
+      // } catch (error) {
+      //   this.logout()
+      // }
+
+    } catch (err) {
+      this.logout()
+    }
     if (this.configService.avatar === 'null') {
       this.avatar = '../../../assets/img/avatars/avatar_user.jpg';
     } else {

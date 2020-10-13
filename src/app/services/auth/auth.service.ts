@@ -91,6 +91,8 @@ export class AuthService {
     this.configService.token = 'Bearer ' + row.token;
     this.configService.isLogon = 'true';
     this.configService.id = row.object.id;
+    this.configService.username = row.object.username;
+    this.configService.password = data.password;
     this.configService.avatar = row.object.avatar;
     this.onAuthStateChange.next(true);
     return row;

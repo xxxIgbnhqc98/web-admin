@@ -40,7 +40,20 @@ export class ConfigService {
   set id(value: string) {
     localStorage.setItem('id', value);
   }
+  get username() {
+    return localStorage.getItem('username');
+  }
 
+  set username(value: string) {
+    localStorage.setItem('username', value);
+  }
+  get password() {
+    return localStorage.getItem('password');
+  }
+
+  set password(value: string) {
+    localStorage.setItem('password', value);
+  }
   get fullname() {
     return localStorage.getItem('fullname');
   }
