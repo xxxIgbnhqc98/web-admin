@@ -602,11 +602,6 @@
             "name": "상점 추가하기",
             "icon": "fa fa-plus",
             "url": "/shop/add"
-          },
-          {
-            "name": "태그 리스트",
-            "icon": "fa fa-list-ol",
-            "url": "/shop/tag-list"
           }
         ]
       },

@@ -4,14 +4,14 @@
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
         <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="deleteAll()">
-          <i class="fa fa-trash"></i>{{'Delete' | translate}}
+          <i class="fa fa-trash"></i> {{'Delete' | translate}}
         </button>
         <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
           <i class="fa fa-cloud-download"></i> {{'Export excel' | translate}}
         </button> -->
-        <!-- <button class="btn btn-info" routerLink="/users/add">
-          <i class="fa fa-plus"></i>{{'Add new' | translate}}
-        </button> -->
+        <button class="btn btn-info" routerLink="/users/add">
+          <i class="fa fa-plus"></i> {{'Add new' | translate}}
+        </button>
       </div>
     </div>
     <div class="card-body">

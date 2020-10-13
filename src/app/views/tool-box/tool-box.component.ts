@@ -13,6 +13,7 @@ declare var swal: any;
   styleUrls: ['./tool-box.component.scss']
 
 })
+
 export class ToolBoxComponent implements OnInit {
   submitting: boolean = false;
   description: any = html;

@@ -558,6 +558,7 @@ export class recommendationAreaListComponent implements OnInit {
       this.submitting = false;
     }, this.searchTimeOut);
   }
+
   async exportAsXLSX() {
     try {
       this.loadingExportExcel = true;

@@ -31,6 +31,12 @@ export class AddUserComponent implements OnInit {
   show_shop_tag: boolean = false;
   loadingUploadAvatar: boolean = false;
   paid_user_expiration_date: any;
+
+  fullname: string;
+  password: any;
+  password_show: string;
+
+
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
 
   constructor(private route: ActivatedRoute,
@@ -179,9 +185,9 @@ export class AddUserComponent implements OnInit {
 
   async addItem(form: NgForm) {
     try {
-      // this.password = new Md5().appendStr(this.password_show).end();
-      // const { phone, email, password } = this;
-      // await this.apiService.user.add({ fullname: this.password_show, phone, email, password, username: this.password_show });
+      this.password = new Md5().appendStr(this.password_show).end();
+      const { fullname, avatar, phone, account_type, email, password, username, nickname } = this;
+      await this.apiService.user.add({ fullname, avatar, phone, account_type, email, password, username });
       form.reset();
       this.alertSuccess();
       this.backToList();
