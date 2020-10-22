@@ -18,15 +18,16 @@
             </div>
             <div class="form-group">
               <label for="thema_name">{{'Thema' | translate}}</label>
-              <select name="thema_id" [(ngModel)]="thema_id" required #thema_idControl="ngModel" (change)="changeThema();"
-                [ngClass]="{'is-invalid' : thema_idControl.errors?.required}" id="" class="form-control input-control">
+              <select name="thema_id" [(ngModel)]="thema_id"  #thema_idControl="ngModel" (change)="changeThema();"
+                 id="" class="form-control input-control">
+                <option *ngIf="route_link === 'BULLETIN_BOARD' || route_link === 'EVENT_BOARD'" value="null">All thema</option>
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name
                 }}</option>
               </select>
-              <div class="invalid-feedback" *ngIf="thema_idControl.errors?.required">
+              <!-- <div class="invalid-feedback" *ngIf="thema_idControl.errors?.required">
                 {{'Please choose thema.' | translate}}
-              </div>
+              </div> -->
             </div>
             <div class="form-group">
               <label for="route_link">{{'Route' | translate}}</label>
@@ -72,10 +73,10 @@
               <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
 
                 <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Category' | translate" [data]="categories" [(ngModel)]="categories_select" [settings]="settings"
-                  [formControl]="f.name" [disabled]="false" (onFilterChange)="onSave($event)"
-                  (onSelect)="onSave($event)"
-                  (onDeSelect)="onSave($event)" (onSelectAll)="onSave($event)"
-                  (onDeSelectAll)="onSave($event)">
+                  [formControl]="f.name" [disabled]="false" (onFilterChange)="onSaveCa($event)"
+                  (onSelect)="onSaveCa($event)"
+                  (onDeSelect)="onSaveCa($event)" (onSelectAll)="onSaveCa($event)"
+                  (onDeSelectAll)="onSaveCa($event)">
                 </ng-multiselect-dropdown>
                 <span class="invalid-feedback" *ngIf="f?.name?.errors?.required">
                   Category is required

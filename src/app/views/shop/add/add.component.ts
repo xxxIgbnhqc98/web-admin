@@ -113,7 +113,7 @@ export class AddShopComponent implements OnInit {
       });
       this.updateCateList();
 
-      
+
       // this.tags_select = [
       //   {item_text: "Parking lot", item_id: "1558a660-bf58-11ea-a3ea-5d37b467b530"},
       //   {item_text: "Wifi", item_id: "184abd40-bf58-11ea-a3ea-5d37b467b530"},
@@ -457,19 +457,23 @@ export class AddShopComponent implements OnInit {
       this.theme_color = data.theme_color;
       this.badge_image = data.badge_image;
       this.thumbnails = data.thumbnails;
+
       if (this.tag_ids) {
         for (let index = 0; index < this.tag_ids.length; index++) {
           const tag_id = this.tag_ids[index];
-          const tag = await this.apiService.tag.getItem(tag_id, {
-            query: { fields: ['$all'] }
-          });
-          this.tags_select.push({
-            item_text: tag.name,
-            item_id: tag_id
-          })
+          try {
+            const tag = await this.apiService.tag.getItem(tag_id, {
+              query: { fields: ['$all'] }
+            });
+            this.tags_select.push({
+              item_text: tag.name,
+              item_id: tag_id
+            })
+          } catch (err) {
+            this.tags_select = this.tags_select
+          }
+
         }
-      } else {
-        this.tags_select = []
       }
       this.title = data.title;
       this.images = data.images;
@@ -492,6 +496,7 @@ export class AddShopComponent implements OnInit {
       try { await this.alertItemNotFound(); } catch (err) { }
       this.backToList();
     }
+
   }
 
   async updateItem(form: NgForm) {

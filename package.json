@@ -57,6 +57,7 @@
     "file-saver": "^2.0.2",
     "flag-icon-css": "^3.0.0",
     "font-awesome": "^4.7.0",
+    "jwt-decode": "^3.0.0",
     "moment": "^2.22.2",
     "mutationobserver-shim": "^0.3.2",
     "ng-multiselect-dropdown": "^0.2.3",

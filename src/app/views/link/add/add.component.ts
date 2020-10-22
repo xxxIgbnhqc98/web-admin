@@ -80,13 +80,15 @@ export class AddLinkComponent implements OnInit {
       }
       let dataCate
       if (this.isEdit) {
+        let filter:any = {};
+        if (this.thema_id !== 'null') {
+          filter.thema_id = this.thema_id
+        }
         await this.setData();
         dataCate = await this.apiService.category.getList({
           query: {
             fields: ["$all"],
-            filter: {
-              thema_id: this.thema_id
-            },
+            filter: filter,
             limit: 9999999
           }
         });
@@ -141,20 +143,22 @@ export class AddLinkComponent implements OnInit {
   }
 
   save() {
-    this.category_ids = []
     this.user_types_ids = []
-    console.log("tag ", this.form.value)
-    this.form.value.name.forEach(async (element) => {
-      await this.category_ids.push(element.item_id)
-    });
     this.form.value.user_type.forEach(async (element) => {
       await this.user_types_ids.push(element)
     });
-    console.log("tag 2", this.user_types_ids)
+  }
+  saveCa() {
+    this.category_ids = []
+    this.form.value.name.forEach(async (element) => {
+      await this.category_ids.push(element.item_id)
+    });
 
   }
 
-
+  public onSaveCa(items: any) {
+    this.saveCa();
+  }
   public onSave(items: any) {
     this.save();
   }
@@ -227,6 +231,7 @@ export class AddLinkComponent implements OnInit {
       this.thema_id = data.thema_id;
       this.route_link = data.route;
       this.user_types_ids = data.accessible_user_type;
+
       // 
       this.index = data.index
       if (data.accessible_user_type.length !== 0) {
@@ -248,11 +253,12 @@ export class AddLinkComponent implements OnInit {
             item_text: cate.category.name,
             item_id: cate.category_id
           })
+          this.category_ids.push(cate.category_id)
         }
       } else {
         this.categories_select = []
       }
-
+      console.log("data.accessible_user_type ", this.category_ids)
       this.titleService.setTitle(this.name);
     } catch (err) {
       console.log('err: ', err);
@@ -263,14 +269,27 @@ export class AddLinkComponent implements OnInit {
   async changeThema() {
     this.category_ids = [];
     this.categories_select = [];
-    const dataCate = await this.apiService.category.getList({
-      query: {
-        fields: ["$all"],
-        filter: {
-          thema_id: this.thema_id
+    let dataCate;
+    if (this.thema_id !== 'null') {
+      dataCate = await this.apiService.category.getList({
+        query: {
+          fields: ["$all"],
+          filter: {
+            thema_id: this.thema_id
+          }
         }
-      }
-    });
+      });
+    } else {
+      dataCate = await this.apiService.category.getList({
+        query: {
+          fields: ["$all"],
+          filter: {
+
+          }
+        }
+      });
+    }
+
     this.categories = dataCate.map(item => {
       return {
         item_id: item.id,
@@ -281,8 +300,11 @@ export class AddLinkComponent implements OnInit {
   }
   async updateItem(form: NgForm) {
     try {
-      const { name, image, thema_id, route_link, category_ids, index, user_types_ids } = this;
-      console.log('#######', user_types_ids)
+      let { name, image, thema_id, route_link, category_ids, index, user_types_ids } = this;
+      console.log('#######', category_ids)
+      if (thema_id === 'null') {
+        thema_id = null
+      }
       if (index < 0) {
         this.alertErrorFromServer("Index can not be negative");
         this.submitting = false;
@@ -290,6 +312,11 @@ export class AddLinkComponent implements OnInit {
       }
       if (index > 12) {
         this.alertErrorFromServer("Index can not be greater than 12")
+        this.submitting = false;
+        return;
+      }
+      if (category_ids.length === 0) {
+        this.alertFormNotValid();
         this.submitting = false;
         return;
       }
@@ -308,7 +335,10 @@ export class AddLinkComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
-      const { name, image, thema_id, route_link, category_ids, index } = this;
+      let { name, image, thema_id, route_link, category_ids, index, user_types_ids } = this;
+      if (thema_id === 'null') {
+        thema_id = null
+      }
       if (index < 0) {
         this.alertErrorFromServer("Index can not be negative");
         this.submitting = false;
@@ -319,7 +349,12 @@ export class AddLinkComponent implements OnInit {
         this.submitting = false;
         return;
       }
-      await this.apiService.link.add({ name, image, thema_id, route: route_link, category_ids, index });
+      if (category_ids.length === 0) {
+        this.alertFormNotValid();
+        this.submitting = false;
+        return;
+      }
+      await this.apiService.link.add({ name, image, thema_id, route: route_link, category_ids, accessible_user_type: user_types_ids, index });
       form.reset();
       this.alertSuccess();
       this.backToList();
