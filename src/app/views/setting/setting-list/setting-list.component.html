@@ -97,7 +97,7 @@
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
               </div>
               <select class="form-control" name="value" [(ngModel)]="value">
-                <option value="LATEST">LATEST</option>
+                <option *ngIf="field !== 'SHOP_LIST_BOARD_SHOW_OPTION'" value="LATEST">LATEST</option>
                 <option value="RANDOM">RANDOM</option>
               </select>
 

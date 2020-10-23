@@ -3,9 +3,9 @@
     <div class="card-header">
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
-        <button class="btn btn-success" [disabled]="!itemsTable.selectedRows.length" (click)="selectAll()">
+        <button class="btn btn-success" [disabled]="!itemsTable.selectedRows.length" (click)="setReShop(true)">
           {{'Select' | translate}}</button>
-        <button class="btn btn-danger">{{'Unselect' | translate}}</button>
+        <button class="btn btn-danger" (click)="setReShop(false)">{{'Unselect' | translate}}</button>
       </div>
     </div>
     <div class="card-body">
@@ -140,7 +140,8 @@
         </data-table-column>
         <data-table-column [header]="'Event' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="item.events && item.events.length === 0" (click)="openModalEvent(template2, item)" class="btn btn-primary">
+            <button *ngIf="item.events && item.events.length === 0" (click)="openModalEvent(template2, item)"
+              class="btn btn-primary">
               <i>Add Event</i>
             </button>
             <button *ngIf="item.events&& (item.events.length > 0 && item.events[0].state ==='PENDING')"

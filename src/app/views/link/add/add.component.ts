@@ -81,10 +81,10 @@ export class AddLinkComponent implements OnInit {
       let dataCate
       if (this.isEdit) {
         let filter:any = {};
+        await this.setData();
         if (this.thema_id !== 'null') {
           filter.thema_id = this.thema_id
         }
-        await this.setData();
         dataCate = await this.apiService.category.getList({
           query: {
             fields: ["$all"],
@@ -94,9 +94,10 @@ export class AddLinkComponent implements OnInit {
         });
 
       } else {
-        dataCate = await this.apiService.category.getList({
-          query
-        });
+        // dataCate = await this.apiService.category.getList({
+        //   query
+        // });
+        dataCate = []
       }
 
       this.themas = await this.apiService.thema.getList({
@@ -315,7 +316,7 @@ export class AddLinkComponent implements OnInit {
         this.submitting = false;
         return;
       }
-      if (category_ids.length === 0) {
+      if (thema_id && category_ids.length === 0) {
         this.alertFormNotValid();
         this.submitting = false;
         return;

@@ -18,9 +18,10 @@
             </div>
             <div class="form-group">
               <label for="thema_name">{{'Thema' | translate}}</label>
-              <select name="thema_id" [(ngModel)]="thema_id"  #thema_idControl="ngModel" (change)="changeThema();"
-                 id="" class="form-control input-control">
-                <option *ngIf="route_link === 'BULLETIN_BOARD' || route_link === 'EVENT_BOARD'" value="null">All thema</option>
+              <select name="thema_id" [(ngModel)]="thema_id" #thema_idControl="ngModel" (change)="changeThema();" id=""
+                class="form-control input-control">
+                <option *ngIf="route_link === 'BULLETIN_BOARD' || route_link === 'EVENT_BOARD'" value="null">All thema
+                </option>
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name
                 }}</option>
@@ -46,8 +47,8 @@
             <!--  -->
             <div class="form-group">
               <label for="name">{{'The order of link' | translate}}</label>
-              <input class="form-control" id="index" [placeholder]="'Enter the order of link' | translate" type="number" name="index"
-                [(ngModel)]="index" required #indexControl="ngModel" min="0"
+              <input class="form-control" id="index" [placeholder]="'Enter the order of link' | translate" type="number"
+                name="index" [(ngModel)]="index" required #indexControl="ngModel" min="0"
                 [ngClass]="{'is-invalid' : indexControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="indexControl.errors?.required">
                 {{'Please enter the order of link.' | translate}}
@@ -56,11 +57,10 @@
             <div class="form-group">
               <label for="category">{{'User Type' | translate}}</label>
               <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
-                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select User type'" [data]="user_types" [(ngModel)]="user_types_select" [settings]="settings"
-                  [formControl]="f.user_type" [disabled]="false" (onFilterChange)="onSave($event)"
-                  (onSelect)="onSave($event)"
-                  (onDeSelect)="onSave($event)" (onSelectAll)="onSave($event)"
-                  (onDeSelectAll)="onSave($event)">
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select User type'" [data]="user_types"
+                  [(ngModel)]="user_types_select" [settings]="settings" [formControl]="f.user_type" [disabled]="false"
+                  (onFilterChange)="onSave($event)" (onSelect)="onSave($event)" (onDeSelect)="onSave($event)"
+                  (onSelectAll)="onSave($event)" (onDeSelectAll)="onSave($event)">
                 </ng-multiselect-dropdown>
                 <span class="invalid-feedback" *ngIf="f?.name?.errors?.required">
                   User Type is required
@@ -70,13 +70,13 @@
             <!--  -->
             <div class="form-group">
               <label for="category">{{'Category' | translate}}</label>
-              <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
+              <input *ngIf="thema_id === 'null'" class="form-control" disabled value="All Category">
+              <form  [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
 
-                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Category' | translate" [data]="categories" [(ngModel)]="categories_select" [settings]="settings"
-                  [formControl]="f.name" [disabled]="false" (onFilterChange)="onSaveCa($event)"
-                  (onSelect)="onSaveCa($event)"
-                  (onDeSelect)="onSaveCa($event)" (onSelectAll)="onSaveCa($event)"
-                  (onDeSelectAll)="onSaveCa($event)">
+                <ng-multiselect-dropdown *ngIf="thema_id !== 'null'" #multiSelect [placeholder]="'Select Category' | translate" [data]="categories"
+                  [(ngModel)]="categories_select" [settings]="settings" [formControl]="f.name" [disabled]="false"
+                  (onFilterChange)="onSaveCa($event)" (onSelect)="onSaveCa($event)" (onDeSelect)="onSaveCa($event)"
+                  (onSelectAll)="onSaveCa($event)" (onDeSelectAll)="onSaveCa($event)">
                 </ng-multiselect-dropdown>
                 <span class="invalid-feedback" *ngIf="f?.name?.errors?.required">
                   Category is required

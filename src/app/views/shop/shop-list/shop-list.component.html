@@ -160,7 +160,7 @@
         </data-table-column>
         <data-table-column [header]="'Actions' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button (click)="editItem(item)" class="btn btn-primary" style="margin-right: 5px;">
+            <button *ngIf="!item.old_shop" (click)="editItem(item)" class="btn btn-primary" style="margin-right: 5px;">
               <i class="fa fa-edit"></i>
             </button>
             <button (click)="deleteItem(item)" class="btn btn-danger">

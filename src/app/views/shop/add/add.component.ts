@@ -53,6 +53,9 @@ export class AddShopComponent implements OnInit {
   description: string = html;
   loadingUploadAvatar: boolean = false;
   loadingUploadImage: boolean = false;
+  short_description: string;
+  min_price: number;
+  kakaolink_url: string;
   theme_color: string = "#f44336"
   hours = [
     '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
@@ -62,7 +65,9 @@ export class AddShopComponent implements OnInit {
   ]
   start_time: string = null;
   end_time: string = null;
-  badge_image: string = null;
+  badge_text: string = null;
+  badge_color: string = "#f44336";
+
   settings = {};
   public form_tag: FormGroup;
 
@@ -426,6 +431,9 @@ export class AddShopComponent implements OnInit {
     this.ward_id = null;
     this.start_time = null;
     this.end_time = null;
+    this.short_description = null;
+    this.min_price = 1000;
+    this.kakaolink_url = null;
     return {
       category_id: this.category_id,
       tag_ids: this.tag_ids,
@@ -441,7 +449,10 @@ export class AddShopComponent implements OnInit {
       start_time: this.start_time,
       end_time: this.end_time,
       description: this.description,
-      thumbnails: this.thumbnails
+      thumbnails: this.thumbnails,
+      short_description: this.short_description,
+      min_price: this.min_price,
+      kakaolink_url: this.kakaolink_url
     };
   }
 
@@ -455,9 +466,12 @@ export class AddShopComponent implements OnInit {
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
-      this.badge_image = data.badge_image;
+      this.badge_text = data.badge_text;
+      this.badge_color = data.badge_color;
       this.thumbnails = data.thumbnails;
-
+      this.short_description = data.short_description;
+      this.min_price = data.min_price;
+      this.kakaolink_url = data.kakaolink_url;
       if (this.tag_ids) {
         for (let index = 0; index < this.tag_ids.length; index++) {
           const tag_id = this.tag_ids[index];
@@ -505,8 +519,8 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { category_id, thumbnails, badge_image, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.update(this.id, { category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, user_id: this.user_id });
+      const { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
@@ -529,8 +543,8 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { category_id, badge_image, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.add({ category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_image, opening_hours, contact_phone, address, verified: true, user_id: this.user_id });
+      const { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, verified: true, user_id: this.user_id });
       form.reset();
       this.alertSuccess();
       if (this.params_thema_id) {
@@ -597,7 +611,7 @@ export class AddShopComponent implements OnInit {
       const file = files[0];
       const result = this.apiService.fileUploader.uploadImage(file, 300)
         .then(result => {
-          this.badge_image = result.url
+          // this.badge_image = result.url
           this.loadingUploadImage = false;
         });
     } catch (err) {
@@ -606,7 +620,7 @@ export class AddShopComponent implements OnInit {
   }
 
   removeImage() {
-    this.badge_image = null
+    // this.badge_image = null
   }
   async listDistrict() {
     let fields: any = ["$all"];

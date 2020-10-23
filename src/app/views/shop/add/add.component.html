@@ -16,7 +16,8 @@
                 <span (click)="closeDropdownUser()"
                   style="float: right; font-size: 25px; width: 25px; height: 25px; cursor: pointer;;">x</span>
                 <div style="clear: both;"></div>
-                <input style="margin-top: 15px; width: 100%" type="text" [placeholder]="'Please search member with ID , ID code, and Nckname' | translate" id="myInput"
+                <input style="margin-top: 15px; width: 100%" type="text"
+                  [placeholder]="'Please search member with ID , ID code, and Nckname' | translate" id="myInput"
                   (keyup)="onUserSearch()">
                 <div id="singerListWrapper" style="overflow: scroll; height: 200px;">
                   <div [id]="item.id" *ngFor="let item of listUserFiltered" (click)="onUserClick(item);onChangeName()"
@@ -61,15 +62,24 @@
                 {{'Please enter title' | translate}}
               </div>
             </div>
-            <!-- <div class="form-group">
-              <label for="min_price">{{'Min price' | translate}}</label>
-              <input class="form-control" id="min_price" [placeholder]="'enter price' | translate" type="number"
+            <div class="form-group">
+              <label for="brief_description">{{'Brief description' | translate}}</label>
+              <input class="form-control" id="short_description" [placeholder]="'Enter brief description' | translate" type="text" name="short_description"
+                [(ngModel)]="short_description" required #brief_descriptionControl="ngModel"
+                [ngClass]="{'is-invalid' : brief_descriptionControl.errors?.required}">
+              <div class="invalid-feedback" *ngIf="brief_descriptionControl.errors?.required">
+                {{'Please enter brief description' | translate}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="min_price">{{'Min amount' | translate}}</label>
+              <input class="form-control" id="min_price" [placeholder]="'Enter min amount' | translate" type="number"
                 name="min_price" [(ngModel)]="min_price" required #min_priceControl="ngModel"
                 [ngClass]="{'is-invalid' : min_priceControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="min_priceControl.errors?.required">
-                {{'Please enter price.' | translate}}
+                {{'Please enter min amount.' | translate}}
               </div>
-            </div> -->
+            </div>
             <div class="form-group">
               <label for="contact_phone">{{'Contact phone' | translate}}</label>
               <input class="form-control" id="contact_phone" [placeholder]="'enter phone' | translate" type="text"
@@ -82,8 +92,8 @@
             <div class="form-group">
               <label for="start_time">{{'Start time - End time' | translate}}</label>
               <select name="start_time" [(ngModel)]="start_time" required #start_timeControl="ngModel"
-                [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id="" class="form-control input-control"
-                >
+                [ngClass]="{'is-invalid' : start_timeControl.errors?.required}" id=""
+                class="form-control input-control">
                 <option *ngFor="let item of hours" value="{{ item }}">{{
                   item
                 }}</option>
@@ -103,6 +113,11 @@
               </div>
             </div>
             <div class="form-group">
+              <label for="kakaolink_url">{{'Kakao link' | translate}}</label>
+              <input class="form-control" id="kakaolink_url" [placeholder]="'Enter kakao link' | translate" type="text"
+                name="kakaolink_url" [(ngModel)]="kakaolink_url">
+            </div>
+            <div class="form-group">
               <label for="tag">{{'Tag' | translate}}</label>
               <form [formGroup]="form_tag" *ngIf="form_tag" (ngSubmit)="save()" (reset)="resetForm()">
 
@@ -116,10 +131,24 @@
                 </span>
               </form>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="contact_phone">{{'Theme color' | translate}}</label>
               <input class="form-control col-3" id="theme_color" [(colorPicker)]="theme_color"
                 [style.background]="theme_color" />
+            </div> -->
+            <div class="form-group">
+              <label for="badge_color">{{'Badge color' | translate}}</label>
+              <div>
+                <input class="form-control col-3" id="badge_color" [(colorPicker)]="badge_color"
+                  [style.background]="badge_color" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="badge_color">{{'Badge text' | translate}}</label>
+              <div>
+                <input class="form-control" id="badge_text" [placeholder]="'enter badge text' | translate" type="text"
+                  name="badge_text" [(ngModel)]="badge_text" #badge_textControl="ngModel">
+              </div>
             </div>
             <!-- <div class="form-group">
               <label for="city_id">{{'City' | translate}}</label>
@@ -191,21 +220,7 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-header">
-            <strong><i class="fa fa-picture-o"></i> {{'Badge image' | translate}}</strong>
-            <button class="pull-right btn btn-primary btn-upload-avatar" (click)="fileImage.click()"
-              *ngIf="!loadingUploadImage"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
-              {{'Upload Image' | translate}}</button>
-            <button class="pull-right btn btn-primary btn-upload-avatar" *ngIf="loadingUploadImage"><i
-                class="fa fa-spinner fa-spin"></i> {{'Uploading Image' | translate}}</button>
-            <input id="fileImage" type="file" (change)="uploadImage($event)" #fileImage accept="image/*">
-          </div>
-          <div class="card-body">
-            <div class="avatar" [style.backgroundImage]="'url('+ badge_image +')'"
-              *ngIf="badge_image && badge_image !== null">
-              <span class="remove-avatar" (click)="removeImage(badge_image)"><i class="fa fa-times"></i></span>
-            </div>
-          </div>
+
         </div>
         <div class="card">
           <div class="card-header">

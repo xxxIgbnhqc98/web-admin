@@ -374,14 +374,6 @@ export class recommendationAreaListComponent implements OnInit {
       cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
     });
   }
-  alertSuccess() {
-    return swal({
-      title: (this.configService.lang === 'en') ? 'Success' : ((this.configService.lang === 'vn') ? 'Thành công' : '성공'),
-      type: 'success',
-      timer: 2000,
-    });
-  }
-
   alertFailed() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Failed action!' : ((this.configService.lang === 'vn') ? 'Thao tác thất bại.' : '실패되었습니다.'),
@@ -424,6 +416,13 @@ export class recommendationAreaListComponent implements OnInit {
       title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
       type: 'success',
       timer: 1000,
+    });
+  }
+  alertSuccess() {
+    return swal({
+      title: (this.configService.lang === 'en') ? 'Successfully!' : ((this.configService.lang === 'vn') ? 'Thành công!' : '성공'),
+      type: 'success',
+      timer: 2000,
     });
   }
   async confirmDelete() {
@@ -478,6 +477,29 @@ export class recommendationAreaListComponent implements OnInit {
       this.alertDeleteSuccess();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
+    }
+  }
+  async setReShop(state) {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      await this.apiService.shop.setReShop(state, ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
     }
   }
   async removeShop(id) {

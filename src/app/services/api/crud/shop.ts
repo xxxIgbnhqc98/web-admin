@@ -156,4 +156,44 @@ export class Shop extends CrudAPI<IShop> {
     }
     return true;
   }
+  async setReShop(state, ids: string[], options?: CrudOptions) {
+    if (!ids) { throw new Error('ids undefined in rejectAll'); }
+    options = _.merge({}, this.options, options);
+    const setting = {
+      method: 'POST',
+      uri: this.apiUrl('/set_recommen_shop'),
+      params: _.merge({}, {
+        items: ids
+      }, options.query),
+      body: {
+        is_random_20_shop: state
+      },
+      headers: _.merge({}, {
+        'content-type': 'application/json',
+        'Authorization': this.api.configService.token
+      }, options.headers),
+      responseType: 'json'
+    };
+    const res: any = await this.exec(setting);
+    if (options.reload) {
+      const items = this.items.getValue();
+      const removed = _.remove(items, function (item: any) {
+        return _.indexOf(ids, item.id) !== -1;
+      });
+      if (removed.length > 0) {
+        if (this.activeHashQuery && this.hashCache[this.activeHashQuery]) {
+          this.hashCache[this.activeHashQuery].items = items;
+        }
+        this.items.next(items);
+      } else {
+        await this.getList({ local: false, query: this.activeQuery });
+      }
+      if (this.activeHashQuery) {
+        this.hashCache = {
+          [this.activeHashQuery]: this.hashCache[this.activeHashQuery]
+        };
+      }
+    }
+    return true;
+  }
 }
