@@ -18,7 +18,7 @@
                 </option>
               </select>
               <div class="invalid-feedback" *ngIf="account_typeControl.value == null">
-                {{'Please enter Account type' | translate}}
+                {{'Please choose Account type' | translate}}
               </div>
             </div>
             <div class="form-group" *ngIf="isEdit">
@@ -34,7 +34,7 @@
                 </option>
               </select>
               <div class="invalid-feedback" *ngIf="account_typeControl.value == null">
-                {{'Please enter Account type' | translate}}
+                {{'Please choose Account type' | translate}}
               </div>
             </div>
             <!-- <div class="form-group" *ngIf="!isEdit">
@@ -48,11 +48,11 @@
             </div> -->
             <div class="form-group">
               <label for="username">{{'ID' | translate}}</label>
-              <input class="form-control" id="username" [placeholder]="'enter username' | translate" type="text"
+              <input class="form-control" id="username" [placeholder]="'enter email' | translate" type="text"
                 name="username" [(ngModel)]="username" required #usernameControl="ngModel"
                 [ngClass]="{'is-invalid' : usernameControl.errors?.required}" [disabled]="isEdit">
               <div class="invalid-feedback" *ngIf="usernameControl.errors?.required">
-                {{'Please enter username.' | translate}}
+                {{'Please enter email.' | translate}}
               </div>
             </div>
             <div class="form-group">
@@ -124,7 +124,7 @@
             </div>
             <div class="input-group" *ngIf="account_type === 'BIZ_USER'">
 
-              <label for="role">{{'Show shop tag' | translate}}</label>
+              <label for="role">{{'Show Badge' | translate}}</label>
               <div class="form-check form-check-inline mr-1 ml-3">
                 <input class="form-check-input" id="inline-radio1" type="radio" [value]="true" name="show_shop_tag"
                   [(ngModel)]="show_shop_tag" [checked]="show_shop_tag">

@@ -494,6 +494,10 @@
   "Days to decrease": "Số ngày giảm",
   "Decrease": "Giảm bớt",
   "Memo": "Bản ghi nhớ",
+  "Show Badge": "Hiển thị Badge",
+  "Please choose Account type": "Vui lòng chọn loại tài khoản.",
+  "Please enter nickname.": "Vui lòng nhập nickname.",
+  "enter nickname": "nhập nickname",
   "nav": {
     "nav_items": [
       {
