@@ -9,8 +9,9 @@ import { ConfigService } from '../../services/config/config.service';
 
 declare var swal: any;
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: 'content.component.html'
+  selector: 'app-content',
+  templateUrl: 'content.component.html',
+  styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
   type: string;

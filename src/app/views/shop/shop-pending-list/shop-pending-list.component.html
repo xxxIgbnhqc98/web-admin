@@ -91,7 +91,7 @@
         </data-table-column>
         <data-table-column [header]="'Address' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.address ? (item.address + ' '+ (item.short_address ? item.short_address  : 'No info'))  : 'No info' | translate}}</span>
+            <span>{{item.address ? (item.address + ' '+ item.short_address )  : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'List Image' | translate">

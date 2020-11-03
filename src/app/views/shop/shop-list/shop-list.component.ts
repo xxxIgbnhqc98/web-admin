@@ -113,7 +113,13 @@ export class ShopListComponent implements OnInit {
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);
-    this.link_map = `https://maps.google.com/maps?q=${user.latitude},${user.longitude}&output=embed`
+    if (user.old_shop) {
+      this.link_map = `https://maps.google.com/maps?q=${user.old_shop.latitude},${user.old_shop.longitude}&output=embed`
+
+    } else {
+      this.link_map = `https://maps.google.com/maps?q=${user.latitude},${user.longitude}&output=embed`
+
+    }
     console.log("@@@ ", this.link_map)
 
   }
@@ -328,7 +334,7 @@ export class ShopListComponent implements OnInit {
       timer: 2000,
     });
   }
-  alertSubTime(){
+  alertSubTime() {
     return swal({
       title: (this.configService.lang === 'en') ? 'The date to decrease can\'t be bigger than remaining date' : ((this.configService.lang === 'vn') ? 'Ngày giảm không được lớn hơn ngày còn lại' : '광고단축일은  남은 광고기간보다 크게 설정할 수 없습니다.'),
       type: 'warning',

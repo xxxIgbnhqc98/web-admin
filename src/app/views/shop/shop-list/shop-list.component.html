@@ -61,7 +61,7 @@
         </data-table-column>
         <data-table-column [header]="'Title' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.title ? item.title : 'No info' | translate}}</span>
+            <span>{{item.old_shop ? item.old_shop.title : item.title ? item.title : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Thema' | translate">
@@ -76,8 +76,8 @@
         </data-table-column>
         <data-table-column [header]="'Start date End Date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{ item.start_date ? getDateFromUnixTimestamp(item.start_date):"No info" | translate}}<br></span>
-            <span>{{ item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" | translate}}</span>
+            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.start_date) : item.start_date ? getDateFromUnixTimestamp(item.start_date):"No info" | translate}}<br></span>
+            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.expired_date) : item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Remaining date' | translate">
@@ -99,8 +99,8 @@
         </data-table-column> -->
         <data-table-column [header]="'Opening hours' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.opening_hours ? subTimeOpen1(item.opening_hours) : 'No info' | translate}}<br></span>
-            <span>{{item.opening_hours ? subTimeOpen2(item.opening_hours) : 'No info' | translate}}</span>
+            <span>{{item.old_shop ? subTimeOpen1(item.old_shop.opening_hours) : item.opening_hours ? subTimeOpen1(item.opening_hours) : 'No info' | translate}}<br></span>
+            <span>{{item.old_shop ? subTimeOpen2(item.old_shop.opening_hours) : item.opening_hours ? subTimeOpen2(item.opening_hours) : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <!-- <data-table-column [header]="'Contact phone' | translate">
@@ -115,13 +115,24 @@
         </data-table-column> -->
         <data-table-column [header]="'List Image' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span *ngIf="item.thumbnails === null || item.thumbnails.length === 0">
-              {{'No info' | translate}}
-            </span>
-            <span *ngFor="let item of item.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
-              <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
-                onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
-            </span>
+            <div *ngIf="!item.old_shop">
+              <span *ngIf="item.thumbnails === null || item.thumbnails.length === 0">
+                {{'No info' | translate}}
+              </span>
+              <span *ngFor="let item of item.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
+                <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
+                  onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+              </span>
+            </div>
+            <div *ngIf="item.old_shop">
+              <span *ngIf="item.old_shop.thumbnails === null || item.old_shop.thumbnails.length === 0">
+                {{'No info' | translate}}
+              </span>
+              <span *ngFor="let item of item.old_shop.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
+                <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
+                  onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
+              </span>
+            </div>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Comment' | translate">
