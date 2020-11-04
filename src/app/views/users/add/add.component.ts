@@ -194,7 +194,16 @@ export class AddUserComponent implements OnInit {
       this.backToList();
       this.submitting = false;
     } catch (error) {
-      this.alertErrorFromServer(error.error.message);
+      if (error.error.message.includes(', vui lòng chọn username khác')) {
+        let msg;
+        (this.configService.lang === 'en') ? msg = '[EMAIL (ID)] already exists plz choose another email address'
+          : ((this.configService.lang === 'vn')
+            ? msg = '[EMAIL (ID)] đã tồn tại, vui lòng chọn [EMAIL (ID)] khác' :
+            msg = '[EMAIL (ID)] 는 이미 존재하는 아이디입니다. 다른 이메일을 등록해주세요')
+        this.alertErrorFromServer(msg);
+      } else {
+        this.alertErrorFromServer(error.error.message);
+      }
       this.submitting = false;
     }
   }
