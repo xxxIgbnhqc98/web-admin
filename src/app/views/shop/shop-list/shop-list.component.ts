@@ -610,6 +610,11 @@ export class ShopListComponent implements OnInit {
       relativeTo: this.route
     });
   }
+  getReview( shop_id) {
+    this.router.navigate(['/shop/review-list/' + shop_id], {
+      relativeTo: this.route
+    });
+  }
   async alertDeleteSuccess() {
     return await swal({
       title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),

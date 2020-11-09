@@ -532,6 +532,10 @@
           {
             "name": "Location Based Services",
             "url": "/board/location-based-services"
+          },
+          {
+            "name": "Company Info",
+            "url": "/board/company-info"
           }
         ]
       },

@@ -542,6 +542,10 @@
           {
             "name": "위치기반 서비스 이용약관",
             "url": "/board/location-based-services"
+          },
+          {
+            "name": "회사 정보",
+            "url": "/board/company-info"
           }
         ]
       },

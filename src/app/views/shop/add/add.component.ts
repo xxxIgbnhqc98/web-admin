@@ -54,7 +54,7 @@ export class AddShopComponent implements OnInit {
   loadingUploadAvatar: boolean = false;
   loadingUploadImage: boolean = false;
   short_description: string;
-  min_price: number;
+  min_price: string;
   kakaolink_url: string;
   theme_color: string = "#f44336"
   hours = [
@@ -432,7 +432,7 @@ export class AddShopComponent implements OnInit {
     this.start_time = null;
     this.end_time = null;
     this.short_description = null;
-    this.min_price = 1000;
+    this.min_price = '1000';
     this.kakaolink_url = null;
     return {
       category_id: this.category_id,

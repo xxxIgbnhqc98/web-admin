@@ -72,6 +72,11 @@ export class BulletinComponent implements OnInit {
       query
     });
   }
+  getComment( post_id) {
+    this.router.navigate(['/bulletin/comment-list/' + post_id], {
+      relativeTo: this.route
+    });
+  }
   async updateCateList() {
     const query: any = {
       fields: ["$all"],

@@ -128,7 +128,8 @@
               <span *ngIf="item.old_shop.thumbnails === null || item.old_shop.thumbnails.length === 0">
                 {{'No info' | translate}}
               </span>
-              <span *ngFor="let item of item.old_shop.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
+              <span *ngFor="let item of item.old_shop.thumbnails" lazy-load-images
+                style="float: left; margin-left: 2px;">
                 <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
                   onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'">
               </span>
@@ -139,6 +140,8 @@
           <ng-template #dataTableCell let-item="item">
             <span (click)="getListReviewOfConversation(templateComment,item)"
               class="btn btn-primary">{{item.comment}}</span>
+            <span (click)="getReview(item.id)" class="btn btn-warning ml-1"><i class="fa fa-comment" aria-hidden="true"></i>
+            </span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Status' | translate">

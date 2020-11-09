@@ -532,6 +532,10 @@
           {
             "name": "Dịch vụ dựa trên địa điểm",
             "url": "/board/location-based-services"
+          },
+          {
+            "name": "Thông tin công ty",
+            "url": "/board/company-info"
           }
         ]
       },
