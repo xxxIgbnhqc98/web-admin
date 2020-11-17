@@ -4,7 +4,7 @@
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
         <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="deleteAll()">
-          <i class="fa fa-trash"></i>{{'Delete' | translate}}
+          <i class="fa fa-trash"></i> {{'Delete' | translate}}
         </button>
       </div>
     </div>
@@ -36,20 +36,25 @@
     <div class="card-header">
       <i class="fa fa-list"></i> {{'Comment list' | translate}}
     </div>
+    <div class="col-12" style="margin-bottom: 10px">
+      <button style="margin-left: 10px;margin-top: 10px;" [ngClass]="type_search == 'POST' ? 'btn btn-primary' : 'btn btn-secondary'"
+        (click)="changeTypeSearch('POST')" data-style="expand-left">
+        Post
+      </button>
+      <button style="margin-left: 10px;margin-top: 10px;" [ngClass]="type_search !== 'POST' ? 'btn btn-primary' : 'btn btn-secondary'"
+        (click)="changeTypeSearch('SHOP')" data-style="expand-left">
+        Shop
+      </button>
+    </div>
     <div class="card-body scroll-table" id="review-list">
       <data-table id="data-table-grid" #itemsTable [indexColumnHeader]="'no' | translate" [items]="items | async"
-        [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
+        [itemCount]="itemCount" [limit]="default_limit" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
         [selectColumn]="true" [multiSelect]="true" [substituteRows]="false" [selectOnRowClick]="false"
         [showReloading]="false">
         <data-table-column [header]="'Created date' | translate">
           <ng-template #dataTableCell let-item="item">
-            {{item.created_at | date :"yyyy/MM/dd":'+0'}}<br>
-            {{item.created_at | date :"HH:mm":'+0'}}
-          </ng-template>
-        </data-table-column>
-        <data-table-column [header]="'Post' | translate">
-          <ng-template #dataTableCell let-item="item">
-            <span>{{item.post ? item.post.content : 'No info' | translate}}</span>
+            {{item.created_at | date :"yyyy/MM/dd":'+2'}}<br>
+            {{item.created_at | date :"HH:mm":'+2'}}
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Nickname' | translate">
@@ -57,9 +62,10 @@
             <span>{{item.user ? item.user.nickname : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
-        <data-table-column [header]="'type' | translate">
+        <data-table-column [header]="'Category' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.parent_id ? 'Reply' : 'Comment' | translate}}</span>
+            <span *ngIf="type_search == 'POST'">{{item.post ? (item.post.category.thema.name):'No info' | translate}} > {{item.post ? (item.post.category.name):'No info' | translate}}</span>
+            <span *ngIf="type_search == 'SHOP'">{{item.shop ? (item.shop.category.thema.name):'No info' | translate}} > {{item.shop ? (item.shop.category.name):'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Content' | translate">

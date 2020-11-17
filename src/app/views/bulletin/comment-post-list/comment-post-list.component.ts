@@ -20,7 +20,7 @@ declare var swal: any;
 export class CommentListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { 'post': ['$all'] },{ 'user': ['$all'] }];
+  itemFields: any = ['$all',{ 'user': ['$all'] }];
   query: any = {
     filter: {
     }
@@ -36,7 +36,9 @@ export class CommentListComponent implements OnInit {
   searchRef: any;
   modalRef: BsModalRef;
   searchTimeOut: number = 250;
-  post_id: string = null;
+  type_search: string = "POST";
+  default_limit: number = 50;
+  // post_id: string = null;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -55,12 +57,13 @@ export class CommentListComponent implements OnInit {
   async ngOnInit() {
     console.log(this.items)
     this.titleService.setTitle('Comment list')
-    this.route.params.subscribe(async (params) => {
-      this.post_id = params.post_id;
-      if (this.post_id) {
-        this.query.filter.post_id = this.post_id
-      }
-    });
+    await this.getItems(this.type_search);
+    // this.route.params.subscribe(async (params) => {
+    //   this.post_id = params.post_id;
+    //   if (this.post_id) {
+    //     this.query.filter.post_id = this.post_id
+    //   }
+    // });
   }
 
   alertFormNotValid() {
@@ -122,7 +125,7 @@ export class CommentListComponent implements OnInit {
     if (!sortBy && !sortAsc) {
       this.query.order = [['updated_at', 'DESC']]
     }
-    await this.getItems();
+    await this.getItems(this.type_search);
   }
   alertCopied(text) {
     return swal({
@@ -176,13 +179,34 @@ export class CommentListComponent implements OnInit {
       timer: 2000,
     });
   }
-  async getItems() {
+  changeTypeSearch(type) {
+    this.type_search = type;
+    this.getItems(this.type_search);
+  }
+  async getItems(type) {
     try {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
-      this.items.next(await this.apiService.comment.getList({ query }));
-      this.itemCount = this.apiService.comment.pagination.totalItems;
+      if (type === 'SHOP') {
+        console.log("vao shop")
+        this.itemFields = ['$all',{ 'shop': ['$all',{ 'category': ['$all',{ 'thema': ['$all'] }] }] },{ 'user': ['$all'] }];
+        query = Object.assign({
+          fields: this.itemFields
+        }, this.query);
+        this.items.next(await this.apiService.review.getList({ query }));
+        this.itemCount = this.apiService.review.pagination.totalItems;
+      } else {
+        console.log("vao post")
+
+        this.itemFields = ['$all',{ 'post': ['$all',{ 'category': ['$all',{ 'thema': ['$all'] }] }] },{ 'user': ['$all'] }];
+        query = Object.assign({
+          fields: this.itemFields
+        }, this.query);
+        this.items.next(await this.apiService.comment.getList({ query }));
+        this.itemCount = this.apiService.comment.pagination.totalItems;
+      }
+
       this.ref.detectChanges();
       return this.items;
     } catch (error) {
@@ -278,12 +302,12 @@ export class CommentListComponent implements OnInit {
           this.query.filter.content = { $iLike: `%${this.keyword}%` }
         }
       } else {
-        this.query.filter = { post_id: this.post_id }
+        this.query.filter = {}
       }
       // if (this.sex !== null) {
       //   this.query.filter.sex = this.sex;
       // }
-      await this.getItems();
+      await this.getItems(this.type_search);
       this.submitting = false;
     }, this.searchTimeOut);
   }

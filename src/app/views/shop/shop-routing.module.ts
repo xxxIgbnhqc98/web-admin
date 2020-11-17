@@ -106,7 +106,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'review-list/:shop_id',
+        path: 'review',
         component: CommentListComponent,
         data: {
           title: 'Comment list'

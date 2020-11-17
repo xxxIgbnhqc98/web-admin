@@ -37,7 +37,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'comment-list/:post_id',
+        path: 'comment',
         component: CommentListComponent,
         data: {
           title: 'Comment'

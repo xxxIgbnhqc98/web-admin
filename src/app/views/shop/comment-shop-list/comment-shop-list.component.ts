@@ -36,7 +36,7 @@ export class CommentListComponent implements OnInit {
   searchRef: any;
   modalRef: BsModalRef;
   searchTimeOut: number = 250;
-  shop_id: string = null;
+  // shop_id: string = null;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -55,12 +55,12 @@ export class CommentListComponent implements OnInit {
   async ngOnInit() {
     console.log(this.items)
     this.titleService.setTitle('Tag list')
-    this.route.params.subscribe(async (params) => {
-      this.shop_id = params.shop_id;
-      if (this.shop_id) {
-        this.query.filter.shop_id = this.shop_id
-      }
-    });
+    // this.route.params.subscribe(async (params) => {
+    //   this.shop_id = params.shop_id;
+    //   if (this.shop_id) {
+    //     this.query.filter.shop_id = this.shop_id
+    //   }
+    // });
   }
 
   alertFormNotValid() {
@@ -278,7 +278,7 @@ export class CommentListComponent implements OnInit {
           this.query.filter.content = { $iLike: `%${this.keyword}%` }
         }
       } else {
-        this.query.filter = { shop_id: this.shop_id }
+        this.query.filter = {  }
       }
       // if (this.sex !== null) {
       //   this.query.filter.sex = this.sex;

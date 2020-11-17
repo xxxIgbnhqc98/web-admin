@@ -492,7 +492,7 @@
                 <img *ngIf="item.thumbnail" [src]="item.thumbnail"
                   onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'"
                   style="width: 100%;">
-                <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm:ss': '+0' }} <i
+                <span class="time_date">{{item.created_at | date :'yyyy/MM/dd HH:mm:ss': '+2' }} <i
                     (click)="deleteReview(item)" class="fa fa-trash"></i></span>
               </div>
             </div>
@@ -511,7 +511,7 @@
                       <img *ngIf="itemC.thumbnail" [src]="itemC.thumbnail"
                         onerror="this.src='https://server.townmates.kr:9877/api/v1/image/get/icon-product-gray.png'"
                         style="width: 100%;">
-                      <span class="time_date">{{itemC.created_at | date :'yyyy/MM/dd HH:mm:ss': '+0' }} <i
+                      <span class="time_date">{{itemC.created_at | date :'yyyy/MM/dd HH:mm:ss': '+2' }} <i
                           (click)="deleteReview(itemC)" class="fa fa-trash"></i></span>
                     </div>
                   </div>
