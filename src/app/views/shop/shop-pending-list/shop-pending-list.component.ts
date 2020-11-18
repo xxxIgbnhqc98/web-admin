@@ -44,7 +44,9 @@ export class ShopPendingListComponent implements OnInit {
   id_update: string = null;
   expired_date: number;
   extra_days: number = 30;
+  denied_message: string = null;
   option_search: string = "id";
+  default_limit: number = 50;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -61,7 +63,7 @@ export class ShopPendingListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('Shop Pending list')
+    this.titleService.setTitle('Pending shop list')
     this.route.params.subscribe(params => {
       this.category_id = params.thema_id;
       if (this.category_id) {
@@ -78,6 +80,11 @@ export class ShopPendingListComponent implements OnInit {
   openModalApprove(template: TemplateRef<any>, item) {
     this.id_update = item.id
     this.expired_date = item.expired_date;
+    this.modalRef = this.modalService.show(template);
+  }
+  openModalDeny(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    // this.denied_message = item.denied_message;
     this.modalRef = this.modalService.show(template);
   }
   alertFormNotValid() {
@@ -340,14 +347,15 @@ export class ShopPendingListComponent implements OnInit {
   }
   async rejectedItem(item) {
     try {
-      try {
-        await this.confirmDeny();
-      } catch (error) {
-        return;
-      }
-      await this.apiService.shop.update(item.id, { state: 'REJECTED' });
+      // try {
+      //   await this.confirmDeny();
+      // } catch (error) {
+      //   return;
+      // }
+      await this.apiService.shop.update(this.id_update, { state: 'REJECTED', denied_message: this.denied_message });
       this.itemsTable.reloadItems();
       this.alertSuccess();
+      this.modalRef.hide()
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
     }

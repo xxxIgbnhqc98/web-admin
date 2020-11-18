@@ -95,7 +95,7 @@ const routes: Routes = [
         path: 'shop-pending-list',
         component: ShopPendingListComponent,
         data: {
-          title: 'shop pending list'
+          title: 'Pending shop list'
         }
       },
       {

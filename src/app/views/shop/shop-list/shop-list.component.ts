@@ -72,6 +72,7 @@ export class ShopListComponent implements OnInit {
   limit_list_reviews: number = 10;
   count_list_reviews: number = 0;
   load_more: boolean = false;
+  default_limit:number  = 50;
 
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;

@@ -20,7 +20,7 @@ declare var swal: any;
 export class CommentListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all',{ 'user': ['$all'] }];
+  itemFields: any = ['$all', { 'user': ['$all'] }];
   query: any = {
     filter: {
     }
@@ -102,7 +102,11 @@ export class CommentListComponent implements OnInit {
       } catch (err) {
         return;
       }
-      await this.apiService.comment.deleteAll(ids);
+      if (this.type_search === "POST") {
+        await this.apiService.comment.deleteAll(ids);
+      } {
+        await this.apiService.review.deleteAll(ids);
+      }
       this.itemsTable.selectAllCheckbox = false;
       this.itemsTable.reloadItems();
       this.alertDeleteSuccess();
@@ -190,7 +194,7 @@ export class CommentListComponent implements OnInit {
       }, this.query);
       if (type === 'SHOP') {
         console.log("vao shop")
-        this.itemFields = ['$all',{ 'shop': ['$all',{ 'category': ['$all',{ 'thema': ['$all'] }] }] },{ 'user': ['$all'] }];
+        this.itemFields = ['$all', { 'shop': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'user': ['$all'] }];
         query = Object.assign({
           fields: this.itemFields
         }, this.query);
@@ -199,7 +203,7 @@ export class CommentListComponent implements OnInit {
       } else {
         console.log("vao post")
 
-        this.itemFields = ['$all',{ 'post': ['$all',{ 'category': ['$all',{ 'thema': ['$all'] }] }] },{ 'user': ['$all'] }];
+        this.itemFields = ['$all', { 'post': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'user': ['$all'] }];
         query = Object.assign({
           fields: this.itemFields
         }, this.query);
@@ -278,7 +282,11 @@ export class CommentListComponent implements OnInit {
       } catch (error) {
         return;
       }
-      await this.apiService.comment.delete(item.id);
+      if (this.type_search === "POST") {
+        await this.apiService.comment.delete(item.id);
+      } {
+        await this.apiService.review.delete(item.id);
+      }
       this.itemsTable.selectAllCheckbox = false;
       this.itemsTable.reloadItems();
       this.alertDeleteSuccess();
