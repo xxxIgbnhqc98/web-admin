@@ -13,6 +13,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { SharedModule } from '../../shared';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CommentListComponent } from './comment-post-list/comment-post-list.component';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     NgxInfiniteScrollerModule,
 
   ],
-  declarations: [BulletinComponent],
+  declarations: [CommentListComponent, BulletinComponent],
   providers: [
     ExcelService,
     DatePipe

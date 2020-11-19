@@ -7,6 +7,7 @@ import { TagListComponent } from './tag-list/tag-list.component';
 import { ShopBannerListComponent } from './shop-banner-list/shop-banner-list.component';
 import { recommendationAreaListComponent } from './recommendation-area/recommendation-area-list.component';
 import { ShopExpiredListComponent } from './shop-expired-list/shop-expired-list.component';
+import { CommentListComponent } from './comment-shop-list/comment-shop-list.component';
 
 const routes: Routes = [
   {
@@ -94,7 +95,7 @@ const routes: Routes = [
         path: 'shop-pending-list',
         component: ShopPendingListComponent,
         data: {
-          title: 'shop pending list'
+          title: 'Pending shop list'
         }
       },
       {
@@ -102,6 +103,13 @@ const routes: Routes = [
         component: recommendationAreaListComponent,
         data: {
           title: 'Recommendation area'
+        }
+      },
+      {
+        path: 'review',
+        component: CommentListComponent,
+        data: {
+          title: 'Comment list'
         }
       }
     ]

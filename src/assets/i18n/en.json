@@ -423,7 +423,7 @@
   "Weekly sum": "Weekly sum",
   "Weekly average": "Weekly average",
   "Increase & Decrease": "Increase & Decrease",
-  "shop list": "Shop list",
+  "shop list": "Active shop list",
   "Banner list": "Banner list",
   "Thema list": "Thema list",
   "Event": "Event",
@@ -532,6 +532,10 @@
           {
             "name": "Location Based Services",
             "url": "/board/location-based-services"
+          },
+          {
+            "name": "Company Info",
+            "url": "/board/company-info"
           }
         ]
       },
@@ -582,12 +586,12 @@
         "icon": "fa fa-home",
         "children": [
           {
-            "name": "Shop pending list",
+            "name": "Pending shop list",
             "icon": "fa fa-tasks",
             "url": "/shop/shop-pending-list"
           },
           {
-            "name": "Shop list",
+            "name": "Active shop list",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-list"
           },
@@ -610,8 +614,19 @@
       },
       {
         "name": "Post",
-        "url": "/bulletin",
-        "icon": "fa fa-sticky-note-o"
+        "icon": "fa fa-sticky-note-o",
+        "children": [
+          {
+            "name": "Post list",
+            "icon": "fa fa-list-ol",
+            "url": "/bulletin/bulletin"
+          },
+          {
+            "name": "Comment and reply",
+            "icon": "fa fa-comment",
+            "url": "/bulletin/comment"
+          }
+        ]
       },
       {
         "name": "Partner manager & Admin",

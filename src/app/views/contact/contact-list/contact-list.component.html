@@ -64,8 +64,8 @@
         </data-table-column>
         <data-table-column [header]="'Created date' | translate">
           <ng-template #dataTableCell let-item="item">
-            {{item.created_at | date :"yyyy/MM/dd":'+0'}}<br>
-            {{item.created_at | date :"HH:mm":'+0'}}
+            {{item.created_at | date :"yyyy/MM/dd":'+2'}}<br>
+            {{item.created_at | date :"HH:mm":'+2'}}
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Actions' | translate">

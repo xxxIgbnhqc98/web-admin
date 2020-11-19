@@ -24,6 +24,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { CustomFormsModule } from 'ng2-validation'
 import { ShopBannerListComponent } from './shop-banner-list/shop-banner-list.component';
 import { recommendationAreaListComponent } from './recommendation-area/recommendation-area-list.component';
+import { CommentListComponent } from './comment-shop-list/comment-shop-list.component';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { recommendationAreaListComponent } from './recommendation-area/recommend
     ColorPickerModule,
     CustomFormsModule
   ],
-  declarations: [ShopListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent, ShopExpiredListComponent],
+  declarations: [ShopListComponent,CommentListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent, ShopExpiredListComponent],
   providers: [
     ExcelService,
     DatePipe

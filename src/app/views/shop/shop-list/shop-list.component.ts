@@ -72,6 +72,7 @@ export class ShopListComponent implements OnInit {
   limit_list_reviews: number = 10;
   count_list_reviews: number = 0;
   load_more: boolean = false;
+  default_limit:number  = 50;
 
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
@@ -610,6 +611,11 @@ export class ShopListComponent implements OnInit {
       relativeTo: this.route
     });
   }
+  getReview( shop_id) {
+    this.router.navigate(['/shop/review-list/' + shop_id], {
+      relativeTo: this.route
+    });
+  }
   async alertDeleteSuccess() {
     return await swal({
       title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
@@ -683,6 +689,8 @@ export class ShopListComponent implements OnInit {
     this.query.filter = {
       // state: { $in: ["APPROVED", "PENDING"] }
     }
+    this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+
     if (this.searchRef) { clearTimeout(this.searchRef); }
     this.searchRef = setTimeout(async () => {
       // if (!this.keyword && !this.fieldSearch) {

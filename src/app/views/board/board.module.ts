@@ -11,6 +11,7 @@ import { SharedModule } from './../../shared';
 import { PolicyComponent } from './policy/policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { LocationBasedServicesComponent } from './location-based-services/location-based-services.component';
+import { CompanyInfoComponent } from './company-info/company-info.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { LocationBasedServicesComponent } from './location-based-services/locati
     TabsModule.forRoot(),
     SharedModule
   ],
-  declarations: [HowToUseComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
+  declarations: [HowToUseComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
   providers: [
 
   ]

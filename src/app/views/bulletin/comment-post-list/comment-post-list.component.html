@@ -1,0 +1,175 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-search"></i> {{'Search' | translate}}
+      <div class="btn-action float-right">
+        <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="deleteAll()">
+          <i class="fa fa-trash"></i> {{'Delete' | translate}}
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row apps">
+        <div class="col-12 search form-group">
+          <div class="row">
+            <!-- <div class="col-2">
+              <select class="form-control" name="sex" [(ngModel)]="sex">
+                <option [ngValue]="null">{{'Choose gender' | translate}}</option>
+                <option value="MALE">{{'Male' | translate}}</option>
+                <option value="FEMALE">{{'Female' | translate}}</option>
+              </select>
+            </div> -->
+            <div class="col-2">
+              <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
+                [(ngModel)]="keyword">
+            </div>
+            <div class="col-3">
+              <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
+                  class="fa fa-search"></i> {{'Search' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-list"></i> {{'Comment list' | translate}}
+    </div>
+    <div class="col-12" style="margin-bottom: 10px">
+      <button style="margin-left: 10px;margin-top: 10px;" [ngClass]="type_search == 'POST' ? 'btn btn-primary' : 'btn btn-secondary'"
+        (click)="changeTypeSearch('POST')" data-style="expand-left">
+        Post
+      </button>
+      <button style="margin-left: 10px;margin-top: 10px;" [ngClass]="type_search !== 'POST' ? 'btn btn-primary' : 'btn btn-secondary'"
+        (click)="changeTypeSearch('SHOP')" data-style="expand-left">
+        Shop
+      </button>
+    </div>
+    <div class="card-body scroll-table" id="review-list">
+      <data-table id="data-table-grid" #itemsTable [indexColumnHeader]="'no' | translate" [items]="items | async"
+        [itemCount]="itemCount" [limit]="default_limit" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
+        [selectColumn]="true" [multiSelect]="true" [substituteRows]="false" [selectOnRowClick]="false"
+        [showReloading]="false">
+        <data-table-column [header]="'Created date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            {{item.created_at | date :"yyyy/MM/dd":'+2'}}<br>
+            {{item.created_at | date :"HH:mm":'+2'}}
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Nickname' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.user ? item.user.nickname : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Category' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span *ngIf="type_search == 'POST'">{{item.post ? (item.post.category.thema.name):'No info' | translate}} > {{item.post ? (item.post.category.name):'No info' | translate}}</span>
+            <span *ngIf="type_search == 'SHOP'">{{item.shop ? (item.shop.category.thema.name):'No info' | translate}} > {{item.shop ? (item.shop.category.name):'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Content' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.content ? item.content : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        
+        <data-table-column [header]="'Actions' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="deleteItem(item)" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+          </ng-template>
+        </data-table-column>
+      </data-table>
+    </div>
+  </div>
+</div>
+<ng-template #templateImage>
+  <div class="modal-body-img">
+    <div style="    white-space: nowrap;
+                    overflow-x: visible;
+                    overflow-y: hidden;
+                    height: 100%;;
+                    width: 100%;">
+
+      <p lazy-load-images>
+        <img [attr.data-src]="zoom_image" (error)="replaceImage($event)"
+          onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
+      </p>
+    </div>
+  </div>
+</ng-template>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Location'| translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(link_map)" width="730" height="450" frameborder="0"
+      style="border:0;" allowfullscreen=""></iframe>
+
+  </div>
+</ng-template>
+<ng-template #template2>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Add Tag' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Tag ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Name' | translate }}</span>
+              </div>
+              <input type="text" id="name" class="form-control" name="name" [(ngModel)]="name" #nameControl="ngModel"
+                [ngClass]="{'is-valid' : !nameControl.errors?.required, 'is-invalid' : nameControl.errors?.required}"
+                required [placeholder]="'Title Tag' | translate">
+              <div class="invalid-feedback" *ngIf="nameControl.errors?.required">
+                {{ 'Please enter Tag.' | translate }}
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{'Thema' | translate}}</span>
+              </div>
+              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
+                class="form-control input-control">
+                <option *ngFor="let item of themas" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitAdd(formContent)">
+          <i *ngIf="!id_update">{{ 'Add' | translate }}</i>
+          <i *ngIf="id_update">{{ 'Edit' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

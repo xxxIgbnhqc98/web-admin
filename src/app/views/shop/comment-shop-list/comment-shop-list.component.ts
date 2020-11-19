@@ -9,44 +9,34 @@ import { ExcelService } from '../../../services/excel/excel.service';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
-import * as moment from "moment";
+import { async } from '@angular/core/testing';
 
 declare var swal: any;
 @Component({
-  selector: 'app-shop-pending-list',
-  templateUrl: 'shop-pending-list.component.html',
-  styleUrls: ['./shop-pending-list.component.scss']
+  selector: 'app-comment-shop-list',
+  templateUrl: 'comment-shop-list.component.html',
+  styleUrls: ['./comment-shop-list.component.scss']
 })
-export class ShopPendingListComponent implements OnInit {
+export class CommentListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "category": ["$all", { "thema": ["$all"] }] }, { "user": ["$all"] }];
+  itemFields: any = ['$all', { 'shop': ['$all'] },{ 'user': ['$all'] }];
   query: any = {
     filter: {
-      state: "PENDING"
     }
   };
   submitting: boolean = false;
   submittingUpdate: boolean = false;
-  submittingSend: boolean = false;
-  submittingApprove: boolean = false;
   keyword: string;
+  name: string;
+  id_update: string;
   columm_update: string
   fieldSearch: string = null;
   loadingExportExcel: boolean = false;
   searchRef: any;
   modalRef: BsModalRef;
   searchTimeOut: number = 250;
-  category_id: string;
-  admin_message: string;
-  zoom_image: string;
-  link_map: string;
-  id_update: string = null;
-  expired_date: number;
-  extra_days: number = 30;
-  denied_message: string = null;
-  option_search: string = "id";
-  default_limit: number = 50;
+  // shop_id: string = null;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -63,30 +53,16 @@ export class ShopPendingListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.titleService.setTitle('Pending shop list')
-    this.route.params.subscribe(params => {
-      this.category_id = params.thema_id;
-      if (this.category_id) {
-        this.query.filter.category_id = this.category_id
-      }
-    });
+    console.log(this.items)
+    this.titleService.setTitle('Tag list')
+    // this.route.params.subscribe(async (params) => {
+    //   this.shop_id = params.shop_id;
+    //   if (this.shop_id) {
+    //     this.query.filter.shop_id = this.shop_id
+    //   }
+    // });
   }
-  openModal(template: TemplateRef<any>, user) {
-    this.modalRef = this.modalService.show(template);
-    this.link_map = `https://maps.google.com/maps?q=${user.latitude},${user.longitude}&output=embed`
-    console.log("@@@ ", this.link_map)
 
-  }
-  openModalApprove(template: TemplateRef<any>, item) {
-    this.id_update = item.id
-    this.expired_date = item.expired_date;
-    this.modalRef = this.modalService.show(template);
-  }
-  openModalDeny(template: TemplateRef<any>, item) {
-    this.id_update = item.id
-    // this.denied_message = item.denied_message;
-    this.modalRef = this.modalService.show(template);
-  }
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),
@@ -107,18 +83,38 @@ export class ShopPendingListComponent implements OnInit {
       cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
     });
   }
+  async deleteAll() {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      try {
+        await this.confirmDelete();
+      } catch (err) {
+        return;
+      }
+      await this.apiService.review.deleteAll(ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
+
   async reloadItems(params) {
     const { limit, offset, sortBy, sortAsc } = params;
     this.query.limit = limit;
-    // this.query.filter = {
-    //   $or: [
-    //     {
-    //       host_register_status: "ACCEPT"
-    //     }, {
-    //       guest_register_status: "ACCEPT"
-    //     }
-    //   ]
-    // }
     this.query.offset = offset;
     this.query.order = sortBy ? [
       [sortBy, sortAsc ? 'ASC' : 'DESC']
@@ -180,20 +176,13 @@ export class ShopPendingListComponent implements OnInit {
       timer: 2000,
     });
   }
-  openModalZoomImage(template: TemplateRef<any>, item) {
-    this.modalRef = this.modalService.show(template);
-    this.zoom_image = item.replace('300', '1024')
-  }
-  replaceImage(event) {
-    this.zoom_image = this.zoom_image.replace('1024', '300')
-  }
   async getItems() {
     try {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
-      this.items.next(await this.apiService.shop.getList({ query }));
-      this.itemCount = this.apiService.shop.pagination.totalItems;
+      this.items.next(await this.apiService.review.getList({ query }));
+      this.itemCount = this.apiService.review.pagination.totalItems;
       this.ref.detectChanges();
       return this.items;
     } catch (error) {
@@ -210,11 +199,11 @@ export class ShopPendingListComponent implements OnInit {
       relativeTo: this.route
     });
   }
-  addNew() {
-    this.router.navigate(['/category/' + this.category_id + "/add"], {
-      relativeTo: this.route
-    });
-  }
+  // addNew() {
+  //   this.router.navigate(['/category/' + this.category_id + "/add"], {
+  //     relativeTo: this.route
+  //   });
+  // }
   async alertDeleteSuccess() {
     return await swal({
       title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
@@ -265,183 +254,31 @@ export class ShopPendingListComponent implements OnInit {
       } catch (error) {
         return;
       }
-      await this.apiService.shop.delete(item.id);
+      await this.apiService.review.delete(item.id);
       this.itemsTable.selectAllCheckbox = false;
       this.itemsTable.reloadItems();
       this.alertDeleteSuccess();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
-    }
-  }
-  async acceptItem(form: NgForm) {
-    this.submittingApprove = true;
-    if (form.valid) {
-      try {
-        await this.apiService.shop.editReTime(this.id_update, {
-          expired_date: moment().valueOf() + (this.extra_days * 86400000),
-          state: 'APPROVED'
-        });
-        this.alertSuccess();
-        this.modalRef.hide()
-        this.submittingApprove = false;
-        this.itemsTable.reloadItems();
-      } catch (error) {
-        this.alertErrorFromServer(error.error.message);
-        this.submittingApprove = false;
-      }
-    } else {
-      this.alertFormNotValid();
-      this.submittingApprove = false;
-    }
-    try {
-      // try {
-      //   await this.confirmAccept();
-      // } catch (error) {
-      //   return;
-      // }
-
-    } catch (error) {
-      this.alertErrorFromServer(error.error.message);
-    }
-  }
-  async acceptItemOld(item: any) {
-    try {
-      await this.apiService.shop.update(item.id, {
-        state: 'APPROVED'
-      });
-      this.alertSuccess();
-      this.itemsTable.reloadItems();
-    } catch (error) {
-      this.alertErrorFromServer(error.error.message);
-    }
-
-  }
-  checkExpire(item: any) {
-    if (item.expired_date) {
-      const time: number = (parseInt(item.expired_date) - moment().valueOf()) / (24 * 60 * 60 * 1000)
-      if (time >= 0) {
-        return true
-      } else {
-        return false
-      }
-    } else {
-      return false
-    }
-
-  }
-  mathRemainingTime(unixtimestamp: any) {
-    // return new Date(parseInt(unixtimestamp));
-    return (unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)
-  }
-  ceilRemainingTime(unixtimestamp: any) {
-    return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
-  }
-  check_extra_day() {
-    if (this.extra_days > 180) {
-      this.extra_days = 180
-    }
-    if (this.extra_days < 30) {
-      this.extra_days = 30
-    }
-    console.log("@@@ ", this.extra_days)
-  }
-  async rejectedItem(item) {
-    try {
-      // try {
-      //   await this.confirmDeny();
-      // } catch (error) {
-      //   return;
-      // }
-      await this.apiService.shop.update(this.id_update, { state: 'REJECTED', denied_message: this.denied_message });
-      this.itemsTable.reloadItems();
-      this.alertSuccess();
-      this.modalRef.hide()
-    } catch (error) {
-      this.alertErrorFromServer(error.error.message);
-    }
-  }
-  async rejectAllItem() {
-    if (this.itemsTable.selectedRows.length === 0) {
-      return;
-    }
-    const rows = this.itemsTable.selectedRows;
-    const ids = [];
-    rows.forEach(row => {
-      row.item.deleting = true;
-      ids.push(row.item.id);
-    });
-    try {
-      try {
-        await this.confirmDeny();
-      } catch (err) {
-        return;
-      }
-      await this.apiService.shop.rejectAll(ids);
-      this.itemsTable.selectAllCheckbox = false;
-      this.itemsTable.reloadItems();
-      this.alertDeleteSuccess();
-    } catch (err) {
-      this.alertErrorFromServer(err.error.message);
-    } finally {
-      rows.forEach(row => {
-        row.item.deleting = false;
-      });
-    }
-  }
-  async approveAllItem() {
-    if (this.itemsTable.selectedRows.length === 0) {
-      return;
-    }
-    const rows = this.itemsTable.selectedRows;
-    const ids = [];
-    rows.forEach(row => {
-      row.item.deleting = true;
-      ids.push(row.item.id);
-    });
-    try {
-      try {
-        await this.confirmDeny();
-      } catch (err) {
-        return;
-      }
-      await this.apiService.shop.approveAll(ids);
-      this.itemsTable.selectAllCheckbox = false;
-      this.itemsTable.reloadItems();
-      this.alertDeleteSuccess();
-    } catch (err) {
-      this.alertErrorFromServer(err.error.message);
-    } finally {
-      rows.forEach(row => {
-        row.item.deleting = false;
-      });
     }
   }
   async search() {
     this.submitting = true;
-    this.query.filter = {
-      state: "PENDING"
-    }
+
     if (this.searchRef) { clearTimeout(this.searchRef); }
     this.searchRef = setTimeout(async () => {
-      // if (!this.keyword && !this.fieldSearch) {
-      //   this.alertNotChooseSearchCondition();
+      // if (!this.keyword) {
       //   this.submitting = false;
       //   return;
       // }
-      if (this.option_search === 'id') {
+      if (this.keyword && this.keyword.length !== 0) {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
-          this.itemFields = ['$all', { "user": ["$all", { "$filter": { username: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+          this.query.filter.content = { $iLike: `%${this.keyword}%` }
         }
-      } else if (this.option_search === 'nickname') {
-        this.itemFields = ['$all', { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
-      } else if (this.option_search === 'gmail') {
-        this.itemFields = ['$all', { "user": ["$all", { "$filter": { email: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
-      } else if (this.option_search === 'title') {
-        this.query.filter.title = { $iLike: `%${this.keyword}%` }
-      } else if (this.option_search === 'phone_number') {
-        this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
+      } else {
+        this.query.filter = {  }
       }
       // if (this.sex !== null) {
       //   this.query.filter.sex = this.sex;
@@ -453,10 +290,10 @@ export class ShopPendingListComponent implements OnInit {
   async exportAsXLSX() {
     try {
       this.loadingExportExcel = true;
-      const data = await this.apiService.shop.getList({
+      const data = await this.apiService.review.getList({
         query: {
           limit: this.itemCount,
-          fields: ['$all', { "thema": ["$all"] }],
+          fields: ['$all'],
           order: [['updated_at', 'DESC']]
         }
       });

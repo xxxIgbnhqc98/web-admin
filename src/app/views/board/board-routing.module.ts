@@ -4,6 +4,7 @@ import { HowToUseComponent } from './how-to-use/how-to-use.component';
 import { PolicyComponent } from './policy/policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { LocationBasedServicesComponent } from './location-based-services/location-based-services.component';
+import { CompanyInfoComponent } from './company-info/company-info.component';
 const routes: Routes = [
   {
     path: '',
@@ -42,6 +43,13 @@ const routes: Routes = [
         component: LocationBasedServicesComponent,
         data: {
           title: 'Location based services'
+        }
+      },
+      {
+        path: 'company-info',
+        component: CompanyInfoComponent,
+        data: {
+          title: 'Company info'
         }
       }
     ]

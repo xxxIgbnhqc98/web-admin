@@ -73,7 +73,7 @@
             </div>
             <div class="form-group">
               <label for="min_price">{{'Min amount' | translate}}</label>
-              <input class="form-control" id="min_price" [placeholder]="'Enter min amount' | translate" type="number"
+              <input class="form-control" id="min_price" maxlength="10" [placeholder]="'Enter min amount' | translate" type="text"
                 name="min_price" [(ngModel)]="min_price" required #min_priceControl="ngModel"
                 [ngClass]="{'is-invalid' : min_priceControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="min_priceControl.errors?.required">

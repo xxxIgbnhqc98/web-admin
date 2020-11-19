@@ -542,6 +542,10 @@
           {
             "name": "위치기반 서비스 이용약관",
             "url": "/board/location-based-services"
+          },
+          {
+            "name": "회사 정보",
+            "url": "/board/company-info"
           }
         ]
       },
@@ -621,7 +625,19 @@
       {
         "name": "게시판",
         "url": "/bulletin",
-        "icon": "fa fa-sticky-note-o"
+        "icon": "fa fa-sticky-note-o",
+        "children": [
+          {
+            "name": "게시판 목록",
+            "icon": "fa fa-list-ol",
+            "url": "/bulletin/bulletin"
+          },
+          {
+            "name": "리뷰 및 댓글",
+            "icon": "fa fa-comment",
+            "url": "/bulletin/comment"
+          }
+        ]
       },
       {
         "name": "파트너 관리자 & 어드민 계정",

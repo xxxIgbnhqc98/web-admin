@@ -532,6 +532,10 @@
           {
             "name": "Dịch vụ dựa trên địa điểm",
             "url": "/board/location-based-services"
+          },
+          {
+            "name": "Thông tin công ty",
+            "url": "/board/company-info"
           }
         ]
       },
@@ -610,8 +614,19 @@
       },
       {
         "name": "Bài đăng",
-        "url": "/bulletin",
-        "icon": "fa fa-sticky-note-o"
+        "icon": "fa fa-sticky-note-o",
+        "children": [
+          {
+            "name": "Danh sách bài đăng",
+            "icon": "fa fa-list-ol",
+            "url": "/bulletin/bulletin"
+          },
+          {
+            "name": "Bình luận",
+            "icon": "fa fa-comment",
+            "url": "/bulletin/comment"
+          }
+        ]
       },
       {
         "name": "Tài khoản quản lý",
