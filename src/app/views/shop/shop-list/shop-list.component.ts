@@ -11,6 +11,7 @@ import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
 import * as _ from 'lodash';
+import { title } from 'process';
 
 declare var $: any;
 
@@ -72,7 +73,11 @@ export class ShopListComponent implements OnInit {
   limit_list_reviews: number = 10;
   count_list_reviews: number = 0;
   load_more: boolean = false;
-  default_limit:number  = 50;
+  default_limit: number = 50;
+  listShopFiltered: any = []
+  listShop: any = []
+  lastSubmitSingerId: string;
+  isShowingCategoryDropDown: boolean = false
 
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
@@ -92,7 +97,8 @@ export class ShopListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    console.log(this.items)
+    document.getElementById("myDropdown").classList.add("hide");
+    await this.getShopList();
     this.titleService.setTitle('Shop list')
     this.route.params.subscribe(params => {
       this.category_id = params.category_id;
@@ -101,6 +107,92 @@ export class ShopListComponent implements OnInit {
       }
     });
   }
+  async getShopList() {
+    try {
+      this.loading_api = true;
+      this.listShop = await this.apiService.shop.getList({
+        query: {
+          fields: ['$all'],
+          page: 1,
+          limit: 50
+        }
+      })
+      this.ref.detectChanges();
+      this.loading_api = false;
+    } catch (error) {
+      this.loading_api = false;
+    }
+  }
+  getShopFromId(id) {
+    let title = '';
+    if (this.listShop) {
+      this.listShop.forEach(shop => {
+        if (shop.id === id) {
+          title = shop.title;
+        }
+      });
+    }
+    return title;
+  }
+  closeDropdownUser() {
+    document.getElementById("myDropdown").classList.remove("show");
+    document.getElementById("myDropdown").classList.add("hide");
+  }
+  onShopSearch() {
+    const input: any = document.getElementById("myInput");
+    this.filterFunction(input.value);
+  }
+  async filterFunction(keyword: string) {
+    if (!keyword || keyword.length === 0) {
+      this.listShopFiltered = this.items.value;
+      return;
+    }
+    const newFilteredShopList = [];
+    try {
+      this.query.filter.title = { $iLike: `%${keyword}%` }
+      this.query.fields = ["$all"]
+      this.listShop = await this.apiService.shop.getList({ query: this.query })
+    } catch (error) {
+    }
+    if (this.listShop.length) {
+      this.listShop.forEach(shop => {
+        if (shop.title.toUpperCase().indexOf(keyword.toUpperCase()) > -1) {
+          newFilteredShopList.push(shop);
+        }
+      });
+    }
+    this.listShopFiltered = newFilteredShopList;
+  }
+  async onShopClick(shop) {
+    this.shop_id = shop.id;
+    document.getElementById("myDropdown").classList.remove("show");
+    this.router.navigate([`/shop/add/${this.shop_id}`,], {
+      relativeTo: this.route
+    });
+  }
+  showDropdown() {
+    if (this.isShowingCategoryDropDown) {
+      return;
+    }
+
+    document.getElementById("myDropdown").classList.add("show");
+    document.getElementById("shop_id").blur();
+    document.getElementById("myInput").focus();
+
+    // Auto scroll to the previous chosen singer_id
+    if (this.lastSubmitSingerId && this.lastSubmitSingerId !== '') {
+      setTimeout(() => {
+        const singerItem: any = document.getElementById('singer_' + this.lastSubmitSingerId);
+        const singerWrapper: any = document.getElementById('singerListWrapper');
+        singerWrapper.scrollTop = singerItem.offsetTop - 100;
+      }, 500);
+    }
+
+    setTimeout(() => {
+      this.filterFunction(""); //Show all singers
+    }, 100);
+  }
+  //
   onChangeDate(event) {
     console.log('event12eihiuhg', event)
   }
@@ -611,7 +703,7 @@ export class ShopListComponent implements OnInit {
       relativeTo: this.route
     });
   }
-  getReview( shop_id) {
+  getReview(shop_id) {
     this.router.navigate(['/shop/review-list/' + shop_id], {
       relativeTo: this.route
     });

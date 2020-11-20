@@ -37,6 +37,7 @@ export class TagListComponent implements OnInit {
   modalRef: BsModalRef;
   searchTimeOut: number = 250;
   thema_id: string = null;
+  thema_name: string;
   // 
   id: string;
   params_thema_id: string;
@@ -72,7 +73,6 @@ export class TagListComponent implements OnInit {
         this.params_thema_id = params.thema_id;
       }
 
-      console.log("log ", this.thema_id)
       const query: any = {
         fields: ["$all"],
         limit: 9999999
@@ -80,6 +80,8 @@ export class TagListComponent implements OnInit {
       this.themas = await this.apiService.thema.getList({
         query
       });
+      const item = await this.apiService.thema.getItem(this.thema_id, { query })
+      this.thema_name = item.name
     });
   }
   async setData() {

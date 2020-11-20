@@ -164,10 +164,10 @@ export class AddUserComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       if (moment(this.paid_user_expiration_date).valueOf() < moment().hour(0).minute(0).second(0).valueOf()) {
-        this.alertExpDate();
-        this.submitting = false;
+        //   this.alertExpDate();
+        //   this.submitting = false;
         this.paid_user_expiration_date = new Date()
-        return;
+        //   return;
       }
       this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
       const { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;

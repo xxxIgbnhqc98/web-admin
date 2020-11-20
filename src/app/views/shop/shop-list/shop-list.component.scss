@@ -347,3 +347,30 @@
 /deep/ #shop-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(16) {
   width: 100px;
 }
+.hide{
+  display: none;
+}
+
+.show{
+  display: inline;
+}
+.btn-remove-search-dropdown{
+  float: right;
+  font-size: 40px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: red;
+  position: absolute;
+  right: 20px;
+  bottom: 235px;
+}
+.search-item{
+  padding: 20px;
+  font-size: 16px;
+}
+
+.search-item:hover{
+  font-weight: bold;
+  background-color: #d3d3d36b;
+}
