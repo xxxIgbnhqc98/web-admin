@@ -141,10 +141,10 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{'Thema' | translate}}</span>
               </div>
-              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
-                class="form-control input-control">
-                <option *ngFor="let item of themas" value="{{ item.id }}">{{
-                  item.name
+              <select (change)="updateCateList()" name="thema_name" [(ngModel)]="thema_name" id="thema_name"
+                class="form-control input-control" disabled="true">
+                <option *ngFor="let item of themas" value="{{ thema_name }}" selected>{{
+                  thema_name
                 }}</option>
               </select>
             </div>

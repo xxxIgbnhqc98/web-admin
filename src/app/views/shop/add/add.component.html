@@ -25,7 +25,7 @@
                     <img height="80px" width="80px" style="object-fit: cover; margin: 5px;"
                       [src]="item.avatar ? item.avatar : thumbDefault"
                       onerror="this.src='https://server.hitek.com.vn:7779/api/v1/image/get/resized-large-image-1589440379750.png'">
-                    {{item.nickname}}
+                    {{item.nickname + "/ " + item.username}}
                   </div>
                 </div>
               </div>

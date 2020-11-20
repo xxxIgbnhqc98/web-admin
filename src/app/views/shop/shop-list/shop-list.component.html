@@ -17,23 +17,19 @@
     <div class="card-body">
       <div class="row apps">
         <div class="col-12 search form-group">
-          <div class="row">
-            <div class="col-2">
-              <select class="form-control" name="option_search" [(ngModel)]="option_search">
-                <option value="id">{{'ID' | translate}}</option>
-                <option value="nickname">{{'Nickname' | translate}}</option>
-                <option value="gmail">{{'Gmail' | translate}}</option>
-                <option value="title">{{'Title' | translate}}</option>
-                <option value="phone_number">{{'Phone number' | translate}}</option>
-              </select>
-            </div>
-            <div class="col-2">
-              <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
-                [(ngModel)]="keyword">
-            </div>
-            <div class="col-3">
-              <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
-                  class="fa fa-search"></i> {{'Search' | translate}}</button>
+          <label for="title">{{'Search' | translate}}</label>
+          <input (click)="showDropdown()" placeholder="Please choose a Shop" id="shop_id"
+            class="form-control input-control" name="shop_id" [value]="getShopFromId(shop_id)" />
+          <div style="width: 80%; height: 600px;" id="myDropdown" class="dropdown-content">
+            <span (click)="closeDropdownUser()" class="btn-remove-search-dropdown">x</span>
+            <div style="clear: both;"></div>
+            <input style="margin-top: 15px; width: 100%; height:50px;" type="text"
+              [placeholder]="'Please search shop with title' | translate" id="myInput" (keyup)="onShopSearch()">
+            <div id="singerListWrapper" style="overflow: scroll; height: 200px;">
+              <div [id]="item.id" *ngFor="let item of listShopFiltered" (click)="onShopClick(item)"
+                [ngClass]="this.lastSubmitSingerId === item.id ? 'checked' : ''">
+                <div class="search-item">{{item.title}}</div>
+              </div>
             </div>
           </div>
         </div>
