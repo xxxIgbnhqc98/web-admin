@@ -596,6 +596,11 @@
             "url": "/shop/shop-list"
           },
           {
+            "name": "Rejected shop list",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/shop-rejected-list"
+          },
+          {
             "name": "Expried shop list",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-expired-list"

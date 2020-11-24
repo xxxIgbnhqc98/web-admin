@@ -596,7 +596,12 @@
             "url": "/shop/shop-list"
           },
           {
-            "name": "Shop expried list",
+            "name": "Cửa hàng từ chối",
+            "icon": "fa fa-list-ol",
+            "url": "/shop/shop-rejected-list"
+          },
+          {
+            "name": "Cửa hàng hết hạn",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-expired-list"
           },
