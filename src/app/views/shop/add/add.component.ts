@@ -23,7 +23,10 @@ declare let swal: any;
 })
 export class AddShopComponent implements OnInit {
   @ViewChild('multiSelect') multiSelect;
-
+  public editorOptions: Object = { 
+    placeholderText: ' ',
+    key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' 
+  };
   id: any;
   isEdit: boolean = false;
   submitting: boolean = false;

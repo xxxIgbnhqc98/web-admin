@@ -14,6 +14,10 @@ export class HowToUseComponent implements OnInit {
   submitting: boolean = false;
   content: string = null;
   id: string;
+  public editorOptions: Object = { 
+    placeholderText: ' ',
+    key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' 
+  };
   constructor(
     public ref: ChangeDetectorRef,
     public apiService: ApiService,

@@ -2,10 +2,10 @@
     <form #loginForm="ngForm">
         <!-- <quill-editor id="description" name="description" [(ngModel)]="description">
             </quill-editor> -->
-        <div id="description" name="description" [(ngModel)]="description" [froalaEditor]></div>
+        <div id="description" name="description" [(ngModel)]="description" [froalaEditor]="editorOptions"></div>
 
-        <div class="row">
-            <div class="col-12" style="display: flex;justify-content: center;align-items: center;margin: 0px !important;">
+        <div class="row" style="margin: 0px !important;">
+            <div class="col-12" style="display: flex;justify-content: center;align-items: center;">
                 <button style="margin: 2px;" type="button" class="btn btn-primary" data-style="expand-right"
                     [ladda]='submitting' (click)="toHtml()">
                     입력하기
