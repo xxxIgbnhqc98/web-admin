@@ -5,8 +5,10 @@
         {{'How to use' | translate}}
       </div>
       <div class="card-body">
-        <quill-editor name="content" [(ngModel)]="content">
-        </quill-editor>
+        <!-- <quill-editor name="content" [(ngModel)]="content">
+        </quill-editor> -->
+        <div name="content" [(ngModel)]="content" [froalaEditor]></div>
+
       </div>
       <div class="card-footer">
         <button class="btn btn-success" data-style="expand-right" [ladda]='submitting'

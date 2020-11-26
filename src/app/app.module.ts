@@ -27,6 +27,8 @@ import { SharedModule } from './shared';
 import { ToolBoxComponent } from './views/tool-box/tool-box.component';
 import { QuillModule } from 'ngx-quill';
 import { ContentComponent } from './views/content/content.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -36,6 +38,8 @@ const APP_CONTAINERS = [
 
 @NgModule({
   imports: [
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     AppAsideModule,

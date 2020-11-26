@@ -46,6 +46,7 @@
     "@types/node-geocoder": "^3.24.1",
     "agm-direction": "^0.8.0",
     "angular-2-data-table-bootstrap4": "^0.1.6",
+    "angular-froala-wysiwyg": "^2.9.5",
     "angular2-ladda": "^2.0.1",
     "angular2-multiselect-dropdown": "^3.2.1",
     "angularjs-dropdown-multiselect": "^2.0.0-beta.10",
