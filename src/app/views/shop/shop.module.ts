@@ -25,6 +25,7 @@ import { CustomFormsModule } from 'ng2-validation'
 import { ShopBannerListComponent } from './shop-banner-list/shop-banner-list.component';
 import { recommendationAreaListComponent } from './recommendation-area/recommendation-area-list.component';
 import { CommentListComponent } from './comment-shop-list/comment-shop-list.component';
+import { ShopRejectedListComponent } from './shop-rejected-list/shop-rejected-list.component';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { CommentListComponent } from './comment-shop-list/comment-shop-list.comp
     ColorPickerModule,
     CustomFormsModule
   ],
-  declarations: [ShopListComponent,CommentListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent, ShopExpiredListComponent],
+  declarations: [ShopListComponent, CommentListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent, ShopExpiredListComponent, ShopRejectedListComponent],
   providers: [
     ExcelService,
     DatePipe
