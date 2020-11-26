@@ -97,7 +97,7 @@ export class ShopListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    document.getElementById("myDropdown").classList.add("hide");
+
     await this.getShopList();
     this.titleService.setTitle('Shop list')
     this.route.params.subscribe(params => {
@@ -135,7 +135,7 @@ export class ShopListComponent implements OnInit {
     return title;
   }
   closeDropdownUser() {
-    document.getElementById("myDropdown").classList.remove("show");
+    // document.getElementById("myDropdown").classList.remove("show");
     document.getElementById("myDropdown").classList.add("hide");
   }
   onShopSearch() {
@@ -165,17 +165,20 @@ export class ShopListComponent implements OnInit {
   }
   async onShopClick(shop) {
     this.shop_id = shop.id;
-    document.getElementById("myDropdown").classList.remove("show");
+    console.log(this.shop_id)
     this.router.navigate([`/shop/add/${this.shop_id}`,], {
       relativeTo: this.route
     });
+  }
+  changeSearchHandler() {
+    this.listShopFiltered = []
   }
   showDropdown() {
     if (this.isShowingCategoryDropDown) {
       return;
     }
-
-    document.getElementById("myDropdown").classList.add("show");
+    document.getElementById("search-section").classList.add("show");
+    document.getElementById("singerListWrapper").style.overflowY = "scroll";
     document.getElementById("shop_id").blur();
     document.getElementById("myInput").focus();
 
@@ -191,6 +194,7 @@ export class ShopListComponent implements OnInit {
     setTimeout(() => {
       this.filterFunction(""); //Show all singers
     }, 100);
+
   }
   //
   onChangeDate(event) {
