@@ -498,6 +498,7 @@
   "Please choose Account type": "Please choose Account type.",
   "Please enter nickname.": "Please enter nickname.",
   "enter nickname": "enter nickname",
+  "Detailed address": "Detailed address",
   "nav": {
     "nav_items": [
       {
@@ -601,7 +602,7 @@
             "url": "/shop/shop-rejected-list"
           },
           {
-            "name": "Expried shop list",
+            "name": "Expired shop list",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-expired-list"
           },

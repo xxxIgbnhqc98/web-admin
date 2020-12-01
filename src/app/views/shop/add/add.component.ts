@@ -23,9 +23,9 @@ declare let swal: any;
 })
 export class AddShopComponent implements OnInit {
   @ViewChild('multiSelect') multiSelect;
-  public editorOptions: Object = { 
+  public editorOptions: Object = {
     placeholderText: ' ',
-    key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' 
+    key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp=='
   };
   id: any;
   isEdit: boolean = false;
@@ -46,6 +46,7 @@ export class AddShopComponent implements OnInit {
   opening_hours: string;
   contact_phone: string;
   address: string;
+  address_2: string;
   created_by_admin: boolean = true;
   city_id: string;
   district_id: string;
@@ -427,6 +428,7 @@ export class AddShopComponent implements OnInit {
     this.opening_hours = null;
     this.contact_phone = null;
     this.address = null;
+    this.address_2 = null;
     this.tag_ids = [];
     // this.created_by_admin = true;
     this.city_id = null;
@@ -445,6 +447,7 @@ export class AddShopComponent implements OnInit {
       opening_hours: this.opening_hours,
       contact_phone: this.contact_phone,
       address: this.address,
+      address_2: this.address_2,
       created_by_admin: this.created_by_admin,
       city_id: this.city_id,
       district_id: this.district_id,
@@ -500,6 +503,8 @@ export class AddShopComponent implements OnInit {
       this.opening_hours = data.opening_hours;
       this.contact_phone = data.contact_phone;
       this.address = data.address;
+      this.address_2 = data.address_2;
+
       // this.created_by_admin = true;
       this.city_id = data.city_id;
       this.district_id = data.district_id;
@@ -522,8 +527,8 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, user_id: this.user_id });
+      const { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
@@ -546,8 +551,8 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, verified: true, user_id: this.user_id });
+      const { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
       form.reset();
       this.alertSuccess();
       if (this.params_thema_id) {

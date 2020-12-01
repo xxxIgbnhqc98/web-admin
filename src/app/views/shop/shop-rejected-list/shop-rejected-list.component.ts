@@ -24,9 +24,18 @@ export class ShopRejectedListComponent implements OnInit {
   itemCount: number = 0;
   itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
+
     filter: {
-      state: { $in: ["REJECTED"] }
+      $or: [
+        {
+          denied_shop: { $ne: null }
+        },
+        {
+          state: { $in: ["REJECTED"] }
+        }
+      ]
     }
+
   };
   option_search: string = 'id';
   submitting: boolean = false;
@@ -71,7 +80,7 @@ export class ShopRejectedListComponent implements OnInit {
   limit_list_reviews: number = 10;
   count_list_reviews: number = 0;
   load_more: boolean = false;
-  default_limit:number  = 50;
+  default_limit: number = 50;
 
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
@@ -665,7 +674,7 @@ export class ShopRejectedListComponent implements OnInit {
   }
   async search() {
     this.submitting = true;
-    
+
     if (this.searchRef) { clearTimeout(this.searchRef); }
     this.searchRef = setTimeout(async () => {
       // if (!this.keyword && !this.fieldSearch) {

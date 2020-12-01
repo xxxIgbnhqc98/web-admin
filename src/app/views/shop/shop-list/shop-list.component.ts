@@ -601,7 +601,7 @@ export class ShopListComponent implements OnInit {
       [sortBy, sortAsc ? 'ASC' : 'DESC']
     ] : null;
     if (!sortBy && !sortAsc) {
-      this.query.order = [['updated_at', 'DESC']]
+      this.query.order = [['expired_date', 'DESC'],['updated_at', 'DESC']]
     }
     await this.getItems();
   }
