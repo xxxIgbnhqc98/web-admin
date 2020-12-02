@@ -191,7 +191,7 @@
             </div> -->
             <div class="form-group">
               <label for="address">{{'Address' | translate}}</label>
-              <input Googleplace (setAddress)="getAddressOnChange($event,addressControl)" class="form-control" id="address" [placeholder]="'Enter address' | translate" type="text"
+              <input ngx-google-places-autocomplete  class="form-control" id="address" [placeholder]="'Enter address' | translate" type="text"
                 name="address" [(ngModel)]="address" required #addressControl="ngModel"
                 [ngClass]="{'is-invalid' : addressControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="addressControl.errors?.required">
@@ -201,11 +201,7 @@
             <div class="form-group">
               <label for="address_2">{{'Detailed address' | translate}}</label>
               <input class="form-control" id="address_2" [placeholder]="'Enter detailed address' | translate" type="text"
-                name="address_2" [(ngModel)]="address_2" required #address_2Control="ngModel"
-                [ngClass]="{'is-invalid' : address_2Control.errors?.required}">
-              <div class="invalid-feedback" *ngIf="address_2Control.errors?.required">
-                {{'Please enter detailed address.' | translate}}
-              </div>
+                name="address_2" [(ngModel)]="address_2">
             </div>
           </div>
         </div>
