@@ -59,6 +59,7 @@ export class ShopListComponent implements OnInit {
   extra_days: number = 30;
   expiration_date: any;
   start_date: any;
+  days: number = 30;
   // 
   start_date_1: Date;
   start_time_1: any = '12:00';
@@ -248,6 +249,34 @@ export class ShopListComponent implements OnInit {
     } else {
       this.alertFormNotValid();
       this.submitting = false;
+    }
+  }
+  openModalAddTimeAll(template: TemplateRef<any>, item) {
+    this.modalRef = this.modalService.show(template);
+  }
+  async submitAddTimeAll(form: NgForm) {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      await this.apiService.shop.addDateAll({ days: this.days }, ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertSuccess();
+      this.modalRef.hide()
+
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
     }
   }
   // Review
@@ -850,6 +879,7 @@ export class ShopListComponent implements OnInit {
       });
     }
   }
+
   async exportAsXLSX() {
     try {
       this.loadingExportExcel = true;
