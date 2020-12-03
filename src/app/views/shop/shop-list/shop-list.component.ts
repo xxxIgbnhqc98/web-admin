@@ -251,7 +251,7 @@ export class ShopListComponent implements OnInit {
       this.submitting = false;
     }
   }
-  openModalAddTimeAll(template: TemplateRef<any>, item) {
+  openModalAddTimeAll(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
   async submitAddTimeAll(form: NgForm) {

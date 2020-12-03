@@ -3,7 +3,7 @@
     <div class="card-header">
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
-        <button class="btn btn-info" (click)="openModalAddTimeAll(templateAddTimeAll, item)">
+        <button class="btn btn-info" (click)="openModalAddTimeAll(templateAddTimeAll)">
           <i class="fa fa-plus"></i> {{'Add' | translate}}
         </button>
         <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="deleteAll()">
