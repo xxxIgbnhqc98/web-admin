@@ -26,10 +26,14 @@ import { ShopBannerListComponent } from './shop-banner-list/shop-banner-list.com
 import { recommendationAreaListComponent } from './recommendation-area/recommendation-area-list.component';
 import { CommentListComponent } from './comment-shop-list/comment-shop-list.component';
 import { ShopRejectedListComponent } from './shop-rejected-list/shop-rejected-list.component';
-
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 @NgModule({
   imports: [
+    GooglePlaceModule,
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     PipesModule.forRoot(),

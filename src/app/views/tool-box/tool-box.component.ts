@@ -18,7 +18,13 @@ export class ToolBoxComponent implements OnInit {
   submitting: boolean = false;
   description: any = html;
   stopListening: Function;
-  constructor(private configService: ConfigService,
+  public editorOptions: Object = { 
+    placeholderText: ' ',
+    key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' 
+  };
+  constructor(
+
+    private configService: ConfigService,
     private authService: AuthService,
     private router: Router,
     private renderer: Renderer2) {
@@ -39,7 +45,7 @@ export class ToolBoxComponent implements OnInit {
     // this.updateDe()
   }
   async ngOnInit() {
-
+    
   }
   toHtml() {
     window.postMessage(this.description, '*')

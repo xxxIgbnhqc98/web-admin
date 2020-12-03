@@ -12,9 +12,12 @@ import { PolicyComponent } from './policy/policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { LocationBasedServicesComponent } from './location-based-services/location-based-services.component';
 import { CompanyInfoComponent } from './company-info/company-info.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 @NgModule({
   imports: [
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot(),
     FormsModule,
     BoardRoutingModule,
     PipesModule.forRoot(),

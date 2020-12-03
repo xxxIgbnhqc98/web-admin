@@ -508,6 +508,7 @@
   "Please choose Account type": " 계정 타입을 선택해주세요.",
   "Please enter nickname.": "닉네임을 입력하세요.",
   "enter nickname": "닉네임을 입력하세요",
+  "Detailed address": "상세주소",
   "nav": {
     "nav_items": [
       {
@@ -606,12 +607,12 @@
             "url": "/shop/shop-list"
           },
           {
-            "name": "거부 목록",
+            "name": "상점 거절 목록",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-rejected-list"
           },
           {
-            "name": "상점만료 목록",
+            "name": "상점 만료 목록",
             "icon": "fa fa-list-ol",
             "url": "/shop/shop-expired-list"
           },
