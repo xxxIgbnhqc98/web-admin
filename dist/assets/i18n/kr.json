@@ -509,6 +509,13 @@
   "Please enter nickname.": "닉네임을 입력하세요.",
   "enter nickname": "닉네임을 입력하세요",
   "Detailed address": "상세주소",
+  "Add AD date": "광고일 추가",
+  "Badge color": "배지 컬러",
+  "Badge text": "배지 문구",
+  "Please choose user": "회원을 선택해 주세요",
+  "Thema Color": "테마컬러",
+  "Comment list": "댓글목록",
+  "Company Info": "회사정보",
   "nav": {
     "nav_items": [
       {
