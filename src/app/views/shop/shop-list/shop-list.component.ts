@@ -79,7 +79,7 @@ export class ShopListComponent implements OnInit {
   listShop: any = []
   lastSubmitSingerId: string;
   isShowingCategoryDropDown: boolean = false
-
+  option_order: string = 'DESC'
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
@@ -107,6 +107,9 @@ export class ShopListComponent implements OnInit {
         this.query.filter.category_id = this.category_id
       }
     });
+  }
+  async changeOptionOrder() {
+    this.itemsTable.reloadItems();
   }
   async getShopList() {
     try {
@@ -630,7 +633,7 @@ export class ShopListComponent implements OnInit {
       [sortBy, sortAsc ? 'ASC' : 'DESC']
     ] : null;
     if (!sortBy && !sortAsc) {
-      this.query.order = [['expired_date', 'DESC'],['updated_at', 'DESC']]
+      this.query.order = [['expired_date', this.option_order], ['updated_at', 'DESC']]
     }
     await this.getItems();
   }

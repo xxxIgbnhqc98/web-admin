@@ -30,8 +30,8 @@
           <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
             [(ngModel)]="keyword" *ngIf="option_search !== 'title'">
         </div>
-        <div class="col-3">
-          <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'
+        <div class="col-1">
+          <button style="padding-left: 0px;width: 80px;padding-right: 0px;" class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'
             *ngIf="option_search !== 'title'"><i class="fa fa-search"></i> {{'Search' | translate}}</button>
         </div>
         <div class="col-12 search form-group" *ngIf="option_search === 'title'">
@@ -49,7 +49,15 @@
             </div>
           </div>
         </div>
+        <div class="col-3 pull-right">
+          <select class="form-control" name="option_order" [(ngModel)]="option_order"
+            (ngModelChange)="changeOptionOrder()">
+            <option value="ASC">{{'Increasing with remaining date' | translate}}</option>
+            <option value="DESC">{{'Decrease with remaining date' | translate}}</option>
+          </select>
+        </div>
       </div>
+
     </div>
   </div>
   <div class="card">
