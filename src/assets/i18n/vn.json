@@ -508,6 +508,9 @@
   "Company Info": "Thông tin công ty",
   "Approve": "Chấp nhận",
   "Reject": "Từ chối",
+  "Unselected": "Không sắp xếp",
+  "Increasing with remaining date": "Tăng theo ngày còn lại",
+  "Decrease with remaining date": "Giảm theo ngày còn lại",
   "nav": {
     "nav_items": [
       {

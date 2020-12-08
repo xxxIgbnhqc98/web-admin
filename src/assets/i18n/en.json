@@ -508,6 +508,9 @@
   "Company Info": "Company Info",
   "Approve": "Approve",
   "Reject": "Reject",
+  "Unselected": "Unselected",
+  "Increasing with remaining date": "Increasing with remaining date",
+  "Decrease with remaining date": "Decrease with remaining date",
   "nav": {
     "nav_items": [
       {
