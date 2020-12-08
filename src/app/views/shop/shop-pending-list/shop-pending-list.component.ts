@@ -86,7 +86,7 @@ export class ShopPendingListComponent implements OnInit {
     this.expired_date = item.expired_date;
     this.modalRef = this.modalService.show(template);
   }
-  async openModalApproveAll(template: TemplateRef<any>, item) {
+  async openModalApproveAll(template: TemplateRef<any>) {
     if (this.itemsTable.selectedRows.length === 0) {
       return;
     }

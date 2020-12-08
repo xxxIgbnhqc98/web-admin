@@ -523,6 +523,8 @@
   "Decrease with remaining date": "광고일 적은 순서",
   "Select": "설정하기",
   "Unselect": "미설정하기",
+  "Recommendation selected": "추천리스트 설정목록",
+  "Recommendation unselected": "추천리스트 미설정목록",
   "nav": {
     "nav_items": [
       {

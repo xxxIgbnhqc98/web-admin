@@ -513,6 +513,8 @@
   "Decrease with remaining date": "Decrease with remaining date",
   "Select": "Select",
   "Unselect": "Unselect",
+  "Recommendation selected": "Recommendation selected",
+  "Recommendation unselected": "Recommendation unselected",
   "nav": {
     "nav_items": [
       {
