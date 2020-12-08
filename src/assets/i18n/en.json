@@ -511,6 +511,8 @@
   "Unselected": "Unselected",
   "Increasing with remaining date": "Increasing with remaining date",
   "Decrease with remaining date": "Decrease with remaining date",
+  "Select": "Select",
+  "Unselect": "Unselect",
   "nav": {
     "nav_items": [
       {

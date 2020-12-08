@@ -521,6 +521,8 @@
   "Unselected": "미선택",
   "Increasing with remaining date": "광고일 많은 순서",
   "Decrease with remaining date": "광고일 적은 순서",
+  "Select": "설정하기",
+  "Unselect": "미설정하기",
   "nav": {
     "nav_items": [
       {

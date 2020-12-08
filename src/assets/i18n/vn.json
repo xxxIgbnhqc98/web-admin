@@ -511,6 +511,8 @@
   "Unselected": "Không sắp xếp",
   "Increasing with remaining date": "Tăng theo ngày còn lại",
   "Decrease with remaining date": "Giảm theo ngày còn lại",
+  "Select": "Chọn",
+  "Unselect": "Bỏ Chọn",
   "nav": {
     "nav_items": [
       {
