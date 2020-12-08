@@ -26,6 +26,14 @@
                 [(ngModel)]="keyword">
             </div>
             <div class="col-3">
+              <select class="form-control" name="filter_selected" [(ngModel)]="filter_selected"
+                (ngModelChange)="changeFilterSelected()">
+                <option value="null">{{'Unselected' | translate}}</option>
+                <option value="true">{{'Recommendation selected' | translate}}</option>
+                <option value="fasle">{{'Recommendation unselected' | translate}}</option>
+              </select>
+            </div>
+            <div class="col-3">
               <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
                   class="fa fa-search"></i> {{'Search' | translate}}</button>
             </div>
