@@ -516,6 +516,8 @@
   "Thema Color": "테마컬러",
   "Comment list": "댓글목록",
   "Company Info": "회사정보",
+  "Approve": "승인",
+  "Reject": "거부",
   "nav": {
     "nav_items": [
       {

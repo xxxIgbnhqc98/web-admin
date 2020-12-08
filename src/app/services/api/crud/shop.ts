@@ -119,7 +119,7 @@ export class Shop extends CrudAPI<IShop> {
     }
     return true;
   }
-  async approveAll(ids: string[], options?: CrudOptions) {
+  async approveAll(ids: string[], data, options?: CrudOptions) {
     if (!ids) { throw new Error('ids undefined in rejectAll'); }
     options = _.merge({}, this.options, options);
     const setting = {
@@ -132,6 +132,7 @@ export class Shop extends CrudAPI<IShop> {
         'content-type': 'application/json',
         'Authorization': this.api.configService.token
       }, options.headers),
+      body: data,
       responseType: 'json'
     };
     const res: any = await this.exec(setting);
