@@ -67,6 +67,7 @@ export class recommendationAreaListComponent implements OnInit {
   start_time_unix_timestamp: number;
   expiration_time_unix_timestamp: number;
   // 
+  filter_selected: string = "null";
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
@@ -171,7 +172,9 @@ export class recommendationAreaListComponent implements OnInit {
       timer: 2000,
     });
   }
-
+  async changeFilterSelected() {
+    this.itemsTable.reloadItems();
+  }
   async alertConfirmUnBlock() {
     return await swal({
       title: (this.configService.lang === 'en') ? 'Are you sure to unblock this user?' : ((this.configService.lang === 'vn') ? 'Gỡ bỏ hình phạt' : '패널티 해제하기'),
@@ -328,6 +331,11 @@ export class recommendationAreaListComponent implements OnInit {
     //     }
     //   ]
     // }
+    if (this.filter_selected !== "null") {
+      this.query.filter.is_random_20_shop = (this.filter_selected === "true") ? true : false;
+    }else{
+      this.query.filter.is_random_20_shop = undefined
+    }
     this.query.offset = offset;
     this.query.order = sortBy ? [
       [sortBy, sortAsc ? 'ASC' : 'DESC']

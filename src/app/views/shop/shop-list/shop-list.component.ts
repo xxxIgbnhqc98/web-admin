@@ -79,7 +79,7 @@ export class ShopListComponent implements OnInit {
   listShop: any = []
   lastSubmitSingerId: string;
   isShowingCategoryDropDown: boolean = false
-  option_order: string = 'DESC'
+  option_order: string = null;
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
@@ -633,7 +633,11 @@ export class ShopListComponent implements OnInit {
       [sortBy, sortAsc ? 'ASC' : 'DESC']
     ] : null;
     if (!sortBy && !sortAsc) {
-      this.query.order = [['expired_date', this.option_order], ['updated_at', 'DESC']]
+      if (!this.option_order || this.option_order === "null") {
+        this.query.order = [['updated_at', 'DESC']]
+      } else {
+        this.query.order = [['expired_date', this.option_order], ['updated_at', 'DESC']]
+      }
     }
     await this.getItems();
   }
