@@ -98,7 +98,6 @@ export class TagListComponent implements OnInit {
     this.titleService.setTitle('Add new shop');
     this.name = null;
     this.id_update = null;
-    this.thema_id = null;
     return {
       id_update: this.id_update,
       name: this.name,
