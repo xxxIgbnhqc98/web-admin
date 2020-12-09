@@ -3,8 +3,12 @@
     <div class="card-header">
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
+        <button class="btn btn-primary" [disabled]="!itemsTable.selectedRows.length"
+          (click)="openModalApproveAll(templateApproveAll)">
+          {{'Approve' | translate}}
+        </button>
         <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="rejectAllItem()">
-          {{'Rejected' | translate}}
+          {{'Reject' | translate}}
         </button>
         <!-- <button class="btn btn-primary" (click)="exportAsXLSX()">
           <i class="fa fa-cloud-download"></i> {{'Export excel' | translate}}
@@ -116,14 +120,14 @@
           <ng-template #dataTableCell let-item="item">
             <button *ngIf="!checkExpire(item)" (click)="openModalApprove(templateApprove, item)" class="btn btn-primary"
               style="margin-bottom: 5px;">
-              <i>{{'Approved' | translate}}</i>
+              <i>{{'Approve' | translate}}</i>
             </button>
             <button *ngIf="checkExpire(item)" (click)="acceptItemOld(item)" class="btn btn-primary"
               style="margin-bottom: 5px;">
-              <i>{{'Approved' | translate}}</i>
+              <i>{{'Approve' | translate}}</i>
             </button>
             <button (click)="openModalDeny(templateDeny,item)" class="btn btn-danger">
-              <i>{{'Rejected' | translate}}</i>
+              <i>{{'Reject' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>
@@ -200,6 +204,58 @@
     </div>
   </form>
 </ng-template>
+<ng-template #templateApproveAll>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Approve All' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Extra days' | translate }}</span>
+              </div>
+              <input type="number" (change)="check_extra_day_for_all()" min="30" max="180" id="extra_days_for_all"
+                class="form-control" name="extra_days_for_all" [(ngModel)]="extra_days_for_all" #nameControl="ngModel">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="card-header">
+        <i class="fa fa-list"></i> {{'Expired shop list' | translate}}
+      </div>
+      <div class="card-body scroll-table">
+        <data-table id="data-table-grid" #itemsTable [indexColumnHeader]="'no' | translate" [items]="listExpiredShop"
+          [limit]="default_limit" [itemCount]="listExpiredShop.length" [pagination]="true" [indexColumn]="true"
+          [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
+          [showReloading]="false">
+          <data-table-column [header]="'Title' | translate">
+            <ng-template #dataTableCell let-item="item">
+              <span>{{item && item.title}}</span>
+            </ng-template>
+          </data-table-column>
+          <data-table-column [header]="'Nickname' | translate">
+            <ng-template #dataTableCell let-item="item">
+              <span>{{item.user ? item.user.nickname : 'No info' | translate}}</span>
+            </ng-template>
+          </data-table-column>
+        </data-table>
+      </div> <br />
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submittingApprove'
+          (click)="acceptItem(formContent)">
+          <i>{{ 'Approved' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
 <ng-template #templateDeny>
   <form class="form-horizontal form-content" #formContent="ngForm">
     <div class="modal-header">
@@ -225,9 +281,9 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Deny message' | translate }}</span>
               </div>
-              <input type="text" id="denied_message" class="form-control"
-                name="denied_message"  [(ngModel)]="denied_message" #denied_messageControl="ngModel">
-                
+              <input type="text" id="denied_message" class="form-control" name="denied_message"
+                [(ngModel)]="denied_message" #denied_messageControl="ngModel">
+
             </div>
           </div>
         </div>

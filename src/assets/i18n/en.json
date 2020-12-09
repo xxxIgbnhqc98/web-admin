@@ -506,6 +506,15 @@
   "Thema Color": "Thema color",
   "Comment list": "Comment list",
   "Company Info": "Company Info",
+  "Approve": "Approve",
+  "Reject": "Reject",
+  "Unselected": "Unselected",
+  "Increasing with remaining date": "Increasing with remaining date",
+  "Decrease with remaining date": "Decrease with remaining date",
+  "Select": "Select",
+  "Unselect": "Unselect",
+  "Recommendation selected": "Recommendation selected",
+  "Recommendation unselected": "Recommendation unselected",
   "nav": {
     "nav_items": [
       {

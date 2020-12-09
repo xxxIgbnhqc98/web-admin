@@ -500,12 +500,21 @@
   "enter nickname": "nhập nickname",
   "Detailed address": "Địa chỉ củ thể",
   "Add AD date": "Thêm ngày quảng cáo",
-  "Badge color":"Màu huy hệu",
+  "Badge color": "Màu huy hệu",
   "Badge text": "Văn bản huy hiệu",
   "Please choose user": "Vui lòng chọn người dùng",
   "Thema Color": "Màu Thema",
   "Comment list": "Danh sách bình luận",
   "Company Info": "Thông tin công ty",
+  "Approve": "Chấp nhận",
+  "Reject": "Từ chối",
+  "Unselected": "Không sắp xếp",
+  "Increasing with remaining date": "Tăng theo ngày còn lại",
+  "Decrease with remaining date": "Giảm theo ngày còn lại",
+  "Select": "Chọn",
+  "Unselect": "Bỏ Chọn",
+  "Recommendation selected": "Cửa hàng đề xuất đã chọn",
+  "Recommendation unselected": "Cửa hàng đề xuất không được chọn",
   "nav": {
     "nav_items": [
       {

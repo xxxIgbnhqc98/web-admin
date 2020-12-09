@@ -44,9 +44,13 @@ export class ShopPendingListComponent implements OnInit {
   id_update: string = null;
   expired_date: number;
   extra_days: number = 30;
+  extra_days_for_all: number = 30;
   denied_message: string = null;
   option_search: string = "id";
   default_limit: number = 50;
+  listShopToApprove = [];
+  listExpiredShop = [];
+  listApproveShopIds = [];
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -81,6 +85,45 @@ export class ShopPendingListComponent implements OnInit {
     this.id_update = item.id
     this.expired_date = item.expired_date;
     this.modalRef = this.modalService.show(template);
+  }
+  async openModalApproveAll(template: TemplateRef<any>) {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    rows.forEach(row => {
+      row.item.deleting = true;
+      this.listApproveShopIds.push(row.item.id);
+      this.listShopToApprove.push(row.item)
+    });
+    this.listShopToApprove.forEach(item => {
+      if (!this.checkExpire(item)) {
+        this.listExpiredShop.push(item)
+      }
+    })
+    try {
+      if (this.listExpiredShop.length > 0) {
+        this.modalRef = this.modalService.show(template);
+      } else {
+        try {
+          await this.confirmAccept();
+        } catch (err) {
+          return;
+        }
+        await this.apiService.shop.approveAll(this.listApproveShopIds, {
+          state: 'APPROVED'
+        });
+        this.itemsTable.selectAllCheckbox = false;
+        this.itemsTable.reloadItems();
+        this.alertSuccess();
+      }
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
   }
   openModalDeny(template: TemplateRef<any>, item) {
     this.id_update = item.id
@@ -273,6 +316,37 @@ export class ShopPendingListComponent implements OnInit {
       this.alertErrorFromServer(error.error.message);
     }
   }
+  async acceptItemAll(form: NgForm) {
+    this.submittingApprove = true;
+    if (form.valid) {
+      try {
+        await this.apiService.shop.approveAll(this.listApproveShopIds, {
+          expired_date: moment().valueOf() + (this.extra_days_for_all * 86400000),
+          state: 'APPROVED'
+        });
+        this.alertSuccess();
+        this.modalRef.hide()
+        this.submittingApprove = false;
+        this.itemsTable.reloadItems();
+      } catch (error) {
+        this.alertErrorFromServer(error.error.message);
+        this.submittingApprove = false;
+      }
+    } else {
+      this.alertFormNotValid();
+      this.submittingApprove = false;
+    }
+    try {
+      // try {
+      //   await this.confirmAccept();
+      // } catch (error) {
+      //   return;
+      // }
+
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
+    }
+  }
   async acceptItem(form: NgForm) {
     this.submittingApprove = true;
     if (form.valid) {
@@ -343,7 +417,14 @@ export class ShopPendingListComponent implements OnInit {
     if (this.extra_days < 30) {
       this.extra_days = 30
     }
-    console.log("@@@ ", this.extra_days)
+  }
+  check_extra_day_for_all() {
+    if (this.extra_days > 180) {
+      this.extra_days_for_all = 180
+    }
+    if (this.extra_days < 30) {
+      this.extra_days_for_all = 30
+    }
   }
   async rejectedItem(item) {
     try {
@@ -388,34 +469,36 @@ export class ShopPendingListComponent implements OnInit {
       });
     }
   }
-  async approveAllItem() {
-    if (this.itemsTable.selectedRows.length === 0) {
-      return;
-    }
-    const rows = this.itemsTable.selectedRows;
-    const ids = [];
-    rows.forEach(row => {
-      row.item.deleting = true;
-      ids.push(row.item.id);
-    });
-    try {
-      try {
-        await this.confirmDeny();
-      } catch (err) {
-        return;
-      }
-      await this.apiService.shop.approveAll(ids);
-      this.itemsTable.selectAllCheckbox = false;
-      this.itemsTable.reloadItems();
-      this.alertDeleteSuccess();
-    } catch (err) {
-      this.alertErrorFromServer(err.error.message);
-    } finally {
-      rows.forEach(row => {
-        row.item.deleting = false;
-      });
-    }
-  }
+  // async approveAllItem() {
+  //   if (this.itemsTable.selectedRows.length === 0) {
+  //     return;
+  //   }
+  //   const rows = this.itemsTable.selectedRows;
+  //   const ids = [];
+  //   const list = [];
+  //   rows.forEach(row => {
+  //     row.item.deleting = true;
+  //     ids.push(row.item.id);
+  //     list.push(row.item)
+  //   });
+  //   try {
+  //     try {
+  //       await this.confirmAccept();
+  //     } catch (err) {
+  //       return;
+  //     }
+  //     // await this.apiService.shop.approveAll(ids);
+  //     this.itemsTable.selectAllCheckbox = false;
+  //     this.itemsTable.reloadItems();
+  //     this.alertSuccess();
+  //   } catch (err) {
+  //     this.alertErrorFromServer(err.error.message);
+  //   } finally {
+  //     rows.forEach(row => {
+  //       row.item.deleting = false;
+  //     });
+  //   }
+  // }
   async search() {
     this.submitting = true;
     this.query.filter = {
