@@ -67,7 +67,7 @@ export class recommendationAreaListComponent implements OnInit {
   start_time_unix_timestamp: number;
   expiration_time_unix_timestamp: number;
   // 
-  filter_selected: string = "null";
+  filter_selected: string = "true";
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
