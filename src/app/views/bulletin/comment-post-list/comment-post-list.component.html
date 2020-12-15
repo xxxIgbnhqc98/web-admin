@@ -38,14 +38,19 @@
     </div>
     <div class="col-12" style="margin-bottom: 10px">
       <button style="margin-left: 10px;margin-top: 10px;"
-        [ngClass]="type_search == 'POST' ? 'btn btn-primary' : 'btn btn-secondary'" (click)="changeTypeSearch('POST')"
+        [ngClass]="type_search === 'POST' ? 'btn btn-primary' : 'btn btn-secondary'" (click)="changeTypeSearch('POST')"
         data-style="expand-left">
         {{'Post' | translate}}
       </button>
       <button style="margin-left: 10px;margin-top: 10px;"
-        [ngClass]="type_search !== 'POST' ? 'btn btn-primary' : 'btn btn-secondary'" (click)="changeTypeSearch('SHOP')"
+        [ngClass]="type_search === 'SHOP' ? 'btn btn-primary' : 'btn btn-secondary'" (click)="changeTypeSearch('SHOP')"
         data-style="expand-left">
         {{'Shop' | translate}}
+      </button>
+      <button style="margin-left: 10px;margin-top: 10px;"
+        [ngClass]="type_search === 'RECRUIT' ? 'btn btn-primary' : 'btn btn-secondary'"
+        (click)="changeTypeSearch('RECRUIT')" data-style="expand-left">
+        {{'Recruit' | translate}}
       </button>
     </div>
     <div class="card-body scroll-table" id="review-list">
@@ -66,10 +71,12 @@
         </data-table-column>
         <data-table-column [header]="'Category' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span *ngIf="type_search == 'POST'">{{item.post ? (item.post.category.thema.name):'No info' | translate}} >
+            <span *ngIf="type_search === 'POST'">{{item.post ? (item.post.category.thema.name):'No info' | translate}} >
               {{item.post ? (item.post.category.name):'No info' | translate}}</span>
-            <span *ngIf="type_search == 'SHOP'">{{item.shop ? (item.shop.category.thema.name):'No info' | translate}} >
+            <span *ngIf="type_search === 'SHOP'">{{item.shop ? (item.shop.category.thema.name):'No info' | translate}} >
               {{item.shop ? (item.shop.category.name):'No info' | translate}}</span>
+            <span *ngIf="type_search === 'RECRUIT'">{{item.recruit ? (item.recruit.category.thema.name):'No info' | translate}} >
+              {{item.recruit ? (item.recruit.category.name):'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Content' | translate">

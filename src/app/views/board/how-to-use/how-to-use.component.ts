@@ -15,6 +15,35 @@ export class HowToUseComponent implements OnInit {
   content: string = null;
   id: string;
   public editorOptions: Object = { 
+    toolbarButtons: 	['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'getPDF', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
+    charCounterCount: true,
+    imageUploadParam: 'image_param',
+    imageUploadURL: 'assets/upload_image',
+    imageUploadParams: { id: 'my_editor' },
+    imageUploadMethod: 'POST',
+    imageMaxSize: 5 * 1024 * 1024,
+    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+    events: {
+      'froalaEditor.initialized': function () {
+        console.log('initialized');
+      },
+      'froalaEditor.image.beforeUpload': function (e, editor, images) {
+        if (images.length) {
+          // Create a File Reader.
+          const reader = new FileReader();
+          // Set the reader to insert images when they are loaded.
+          reader.onload = (ev) => {
+            const result = ev.target['result'];
+            editor.image.insert(result, null, null, editor.image.get());
+            console.log(ev, editor.image, ev.target['result'])
+          };
+          // Read image as base64.
+          reader.readAsDataURL(images[0]);
+        }
+        // Stop default upload chain.
+        return false;
+      }
+    },
     placeholderText: ' ',
     key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' 
   };

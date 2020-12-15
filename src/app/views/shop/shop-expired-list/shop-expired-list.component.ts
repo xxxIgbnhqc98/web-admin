@@ -72,7 +72,8 @@ export class ShopExpiredListComponent implements OnInit {
   count_list_reviews: number = 0;
   load_more: boolean = false;
   default_limit:number  = 50;
-
+  themas: any;
+  thema_id: string = "null";
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
@@ -99,6 +100,17 @@ export class ShopExpiredListComponent implements OnInit {
         this.query.filter.category_id = this.category_id
       }
     });
+    this.themas = await this.apiService.thema.getList({
+      query: {
+        fields: ["$all"],
+        limit: 9999999,
+        filter: {
+        }
+      }
+    });
+  }
+  filterThema() {
+    this.itemsTable.reloadItems();
   }
   onChangeDate(event) {
     console.log('event12eihiuhg', event)
@@ -475,6 +487,12 @@ export class ShopExpiredListComponent implements OnInit {
   async reloadItems(params) {
     const { limit, offset, sortBy, sortAsc } = params;
     this.query.limit = limit;
+    if (this.thema_id !== "null") {
+      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", {"$filter": { "thema_id": this.thema_id }}, { "thema": ["$all"] }] }, { "events": ["$all"] }];
+    }else{
+      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+
+    }
     // this.query.filter = {
     //   $or: [
     //     {
@@ -684,7 +702,7 @@ export class ShopExpiredListComponent implements OnInit {
       //     this.query.filter.title = { $iLike: `%${this.keyword}%` }
       //   }
       // }
-      if (this.option_search === 'id') {
+      if (this.option_search === 'id' && this.keyword) {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
@@ -698,6 +716,9 @@ export class ShopExpiredListComponent implements OnInit {
         this.query.filter.title = { $iLike: `%${this.keyword}%` }
       } else if (this.option_search === 'phone_number') {
         this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
+      }
+      if(this.thema_id !== "null"){
+        this.itemFields[2].category.push({"$filter": { "thema_id": this.thema_id }})
       }
       await this.getItems();
       this.submitting = false;

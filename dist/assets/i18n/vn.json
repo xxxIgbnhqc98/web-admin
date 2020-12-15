@@ -516,6 +516,8 @@
   "Recommendation selected": "Cửa hàng đề xuất đã chọn",
   "Recommendation unselected": "Cửa hàng đề xuất không được chọn",
   "Country list":"Danh sách quốc gia",
+  "Please search shop with title": "Tìm kiếm cửa hàng theo tiêu đề",
+  "Recruit": "Tuyển dụng",
   "nav": {
     "nav_items": [
       {
@@ -643,6 +645,11 @@
             "name": "Danh sách bài đăng",
             "icon": "fa fa-list-ol",
             "url": "/bulletin/bulletin"
+          },
+          {
+            "name": "Danh sách tuyển dụng",
+            "icon": "fa fa-address-card",
+            "url": "/bulletin/recruit"
           },
           {
             "name": "Bình luận",

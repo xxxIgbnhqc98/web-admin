@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BulletinComponent } from './bulletin/bulletin-list.component';
 import { CommentListComponent } from './comment-post-list/comment-post-list.component';
+import { RecruitComponent } from './recruit/recruit-list.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,13 @@ const routes: Routes = [
         component: BulletinComponent,
         data: {
           title: 'Bulletin'
+        }
+      },
+      {
+        path: 'recruit',
+        component: RecruitComponent,
+        data: {
+          title: 'Recruit'
         }
       },
       {

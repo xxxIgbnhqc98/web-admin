@@ -526,6 +526,8 @@
   "Recommendation selected": "추천리스트 설정목록",
   "Recommendation unselected": "추천리스트 미설정목록",
   "Country list":"국가 목록",
+  "Please search shop with title": "상점제목으로 상점을 검색할 수 있습니다.",
+  "Recruit": "구인구직",
   "nav": {
     "nav_items": [
       {
@@ -654,6 +656,11 @@
             "name": "게시판 목록",
             "icon": "fa fa-list-ol",
             "url": "/bulletin/bulletin"
+          },
+          {
+            "name": "Recruit list",
+            "icon": "fa fa-address-card",
+            "url": "/bulletin/recruit"
           },
           {
             "name": "리뷰 및 댓글",

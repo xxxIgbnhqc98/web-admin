@@ -14,6 +14,7 @@ import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { SharedModule } from '../../shared';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CommentListComponent } from './comment-post-list/comment-post-list.component';
+import { RecruitComponent } from './recruit/recruit-list.component';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { CommentListComponent } from './comment-post-list/comment-post-list.comp
     NgxInfiniteScrollerModule,
 
   ],
-  declarations: [CommentListComponent, BulletinComponent],
+  declarations: [CommentListComponent, BulletinComponent, RecruitComponent],
   providers: [
     ExcelService,
     DatePipe
