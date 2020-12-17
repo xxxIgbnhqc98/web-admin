@@ -58,7 +58,7 @@
             </button>
             <button *ngIf="item.field === 'LOCATION'" (click)="openModalCountry(templateCountry, item)"
               class="btn btn-primary">
-              <i>{{'Country list'| translate}}</i>
+              <i>{{'Location list'| translate}}</i>
             </button>
           </ng-template>
         </data-table-column>
@@ -141,6 +141,10 @@
       </button>
     </div>
     <div class="card-body">
+      <button type="submit" class="btn btn-primary" data-style="expand-right"
+          (click)="addCircle()">
+          <i>{{ 'Add' | translate }}</i>
+        </button>
       <div class="row">
         <div class="modal-body">
           <div class="col-md-12 form-item" hidden>
@@ -154,13 +158,12 @@
           </div>
           <div style="justify-content: center; display:grid;grid-template-columns: auto auto auto;grid-gap: 40px;">
             <div class="col-md-12 form-item" *ngFor="let item of value_array_obj,let index=index">
-              <div>
+              <span (click)="deleteCircle(index)" style="right: 0; padding: 10px 7px 0px 0px;position:absolute;"><i class="fa fa-times" aria-hidden="true"></i></span>
                 <div>
-                  <input style="color: white; width: 100px; height: 100px;border-radius: 50%; text-align: center;"
+                  <input (keyup)="changeValue($event,index)" style="color: white; width: 100px; height: 100px;border-radius: 50%; text-align: center;"
                     class="form-control" id="country_color" [(colorPicker)]="item.color" [style.background]="item.color"
                     [value]="item.id"/>
                 </div>
-              </div>
             </div>
           </div>
           

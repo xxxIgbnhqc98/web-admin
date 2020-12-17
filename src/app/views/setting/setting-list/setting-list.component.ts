@@ -53,6 +53,19 @@ export class SettingListComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('Link list')
   }
+  changeValue($event, index) {
+    this.value_array_obj[index].id = $event.target.value
+  }
+  addCircle() {
+    const newC: any = {
+      id: '',
+      color: '#000000'
+    }
+    this.value_array_obj.unshift(newC)
+  }
+  deleteCircle(index) {
+    this.value_array_obj.splice(index, 1)
+  }
   openModalEditValue(template: TemplateRef<any>, item) {
     this.id_update = item.id
     this.field = item.field
@@ -74,12 +87,12 @@ export class SettingListComponent implements OnInit {
       this.submittingUpdate = false;
     }
   }
-  changeColor(index,color) {
+  changeColor(index, color) {
     if (color.match('rgba')) {
       color = this.rgb2hex(color)
     }
     this.value_array_obj[index].color = color
-    console.log("@#@#@#@3 ",this.value_array_obj)
+    console.log("@#@#@#@3 ", this.value_array_obj)
   }
   rgb2hex(orig) {
     var a, isPercent,
@@ -114,7 +127,7 @@ export class SettingListComponent implements OnInit {
       this.submittingUpdate = false;
     }
   }
-  
+
   async editValueContry(form: NgForm) {
     try {
 

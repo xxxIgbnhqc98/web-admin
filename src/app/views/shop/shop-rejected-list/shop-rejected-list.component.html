@@ -38,7 +38,7 @@
             <div class="col-3">
               <select (change)="filterThema()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
                 class="form-control input-control">
-                <option value="null">{{'Choose Thema' | translate}}</option>
+                <option value="null">{{'Please choose thema.' | translate}}</option>
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name
                 }}</option>
