@@ -5,6 +5,8 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config/config.service';
 import { html } from '../../_html_de';
+import { ApiService } from '../../services/api/api.service';
+import axios from 'axios';
 
 declare var swal: any;
 @Component({
@@ -19,31 +21,20 @@ export class ToolBoxComponent implements OnInit {
   description: any = html;
   stopListening: Function;
   public editorOptions: Object = {
-    charCounterCount: true,
-    imageUploadParam: 'image_param',
-    imageUploadURL: 'assets/upload_image',
-    imageUploadParams: { id: 'my_editor' },
-    imageUploadMethod: 'POST',
-    imageMaxSize: 5 * 1024 * 1024,
-    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
     events: {
-      'froalaEditor.initialized': function () {
-        console.log('initialized');
-      },
       'froalaEditor.image.beforeUpload': function (e, editor, images) {
         if (images.length) {
-          // Create a File Reader.
-          const reader = new FileReader();
-          // Set the reader to insert images when they are loaded.
-          reader.onload = (ev) => {
-            const result = ev.target['result'];
-            editor.image.insert(result, null, null, editor.image.get());
-            console.log(ev, editor.image, ev.target['result'])
-          };
-          // Read image as base64.
-          reader.readAsDataURL(images[0]);
+          const data = new FormData();
+          data.append('image', images[0]);
+          axios.post('https://server.kormassage.kr:9877/api/v1/image/upload/600', data, {
+            headers: {
+            }
+          }).then((res: any) => {
+            editor.image.insert(res.data.results.object.url, null, null, editor.image.get());
+          }).catch(err => {
+            console.log(err);
+          });
         }
-        // Stop default upload chain.
         return false;
       }
 
@@ -55,6 +46,7 @@ export class ToolBoxComponent implements OnInit {
   constructor(
 
     private configService: ConfigService,
+    private apiService: ApiService,
     private authService: AuthService,
     private router: Router,
     private renderer: Renderer2) {
