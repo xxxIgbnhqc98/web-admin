@@ -59,7 +59,7 @@ export class ThemaListComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('Thema list')
-   
+
 
   }
   openModal(template: TemplateRef<any>, user) {
@@ -102,6 +102,19 @@ export class ThemaListComponent implements OnInit {
       cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
     });
   }
+  async editStatusThema(item) {
+    try {
+      let status = true
+      if (item.status) {
+        status = false
+      }
+      item.status = status
+      await this.apiService.thema.update(item.id, { status });
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
+      this.submitting = false;
+    }
+  }
   async reloadItems(params) {
     const { limit, offset, sortBy, sortAsc } = params;
     this.query.limit = limit;
@@ -119,7 +132,7 @@ export class ThemaListComponent implements OnInit {
       [sortBy, sortAsc ? 'ASC' : 'DESC']
     ] : null;
     if (!sortBy && !sortAsc) {
-      this.query.order = [['updated_at', 'DESC']]
+      this.query.order = [['created_at', 'DESC']]
     }
     await this.getItems();
   }

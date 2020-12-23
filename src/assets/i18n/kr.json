@@ -528,6 +528,10 @@
   "Location list": "위치 목록",
   "Please search shop with title": "상점제목으로 상점을 검색할 수 있습니다.",
   "Recruit": "구인구직",
+  "Show thema": "테마 노출하기",
+  "Hide thema": "테마 숨기기",
+  "Recruit board": "구인 게시판",
+  "Job hunting board": "구직 게시판",
   "nav": {
     "nav_items": [
       {
