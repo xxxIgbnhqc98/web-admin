@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes.module';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DataTableModule } from '../../shared/data-table';
@@ -13,11 +13,13 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { SharedModule } from './../../shared';
 import { AddThemaComponent } from './add/add.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     PipesModule.forRoot(),
     CommonModule,
     DataTableModule,
@@ -28,6 +30,7 @@ import { AddThemaComponent } from './add/add.component';
     ThemaRoutingModule,
     ModalModule.forRoot(),
     NgxInfiniteScrollerModule,
+    NgMultiSelectDropDownModule
 
   ],
   declarations: [ThemaListComponent, AddThemaComponent],

@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Md5 } from 'ts-md5/dist/md5';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config/config.service';
 import { ShareDataService } from '../../../services/share-data/share-data-service';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+
 declare var $: any;
 declare let swal: any;
 
@@ -21,7 +22,13 @@ export class AddThemaComponent implements OnInit {
   name: string;
   avatar: string;
   loadingUploadAvatar: boolean = false;
+  broads_ids: any = [];
+  broads: any = [];
+  broads_select: any = [];
+  settings = {};
+  public form: FormGroup;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
+  @ViewChild('multiSelect') multiSelect;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -32,6 +39,24 @@ export class AddThemaComponent implements OnInit {
     public shareDataService: ShareDataService) {
   }
   async ngOnInit() {
+    this.broads = [
+      {
+        item_id: "RECRUIT_BOARD",
+        item_text: "recruit board"
+      },
+      {
+        item_id: "RECRUIT_BOARD_2",
+        item_text: "job hunting board"
+      },
+      {
+        item_id: "EVENT_BOARD",
+        item_text: "event board"
+      },
+      {
+        item_id: "BULLETIN_BOARD",
+        item_text: "bulletin board"
+      }
+    ]
     this.route.params.subscribe(params => {
       this.id = params.id;
       if (this.id == null) {
@@ -45,9 +70,49 @@ export class AddThemaComponent implements OnInit {
         this.setData();
       }
     });
+    this.settings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: false,
+      selectAllText: 'Select all',
+      unSelectAllText: 'Unselect all',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 4,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No info',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
+    this.setForm();
+  }
+  resetForm() {
+    this.setForm();
+    this.multiSelect.toggleSelectAll();
   }
 
-
+  setForm() {
+    this.form = new FormGroup({
+      name: new FormControl(this.broads, Validators.required)
+    });
+  }
+  public onSave(items: any) {
+    this.save();
+  }
+  save() {
+    this.broads_ids = []
+    this.form.value.name.forEach(async (element) => {
+      await this.broads_ids.push(element.item_id)
+    });
+    console.log(this.broads_ids)
+  }
+  get f() {
+    return this.form.controls;
+  }
   alertSuccess() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Successfully!' : ((this.configService.lang === 'vn') ? 'Thành công!' : '성공'),
@@ -88,6 +153,8 @@ export class AddThemaComponent implements OnInit {
     this.titleService.setTitle('Add new thema');
     this.name = null;
     this.avatar = null;
+    this.broads_select = []
+
     return {
       name: this.name,
       avatar: this.avatar
@@ -101,6 +168,20 @@ export class AddThemaComponent implements OnInit {
       });
       this.avatar = data.avatar;
       this.name = data.name;
+      this.broads_ids = data.visible_boards
+      this.broads_select = []
+      if (data.visible_boards.length !== 0) {
+        for (let index = 0; index < data.visible_boards.length; index++) {
+          const board = data.visible_boards[index];
+          this.broads_select.push({
+            item_id: board,
+            item_text: (board === "RECRUIT_BOARD_2") ? "job hunting board" : board.toLowerCase().replace("_", " ")
+          })
+        }
+      } else {
+        this.broads_select = []
+      }
+      console.log("@#@#@# ", this.broads_select)
       this.titleService.setTitle(this.name);
     } catch (err) {
       console.log('err: ', err);
@@ -112,7 +193,7 @@ export class AddThemaComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       const { name } = this;
-      await this.apiService.thema.update(this.id, { name });
+      await this.apiService.thema.update(this.id, { name, visible_boards: this.broads_ids });
       form.reset();
       this.alertSuccess();
       this.backToList();
