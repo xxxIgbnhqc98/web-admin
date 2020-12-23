@@ -52,12 +52,12 @@
         <data-table-column [header]="'Name' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.name ? item.name : 'No info' | translate}}</span><br>
-            <button *ngIf="!item.status" (click)="editStatusThema(item)" class="btn btn-success" style="margin-right: 5px;">
+            <!-- <button *ngIf="!item.status" (click)="editStatusThema(item)" class="btn btn-success" style="margin-right: 5px;">
               {{'Show thema' | translate}}
             </button>
             <button *ngIf="item.status" (click)="editStatusThema(item)"  class="btn btn-danger" style="margin-right: 5px;">
               {{'Hide thema' | translate}}
-            </button>
+            </button> -->
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Tags' | translate">
