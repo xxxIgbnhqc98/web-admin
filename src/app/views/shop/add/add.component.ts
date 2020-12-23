@@ -9,6 +9,7 @@ import { ShareDataService } from '../../../services/share-data/share-data-servic
 import { async } from '@angular/core/testing';
 import { html } from './../../../_html_de';
 import { BehaviorSubject } from 'rxjs';
+import axios from 'axios';
 
 declare var require: any;
 // const NodeGeocoder = require('node-geocoder');
@@ -24,6 +25,25 @@ declare let swal: any;
 export class AddShopComponent implements OnInit {
   @ViewChild('multiSelect') multiSelect;
   public editorOptions: Object = {
+    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'getPDF', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
+    events: {
+      'froalaEditor.image.beforeUpload': function (e, editor, images) {
+        if (images.length) {
+          const data = new FormData();
+          data.append('image', images[0]);
+          axios.post('https://server.kormassage.kr:9877/api/v1/image/upload/600', data, {
+            headers: {
+            }
+          }).then((res: any) => {
+            editor.image.insert(res.data.results.object.url, null, null, editor.image.get());
+          }).catch(err => {
+            console.log(err);
+          });
+        }
+        return false;
+      }
+
+    },
     placeholderText: ' ',
     key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp=='
   };

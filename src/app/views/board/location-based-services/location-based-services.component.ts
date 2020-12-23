@@ -5,6 +5,8 @@ import { Title } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 declare var swal: any;
+import axios from 'axios';
+
 @Component({
   selector: 'app-location-based-services',
   templateUrl: 'location-based-services.component.html',
@@ -15,6 +17,25 @@ export class LocationBasedServicesComponent implements OnInit {
   content: string = null;
   id: string;
   public editorOptions: Object = { 
+    toolbarButtons: 	['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'getPDF', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
+    events: {
+      'froalaEditor.image.beforeUpload': function (e, editor, images) {
+        if (images.length) {
+          const data = new FormData();
+          data.append('image', images[0]);
+          axios.post('https://server.kormassage.kr:9877/api/v1/image/upload/600', data, {
+            headers: {
+            }
+          }).then((res: any) => {
+            editor.image.insert(res.data.results.object.url, null, null, editor.image.get());
+          }).catch(err => {
+            console.log(err);
+          });
+        }
+        return false;
+      }
+
+    },
     placeholderText: ' ',
     key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' 
   };

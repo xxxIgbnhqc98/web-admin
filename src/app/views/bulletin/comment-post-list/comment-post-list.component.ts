@@ -192,15 +192,23 @@ export class CommentListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
-      if (type === 'SHOP') {
+      if (type === 'SHOP' || type === 'RECRUIT') {
+        if(type === 'RECRUIT'){
+          this.query.filter.type = type
+        }else{
+          this.query.filter.type = null
+        }
         console.log("vao shop")
-        this.itemFields = ['$all', { 'shop': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'user': ['$all'] }];
+        this.itemFields = ['$all', { 'shop': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] },{ 'recruit': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'user': ['$all'] }];
         query = Object.assign({
           fields: this.itemFields
         }, this.query);
         this.items.next(await this.apiService.review.getList({ query }));
         this.itemCount = this.apiService.review.pagination.totalItems;
       } else {
+        this.query.filter = {
+
+        }
         console.log("vao post")
 
         this.itemFields = ['$all', { 'post': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'user': ['$all'] }];

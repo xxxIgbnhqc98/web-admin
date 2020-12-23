@@ -20,7 +20,7 @@ declare var swal: any;
 export class ShopPendingListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "category": ["$all", { "thema": ["$all"] }] }, { "user": ["$all"] }];
+  itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }];
   query: any = {
     filter: {
       state: "PENDING"
@@ -51,6 +51,8 @@ export class ShopPendingListComponent implements OnInit {
   listShopToApprove = [];
   listExpiredShop = [];
   listApproveShopIds = [];
+  themas: any;
+  thema_id: string = "null";
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -74,6 +76,17 @@ export class ShopPendingListComponent implements OnInit {
         this.query.filter.category_id = this.category_id
       }
     });
+    this.themas = await this.apiService.thema.getList({
+      query: {
+        fields: ["$all"],
+        limit: 9999999,
+        filter: {
+        }
+      }
+    });
+  }
+  filterThema() {
+    this.itemsTable.reloadItems();
   }
   openModal(template: TemplateRef<any>, user) {
     this.modalRef = this.modalService.show(template);
@@ -153,6 +166,11 @@ export class ShopPendingListComponent implements OnInit {
   async reloadItems(params) {
     const { limit, offset, sortBy, sortAsc } = params;
     this.query.limit = limit;
+    if (this.thema_id !== "null") {
+      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "$filter": { "thema_id": this.thema_id } }, { "thema": ["$all"] }] }];
+    } else {
+      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }];
+    }
     // this.query.filter = {
     //   $or: [
     //     {
@@ -511,7 +529,7 @@ export class ShopPendingListComponent implements OnInit {
       //   this.submitting = false;
       //   return;
       // }
-      if (this.option_search === 'id') {
+      if (this.option_search === 'id' && this.keyword) {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
@@ -525,6 +543,9 @@ export class ShopPendingListComponent implements OnInit {
         this.query.filter.title = { $iLike: `%${this.keyword}%` }
       } else if (this.option_search === 'phone_number') {
         this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
+      }
+      if (this.thema_id !== "null") {
+        this.itemFields[2].category.push({ "$filter": { "thema_id": this.thema_id } })
       }
       // if (this.sex !== null) {
       //   this.query.filter.sex = this.sex;

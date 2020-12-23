@@ -33,6 +33,8 @@ export class SettingListComponent implements OnInit {
   id_update: string;
   field: string;
   value: string;
+  value_array_obj: any;
+  country_color: string;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -51,10 +53,29 @@ export class SettingListComponent implements OnInit {
   async ngOnInit() {
     this.titleService.setTitle('Link list')
   }
+  changeValue($event, index) {
+    this.value_array_obj[index].id = $event.target.value
+  }
+  addCircle() {
+    const newC: any = {
+      id: '',
+      color: '#000000'
+    }
+    this.value_array_obj.unshift(newC)
+  }
+  deleteCircle(index) {
+    this.value_array_obj.splice(index, 1)
+  }
   openModalEditValue(template: TemplateRef<any>, item) {
     this.id_update = item.id
     this.field = item.field
     this.value = item.value
+    this.modalRef = this.modalService.show(template);
+  }
+  openModalCountry(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.field = item.field
+    this.value_array_obj = item.value_array_obj
     this.modalRef = this.modalService.show(template);
   }
   async submitEdit(form: NgForm) {
@@ -63,6 +84,63 @@ export class SettingListComponent implements OnInit {
       await this.editValue(form);
     } else {
       this.alertFormNotValid();
+      this.submittingUpdate = false;
+    }
+  }
+  changeColor(index, color) {
+    if (color.match('rgba')) {
+      color = this.rgb2hex(color)
+    }
+    this.value_array_obj[index].color = color
+    console.log("@#@#@#@3 ", this.value_array_obj)
+  }
+  rgb2hex(orig) {
+    var a, isPercent,
+      rgb = orig.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
+      alpha = (rgb && rgb[4] || "").trim(),
+      hex = rgb ? "#" +
+        (rgb[1] | 1 << 8).toString(16).slice(1) +
+        (rgb[2] | 1 << 8).toString(16).slice(1) +
+        (rgb[3] | 1 << 8).toString(16).slice(1) : orig;
+    if (alpha !== "") {
+      isPercent = alpha.indexOf("%") > -1;
+      a = parseFloat(alpha);
+      if (!isPercent && a >= 0 && a <= 1) {
+        a = Math.round(255 * a);
+      } else if (isPercent && a >= 0 && a <= 100) {
+        a = Math.round(255 * a / 100)
+      } else {
+        a = "";
+      }
+    }
+    if (a) {
+      hex += (a | 1 << 8).toString(16).slice(1);
+    }
+    return hex;
+  }
+  async submitEditCountry(form: NgForm) {
+    this.submittingUpdate = true;
+    if (form.valid) {
+      await this.editValueContry(form);
+    } else {
+      this.alertFormNotValid();
+      this.submittingUpdate = false;
+    }
+  }
+
+  async editValueContry(form: NgForm) {
+    try {
+
+      await this.apiService.setting.update(this.id_update, {
+        value_array_obj: this.value_array_obj
+      });
+
+      this.alertSuccess();
+      this.modalRef.hide()
+      this.submittingUpdate = false;
+      this.itemsTable.reloadItems();
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
       this.submittingUpdate = false;
     }
   }

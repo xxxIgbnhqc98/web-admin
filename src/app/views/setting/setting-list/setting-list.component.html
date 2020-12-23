@@ -44,7 +44,7 @@
         [itemCount]="itemCount" (reload)="reloadItems($event)" [pagination]="true" [indexColumn]="true"
         [selectColumn]="false" [multiSelect]="false" [substituteRows]="false" [selectOnRowClick]="false"
         [showReloading]="false">
-        
+
         <data-table-column [header]="'Field' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.field ? item.field : 'No info' | translate}}</span>
@@ -52,8 +52,13 @@
         </data-table-column>
         <data-table-column [header]="'Value' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button (click)="openModalEditValue(template, item)" class="btn btn-primary">
+            <button *ngIf="item.field !== 'LOCATION'" (click)="openModalEditValue(template, item)"
+              class="btn btn-primary">
               <i>{{item.value}}</i>
+            </button>
+            <button *ngIf="item.field === 'LOCATION'" (click)="openModalCountry(templateCountry, item)"
+              class="btn btn-primary">
+              <i>{{'Location list'| translate}}</i>
             </button>
           </ng-template>
         </data-table-column>
@@ -121,7 +126,53 @@
       <div class="card-footer">
         <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submittingUpdate'
           (click)="submitEdit(formContent)">
-          <i >{{ 'Edit' | translate }}</i>
+          <i>{{ 'Edit' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateCountry>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Edit' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <button type="submit" class="btn btn-primary" data-style="expand-right"
+          (click)="addCircle()">
+          <i>{{ 'Add' | translate }}</i>
+        </button>
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">User ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div style="justify-content: center; display:grid;grid-template-columns: auto auto auto;grid-gap: 40px;">
+            <div class="col-md-12 form-item" *ngFor="let item of value_array_obj,let index=index">
+              <span (click)="deleteCircle(index)" style="right: 0; padding: 10px 7px 0px 0px;position:absolute;"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <div>
+                  <input (keyup)="changeValue($event,index)" style="color: white; width: 100px; height: 100px;border-radius: 50%; text-align: center;"
+                    class="form-control" id="country_color" [(colorPicker)]="item.color" [style.background]="item.color"
+                    [value]="item.id"/>
+                </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submittingUpdate'
+          (click)="submitEditCountry(formContent)">
+          <i>{{ 'Edit' | translate }}</i>
         </button>
       </div>
     </div>

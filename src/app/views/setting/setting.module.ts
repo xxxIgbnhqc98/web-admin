@@ -16,6 +16,7 @@ import { SharedModule } from '../../shared';
 import { AddLinkComponent } from './add/add.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ForbiddenWordListComponent } from './forbidden-word-list/forbidden-word-list.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 @NgModule({
@@ -33,6 +34,8 @@ import { ForbiddenWordListComponent } from './forbidden-word-list/forbidden-word
     NgMultiSelectDropDownModule,
     ModalModule.forRoot(),
     NgxInfiniteScrollerModule,
+    ColorPickerModule,
+
 
   ],
   declarations: [SettingListComponent, AddLinkComponent, SettingUserPermissionListComponent, ForbiddenWordListComponent],

@@ -16,7 +16,7 @@ export class Review extends CrudAPI<IReview> {
     console.log("@#$%^ qr", options.query)
     const setting = {
       method: 'GET',
-      uri: this.apiUrl("/get_list_admin"),
+      uri: this.apiUrl("get_list_admin"),
       params: options.query,
       headers: _.merge({}, {
         'Authorization': this.api.configService.token

@@ -515,6 +515,13 @@
   "Unselect": "Unselect",
   "Recommendation selected": "Recommendation selected",
   "Recommendation unselected": "Recommendation unselected",
+  "Location list": "Location list",
+  "Please search shop with title": "Please search shop with title",
+  "Recruit": "Recruit",
+  "Show thema": "Show thema",
+  "Hide thema": "hide thema",
+  "Recruit board": "Recruit board",
+  "Job hunting board": "Job hunting board",
   "nav": {
     "nav_items": [
       {
@@ -642,6 +649,11 @@
             "name": "Post list",
             "icon": "fa fa-list-ol",
             "url": "/bulletin/bulletin"
+          },
+          {
+            "name": "Recruit list",
+            "icon": "fa fa-address-card",
+            "url": "/bulletin/recruit"
           },
           {
             "name": "Comment and reply",

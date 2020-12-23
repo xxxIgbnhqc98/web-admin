@@ -35,9 +35,18 @@
               <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
             </div>
-            <div class="col-3">
-              <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
+            <div class="col-1">
+              <button style="padding-left: 0px;width: 80px;padding-right: 0px;" class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
                   class="fa fa-search"></i> {{'Search' | translate}}</button>
+            </div>
+            <div class="col-3">
+              <select (change)="filterThema()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
+                class="form-control input-control">
+                <option value="null">{{'Please choose thema.' | translate}}</option>
+                <option *ngFor="let item of themas" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
             </div>
           </div>
         </div>

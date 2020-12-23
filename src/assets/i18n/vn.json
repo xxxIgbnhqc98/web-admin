@@ -515,6 +515,13 @@
   "Unselect": "Bỏ Chọn",
   "Recommendation selected": "Cửa hàng đề xuất đã chọn",
   "Recommendation unselected": "Cửa hàng đề xuất không được chọn",
+  "Location list":"Danh sách vùng",
+  "Please search shop with title": "Tìm kiếm cửa hàng theo tiêu đề",
+  "Recruit": "Tuyển dụng",
+  "Show thema":"Hiện",
+  "Hide thema":"Ẩn",
+  "Recruit board": "Trang tuyển dụng",
+  "Job hunting board": "Job hunting board",
   "nav": {
     "nav_items": [
       {
@@ -642,6 +649,11 @@
             "name": "Danh sách bài đăng",
             "icon": "fa fa-list-ol",
             "url": "/bulletin/bulletin"
+          },
+          {
+            "name": "Danh sách tuyển dụng",
+            "icon": "fa fa-address-card",
+            "url": "/bulletin/recruit"
           },
           {
             "name": "Bình luận",
