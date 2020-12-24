@@ -16,6 +16,19 @@
                 {{'Please enter name.' | translate}}
               </div>
             </div>
+            <div class="form-group">
+              <label for="category">{{'Visible boards' | translate}}</label>
+              <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select broads'" [data]="broads"
+                  [(ngModel)]="broads_select" [settings]="settings" [formControl]="f.name" [disabled]="false"
+                  (onFilterChange)="onSave($event)" (onSelect)="onSave($event)" (onDeSelect)="onSave($event)"
+                  (onSelectAll)="onSave($event)" (onDeSelectAll)="onSave($event)">
+                </ng-multiselect-dropdown>
+                <span class="invalid-feedback" *ngIf="f?.name?.errors?.required">
+                  User Type is required
+                </span>
+              </form>
+            </div>
           </div>
         </div>
       </div>
