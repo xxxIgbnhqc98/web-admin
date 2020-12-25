@@ -17,22 +17,8 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="thema_name">{{'Thema' | translate}}</label>
-              <select name="thema_id" [(ngModel)]="thema_id" #thema_idControl="ngModel" (change)="changeThema();" id=""
-                class="form-control input-control">
-                <option *ngIf="route_link === 'BULLETIN_BOARD' || route_link === 'EVENT_BOARD'" value="null">All thema
-                </option>
-                <option *ngFor="let item of themas" value="{{ item.id }}">{{
-                  item.name
-                }}</option>
-              </select>
-              <!-- <div class="invalid-feedback" *ngIf="thema_idControl.errors?.required">
-                {{'Please choose thema.' | translate}}
-              </div> -->
-            </div>
-            <div class="form-group">
               <label for="route_link">{{'Route' | translate}}</label>
-              <select class="form-control" name="route_link" id="route_link" [(ngModel)]="route_link" required
+              <select class="form-control" name="route_link" id="route_link" [(ngModel)]="route_link" required (change)="changeBoard();"
                 #route_linkControl="ngModel" [ngClass]="{'is-invalid' : route_linkControl.errors?.required}">
                 <option [ngValue]="null">{{'Choose route' | translate}}</option>
                 <option value="BULLETIN_BOARD">{{'Bulletin board' | translate}}</option>
@@ -48,6 +34,21 @@
                 {{'Please enter route' | translate}}
               </div>
             </div>
+            <div class="form-group">
+              <label for="thema_name">{{'Thema' | translate}}</label>
+              <select name="thema_id" [(ngModel)]="thema_id" #thema_idControl="ngModel" (change)="changeThema();" id=""
+                class="form-control input-control">
+                <option *ngIf="route_link === 'BULLETIN_BOARD' || route_link === 'EVENT_BOARD'" value="null">All thema
+                </option>
+                <option *ngFor="let item of themas" value="{{ item.id }}">{{
+                  item.name
+                }}</option>
+              </select>
+              <!-- <div class="invalid-feedback" *ngIf="thema_idControl.errors?.required">
+                {{'Please choose thema.' | translate}}
+              </div> -->
+            </div>
+            
             <!--  -->
             <div class="form-group">
               <label for="name">{{'The order of link' | translate}}</label>
