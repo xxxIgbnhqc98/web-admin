@@ -23,6 +23,7 @@ export class AddSeoComponent implements OnInit {
   isEdit: boolean = false;
   submitting: boolean = false;
   title: string;
+  meta: string;
   loadingUploadAvatar: boolean = false;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
 
@@ -96,8 +97,10 @@ export class AddSeoComponent implements OnInit {
   setDefaultData() {
     this.titleService.setTitle('Add new seo');
     this.title = null;
+    this.meta = null
     return {
       title: this.title,
+      value: this.meta
     };
   }
 
@@ -107,6 +110,7 @@ export class AddSeoComponent implements OnInit {
         query: { fields: ['$all'] }
       });
       this.title = data.title;
+      this.meta = data.value;
       this.titleService.setTitle(this.title);
     } catch (err) {
       console.log('err: ', err);
@@ -118,7 +122,7 @@ export class AddSeoComponent implements OnInit {
   async updateItem(form: NgForm) {
     try {
       const { title } = this;
-      await this.apiService.seo.update(this.id, { title });
+      await this.apiService.seo.update(this.id, { title, value: this.meta });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -134,7 +138,7 @@ export class AddSeoComponent implements OnInit {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
       const { title } = this;
-      await this.apiService.seo.add({ title });
+      await this.apiService.seo.add({ title, value: this.meta });
       form.reset();
       this.alertSuccess();
       this.backToList();
