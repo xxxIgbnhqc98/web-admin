@@ -7,6 +7,39 @@
             <strong><i class="fa fa-info"></i> {{'Information' | translate}}</strong>
           </div>
           <div class="card-body">
+            <div class="form-group">
+              <label for="title">{{'Shop' | translate}}</label>
+              <input (click)="showDropdownShop()" [placeholder]="'Please choose shop' | translate" id="shop_id"
+                class="form-control input-control" name="shop_id" [value]="getShopNameFromId(shop_id)" />
+              <div style="width: 80%; height: 600px;" id="myDropdownShop" class="dropdown-content">
+                <span (click)="closeDropdownShop()"
+                  style="float: right; font-size: 25px; width: 25px; height: 25px; cursor: pointer;;">x</span>
+                <div style="clear: both;"></div>
+                <div>
+                  <select class="form-control" id="search_section" name="option_search" [(ngModel)]="option_search"
+                    (ngModelChange)="changeSearchHandler()">
+                    <option value="username">{{'ID' | translate}}</option>
+                    <option value="nickname">{{'Nickname' | translate}}</option>
+                    <option value="title">{{'Title' | translate}}</option>
+                  </select>
+                  <input style="margin-left: 15px;width: 70%;height: 50px;" type="text"
+                    [placeholder]="'Please search member with ID , ID code, and Nckname' | translate" id="myShopInput"
+                    (keyup)="onShopSearch()">
+                </div>
+                <div id="singerShopListWrapper" style="overflow: scroll; height: 200px;">
+                  <div [id]="item.id" *ngFor="let item of listShopFiltered"
+                    (click)="onShopClick(item);onChangeShopName()"
+                    [ngClass]="this.lastShopSubmitSingerId === item.id ? 'checked' : ''">
+                    <img height="80px" width="80px" style="object-fit: cover; margin: 5px;"
+                      [src]="item.images ? item.images[0] : thumbDefault"
+                      onerror="this.src='https://server.hitek.com.vn:7779/api/v1/image/get/resized-large-image-1589440379750.png'">
+                    <span class="search-item">
+                      {{item.title}}&nbsp;&nbsp;
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- ///////////////////////////// -->
             <div class="form-group">
               <label for="title">{{'User' | translate}}</label>
@@ -39,7 +72,7 @@
                 class="form-control input-control">
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name
-                }}</option>
+                  }}</option>
               </select>
             </div>
             <div class="form-group">
@@ -49,7 +82,7 @@
                 class="form-control input-control">
                 <option *ngFor="let item of categories" value="{{ item.id }}">{{
                   item.name
-                }}</option>
+                  }}</option>
               </select>
               <div class="invalid-feedback" *ngIf="categoryControl.errors?.required">
                 {{'Please choose category.' | translate}}
@@ -99,7 +132,7 @@
                 class="form-control input-control">
                 <option *ngFor="let item of hours" value="{{ item }}">{{
                   item
-                }}</option>
+                  }}</option>
               </select>
               <div class="invalid-feedback" *ngIf="start_timeControl.errors?.required">
                 {{'Please choose start time.' | translate}}
@@ -109,7 +142,7 @@
                 class="form-control input-control">
                 <option *ngFor="let item of hours1" value="{{ item }}">{{
                   item
-                }}</option>
+                  }}</option>
               </select>
               <div class="invalid-feedback" *ngIf="end_timeControl.errors?.required">
                 {{'Please choose end time.' | translate}}

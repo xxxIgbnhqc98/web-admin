@@ -109,8 +109,9 @@ export class AddShopComponent implements OnInit {
   async ngOnInit() {
     // ////////////////
     document.getElementById("myDropdown").classList.add("hide");
+    document.getElementById("myDropdownShop").classList.add("hide");
     await this.getListUser();
-    console.log('listUser', this.listUser)
+    await this.getListShop();
     // ///////////////////
     this.route.params.subscribe(async (params) => {
 
@@ -174,6 +175,13 @@ export class AddShopComponent implements OnInit {
     });
 
   }
+  lastShopSubmitSingerId: string;
+  shop_id: string;
+  listShop: any = [];
+  listShopFiltered: any = [];
+  option_search: string = 'title';
+  itemFields: any = ["$all"];
+  searchRef: any;
   // ////////////////////////
   isShowingCategoryDropDown: boolean = false
   user_id: string;
@@ -189,6 +197,126 @@ export class AddShopComponent implements OnInit {
       account_type: "BIZ_USER"
     }
   };
+  shop_query: any = {
+    fields: this.itemFields,
+    filter: {}
+  };
+  //Shop Search Section
+  async getListShop() {
+    try {
+      this.loading_api = true;
+      this.listShop = await this.apiService.shop.getList({
+        query: {
+          fields: ['$all'],
+          filter: {},
+          page: 1, limit: 10, order: [["created_at_unix_timestamp", "desc"]]
+        }
+      })
+      this.ref.detectChanges();
+      this.loading_api = false;
+    } catch (error) {
+      this.loading_api = false;
+    }
+  }
+  async confirmChooseShop() {
+    return await swal({
+      text: (this.configService.lang === 'en') ? 'Are you sure to choose this shop?' : ((this.configService.lang === 'vn') ? 'Are you sure to choose this shop?' : 'Are you sure to choose this shop?'),
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: (this.configService.lang === 'en') ? 'Confirm' : ((this.configService.lang === 'vn') ? 'Xác nhận' : '확인'),
+      cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
+    });
+  }
+  async onShopClick(shop) {
+    await this.confirmChooseShop()
+    this.shop_id = shop.id;
+    this.id = shop.id;
+    this.setData()
+    document.getElementById("myDropdownShop").classList.remove("show");
+  }
+  showDropdownShop() {
+    if (this.isShowingCategoryDropDown) {
+      return;
+    }
+
+    document.getElementById("myDropdownShop").classList.add("show");
+    document.getElementById("shop_id").blur();
+    document.getElementById("myShopInput").focus();
+
+    // Auto scroll to the previous chosen singer_id
+    if (this.lastShopSubmitSingerId && this.lastShopSubmitSingerId !== '') {
+      setTimeout(() => {
+        const singerItem: any = document.getElementById('singer_' + this.lastShopSubmitSingerId);
+        const singerWrapper: any = document.getElementById('singerShopListWrapper');
+        singerWrapper.scrollTop = singerItem.offsetTop - 100;
+      }, 500);
+    }
+
+    setTimeout(() => {
+      this.filterShopFunction(null); //Show all singers
+    }, 100);
+  }
+
+  closeDropdownShop() {
+    document.getElementById("myDropdownShop").classList.remove("show");
+    document.getElementById("myDropdownShop").classList.add("hide");
+  }
+  getShopNameFromId(id) {
+    let name = '';
+    if (this.listShop) {
+      this.listShop.forEach(shop => {
+        if (shop.id === id) {
+          name = shop.title;
+        }
+      });
+    }
+    return name;
+  }
+  onShopSearch() {
+    const input: any = document.getElementById("myShopInput");
+    this.filterShopFunction(input.value);
+  }
+  async filterShopFunction(keyword: string) {
+    if (!keyword || keyword.length === 0) {
+      this.listShopFiltered = this.listShop;
+      return;
+    }
+    this.shop_query = {
+      fields: ["$all"],
+      filter: {}
+    }
+    const newFilteredUserList = [];
+    try {
+      if (this.option_search === 'nickname') {
+        this.shop_query.fields = ['$all', { "user": ["$all", { "$filter": { nickname: { $iLike: `%${keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      } else if (this.option_search === 'username') {
+        this.shop_query.fields = ['$all', { "user": ["$all", { "$filter": { username: { $iLike: `%${keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      } else if (this.option_search === 'title') {
+        this.shop_query.filter.title = { $iLike: `%${keyword}%` }
+      }
+      this.listShop = await this.apiService.shop.getList({ query: this.shop_query })
+      console.log(this.listShop)
+    } catch (error) {
+    }
+    if (this.listShop.length) {
+      this.listShop.forEach(shop => {
+        if (shop.title.toUpperCase().indexOf(keyword.toUpperCase()) > -1 ||
+          shop.user.email.toUpperCase().indexOf(keyword.toUpperCase()) > -1 ||
+          shop.user.nickname.toUpperCase().indexOf(keyword.toUpperCase()) > -1 ||
+          shop.user.username.toUpperCase().indexOf(keyword.toUpperCase()) > -1
+        ) {
+          newFilteredUserList.push(shop);
+        }
+      });
+    }
+
+    this.listShopFiltered = newFilteredUserList;
+
+  }
+
+  //User Search Section
   getUserNickNameFromId(id) {
     let name = '';
     if (this.listUser) {
@@ -564,7 +692,12 @@ export class AddShopComponent implements OnInit {
     }
   }
 
-
+  changeSearchHandler() {
+    this.shop_query = {
+      fields: ["$all"],
+      filter: {}
+    }
+  }
   async addItem(form: NgForm) {
     try {
       this.opening_hours = this.start_time + '~' + this.end_time

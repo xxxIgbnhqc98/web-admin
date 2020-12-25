@@ -87,7 +87,7 @@ export class Shop extends CrudAPI<IShop> {
     options = _.merge({}, this.options, options);
     const setting = {
       method: 'POST',
-      uri: this.apiUrl('/reject'),
+      uri: this.apiUrl('reject'),
       params: _.merge({}, {
         items: ids
       }, options.query),
@@ -124,7 +124,7 @@ export class Shop extends CrudAPI<IShop> {
     options = _.merge({}, this.options, options);
     const setting = {
       method: 'POST',
-      uri: this.apiUrl('/approve'),
+      uri: this.apiUrl('approve'),
       params: _.merge({}, {
         items: ids
       }, options.query),
