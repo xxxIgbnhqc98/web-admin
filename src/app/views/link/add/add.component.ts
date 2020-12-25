@@ -80,7 +80,7 @@ export class AddLinkComponent implements OnInit {
       }
       let dataCate
       if (this.isEdit) {
-        let filter:any = {};
+        let filter: any = {};
         await this.setData();
         if (this.thema_id !== 'null') {
           filter.thema_id = this.thema_id
@@ -266,6 +266,28 @@ export class AddLinkComponent implements OnInit {
       try { await this.alertItemNotFound(); } catch (err) { }
       this.backToList();
     }
+  }
+  async changeBoard() {
+    if (this.route_link !== 'null' && (this.route_link === "BULLETIN_BOARD" || this.route_link === "EVENT_BOARD" || this.route_link === "RECRUIT_BOARD" || this.route_link === "RECRUIT_BOARD_2")) {
+      this.themas = await this.apiService.thema.getList({
+        query: {
+          fields: ["$all"],
+          filter: {
+            visible_boards: { $contains: [this.route_link] }
+
+          },
+          limit: 9999999
+        }
+      });
+    }else{
+      this.themas = await this.apiService.thema.getList({
+        query: {
+          fields: ["$all"],
+          limit: 9999999
+        }
+      });
+    }
+
   }
   async changeThema() {
     this.category_ids = [];
