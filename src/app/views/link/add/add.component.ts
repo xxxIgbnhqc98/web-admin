@@ -271,7 +271,8 @@ export class AddLinkComponent implements OnInit {
     }
   }
   async changeBoard() {
-    if (this.route_link !== 'null' && (this.route_link === "BULLETIN_BOARD" || this.route_link === "EVENT_BOARD" || this.route_link === "RECRUIT_BOARD" || this.route_link === "RECRUIT_BOARD_2")) {
+    if (this.route_link !== 'null' && (this.route_link === "BULLETIN_BOARD" || this.route_link === "EVENT_BOARD" || this.route_link === "RECRUIT_BOARD" || this.route_link === "RECRUIT_BOARD_2"
+    || this.route_link === "SHOP_SALES_BOARD")) {
       this.themas = await this.apiService.thema.getList({
         query: {
           fields: ["$all"],

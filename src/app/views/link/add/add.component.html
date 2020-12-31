@@ -62,9 +62,9 @@
             </div>
             <div class="form-group">
               <label for="thema_name">{{'Geolocation' | translate}}</label>
-              <select name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel"
-                (change)="changeGeolocation();" id="" class="form-control input-control"
-                [ngClass]="{'is-invalid' : geolocationControl.errors?.required}" required>
+              <select name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel" id=""
+                class="form-control input-control" [ngClass]="{'is-invalid' : geolocationControl.errors?.required}"
+                required>
                 <option [ngValue]="null">{{'Choose geolocation type' | translate}}</option>
                 <option value="GOOGLE">GOOGLE</option>
                 <option value="NAVER">NAVER</option>

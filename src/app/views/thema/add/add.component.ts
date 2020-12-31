@@ -55,7 +55,11 @@ export class AddThemaComponent implements OnInit {
       {
         item_id: "BULLETIN_BOARD",
         item_text: "bulletin board"
-      }
+      },
+      {
+        item_id: "SHOP_SALES_BOARD",
+        item_text: "shop sales board"
+      },
     ]
     this.route.params.subscribe(params => {
       this.id = params.id;
