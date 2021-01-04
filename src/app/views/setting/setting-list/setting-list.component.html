@@ -101,9 +101,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
               </div>
-              <select class="form-control" name="value" [(ngModel)]="value">
-                <option *ngIf="field !== 'SHOP_LIST_BOARD_SHOW_OPTION'" value="LATEST">LATEST</option>
-                <option value="RANDOM">RANDOM</option>
+              <select *ngIf="field !== 'GEOLOCATION'" class="form-control" name="value" [(ngModel)]="value">
+                <option *ngIf="field !== 'SHOP_LIST_BOARD_SHOW_OPTION'" value="LATEST">{{'LATEST' | translate}}</option>
+                <option value="RANDOM">{{'RANDOM' | translate}}</option>
+              </select>
+              <select *ngIf="field === 'GEOLOCATION'" class="form-control" name="value" [(ngModel)]="value">
+                <option value="GOOGLE">{{'GOOGLE' | translate}}</option>
+                <option value="NAVER">{{'NAVER' | translate}}</option>
               </select>
 
             </div>
