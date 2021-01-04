@@ -534,6 +534,14 @@
   "Job hunting board": "구직 게시판",
   "Visible boards": "노출 게시판",
   "Shop sales board": "샵매물 게시판",
+  "LOCATION": "위치",
+  "DISTANCE_ORDER_BOARD_2_OPTION": "거리순게시판 2 옵션",
+  "SHOP_LIST_BOARD_SHOW_OPTION": "상점정보 게시판 옵션",
+  "SHOP_LIST_BOARD_COLUMN": "상점정보 게시판 열 옵션",
+  "FORBIDDEN_WORDS": "금칙어 설정",
+  "DISTANCE_ORDER_BOARD_OPTION": "거리순게시판 옵션",
+  "RANDOM": "랜덤순",
+  "LATEST": "최신순",
   "nav": {
     "nav_items": [
       {

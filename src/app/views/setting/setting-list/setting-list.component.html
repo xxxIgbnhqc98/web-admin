@@ -102,8 +102,8 @@
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
               </div>
               <select class="form-control" name="value" [(ngModel)]="value">
-                <option *ngIf="field !== 'SHOP_LIST_BOARD_SHOW_OPTION'" value="LATEST">LATEST</option>
-                <option value="RANDOM">RANDOM</option>
+                <option *ngIf="field !== 'SHOP_LIST_BOARD_SHOW_OPTION'" value="LATEST">{{'LATEST' | translate}}</option>
+                <option value="RANDOM">{{'RANDOM' | translate}}</option>
               </select>
 
             </div>
