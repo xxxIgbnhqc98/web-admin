@@ -55,7 +55,11 @@ export class AddThemaComponent implements OnInit {
       {
         item_id: "BULLETIN_BOARD",
         item_text: (this.configService.lang === 'en') ? "bulletin board" : ((this.configService.lang === 'vn') ? "Trang bài viết" : '게시판')
-      }
+      },
+      {
+        item_id: "SHOP_SALES_BOARD",
+        item_text: "shop sales board"
+      },
     ]
     this.route.params.subscribe(params => {
       this.id = params.id;

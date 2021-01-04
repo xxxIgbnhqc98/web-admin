@@ -36,6 +36,7 @@ export class AddLinkComponent implements OnInit {
   user_types: any = [];
   user_types_select: any = [];
   settings = {};
+  geolocation: string = null;
   public form: FormGroup;
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
 
@@ -211,6 +212,7 @@ export class AddLinkComponent implements OnInit {
     this.route_link = null
     this.category_ids = [];
     this.index = null;
+    this.geolocation = null;
 
     return {
       name: this.name,
@@ -218,7 +220,8 @@ export class AddLinkComponent implements OnInit {
       thema_id: this.thema_id,
       route_link: this.route_link,
       category_ids: this.category_ids,
-      index: this.index
+      index: this.index,
+      geolocation: this.geolocation
     };
   }
 
@@ -232,7 +235,7 @@ export class AddLinkComponent implements OnInit {
       this.thema_id = data.thema_id;
       this.route_link = data.route;
       this.user_types_ids = data.accessible_user_type;
-
+      this.geolocation = data.geolocation_api_type
       // 
       this.index = data.index
       if (data.accessible_user_type.length !== 0) {
@@ -268,7 +271,8 @@ export class AddLinkComponent implements OnInit {
     }
   }
   async changeBoard() {
-    if (this.route_link !== 'null' && (this.route_link === "BULLETIN_BOARD" || this.route_link === "EVENT_BOARD" || this.route_link === "RECRUIT_BOARD" || this.route_link === "RECRUIT_BOARD_2")) {
+    if (this.route_link !== 'null' && (this.route_link === "BULLETIN_BOARD" || this.route_link === "EVENT_BOARD" || this.route_link === "RECRUIT_BOARD" || this.route_link === "RECRUIT_BOARD_2"
+    || this.route_link === "SHOP_SALES_BOARD")) {
       this.themas = await this.apiService.thema.getList({
         query: {
           fields: ["$all"],
@@ -323,7 +327,7 @@ export class AddLinkComponent implements OnInit {
   }
   async updateItem(form: NgForm) {
     try {
-      let { name, image, thema_id, route_link, category_ids, index, user_types_ids } = this;
+      let { name, image, thema_id, route_link, category_ids, index, user_types_ids, geolocation } = this;
       console.log('#######', category_ids)
       if (thema_id === 'null') {
         thema_id = null
@@ -343,7 +347,7 @@ export class AddLinkComponent implements OnInit {
         this.submitting = false;
         return;
       }
-      await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids, index, accessible_user_type: user_types_ids });
+      await this.apiService.link.update(this.id, { name, image, thema_id, route: route_link, category_ids, index, accessible_user_type: user_types_ids, geolocation_api_type: geolocation });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -358,7 +362,7 @@ export class AddLinkComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
-      let { name, image, thema_id, route_link, category_ids, index, user_types_ids } = this;
+      let { name, image, thema_id, route_link, category_ids, index, user_types_ids, geolocation } = this;
       if (thema_id === 'null') {
         thema_id = null
       }
@@ -377,7 +381,7 @@ export class AddLinkComponent implements OnInit {
         this.submitting = false;
         return;
       }
-      await this.apiService.link.add({ name, image, thema_id, route: route_link, category_ids, accessible_user_type: user_types_ids, index });
+      await this.apiService.link.add({ name, image, thema_id, route: route_link, category_ids, accessible_user_type: user_types_ids, index, geolocation_api_type: geolocation });
       form.reset();
       this.alertSuccess();
       this.backToList();
