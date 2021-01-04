@@ -524,6 +524,14 @@
   "Job hunting board": "Job hunting board",
   "Visible boards": "Visible boards",
   "Shop sales board": "Shop sales board",
+  "LOCATION": "LOCATION",
+  "DISTANCE_ORDER_BOARD_2_OPTION": "DISTANCE_ORDER_BOARD_2_OPTION",
+  "SHOP_LIST_BOARD_SHOW_OPTION": "SHOP_LIST_BOARD_SHOW_OPTION",
+  "SHOP_LIST_BOARD_COLUMN": "SHOP_LIST_BOARD_COLUMN",
+  "FORBIDDEN_WORDS": "FORBIDDEN_WORDS",
+  "DISTANCE_ORDER_BOARD_OPTION": "DISTANCE_ORDER_BOARD_OPTION",
+  "RANDOM": "RANDOM",
+  "LATEST": "LATEST",
   "nav": {
     "nav_items": [
       {
