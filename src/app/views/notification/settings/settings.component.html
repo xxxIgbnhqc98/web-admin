@@ -9,21 +9,22 @@
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-xl-10 col-lg-10 col-md-10">
-                                <input type="text" class="form-control input-control" [placeholder]="'Title' | translate"
-                                    [(ngModel)]="title" name="title" required>
+                                <input type="text" class="form-control input-control"
+                                    [placeholder]="'Title' | translate" [(ngModel)]="title" name="title" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-xl-10 col-lg-10 col-md-10">
-                                <input type="text" class="form-control input-control" [placeholder]="'Title message' | translate"
-                                    [(ngModel)]="message_title" name="message_title" required>
+                                <input type="text" class="form-control input-control"
+                                    [placeholder]="'Title message' | translate" [(ngModel)]="message_title"
+                                    name="message_title" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-xl-10 col-lg-10 col-md-10">
                                 <input style="height: 80px" type="text" class="form-control input-control"
-                                    [placeholder]="'Message content' | translate" [(ngModel)]="message_content" name="message_content"
-                                    required>
+                                    [placeholder]="'Message content' | translate" [(ngModel)]="message_content"
+                                    name="message_content" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -39,24 +40,27 @@
                                 <input class="form-check-input" type="radio" id="every_7_days"
                                     [checked]="frequency === 'REGULAR_EVERY_7_DAYS'" value="REGULAR_EVERY_7_DAYS"
                                     (change)="changeFrequency($event)">
-                                <label class="form-check-label" for="every_7_days">{{'Every 7 days' | translate}}</label>
+                                <label class="form-check-label" for="every_7_days">{{'Every 7 days' |
+                                    translate}}</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="every_30_days"
                                     [checked]="frequency === 'REGULAR_EVERY_30_DAYS'" value="REGULAR_EVERY_30_DAYS"
                                     (change)="changeFrequency($event)">
-                                <label class="form-check-label" for="every_30_days">{{'Every 30 days' | translate}}</label>
+                                <label class="form-check-label" for="every_30_days">{{'Every 30 days' |
+                                    translate}}</label>
                             </div>
                         </div>
                         <div class="form-group row" style="margin-top: 5px">
-                            <div class="col-xl-4 col-lg-4 col-md-4">
-                                <input class="form-control input-control" [placeholder]="'Date' | translate" bsDatepicker
-                                    placement="bottom" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [(ngModel)]="date"
-                                    name="date">
+                            <div class="col-xl-2 col-lg-2 col-md-2">
+                                <input class="form-control input-control" [placeholder]="'Date' | translate"
+                                    bsDatepicker placement="bottom" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                                    [(ngModel)]="date" name="date" (ngModelChange)="checkDate()">
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-4">
+                            <span class="pt-1">:</span>
+                            <div class="col-xl-2 col-lg-2 col-md-2">
                                 <input step="900" type="time" class="form-control input-control" placeholder="Time"
-                                    placement="bottom" [(ngModel)]="time" name="time">
+                                    placement="bottom" [(ngModel)]="time" name="time" (ngModelChange)="checkDate()">
                             </div>
                             <div style="padding: 0; padding-top: 10px;" class="col-xl-4 col-lg-4 col-md-4">
                                 <i>{{'Maximum delay will be 5 minutes' | translate}}</i>

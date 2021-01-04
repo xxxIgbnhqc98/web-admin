@@ -42,19 +42,19 @@ export class AddThemaComponent implements OnInit {
     this.broads = [
       {
         item_id: "RECRUIT_BOARD",
-        item_text: "recruit board"
+        item_text: (this.configService.lang === 'en') ? "recruit board" : ((this.configService.lang === 'vn') ? "Trang tuyển dụng" : '구인 게시판')
       },
       {
         item_id: "RECRUIT_BOARD_2",
-        item_text: "job hunting board"
+        item_text: (this.configService.lang === 'en') ? "job hunting board" : ((this.configService.lang === 'vn') ? "Trang tìm việc" : '구직 게시판')
       },
       {
         item_id: "EVENT_BOARD",
-        item_text: "event board"
+        item_text: (this.configService.lang === 'en') ? "event board" : ((this.configService.lang === 'vn') ? "Trang sự kiện" : '이벤트 게시판')
       },
       {
         item_id: "BULLETIN_BOARD",
-        item_text: "bulletin board"
+        item_text: (this.configService.lang === 'en') ? "bulletin board" : ((this.configService.lang === 'vn') ? "Trang bài viết" : '게시판')
       },
       {
         item_id: "SHOP_SALES_BOARD",
@@ -179,7 +179,7 @@ export class AddThemaComponent implements OnInit {
           const board = data.visible_boards[index];
           this.broads_select.push({
             item_id: board,
-            item_text: (board === "RECRUIT_BOARD_2") ? "job hunting board" : board.toLowerCase().replace("_", " ")
+            item_text: (board === "RECRUIT_BOARD_2") ? ((this.configService.lang === 'en') ? "job hunting board" : ((this.configService.lang === 'vn') ? "Trang tìm việc" : '구직 게시판')) : (board === "RECRUIT_BOARD") ? ((this.configService.lang === 'en') ? "recruit board" : ((this.configService.lang === 'vn') ? "Trang tuyển dụng" : '구인 게시판')) : (board === "EVENT_BOARD") ? ((this.configService.lang === 'en') ? "event board" : ((this.configService.lang === 'vn') ? "Trang sự kiện" : '이벤트 게시판')) : (board === "BULLETIN_BOARD") ? (this.configService.lang === 'en') ? "bulletin board" : ((this.configService.lang === 'vn') ? "Trang bài viết" : '게시판') : board.toLowerCase().replace("_", " ")
           })
         }
       } else {
@@ -213,7 +213,7 @@ export class AddThemaComponent implements OnInit {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
       // const { .thema., email, password } = this;
-      await this.apiService.thema.add({ name: this.name });
+      await this.apiService.thema.add({ name: this.name, visible_boards: this.broads_ids });
       form.reset();
       this.alertSuccess();
       this.backToList();

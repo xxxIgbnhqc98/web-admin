@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { NgForm } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { ConfigService } from '../../../services/config/config.service';
+import { moment } from 'ngx-bootstrap/chronos/test/chain';
+import { throws } from 'assert';
 
 declare let swal: any;
 
@@ -23,7 +25,7 @@ export class PushNotificationSettingsComponent implements OnInit {
   submitting: boolean = false;
   title: string = null;
   date: Date = new Date();
-  time: any = '12:00';
+  time: any = new Date().getHours() + ':59';
   message_title: string = null;
   message_content: string = null;
   sending_type: string = 'GROUP';
@@ -60,7 +62,26 @@ export class PushNotificationSettingsComponent implements OnInit {
       this.submitting = false;
     }
   }
+  checkDate() {
+    let hour = 0;
+    let minute = 0;
+    if (this.time.split(':').length > 0) {
+      hour = this.time.split(':')[0];
+    }
+    if (this.time.split(':').length > 1) {
+      minute = this.time.split(':')[1];
+    }
 
+    const sending_unix_timestamp = new Date(this.date.getFullYear(), this.date.getMonth(),
+      this.date.getDate(), hour, minute, 0).getTime();
+    if (sending_unix_timestamp < new Date().getTime()) {
+      this.time = new Date().getHours() + ':59';
+      this.date = new Date();
+      this.alertPleaseCheckYourTime();
+
+    }
+    console.log("@#@3 ", this.time)
+  }
 
   async addNotificationImpl(form: NgForm) {
     try {
@@ -72,7 +93,6 @@ export class PushNotificationSettingsComponent implements OnInit {
       if (this.time.split(':').length > 1) {
         minute = this.time.split(':')[1];
       }
-
       const sending_unix_timestamp = new Date(this.date.getFullYear(), this.date.getMonth(),
         this.date.getDate(), hour, minute, 0).getTime();
       const body = {
@@ -114,7 +134,13 @@ export class PushNotificationSettingsComponent implements OnInit {
       timer: 2000,
     });
   }
-
+  alertPleaseCheckYourTime() {
+    return swal({
+      title: (this.configService.lang === 'en') ? 'You can not create noti reservation with past schedule' : ((this.configService.lang === 'vn') ? 'Thời gian thực hiện không được nhỏ hơn hiện tại' : '현재시간 이전으로 푸시알림 예약설정이 불가합니다.'),
+      type: 'warning',
+      timer: 2000,
+    });
+  }
   alertSuccess() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Successful' : ((this.configService.lang === 'vn') ? 'Thành công' : '성공'),
