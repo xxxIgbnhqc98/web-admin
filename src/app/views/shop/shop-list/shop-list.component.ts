@@ -270,6 +270,20 @@ export class ShopListComponent implements OnInit {
   openModalAddTimeAll(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
+  async cloneShop(shop_id) {
+    try {
+      try {
+        await this.alertCloneShop();
+      } catch (error) {
+        return;
+      }
+      await this.apiService.shop.cloneShop(shop_id);
+      this.itemsTable.reloadItems();
+      this.alertSuccess();
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
+    }
+  }
   async submitAddTimeAll(form: NgForm) {
     if (this.itemsTable.selectedRows.length === 0) {
       return;
@@ -633,8 +647,8 @@ export class ShopListComponent implements OnInit {
     const { limit, offset, sortBy, sortAsc } = params;
     this.query.limit = limit;
     if (this.thema_id !== "null") {
-      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", {"$filter": { "thema_id": this.thema_id }}, { "thema": ["$all"] }] }, { "events": ["$all"] }];
-    }else{
+      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "$filter": { "thema_id": this.thema_id } }, { "thema": ["$all"] }] }, { "events": ["$all"] }];
+    } else {
       this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
 
     }
@@ -798,6 +812,18 @@ export class ShopListComponent implements OnInit {
       cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
     });
   }
+  async alertCloneShop() {
+    return await swal({
+      title: "shop cloning",
+      text: `Are you sure you want to clone this shop?`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: (this.configService.lang === 'en') ? 'Confirm' : ((this.configService.lang === 'vn') ? 'Xác nhận' : '확인'),
+      cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
+    });
+  }
   async setStateItem(id, state) {
     try {
       try {
@@ -858,7 +884,7 @@ export class ShopListComponent implements OnInit {
       //     this.query.filter.title = { $iLike: `%${this.keyword}%` }
       //   }
       // }
-      if (this.option_search === 'id' && this.keyword ) {
+      if (this.option_search === 'id' && this.keyword) {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
@@ -873,8 +899,8 @@ export class ShopListComponent implements OnInit {
       } else if (this.option_search === 'phone_number') {
         this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
       }
-      if(this.thema_id !== "null"){
-        this.itemFields[2].category.push({"$filter": { "thema_id": this.thema_id }})
+      if (this.thema_id !== "null") {
+        this.itemFields[2].category.push({ "$filter": { "thema_id": this.thema_id } })
       }
       await this.getItems();
       this.submitting = false;

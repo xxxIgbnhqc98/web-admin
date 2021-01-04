@@ -11,6 +11,41 @@ export class Shop extends CrudAPI<IShop> {
   ) {
     super(api, 'shop');
   }
+  async cloneShop(id, options?: CrudOptions) {
+    if (!id) { throw new Error('data undefined in add'); }
+    options = _.merge({}, this.options, options);
+    const setting = {
+      method: 'POST',
+      uri: this.apiUrl("clone_shop/" + id),
+      params: options.query,
+      headers: _.merge({}, {
+        'content-type': 'application/json',
+        'Authorization': this.api.configService.token
+      }, options.headers),
+      body: {},
+      responseType: 'json'
+    };
+    const resp = await this.exec(setting);
+    const res: any = resp;
+    const row = res.body.results.object;
+    if (options.reload) {
+      const items = this.items.getValue();
+      if (items.length < this.pagination.limit) {
+        this.items.next(items);
+        if (this.activeHashQuery && this.hashCache[this.activeHashQuery]) {
+          this.hashCache[this.activeHashQuery].items = items;
+        }
+        items.push(row);
+
+      }
+      if (this.activeHashQuery) {
+        this.hashCache = {
+          [this.activeHashQuery]: this.hashCache[this.activeHashQuery]
+        };
+      }
+    }
+    return row;
+  }
   async add(data, options?: CrudOptions) {
     if (!data) { throw new Error('data undefined in add'); }
     options = _.merge({}, this.options, options);

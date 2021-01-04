@@ -31,8 +31,9 @@
             [(ngModel)]="keyword" *ngIf="option_search !== 'title'">
         </div>
         <div class="col-1">
-          <button style="padding-left: 0px;width: 80px;padding-right: 0px;" class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'
-            *ngIf="option_search !== 'title'"><i class="fa fa-search"></i> {{'Search' | translate}}</button>
+          <button style="padding-left: 0px;width: 80px;padding-right: 0px;" class="btn btn-primary" (click)="search()"
+            data-style="expand-left" [ladda]='submitting' *ngIf="option_search !== 'title'"><i class="fa fa-search"></i>
+            {{'Search' | translate}}</button>
         </div>
         <div class="col-12 search form-group" *ngIf="option_search === 'title'">
           <label for="title"></label>
@@ -55,12 +56,11 @@
             <option value="null">{{'Please choose thema.' | translate}}</option>
             <option *ngFor="let item of themas" value="{{ item.id }}">{{
               item.name
-            }}</option>
+              }}</option>
           </select>
         </div>
         <div class="col-3 pull-right">
-          <select class="form-control" name="option_order" [(ngModel)]="option_order"
-            (change)="changeOptionOrder()">
+          <select class="form-control" name="option_order" [(ngModel)]="option_order" (change)="changeOptionOrder()">
             <option value=null>{{'Unselected' | translate}}</option>
             <option value="ASC">{{'Decrease with remaining date' | translate}}</option>
             <option value="DESC">{{'Increasing with remaining date' | translate}}</option>
@@ -106,13 +106,16 @@
         </data-table-column>
         <data-table-column [header]="'Start date End Date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.start_date) : item.start_date ? getDateFromUnixTimestamp(item.start_date):"No info" | translate}}<br></span>
-            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.expired_date) : item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" | translate}}</span>
+            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.start_date) : item.start_date ?
+              getDateFromUnixTimestamp(item.start_date):"No info" | translate}}<br></span>
+            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.expired_date) : item.expired_date ?
+              getDateFromUnixTimestamp(item.expired_date):"No info" | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Remaining date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) + ("days"|translate)):"Expired" | translate }}</span><br>
+            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) +
+              ("days"|translate)):"Expired" | translate }}</span><br>
             <button style="margin-right: 2px;" (click)="openModalAddTime(templateAddTime, item)" class="btn btn-danger">
               <i class="fa fa-plus"></i>
             </button>
@@ -129,8 +132,10 @@
         </data-table-column> -->
         <data-table-column [header]="'Opening hours' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.old_shop ? subTimeOpen1(item.old_shop.opening_hours) : item.opening_hours ? subTimeOpen1(item.opening_hours) : 'No info' | translate}}<br></span>
-            <span>{{item.old_shop ? subTimeOpen2(item.old_shop.opening_hours) : item.opening_hours ? subTimeOpen2(item.opening_hours) : 'No info' | translate}}</span>
+            <span>{{item.old_shop ? subTimeOpen1(item.old_shop.opening_hours) : item.opening_hours ?
+              subTimeOpen1(item.opening_hours) : 'No info' | translate}}<br></span>
+            <span>{{item.old_shop ? subTimeOpen2(item.old_shop.opening_hours) : item.opening_hours ?
+              subTimeOpen2(item.opening_hours) : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <!-- <data-table-column [header]="'Contact phone' | translate">
@@ -177,7 +182,7 @@
         </data-table-column>
         <data-table-column [header]="'Status' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.state ? item.state  : 'No info' | translate}}</span>
+            <span>{{item.state ? item.state : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Location' | translate">
@@ -208,8 +213,12 @@
             <button *ngIf="!item.old_shop" (click)="editItem(item)" class="btn btn-primary" style="margin-right: 5px;">
               <i class="fa fa-edit"></i>
             </button>
-            <button (click)="deleteItem(item)" class="btn btn-danger">
+            
+            <button (click)="deleteItem(item)" class="btn btn-danger" style="margin-right: 5px;">
               <i class="fa fa-trash"></i>
+            </button>
+            <button (click)="cloneShop(item.id)" class="btn btn-success">
+              <i class="fa fa-clone"></i>
             </button>
           </ng-template>
         </data-table-column>
@@ -466,8 +475,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Extra days' | translate }}</span>
               </div>
-              <input type="text" id="days" class="form-control" name="days" [(ngModel)]="days"
-                #nameControl="ngModel">
+              <input type="text" id="days" class="form-control" name="days" [(ngModel)]="days" #nameControl="ngModel">
             </div>
           </div>
         </div>
