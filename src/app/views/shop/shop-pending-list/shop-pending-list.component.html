@@ -36,8 +36,9 @@
                 [(ngModel)]="keyword">
             </div>
             <div class="col-1">
-              <button style="padding-left: 0px;width: 80px;padding-right: 0px;" class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
-                  class="fa fa-search"></i> {{'Search' | translate}}</button>
+              <button style="padding-left: 0px;width: 80px;padding-right: 0px;" class="btn btn-primary"
+                (click)="search()" data-style="expand-left" [ladda]='submitting'><i class="fa fa-search"></i> {{'Search'
+                | translate}}</button>
             </div>
             <div class="col-3">
               <select (change)="filterThema()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
@@ -45,7 +46,7 @@
                 <option value="null">{{'Please choose thema.' | translate}}</option>
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name
-                }}</option>
+                  }}</option>
               </select>
             </div>
           </div>
@@ -104,7 +105,7 @@
         </data-table-column>
         <data-table-column [header]="'Address' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.address ? (item.address + ' '+ item.short_address )  : 'No info' | translate}}</span>
+            <span>{{item.address ? (item.address + ' '+ item.short_address ) : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'List Image' | translate">
@@ -200,7 +201,23 @@
               </div>
               <input type="number" (change)="check_extra_day()" min="30" max="180" id="extra_days" class="form-control"
                 name="extra_days" [(ngModel)]="extra_days" #nameControl="ngModel">
+            </div><br/>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Geolocation type' | translate }}</span>
+              </div>
+              <select  name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel" id=""
+              class="form-control input-control" [ngClass]="{'is-invalid' : geolocationControl.errors?.required}"
+              required>
+                <option [ngValue]="null">{{'Choose geolocation type' | translate}}</option>
+                <option value="GOOGLE">{{'GOOGLE' | translate}}</option>
+                <option value="NAVER">{{'NAVER' | translate}}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="geolocationControl.value == null">
+                {{'Please choose geolocation type.' | translate}}
+              </div>
             </div>
+            
           </div>
         </div>
       </div>
@@ -231,6 +248,21 @@
               </div>
               <input type="number" (change)="check_extra_day_for_all()" min="30" max="180" id="extra_days_for_all"
                 class="form-control" name="extra_days_for_all" [(ngModel)]="extra_days_for_all" #nameControl="ngModel">
+            </div><br/>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Geolocation type' | translate }}</span>
+              </div>
+              <select  name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel" id=""
+              class="form-control input-control" [ngClass]="{'is-invalid' : geolocationControl.errors?.required}"
+              required>
+                <option [ngValue]="null">{{'Choose geolocation type' | translate}}</option>
+                <option value="GOOGLE">{{'GOOGLE' | translate}}</option>
+                <option value="NAVER">{{'NAVER' | translate}}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="geolocationControl.value == null">
+                {{'Please choose geolocation type.' | translate}}
+              </div>
             </div>
           </div>
         </div>

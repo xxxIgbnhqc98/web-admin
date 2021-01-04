@@ -52,6 +52,7 @@ export class ShopPendingListComponent implements OnInit {
   listExpiredShop = [];
   listApproveShopIds = [];
   themas: any;
+  geolocation: any = null;
   thema_id: string = "null";
   @ViewChild('itemsTable') itemsTable: DataTable;
 
@@ -97,6 +98,7 @@ export class ShopPendingListComponent implements OnInit {
   openModalApprove(template: TemplateRef<any>, item) {
     this.id_update = item.id
     this.expired_date = item.expired_date;
+    this.geolocation = item.geolocation_api_type;
     this.modalRef = this.modalService.show(template);
   }
   async openModalApproveAll(template: TemplateRef<any>) {
@@ -340,7 +342,8 @@ export class ShopPendingListComponent implements OnInit {
       try {
         await this.apiService.shop.approveAll(this.listApproveShopIds, {
           expired_date: moment().valueOf() + (this.extra_days_for_all * 86400000),
-          state: 'APPROVED'
+          state: 'APPROVED',
+          geolocation_api_type: this.geolocation
         });
         this.alertSuccess();
         this.modalRef.hide()
@@ -371,7 +374,8 @@ export class ShopPendingListComponent implements OnInit {
       try {
         await this.apiService.shop.editReTime(this.id_update, {
           expired_date: moment().valueOf() + (this.extra_days * 86400000),
-          state: 'APPROVED'
+          state: 'APPROVED',
+          geolocation_api_type: this.geolocation
         });
         this.alertSuccess();
         this.modalRef.hide()
@@ -399,7 +403,8 @@ export class ShopPendingListComponent implements OnInit {
   async acceptItemOld(item: any) {
     try {
       await this.apiService.shop.update(item.id, {
-        state: 'APPROVED'
+        state: 'APPROVED',
+        geolocation_api_type: this.geolocation
       });
       this.alertSuccess();
       this.itemsTable.reloadItems();
