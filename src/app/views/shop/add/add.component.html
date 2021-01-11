@@ -186,6 +186,18 @@
                   name="badge_text" [(ngModel)]="badge_text" #badge_textControl="ngModel">
               </div>
             </div>
+            <div class="form-group">
+              <label for="geolocation_type">{{'Geolocation type' | translate}}</label>
+              <select name="geolocation_type" [(ngModel)]="geolocation_type" required #geolocation_typeControl="ngModel"
+                [ngClass]="{'is-invalid' : geolocation_typeControl.errors?.required}" id="geolocation_type"
+                class="form-control input-control">
+                <option value="GOOGLE">Google</option>
+                <option value="NAVER">Naver</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="geolocation_typeControl.errors?.required">
+                {{'Please choose geolocation type.' | translate}}
+              </div>
+            </div>
             <!-- <div class="form-group">
               <label for="city_id">{{'City' | translate}}</label>
               <select name="city_id" [(ngModel)]="city_id" required #cityControl="ngModel" (change)="listDistrict()"
@@ -284,6 +296,9 @@
             <button class="btn btn-success" *ngIf="isEdit" data-style="expand-right" [ladda]='submitting'
               (click)="submitUpdate(formContent)">
               <i class="fa fa-save"></i> {{'Edit' | translate}}
+            </button>
+            <button class="btn btn-danger ml-1" *ngIf="isEdit" data-style="expand-right" (click)="deleteItem()">
+              <i class="fa fa-trash"></i> {{'Delete' | translate}}
             </button>
           </div>
         </div>

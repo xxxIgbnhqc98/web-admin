@@ -80,7 +80,8 @@ export class AddShopComponent implements OnInit {
   short_description: string;
   min_price: string;
   kakaolink_url: string;
-  theme_color: string = "#f44336"
+  theme_color: string = "#f44336";
+  geolocation_type: string = "GOOGLE";
   hours = [
     '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
   ]
@@ -620,6 +621,7 @@ export class AddShopComponent implements OnInit {
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
+      this.geolocation_type = data.geolocation_type;
       this.badge_text = data.badge_text;
       this.badge_color = data.badge_color;
       this.thumbnails = data.thumbnails;
@@ -675,8 +677,8 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
+      const { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
@@ -691,7 +693,32 @@ export class AddShopComponent implements OnInit {
       this.submitting = false;
     }
   }
-
+  async confirmDelete() {
+    return await swal({
+      title: (this.configService.lang === 'en') ? 'DELETE' : ((this.configService.lang === 'vn') ? 'Xóa' : '삭제'),
+      text: (this.configService.lang === 'en') ? 'Are you sure you want to delete?' : ((this.configService.lang === 'vn') ? 'Bạn có chắc chắn muốn xóa không?' : '삭제를 진행할까요?'),
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: (this.configService.lang === 'en') ? 'Confirm' : ((this.configService.lang === 'vn') ? 'Xác nhận' : '확인'),
+      cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
+    });
+  }
+  async deleteItem() {
+    try {
+      try {
+        
+          await this.confirmDelete();
+      } catch (error) {
+        return;
+      }
+      await this.apiService.shop.delete(this.id);
+      this.backToList();
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
+    }
+  }
   changeSearchHandler() {
     this.shop_query = {
       fields: ["$all"],
@@ -704,8 +731,8 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
+      const { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, geolocation_type, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
       form.reset();
       this.alertSuccess();
       if (this.params_thema_id) {

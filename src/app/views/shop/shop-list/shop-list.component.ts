@@ -814,8 +814,8 @@ export class ShopListComponent implements OnInit {
   }
   async alertCloneShop() {
     return await swal({
-      title: "shop cloning",
-      text: `Are you sure you want to clone this shop?`,
+      title: (this.configService.lang === 'en') ? 'shop cloning' : ((this.configService.lang === 'vn') ? 'Nhân bản cửa hàng' : '상점복제'),
+      text: (this.configService.lang === 'en') ? 'Are you sure you want to clone this shop?' : ((this.configService.lang === 'vn') ? 'Bạn có muốn Nhân bản cửa hàng?' : '선택한 상점을 복제하시겠습니까?'),
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

@@ -106,10 +106,15 @@
             <span>{{item.min_price ? item.min_price : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column> -->
-        <data-table-column [header]="'Opening hours' | translate">
+        <!-- <data-table-column [header]="'Opening hours' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.opening_hours ? subTimeOpen1(item.opening_hours) : 'No info' | translate}}<br></span>
             <span>{{item.opening_hours ? subTimeOpen2(item.opening_hours) : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column> -->
+        <data-table-column [header]="'Geolocation' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.geolocation_api_type?item.geolocation_api_type:'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <!-- <data-table-column [header]="'Contact phone' | translate">

@@ -542,6 +542,7 @@
   "DISTANCE_ORDER_BOARD_OPTION": "거리순게시판 옵션",
   "RANDOM": "랜덤순",
   "LATEST": "최신순",
+  "Geolocation":"지리적 위치",
   "nav": {
     "nav_items": [
       {

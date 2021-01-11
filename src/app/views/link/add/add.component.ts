@@ -272,7 +272,7 @@ export class AddLinkComponent implements OnInit {
   }
   async changeBoard() {
     if (this.route_link !== 'null' && (this.route_link === "BULLETIN_BOARD" || this.route_link === "EVENT_BOARD" || this.route_link === "RECRUIT_BOARD" || this.route_link === "RECRUIT_BOARD_2"
-    || this.route_link === "SHOP_SALES_BOARD")) {
+      || this.route_link === "SHOP_SALES_BOARD")) {
       this.themas = await this.apiService.thema.getList({
         query: {
           fields: ["$all"],
@@ -283,7 +283,7 @@ export class AddLinkComponent implements OnInit {
           limit: 9999999
         }
       });
-    }else{
+    } else {
       this.themas = await this.apiService.thema.getList({
         query: {
           fields: ["$all"],
@@ -333,12 +333,12 @@ export class AddLinkComponent implements OnInit {
         thema_id = null
       }
       if (index < 0) {
-        this.alertErrorFromServer("Index can not be negative");
+        this.alertErrorFromServer("The order of link can not be negative");
         this.submitting = false;
         return;
       }
       if (index > 12) {
-        this.alertErrorFromServer("Index can not be greater than 12")
+        this.alertErrorFromServer("The order of link can not be greater than 12")
         this.submitting = false;
         return;
       }

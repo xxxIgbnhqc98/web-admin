@@ -532,6 +532,7 @@
   "DISTANCE_ORDER_BOARD_OPTION": "DISTANCE_ORDER_BOARD_OPTION",
   "RANDOM": "RANDOM",
   "LATEST": "LATEST",
+  "Geolocation":"Geolocation",
   "nav": {
     "nav_items": [
       {
