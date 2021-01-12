@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, TemplateRef, ElementRef } from '@angular/core';
 import { DataTable } from 'angular-2-data-table-bootstrap4/dist';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../services/api/api.service';
@@ -35,7 +35,9 @@ export class SettingListComponent implements OnInit {
   value: string;
   value_array_obj: any;
   country_color: string;
+  loadingUploadAvatar: boolean = false;
   @ViewChild('itemsTable') itemsTable: DataTable;
+  @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
 
   constructor(
     public ref: ChangeDetectorRef,
@@ -348,5 +350,23 @@ export class SettingListComponent implements OnInit {
       type: 'warning',
       timer: 2000,
     });
+  }
+  uploadAvatar(fileInput) {
+    this.loadingUploadAvatar = true;
+    try {
+      const files = this.fileAvatarElementRef.nativeElement.files;
+      const file = files[0];
+      const result = this.apiService.fileUploader.uploadImage(file, 300)
+        .then(result => {
+          this.value = result.url;
+          this.loadingUploadAvatar = false;
+        });
+    } catch (err) {
+      console.log('Không úp được hình');
+    }
+  }
+
+  removeAvatar() {
+    this.value = null;
   }
 }

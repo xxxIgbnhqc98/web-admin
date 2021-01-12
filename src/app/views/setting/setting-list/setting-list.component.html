@@ -96,12 +96,14 @@
                 #nameControl="ngModel">
             </div>
           </div>
-          <div class="col-md-12 form-item" *ngIf="field !== 'SHOP_LIST_BOARD_COLUMN'">
+          <div class="col-md-12 form-item"
+            *ngIf="field !== 'SHOP_LIST_BOARD_COLUMN' && field !== 'APP_SCRIPT'&& field !== 'APP_NAME' && field !== 'APP_ICON'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
               </div>
-              <select *ngIf="field !== 'GEOLOCATION'" class="form-control" name="value" [(ngModel)]="value">
+              <select *ngIf="field !== 'GEOLOCATION' && field !== 'APP_SCRIPT'" class="form-control" name="value"
+                [(ngModel)]="value">
                 <option *ngIf="field !== 'SHOP_LIST_BOARD_SHOW_OPTION'" value="LATEST">{{'LATEST' | translate}}</option>
                 <option value="RANDOM">{{'RANDOM' | translate}}</option>
               </select>
@@ -112,7 +114,8 @@
 
             </div>
           </div>
-          <div class="col-md-12 form-item" *ngIf="field === 'SHOP_LIST_BOARD_COLUMN'">
+          <div class="col-md-12 form-item"
+            *ngIf="field === 'SHOP_LIST_BOARD_COLUMN' || field === 'APP_SCRIPT'|| field === 'APP_NAME'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
@@ -122,6 +125,26 @@
                 [ngClass]="{'is-invalid' : valueControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="valueControl.errors?.required">
                 {{'Please enter value.' | translate}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 form-item" *ngIf="field === 'APP_ICON'">
+            <div class="input-group">
+              <div class="card">
+                <div class="card-header">
+                  <strong><i class="fa fa-picture-o"></i> {{'Avatar' | translate}}</strong>
+                  <button class="pull-right btn btn-primary btn-upload-avatar" (click)="fileAvatar.click()"
+                    *ngIf="!loadingUploadAvatar"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    {{'Upload avatar' | translate}}</button>
+                  <button class="pull-right btn btn-primary btn-upload-avatar" *ngIf="loadingUploadAvatar"><i
+                      class="fa fa-spinner fa-spin"></i> {{'Uploading avatar' | translate}}</button>
+                  <input id="fileAvatar" type="file" (change)="uploadAvatar($event)" #fileAvatar accept="image/*">
+                </div>
+                <div class="card-body">
+                  <div class="avatar" [style.backgroundImage]="'url('+ value +')'" *ngIf="value && value !== null">
+                    <span class="remove-avatar" (click)="removeAvatar()"><i class="fa fa-times"></i></span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
