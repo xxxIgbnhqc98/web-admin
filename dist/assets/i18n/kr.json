@@ -766,6 +766,18 @@
             "url": "/statistic/visitor-pageview"
           }
         ]
+      },
+      {
+        "name": "Seo",
+        "url": "/seo",
+        "icon": "fa fa-picture-o",
+        "children": [
+          {
+            "name": "SEO 리스트",
+            "icon": "fa fa-list-ol",
+            "url": "/seo/seo-list"
+          }
+        ]
       }
     ]
   }
