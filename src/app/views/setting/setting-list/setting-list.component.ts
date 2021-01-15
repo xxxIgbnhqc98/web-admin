@@ -351,11 +351,10 @@ export class SettingListComponent implements OnInit {
       timer: 2000,
     });
   }
-  uploadAvatar(fileInput) {
+  uploadAvatar(event) {
     this.loadingUploadAvatar = true;
     try {
-      const files = this.fileAvatarElementRef.nativeElement.files;
-      const file = files[0];
+      const file = event.srcElement.files[0];
       const result = this.apiService.fileUploader.uploadImage(file, 300)
         .then(result => {
           this.value = result.url;

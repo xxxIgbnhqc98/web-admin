@@ -52,13 +52,17 @@
         </data-table-column>
         <data-table-column [header]="'Value' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="item.field !== 'LOCATION'" (click)="openModalEditValue(template, item)"
+            <button *ngIf="item.field !== 'LOCATION' && item.field !== 'APP_ICON'" (click)="openModalEditValue(template, item)"
               class="btn btn-primary">
               <i>{{item.value ? (item.value | translate) : 'No info' | translate}}</i>
             </button>
             <button *ngIf="item.field === 'LOCATION'" (click)="openModalCountry(templateCountry, item)"
               class="btn btn-primary">
               <i>{{'Location list'| translate}}</i>
+            </button>
+            <button *ngIf="item.field === 'APP_ICON'" (click)="openModalEditValue(template, item)"
+              class="btn btn-primary">
+              <i>{{'Show Icon'| translate}}</i>
             </button>
           </ng-template>
         </data-table-column>
