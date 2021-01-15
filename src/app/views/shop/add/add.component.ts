@@ -713,7 +713,7 @@ export class AddShopComponent implements OnInit {
       } catch (error) {
         return;
       }
-      await this.apiService.shop.delete(this.id);
+      await this.apiService.shop.deleteShop(this.id);
       this.backToList();
     } catch (error) {
       this.alertErrorFromServer(error.error.message);
