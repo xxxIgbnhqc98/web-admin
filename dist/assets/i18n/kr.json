@@ -543,6 +543,7 @@
   "RANDOM": "랜덤순",
   "LATEST": "최신순",
   "Geolocation":"지리적 위치",
+  "Day left":"일 남음",
   "nav": {
     "nav_items": [
       {

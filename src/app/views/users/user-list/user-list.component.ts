@@ -77,7 +77,14 @@ export class UserListComponent implements OnInit {
     this.post_expired_date = item.post_expired_date;
     this.modalRef = this.modalService.show(template);
   }
-
+  calExpiredDate(expired_date){
+    if(expired_date < moment().valueOf())
+    {
+      return 'Expired'
+    }else{
+      return  Math.floor((expired_date - moment().valueOf())/(1000 * 60 * 60 * 24))
+    }
+  }
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),

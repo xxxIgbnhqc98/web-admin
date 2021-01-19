@@ -133,16 +133,19 @@
         </data-table-column>
         <data-table-column [header]="'Actions' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="!checkExpire(item)" (click)="openModalApprove(templateApprove, item)" class="btn btn-primary"
-              style="margin-bottom: 5px;">
+
+            <button *ngIf="!checkExpire(item)" (click)="openModalApprove(templateApprove, item)"
+              class="btn btn-primary mr-1">
               <i>{{'Approve' | translate}}</i>
             </button>
-            <button *ngIf="checkExpire(item)" (click)="acceptItemOld(item)" class="btn btn-primary"
-              style="margin-bottom: 5px;">
+            <button *ngIf="checkExpire(item)" (click)="acceptItemOld(item)" class="btn btn-primary mr-1">
               <i>{{'Approve' | translate}}</i>
             </button>
-            <button (click)="openModalDeny(templateDeny,item)" class="btn btn-danger">
+            <button (click)="openModalDeny(templateDeny,item)" class="btn btn-danger mr-1">
               <i>{{'Reject' | translate}}</i>
+            </button>
+            <button *ngIf="!item.old_shop" (click)="editItem(item)" class="btn btn-primary">
+              <i class="fa fa-edit"></i>
             </button>
           </ng-template>
         </data-table-column>
@@ -206,14 +209,14 @@
               </div>
               <input type="number" (change)="check_extra_day()" min="30" max="180" id="extra_days" class="form-control"
                 name="extra_days" [(ngModel)]="extra_days" #nameControl="ngModel">
-            </div><br/>
+            </div><br />
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Geolocation type' | translate }}</span>
               </div>
-              <select  name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel" id=""
-              class="form-control input-control" [ngClass]="{'is-invalid' : geolocationControl.errors?.required}"
-              required>
+              <select name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel" id=""
+                class="form-control input-control" [ngClass]="{'is-invalid' : geolocationControl.errors?.required}"
+                required>
                 <option [ngValue]="null">{{'Choose geolocation type' | translate}}</option>
                 <option value="GOOGLE">{{'GOOGLE' | translate}}</option>
                 <option value="NAVER">{{'NAVER' | translate}}</option>
@@ -222,7 +225,7 @@
                 {{'Please choose geolocation type.' | translate}}
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -253,14 +256,14 @@
               </div>
               <input type="number" (change)="check_extra_day_for_all()" min="30" max="180" id="extra_days_for_all"
                 class="form-control" name="extra_days_for_all" [(ngModel)]="extra_days_for_all" #nameControl="ngModel">
-            </div><br/>
+            </div><br />
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Geolocation type' | translate }}</span>
               </div>
-              <select  name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel" id=""
-              class="form-control input-control" [ngClass]="{'is-invalid' : geolocationControl.errors?.required}"
-              required>
+              <select name="geolocation" [(ngModel)]="geolocation" #geolocationControl="ngModel" id=""
+                class="form-control input-control" [ngClass]="{'is-invalid' : geolocationControl.errors?.required}"
+                required>
                 <option [ngValue]="null">{{'Choose geolocation type' | translate}}</option>
                 <option value="GOOGLE">{{'GOOGLE' | translate}}</option>
                 <option value="NAVER">{{'NAVER' | translate}}</option>

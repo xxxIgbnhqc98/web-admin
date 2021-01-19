@@ -92,7 +92,7 @@ export class AddShopComponent implements OnInit {
   end_time: string = null;
   badge_text: string = null;
   badge_color: string = "#f44336";
-
+  state: string;
   settings = {};
   public form_tag: FormGroup;
 
@@ -588,6 +588,7 @@ export class AddShopComponent implements OnInit {
     this.short_description = null;
     this.min_price = '1000';
     this.kakaolink_url = null;
+    this.state = null;
     return {
       category_id: this.category_id,
       tag_ids: this.tag_ids,
@@ -616,6 +617,7 @@ export class AddShopComponent implements OnInit {
       const data = await this.apiService.shop.getItem(this.id, {
         query: { fields: ['$all', { "category": ["$all"] }] }
       });
+      this.state = data.state
       this.user_id = data.user_id
       this.thema_id = data.category.thema_id
       this.category_id = data.category_id;
@@ -708,8 +710,8 @@ export class AddShopComponent implements OnInit {
   async deleteItem() {
     try {
       try {
-        
-          await this.confirmDelete();
+
+        await this.confirmDelete();
       } catch (error) {
         return;
       }
