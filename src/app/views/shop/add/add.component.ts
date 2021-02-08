@@ -235,6 +235,16 @@ export class AddShopComponent implements OnInit {
     this.shop_id = shop.id;
     this.id = shop.id;
     this.setData()
+    
+
+
+      // this.tags_select = [
+      //   {item_text: "Parking lot", item_id: "1558a660-bf58-11ea-a3ea-5d37b467b530"},
+      //   {item_text: "Wifi", item_id: "184abd40-bf58-11ea-a3ea-5d37b467b530"},
+      //   {item_text: "Credit card accepted", item_id: "096d0b70-bf58-11ea-a3ea-5d37b467b530"}
+      // ];
+      console.log("@@@@@tags_select ", this.tags_select)
+      this.setForm();
     document.getElementById("myDropdownShop").classList.remove("show");
   }
   showDropdownShop() {
@@ -620,6 +630,7 @@ export class AddShopComponent implements OnInit {
       this.state = data.state
       this.user_id = data.user_id
       this.thema_id = data.category.thema_id
+      this.updateCateList();
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
@@ -647,6 +658,7 @@ export class AddShopComponent implements OnInit {
 
         }
       }
+      console.log("@#@#" ,this.tags_select)
       this.title = data.title;
       this.images = data.images;
       if (!this.images) {

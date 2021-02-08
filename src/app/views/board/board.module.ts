@@ -13,6 +13,7 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { LocationBasedServicesComponent } from './location-based-services/location-based-services.component';
 import { CompanyInfoComponent } from './company-info/company-info.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { JumpUpPageComponent } from './jump-up-page/jump-up-page.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,7 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     TabsModule.forRoot(),
     SharedModule
   ],
-  declarations: [HowToUseComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
+  declarations: [HowToUseComponent,JumpUpPageComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
   providers: [
 
   ]

@@ -27,7 +27,7 @@
       overflow-x: auto;
       white-space: nowrap;
       .table {
-        width: 3000px;
+        min-width: 1500px;
         white-space: pre-wrap;
         white-space: -moz-pre-wrap;
         white-space: -pre-wrap;
@@ -89,7 +89,7 @@
   margin-left: -100px;
 }
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
-  width: 1500px;
+  min-width: 1500px;
 }
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
   width: 185px;

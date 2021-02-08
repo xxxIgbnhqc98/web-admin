@@ -208,7 +208,7 @@
   "FAQ": "FAQ",
   "How to use": "사용방법",
   "Payment & Fees": "취소 및 환불 규정",
-  "Post": "올리기",
+  "Post": "포스팅",
   "No infomation found!": "관련정보가 없습니다",
   "Nickname": "닉네임",
   "Thumbnail": "썸네일",
@@ -542,8 +542,11 @@
   "DISTANCE_ORDER_BOARD_OPTION": "거리순게시판 옵션",
   "RANDOM": "랜덤순",
   "LATEST": "최신순",
-  "Geolocation":"지리적 위치",
-  "Day left":"일 남음",
+  "Geolocation": "지리적 위치",
+  "Day left": "일 남음",
+  "Jump-up shop list board": "점프업 상점리스트 게시판",
+  "Jump-up limit": "점프업 한도",
+  "Sales shop": "샵매물",
   "nav": {
     "nav_items": [
       {
@@ -582,6 +585,10 @@
           {
             "name": "회사 정보",
             "url": "/board/company-info"
+          },
+          {
+            "name": "점프업",
+            "url": "/board/jump-up-page"
           }
         ]
       },
@@ -674,12 +681,12 @@
             "url": "/bulletin/bulletin"
           },
           {
-            "name": "구인구직 목록",
+            "name": "구인구직샵매물",
             "icon": "fa fa-address-card",
             "url": "/bulletin/recruit"
           },
           {
-            "name": "리뷰 및 댓글",
+            "name": "댓글관리 목록",
             "icon": "fa fa-comment",
             "url": "/bulletin/comment"
           }

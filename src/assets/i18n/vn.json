@@ -534,6 +534,8 @@
   "LATEST": "LATEST",
   "Geolocation":"Loại vị trí địa lý",
   "Day left":"Ngày còn lại",
+  "Jump-up shop list board": "Jump-up shop list board",
+  "Jump-up limit": "Jump-up limit",
   "nav": {
     "nav_items": [
       {
@@ -572,6 +574,10 @@
           {
             "name": "Thông tin công ty",
             "url": "/board/company-info"
+          },
+          {
+            "name": "cửa hàng ưu tiên",
+            "url": "/board/jump-up-page"
           }
         ]
       },

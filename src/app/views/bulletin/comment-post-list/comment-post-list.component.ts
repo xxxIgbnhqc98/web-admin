@@ -192,14 +192,19 @@ export class CommentListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
-      if (type === 'SHOP' || type === 'RECRUIT') {
-        if(type === 'RECRUIT'){
+      console.log("DSadasdas ", type)
+      if (type === 'SHOP' || type === 'RECRUIT' || type === "SALE_SHOP") {
+        this.query.filter = {}
+        if (type === 'RECRUIT') {
           this.query.filter.type = type
-        }else{
+        } else if (type === 'SHOP') {
           this.query.filter.type = null
+        } else {
+          this.query.filter.type = type
+          this.query.filter.board_type = "SHOP_SALES_BOARD"
         }
         console.log("vao shop")
-        this.itemFields = ['$all', { 'shop': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] },{ 'recruit': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'user': ['$all'] }];
+        this.itemFields = ['$all', { 'shop': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'recruit': ['$all', { 'category': ['$all', { 'thema': ['$all'] }] }] }, { 'user': ['$all'] }];
         query = Object.assign({
           fields: this.itemFields
         }, this.query);

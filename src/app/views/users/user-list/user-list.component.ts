@@ -25,6 +25,7 @@ export class UserListComponent implements OnInit {
   submitting: boolean = false;
   submittingUpdate: boolean = false;
   submittingSend: boolean = false;
+  submittingJumpLimit: boolean = false;
   keyword: string;
   sex: string = null;
   user_type: string = null;
@@ -47,6 +48,7 @@ export class UserListComponent implements OnInit {
   extra_day: number = 30;
   post_expired_date: number;
   account_type: string = null;
+  jump_limit: number = 0;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -77,12 +79,16 @@ export class UserListComponent implements OnInit {
     this.post_expired_date = item.post_expired_date;
     this.modalRef = this.modalService.show(template);
   }
-  calExpiredDate(expired_date){
-    if(expired_date < moment().valueOf())
-    {
+  openModalAddJumpLimit(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.jump_limit = (item.jump_limit) ? item.jump_limit : 0
+    this.modalRef = this.modalService.show(template);
+  }
+  calExpiredDate(expired_date) {
+    if (expired_date < moment().valueOf()) {
       return 'Expired'
-    }else{
-      return  Math.floor((expired_date - moment().valueOf())/(1000 * 60 * 60 * 24))
+    } else {
+      return Math.ceil((expired_date - moment().valueOf()) / (1000 * 60 * 60 * 24))
     }
   }
   alertFormNotValid() {
@@ -99,6 +105,27 @@ export class UserListComponent implements OnInit {
     } else {
       this.alertFormNotValid();
       this.submitting = false;
+    }
+  }
+  async submitEditJumpLimit(form: NgForm) {
+    this.submittingJumpLimit = true;
+    if (form.valid) {
+      try {
+        await this.apiService.user.update(this.id_update, {
+          jump_limit: this.jump_limit
+        });
+
+        this.alertSuccess();
+        this.modalRef.hide()
+        this.submittingJumpLimit = false;
+        this.itemsTable.reloadItems();
+      } catch (error) {
+        this.alertErrorFromServer(error.error.message);
+        this.submittingJumpLimit = false;
+      }
+    } else {
+      this.alertFormNotValid();
+      this.submittingJumpLimit = false;
     }
   }
   async submitEditTime(form: NgForm) {

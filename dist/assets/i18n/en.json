@@ -532,8 +532,12 @@
   "DISTANCE_ORDER_BOARD_OPTION": "DISTANCE_ORDER_BOARD_OPTION",
   "RANDOM": "RANDOM",
   "LATEST": "LATEST",
-  "Geolocation":"Geolocation",
-  "Day left":"Day left",
+  "Geolocation": "Geolocation",
+  "Day left": "Day left",
+  "Jump-up shop list board": "Jump-up shop list board",
+  "Jump-up limit": "Jump-up limit",
+  "Sales shop": "Sales shop",
+
   "nav": {
     "nav_items": [
       {
@@ -572,6 +576,10 @@
           {
             "name": "Company Info",
             "url": "/board/company-info"
+          },
+          {
+            "name": "Jump-up",
+            "url": "/board/jump-up-page"
           }
         ]
       },
