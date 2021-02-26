@@ -9,6 +9,7 @@ import { ExcelService } from '../../../services/excel/excel.service';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
+import * as _ from 'lodash'
 
 declare var swal: any;
 @Component({
@@ -20,7 +21,11 @@ export class SettingListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
   itemFields: any = ['$all'];
-  query: any = {};
+  query: any = {
+    filter: {
+      field: { "$notIn": ["APP_ICON", "APP_SCRIPT", "APP_NAME", "LEVEL_LIST"] }
+    }
+  };
   submitting: boolean = false;
   submittingUpdate: boolean = false;
   submittingSend: boolean = false;
@@ -34,6 +39,8 @@ export class SettingListComponent implements OnInit {
   field: string;
   value: string;
   value_array_obj: any;
+  value_array_obj_point: any;
+  lang: string;
   country_color: string;
   loadingUploadAvatar: boolean = false;
   @ViewChild('itemsTable') itemsTable: DataTable;
@@ -54,12 +61,25 @@ export class SettingListComponent implements OnInit {
 
   async ngOnInit() {
     this.titleService.setTitle('Link list')
+    this.lang = this.configService.lang
   }
   changeValue($event, index) {
     this.value_array_obj[index].id = $event.target.value
   }
+  changeValuePoint($event, index) {
+    this.value_array_obj_point[index].point = $event.target.value
+    console.log("this.value_array_obj_point ", this.value_array_obj_point)
+  }
+  changeValueLimit($event, index) {
+    this.value_array_obj_point[index].limit_per_day = $event.target.value
+    console.log("this.value_array_obj_point ", this.value_array_obj_point)
+
+  }
   addCircle() {
+
+    const newNum = parseInt(_.orderBy(this.value_array_obj, [item => parseInt(item.id_num)], ['desc'])[0].id_num) + 1;
     const newC: any = {
+      id_num: newNum.toString(),
       id: '',
       color: '#000000'
     }
@@ -68,10 +88,19 @@ export class SettingListComponent implements OnInit {
   deleteCircle(index) {
     this.value_array_obj.splice(index, 1)
   }
+  replaceNhay(text) {
+    return text.replace(/"/g, "'")
+  }
   openModalEditValue(template: TemplateRef<any>, item) {
     this.id_update = item.id
     this.field = item.field
     this.value = item.value
+    this.modalRef = this.modalService.show(template);
+  }
+  openModalEarningPoint(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.field = item.field
+    this.value_array_obj_point = item.value_array_obj
     this.modalRef = this.modalService.show(template);
   }
   openModalCountry(template: TemplateRef<any>, item) {
@@ -135,6 +164,22 @@ export class SettingListComponent implements OnInit {
 
       await this.apiService.setting.update(this.id_update, {
         value_array_obj: this.value_array_obj
+      });
+
+      this.alertSuccess();
+      this.modalRef.hide()
+      this.submittingUpdate = false;
+      this.itemsTable.reloadItems();
+    } catch (error) {
+      this.alertErrorFromServer(error.error.message);
+      this.submittingUpdate = false;
+    }
+  }
+  async editValuePoint(form: NgForm) {
+    try {
+
+      await this.apiService.setting.update(this.id_update, {
+        value_array_obj: this.value_array_obj_point
       });
 
       this.alertSuccess();

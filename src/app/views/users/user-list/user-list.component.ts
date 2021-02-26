@@ -20,11 +20,12 @@ declare var swal: any;
 export class UserListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all',];
+  itemFields: any = ['$all'];
   query: any = {};
   submitting: boolean = false;
   submittingUpdate: boolean = false;
   submittingSend: boolean = false;
+  submittingJumpLimit: boolean = false;
   keyword: string;
   sex: string = null;
   user_type: string = null;
@@ -47,6 +48,11 @@ export class UserListComponent implements OnInit {
   extra_day: number = 30;
   post_expired_date: number;
   account_type: string = null;
+  jump_limit: number = 0;
+  add_jump_limit: number = 1;
+
+  listHistories: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  itemCountListHistories: number = 0;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -77,7 +83,45 @@ export class UserListComponent implements OnInit {
     this.post_expired_date = item.post_expired_date;
     this.modalRef = this.modalService.show(template);
   }
+  openModalAddJumpLimit(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.jump_limit = item.jump_limit
+    this.modalRef = this.modalService.show(template);
+  }
+  openModalHistory(template: TemplateRef<any>, item) {
+    this.id_update = item.id
+    this.modalRef = this.modalService.show(template,
+      Object.assign({}, { class: 'modal-history modal-lg' }));
+  }
+  async reloadListHistories(params) {
+    const { limit, offset, sortBy, sortAsc } = params;
+    this.query.limit = limit;
+    this.query.offset = offset;
+    this.query.order = sortBy ? [[sortBy, sortAsc ? 'ASC' : 'DESC']] : null;
+    await this.getListHistories();
+  }
+  async getListHistories() {
+    const query = Object.assign({
+      fields: ['$all', { "user": ["$all"] }, { "shop": ["$all"] }],
+    }, this.query);
+    query.filter = {
+      user_id: this.id_update,
+      type_1: "JUMP_UP"
+    }
 
+
+    this.listHistories.next(await this.apiService.history.getList({ query }));
+    this.itemCountListHistories = this.apiService.history.pagination.totalItems;
+    this.ref.detectChanges();
+    return this.listHistories;
+  }
+  calExpiredDate(expired_date) {
+    if (expired_date < moment().valueOf()) {
+      return 'Expired'
+    } else {
+      return Math.ceil((expired_date - moment().valueOf()) / (1000 * 60 * 60 * 24))
+    }
+  }
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),
@@ -92,6 +136,27 @@ export class UserListComponent implements OnInit {
     } else {
       this.alertFormNotValid();
       this.submitting = false;
+    }
+  }
+  async submitEditJumpLimit(form: NgForm) {
+    this.submittingJumpLimit = true;
+    if (form.valid) {
+      try {
+        await this.apiService.user.updateJumpUpLimit(this.id_update, {
+          jump_limit: this.jump_limit + this.add_jump_limit
+        });
+
+        this.alertSuccess();
+        this.modalRef.hide()
+        this.submittingJumpLimit = false;
+        this.itemsTable.reloadItems();
+      } catch (error) {
+        this.alertErrorFromServer(error.error.message);
+        this.submittingJumpLimit = false;
+      }
+    } else {
+      this.alertFormNotValid();
+      this.submittingJumpLimit = false;
     }
   }
   async submitEditTime(form: NgForm) {

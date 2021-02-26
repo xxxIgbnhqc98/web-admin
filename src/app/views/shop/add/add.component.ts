@@ -92,7 +92,7 @@ export class AddShopComponent implements OnInit {
   end_time: string = null;
   badge_text: string = null;
   badge_color: string = "#f44336";
-
+  state: string;
   settings = {};
   public form_tag: FormGroup;
 
@@ -235,6 +235,16 @@ export class AddShopComponent implements OnInit {
     this.shop_id = shop.id;
     this.id = shop.id;
     this.setData()
+    
+
+
+      // this.tags_select = [
+      //   {item_text: "Parking lot", item_id: "1558a660-bf58-11ea-a3ea-5d37b467b530"},
+      //   {item_text: "Wifi", item_id: "184abd40-bf58-11ea-a3ea-5d37b467b530"},
+      //   {item_text: "Credit card accepted", item_id: "096d0b70-bf58-11ea-a3ea-5d37b467b530"}
+      // ];
+      console.log("@@@@@tags_select ", this.tags_select)
+      this.setForm();
     document.getElementById("myDropdownShop").classList.remove("show");
   }
   showDropdownShop() {
@@ -588,6 +598,7 @@ export class AddShopComponent implements OnInit {
     this.short_description = null;
     this.min_price = '1000';
     this.kakaolink_url = null;
+    this.state = null;
     return {
       category_id: this.category_id,
       tag_ids: this.tag_ids,
@@ -616,8 +627,10 @@ export class AddShopComponent implements OnInit {
       const data = await this.apiService.shop.getItem(this.id, {
         query: { fields: ['$all', { "category": ["$all"] }] }
       });
+      this.state = data.state
       this.user_id = data.user_id
       this.thema_id = data.category.thema_id
+      this.updateCateList();
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
@@ -645,6 +658,7 @@ export class AddShopComponent implements OnInit {
 
         }
       }
+      console.log("@#@#" ,this.tags_select)
       this.title = data.title;
       this.images = data.images;
       if (!this.images) {
@@ -708,8 +722,8 @@ export class AddShopComponent implements OnInit {
   async deleteItem() {
     try {
       try {
-        
-          await this.confirmDelete();
+
+        await this.confirmDelete();
       } catch (error) {
         return;
       }

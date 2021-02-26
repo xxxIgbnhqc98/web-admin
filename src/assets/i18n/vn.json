@@ -515,11 +515,11 @@
   "Unselect": "Bỏ Chọn",
   "Recommendation selected": "Cửa hàng đề xuất đã chọn",
   "Recommendation unselected": "Cửa hàng đề xuất không được chọn",
-  "Location list":"Danh sách vùng",
+  "Location list": "Danh sách vùng",
   "Please search shop with title": "Tìm kiếm cửa hàng theo tiêu đề",
   "Recruit": "Tuyển dụng",
-  "Show thema":"Hiện",
-  "Hide thema":"Ẩn",
+  "Show thema": "Hiện",
+  "Hide thema": "Ẩn",
   "Recruit board": "Trang tuyển dụng",
   "Job hunting board": "Job hunting board",
   "Visible boards": "Hiện ở các bảng",
@@ -532,7 +532,31 @@
   "DISTANCE_ORDER_BOARD_OPTION": "DISTANCE_ORDER_BOARD_OPTION",
   "RANDOM": "RANDOM",
   "LATEST": "LATEST",
-  "Geolocation":"Loại vị trí địa lý",
+  "Geolocation": "Loại vị trí địa lý",
+  "Day left": "Ngày còn lại",
+  "Jump-up shop list board": "Jump-up shop list board",
+  "Jump-up limit": "Jump-up limit",
+  "Apply Jump up for": "Apply Jump up for",
+  "Credit Jump up": "Credit Jump up",
+  "Amount": "Amount",
+  "Transaction time": "Transaction time",
+  "View history": "Xem lịch sử",
+  "History": "Lịch sử",
+  "Pick winners": "Pick winners",
+  "EVENT_SCRIPT": "Pick winners",
+  "EARNING_POINT": "Earning point",
+  "Edit ear": "Thiết lập điểm thanh toán",
+  "Limit per day": "Giới hạn mỗi ngày",
+  "Point": "Điểm",
+  "Edit ear b":"Cập nhật",
+  "Leave comment at shop page": "Leave comment at shop page",
+  "Report postings of other user's at COMMUNITY BOARD": "Report postings of other user's at COMMUNITY BOARD",
+  "Someone Click 'I LIKE' icon of user's posting at COMMUNITY BOARD": "Someone Click 'I LIKE' icon of user's posting at COMMUNITY BOARD",
+  "someone leave comment to user's posting at COMMUNITY BOARD": "someone leave comment to user's posting at COMMUNITY BOARD",
+  "User leave comment to anywhere": "User leave comment to anywhere",
+  "user upload posting to COMMUNITY BOARD": "user upload posting to COMMUNITY BOARD",
+  "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature": "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature",
+  "Event page": "Trang sự kiện",
   "nav": {
     "nav_items": [
       {
@@ -571,6 +595,18 @@
           {
             "name": "Thông tin công ty",
             "url": "/board/company-info"
+          },
+          {
+            "name": "cửa hàng ưu tiên",
+            "url": "/board/jump-up-page"
+          },
+          {
+            "name": "Cấp độ",
+            "url": "/board/level-page"
+          },
+          {
+            "name": "Trang sự kiện",
+            "url": "/board/event-page"
           }
         ]
       },

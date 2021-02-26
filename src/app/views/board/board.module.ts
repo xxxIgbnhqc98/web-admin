@@ -13,10 +13,13 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { LocationBasedServicesComponent } from './location-based-services/location-based-services.component';
 import { CompanyInfoComponent } from './company-info/company-info.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { JumpUpPageComponent } from './jump-up-page/jump-up-page.component';
+import { LevelPageComponent } from './level-page/level-page.component';
+import { EventPageComponent } from './event-page/event-page.component';
 
 @NgModule({
   imports: [
-    FroalaEditorModule.forRoot(), 
+    FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     FormsModule,
     BoardRoutingModule,
@@ -27,7 +30,7 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     TabsModule.forRoot(),
     SharedModule
   ],
-  declarations: [HowToUseComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
+  declarations: [EventPageComponent, LevelPageComponent, HowToUseComponent, JumpUpPageComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
   providers: [
 
   ]

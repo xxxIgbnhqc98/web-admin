@@ -27,7 +27,7 @@
       overflow-x: auto;
       white-space: nowrap;
       .table {
-        width: 3000px;
+        min-width: 1500px;
         white-space: pre-wrap;
         white-space: -moz-pre-wrap;
         white-space: -pre-wrap;
@@ -88,8 +88,12 @@
   width: 765px;
   margin-left: -100px;
 }
+/deep/ .modal-lg .modal-content {
+  width: 765px;
+  margin: auto;
+}
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table {
-  width: 1500px;
+  min-width: 1500px;
 }
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
   width: 185px;
@@ -104,9 +108,18 @@
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(10) {
   width: 120px;
 }
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(11) {
+  width: 150px;
+}
 /deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(12) {
   width: 200px;
 }
-/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(11) {
-  width: 150px;
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(13) {
+  width: 80px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(14) {
+  width: 99px;
+}
+/deep/ #user-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(15) {
+  width: 100px;
 }

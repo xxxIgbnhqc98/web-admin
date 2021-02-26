@@ -58,7 +58,7 @@ export class AddThemaComponent implements OnInit {
       },
       {
         item_id: "SHOP_SALES_BOARD",
-        item_text: "shop sales board"
+        item_text: (this.configService.lang === 'en') ? "shop sales board" : ((this.configService.lang === 'vn') ? "Trang kinh doanh" : '샵매물 게시판')
       },
     ]
     this.route.params.subscribe(params => {
@@ -179,7 +179,7 @@ export class AddThemaComponent implements OnInit {
           const board = data.visible_boards[index];
           this.broads_select.push({
             item_id: board,
-            item_text: (board === "RECRUIT_BOARD_2") ? ((this.configService.lang === 'en') ? "job hunting board" : ((this.configService.lang === 'vn') ? "Trang tìm việc" : '구직 게시판')) : (board === "RECRUIT_BOARD") ? ((this.configService.lang === 'en') ? "recruit board" : ((this.configService.lang === 'vn') ? "Trang tuyển dụng" : '구인 게시판')) : (board === "EVENT_BOARD") ? ((this.configService.lang === 'en') ? "event board" : ((this.configService.lang === 'vn') ? "Trang sự kiện" : '이벤트 게시판')) : (board === "BULLETIN_BOARD") ? (this.configService.lang === 'en') ? "bulletin board" : ((this.configService.lang === 'vn') ? "Trang bài viết" : '게시판') : board.toLowerCase().replace("_", " ")
+            item_text: (board === "RECRUIT_BOARD_2") ? ((this.configService.lang === 'en') ? "job hunting board" : ((this.configService.lang === 'vn') ? "Trang tìm việc" : '구직 게시판')) : (board === "RECRUIT_BOARD") ? ((this.configService.lang === 'en') ? "recruit board" : ((this.configService.lang === 'vn') ? "Trang tuyển dụng" : '구인 게시판')) : (board === "EVENT_BOARD") ? ((this.configService.lang === 'en') ? "event board" : ((this.configService.lang === 'vn') ? "Trang sự kiện" : '이벤트 게시판')) : (board === "BULLETIN_BOARD") ? (this.configService.lang === 'en') ? "bulletin board" : ((this.configService.lang === 'vn') ? "Trang bài viết" : '게시판') : (board === "SHOP_SALES_BOARD") ? (this.configService.lang === 'en') ? "Shop sales board" : ((this.configService.lang === 'vn') ? "Trang kinh doanh" : '샵매물 게시판') : board.toLowerCase().replace("_", " ")
           })
         }
       } else {
