@@ -52,13 +52,17 @@
         </data-table-column>
         <data-table-column [header]="'Value' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="item.field !== 'LOCATION' && item.field !== 'APP_ICON'" (click)="openModalEditValue(template, item)"
-              class="btn btn-primary">
+            <button *ngIf="item.field !== 'LOCATION' && item.field !== 'EARNING_POINT' && item.field !== 'APP_ICON'"
+              (click)="openModalEditValue(template, item)" class="btn btn-primary">
               <i>{{item.value ? (item.value | translate) : 'No info' | translate}}</i>
             </button>
             <button *ngIf="item.field === 'LOCATION'" (click)="openModalCountry(templateCountry, item)"
               class="btn btn-primary">
               <i>{{'Location list'| translate}}</i>
+            </button>
+            <button *ngIf="item.field === 'EARNING_POINT'" (click)="openModalEarningPoint(templateEarningPoint, item)"
+              class="btn btn-primary">
+              <i>{{'Earning point'| translate}}</i>
             </button>
             <button *ngIf="item.field === 'APP_ICON'" (click)="openModalEditValue(template, item)"
               class="btn btn-primary">
@@ -101,7 +105,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item"
-            *ngIf="field !== 'SHOP_LIST_BOARD_COLUMN' && field !== 'APP_SCRIPT'&& field !== 'APP_NAME' && field !== 'APP_ICON'">
+            *ngIf="field !== 'SHOP_LIST_BOARD_COLUMN' && field !== 'EVENT_SCRIPT' && field !== 'APP_SCRIPT'&& field !== 'APP_NAME' && field !== 'APP_ICON'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
@@ -119,7 +123,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item"
-            *ngIf="field === 'SHOP_LIST_BOARD_COLUMN' || field === 'APP_SCRIPT'|| field === 'APP_NAME'">
+            *ngIf="field === 'SHOP_LIST_BOARD_COLUMN' || field === 'APP_SCRIPT'|| field === 'APP_NAME' || field === 'EVENT_SCRIPT'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
@@ -205,6 +209,50 @@
         <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submittingUpdate'
           (click)="submitEditCountry(formContent)">
           <i>{{ 'Edit' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateEarningPoint>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title" [style.margin-left]="(this.configService.lang === 'kr')? '300px' : '350px'">{{ 'Edit ear' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">User ID</span>
+              </div>
+              <input type="text" id="id_update" class="form-control" name="id_update" [(ngModel)]="id_update"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item mb-2" *ngFor="let item of value_array_obj_point,let index=index">
+
+            <span class="input-group-text" style="justify-content: center;">{{replaceNhay(item.desc) | translate}}</span>
+            <div class="input-group">
+              <span class="input-group-text">{{ 'Limit per day' | translate }}</span>
+
+              <input (keyup)="changeValueLimit($event,index)" type="number" id="limit_per_day" class="form-control" name="limit_per_day"
+                [value]="item.limit_per_day">
+              <span class="input-group-text">{{ 'Point' | translate }}</span>
+
+              <input (keyup)="changeValuePoint($event,index)" type="number" id="point" class="form-control" name="point" [value]="item.point">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submittingUpdate'
+          (click)="editValuePoint(formContent)">
+          <i>{{ 'Edit ear b' | translate }}</i>
         </button>
       </div>
     </div>

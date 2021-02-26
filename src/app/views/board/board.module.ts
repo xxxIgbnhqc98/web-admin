@@ -14,10 +14,12 @@ import { LocationBasedServicesComponent } from './location-based-services/locati
 import { CompanyInfoComponent } from './company-info/company-info.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { JumpUpPageComponent } from './jump-up-page/jump-up-page.component';
+import { LevelPageComponent } from './level-page/level-page.component';
+import { EventPageComponent } from './event-page/event-page.component';
 
 @NgModule({
   imports: [
-    FroalaEditorModule.forRoot(), 
+    FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     FormsModule,
     BoardRoutingModule,
@@ -28,7 +30,7 @@ import { JumpUpPageComponent } from './jump-up-page/jump-up-page.component';
     TabsModule.forRoot(),
     SharedModule
   ],
-  declarations: [HowToUseComponent,JumpUpPageComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
+  declarations: [EventPageComponent, LevelPageComponent, HowToUseComponent, JumpUpPageComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
   providers: [
 
   ]

@@ -52,19 +52,19 @@ export class AddLinkComponent implements OnInit {
     this.user_types = [
       {
         item_id: 'BIZ_USER',
-        item_text: 'BIZ_USER'
+        item_text: (this.configService.lang === 'en') ? 'Biz User' : ((this.configService.lang === 'vn') ? 'Biz User' : '기업회원')
       },
       {
         item_id: 'FREE_USER',
-        item_text: 'FREE_USER'
+        item_text: (this.configService.lang === 'en') ? 'Free User' : ((this.configService.lang === 'vn') ? 'Free User' : '무료회원')
       },
       {
         item_id: 'NON_MEMBER',
-        item_text: 'NON_MEMBER'
+        item_text: (this.configService.lang === 'en') ? 'Non User' : ((this.configService.lang === 'vn') ? 'Non User' : '비회원')
       },
       {
         item_id: 'PAID_USER',
-        item_text: 'PAID_USER'
+        item_text: (this.configService.lang === 'en') ? 'Paid User' : ((this.configService.lang === 'vn') ? 'Paid User' : '유료회원')
       }
     ]
     this.route.params.subscribe(async (params) => {
@@ -242,7 +242,7 @@ export class AddLinkComponent implements OnInit {
         for (let index = 0; index < data.accessible_user_type.length; index++) {
           const user_type = data.accessible_user_type[index];
           this.user_types_select.push({
-            item_text: user_type,
+            item_text: user_type === 'BIZ_USER' ? ((this.configService.lang === 'en') ? 'Biz User' : ((this.configService.lang === 'vn') ? 'Biz User' : '기업회원')) : (user_type === 'FREE_USER' ? ((this.configService.lang === 'en') ? 'Free User' : ((this.configService.lang === 'vn') ? 'Free User' : '무료회원')) : (user_type === 'NON_MEMBER' ? ((this.configService.lang === 'en') ? 'Non User' : ((this.configService.lang === 'vn') ? 'Non User' : '비회원')) : ((this.configService.lang === 'en') ? 'Paid User' : ((this.configService.lang === 'vn') ? 'Paid User' : '유료회원')))),
             item_id: user_type
           })
         }

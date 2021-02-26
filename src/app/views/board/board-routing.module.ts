@@ -6,6 +6,8 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { LocationBasedServicesComponent } from './location-based-services/location-based-services.component';
 import { CompanyInfoComponent } from './company-info/company-info.component';
 import { JumpUpPageComponent } from './jump-up-page/jump-up-page.component';
+import { LevelPageComponent } from './level-page/level-page.component';
+import { EventPageComponent } from './event-page/event-page.component';
 const routes: Routes = [
   {
     path: '',
@@ -58,6 +60,20 @@ const routes: Routes = [
         component: JumpUpPageComponent,
         data: {
           title: 'Jump-up page'
+        }
+      },
+      {
+        path: 'level-page',
+        component: LevelPageComponent,
+        data: {
+          title: 'Level page'
+        }
+      },
+      {
+        path: 'event-page',
+        component: EventPageComponent,
+        data: {
+          title: 'Level page'
         }
       }
     ]

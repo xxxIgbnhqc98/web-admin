@@ -30,9 +30,9 @@
             <div class="col-3">
               <select class="form-control" name="account_type" [(ngModel)]="account_type">
                 <option [ngValue]=null>{{'Choose account type' | translate}}</option>
-                <option value="BIZ_USER">{{'BIZ user' | translate}}</option>
-                <option value="FREE_USER">{{'FREE user' | translate}}</option>
-                <option value="PAID_USER">{{'PAID user' | translate}}</option>
+                <option value="BIZ_USER">{{'Biz User' | translate}}</option>
+                <option value="FREE_USER">{{'Free User' | translate}}</option>
+                <option value="PAID_USER">{{'Paid User' | translate}}</option>
               </select>
             </div>
             <div class="col-2">
@@ -65,9 +65,12 @@
         <data-table-column [header]="'Login type - Account type' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.login_type ? item.login_type : 'ADMIN'}}</span><span>{{item.account_type ?' - '+
-              item.account_type:''}}</span>
+              ((item.account_type === 'PAID_USER' && calExpiredDate(item.paid_user_expiration_date) === 'Expired')?
+              'FREE_USER':item.account_type):''}}</span>
             <br>
-            <span>{{(item.account_type !== 'PAID_USER')? '': calExpiredDate(item.paid_user_expiration_date) }}
+            <span>{{(item.account_type !== 'PAID_USER')? '': ((item.account_type === 'PAID_USER' &&
+              calExpiredDate(item.paid_user_expiration_date) === 'Expired')?
+              '':calExpiredDate(item.paid_user_expiration_date)) }}
               {{(calExpiredDate(item.paid_user_expiration_date) === 'Expired') ? '' : 'Day left' | translate}}</span>
           </ng-template>
         </data-table-column>
@@ -114,13 +117,18 @@
             <span>{{item.post_limit ? item.post_limit : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
-        <data-table-column [header]="'Jump-up Limit' | translate">
+        <data-table-column [header]="'Jump-up limit' | translate">
           <ng-template #dataTableCell let-item="item">
             <button *ngIf="item.account_type === 'BIZ_USER'" type="submit" class="btn btn-primary"
               data-style="expand-right" (click)="openModalAddJumpLimit(templateJumpLimit, item)">
               <i>{{item.jump_limit ? item.jump_limit : '0'}}</i>
             </button>
             <span *ngIf="item.account_type !== 'BIZ_USER'">{{'No info' | translate}}</span>
+            <br>
+            <button *ngIf="item.account_type === 'BIZ_USER'" type="submit" class="btn btn-primary mt-1"
+              data-style="expand-right" (click)="openModalHistory(templateJumpLimitPage, item)">
+              <i>{{'View history' | translate}}</i>
+            </button>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Post status' | translate">
@@ -136,6 +144,11 @@
         <data-table-column [header]="'Memo' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.memo ? item.memo : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Pick winners' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.event_type ? item.event_type : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <!-- <data-table-column header="Paypal account">
@@ -154,10 +167,52 @@
     </div>
   </div>
 </div>
+<ng-template #templateJumpLimitPage>
+  <div class="modal-header">
+    <h4 class="modal-title">{{'History' | translate}}</h4>
+    <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-wrapper">
+      <data-table id="data-table-grid" #itemsTableListHistories [indexColumnHeader]="'no' | translate"
+        [items]="listHistories | async" [itemCount]="itemCountListHistories" (reload)="reloadListHistories($event)"
+        [pagination]="true" [indexColumn]="true" [selectColumn]="false" [multiSelect]="false" [substituteRows]="false"
+        [selectOnRowClick]="false" [showReloading]="false" class="history">
+        <data-table-column [header]="'Content' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span *ngIf="!item.note">
+              {{'Apply Jump up for' | translate}}: {{item.shop !== null ? item.shop.title !== null ? item.shop.title :
+              ('No info' | translate) : ('No info' | translate)}}
+            </span>
+            <span *ngIf="item.note">
+              {{'Credit Jump up' | translate}}
+            </span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Amount' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>
+              {{item.note === null ? 1:item.note}}
+            </span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Transaction time' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.created_at_unix_timestamp ? (getDateFromUnixTimestamp(item.created_at_unix_timestamp) | date
+              :'yyyy/MM/dd HH:mm'): ''}}</span>
+
+          </ng-template>
+        </data-table-column>
+      </data-table>
+    </div>
+  </div>
+</ng-template>
 <ng-template #templateJumpLimit>
   <form class="form-horizontal form-content" #formContent="ngForm">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{ 'Add time' | translate }}</h4>
+      <h4 class="modal-title pull-left">{{ 'Add' | translate }}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -179,9 +234,10 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Jump-up limit' | translate }}</span>
               </div>
-              <input type="number" id="jump_limit" class="form-control" name="jump_limit" [(ngModel)]="jump_limit"
-                #jump_limitControl="ngModel" required [placeholder]="'Jump-up limit' | translate">
-              <div class="invalid-feedback" *ngIf="jump_limitControl.errors?.required">
+              <input type="number" id="add_jump_limit" class="form-control" name="add_jump_limit"
+                [(ngModel)]="add_jump_limit" #add_jump_limitControl="ngModel" required
+                [placeholder]="'Jump-up limit' | translate">
+              <div class="invalid-feedback" *ngIf="add_jump_limitControl.errors?.required">
                 {{ 'Please enter jump-up limit' | translate }}
               </div>
 
@@ -190,9 +246,9 @@
         </div>
       </div>
       <div class="card-footer">
-        <button type="submit" class="btn btn-success"
-          data-style="expand-right" [ladda]='submittingJumpLimit' (click)="submitEditJumpLimit(formContent)">
-          <i>{{ 'Edit' | translate }}</i>
+        <button type="submit" class="btn btn-success" data-style="expand-right" [ladda]='submittingJumpLimit'
+          (click)="submitEditJumpLimit(formContent)">
+          <i>{{ 'Add' | translate }}</i>
         </button>
       </div>
     </div>

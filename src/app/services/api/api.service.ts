@@ -26,9 +26,9 @@ import { Meta } from './crud/meta';
 import { Bulletin } from './crud/bulletin';
 import { Comment } from './crud/comment';
 import { Review } from './crud/review';
-import { RecruitComponent } from '../../views/bulletin/recruit/recruit-list.component';
 import { Recruit } from './crud/recruit';
 
+import { History } from './crud/history';
 
 @Injectable()
 export class ApiService {
@@ -66,4 +66,6 @@ export class ApiService {
   comment = new Comment(this);
   review = new Review(this);
   pushNotification = new PushNotification(this);
+  history = new History(this);
+
 }

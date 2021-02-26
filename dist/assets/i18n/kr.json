@@ -220,7 +220,7 @@
   "Number of reviews": "리뷰 수",
   "Rating": "별점",
   "Report": "리포트",
-  "Content": "내용",
+  "Content": "내역",
   "Charge": "요금",
   "Safety": "안전",
   "Hygiene": "위생",
@@ -547,6 +547,28 @@
   "Jump-up shop list board": "점프업 상점리스트 게시판",
   "Jump-up limit": "점프업 한도",
   "Sales shop": "샵매물",
+  "Apply Jump up for": "점프업 적용",
+  "Credit Jump up": " 점프업 포인트 추가",
+  "Amount": "수량",
+  "Transaction time": "거래시간",
+  "View history": "내역보기",
+  "History": "점프업 변동내역",
+  "Pick winners": "당첨자 선택하기",
+  "EVENT_SCRIPT": "당첨자 선택하기",
+  "EARNING_POINT": "지급 포인트 설정",
+  "Earning point": "지급 포인트",
+  "Edit ear": "지급 포인트 설정",
+  "Edit ear b": "업데이트",
+  "Limit per day": "일일 지급한도",
+  "Point": "포인트",
+  "Leave comment at shop page": "상점에 댓글을 남기는 경우",
+  "Report postings of other user's at COMMUNITY BOARD": "커뮤니티게시판 내 타인 게시글을 신고할 경우",
+  "Someone Click 'I LIKE' icon of user's posting at COMMUNITY BOARD": "커뮤니티게시판 내 본인게시물을 타인이 좋아요 클릭한 경우",
+  "someone leave comment to user's posting at COMMUNITY BOARD": "커뮤니티게시판 내 본인게시물에 타인이 댓글을 남기는 경우",
+  "User leave comment to anywhere": "본인이 댓글을 남기는 경우",
+  "user upload posting to COMMUNITY BOARD": "커뮤니티게시판 내 본인이 게시글을 올리는 경우",
+  "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature": "고객센터 > 불편사항 접수를 할 경우",
+  "Event page": "이벤트 페이지",
   "nav": {
     "nav_items": [
       {
@@ -589,6 +611,14 @@
           {
             "name": "점프업",
             "url": "/board/jump-up-page"
+          },
+          {
+            "name": "레벨 페이지",
+            "url": "/board/level-page"
+          },
+          {
+            "name": "이벤트 페이지",
+            "url": "/board/event-page"
           }
         ]
       },

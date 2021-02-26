@@ -537,7 +537,26 @@
   "Jump-up shop list board": "Jump-up shop list board",
   "Jump-up limit": "Jump-up limit",
   "Sales shop": "Sales shop",
-
+  "Apply Jump up for": "Apply Jump up for",
+  "Credit Jump up": "Credit Jump up",
+  "Amount": "Amount",
+  "Transaction time": "Transaction time",
+  "View history": "View history",
+  "History": "History",
+  "Pick winners": "Pick winners",
+  "EVENT_SCRIPT": "Pick winners",
+  "EARNING_POINT": "EARNING_POINT",
+  "Edit ear": "Edit",
+  "Limit per day": "Limit per day",
+  "Point": "Point",
+  "Edit ear b": "Edit",
+  "Leave comment at shop page": "Leave comment at shop page",
+  "Report postings of other user's at COMMUNITY BOARD": "Report postings of other user's at COMMUNITY BOARD",
+  "Someone Click 'I LIKE' icon of user's posting at COMMUNITY BOARD": "Someone Click 'I LIKE' icon of user's posting at COMMUNITY BOARD",
+  "someone leave comment to user's posting at COMMUNITY BOARD": "someone leave comment to user's posting at COMMUNITY BOARD",
+  "User leave comment to anywhere": "User leave comment to anywhere",
+  "user upload posting to COMMUNITY BOARD": "user upload posting to COMMUNITY BOARD",
+  "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature": "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature",
   "nav": {
     "nav_items": [
       {
@@ -580,6 +599,14 @@
           {
             "name": "Jump-up",
             "url": "/board/jump-up-page"
+          },
+          {
+            "name": "Level page",
+            "url": "/board/level-page"
+          },
+          {
+            "name": "Event page",
+            "url": "/board/event-page"
           }
         ]
       },

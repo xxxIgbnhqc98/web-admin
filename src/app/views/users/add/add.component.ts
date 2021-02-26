@@ -25,6 +25,7 @@ export class AddUserComponent implements OnInit {
   avatar: string;
   username: string;
   account_type: string;
+  event_type: string;
   post_limit: number;
   post_limit_min: number;
   memo: string;
@@ -114,6 +115,7 @@ export class AddUserComponent implements OnInit {
     this.phone = null;
     this.avatar = null;
     this.username = null;
+    this.event_type = null;
     this.memo = null;
     this.post_limit = 1;
     this.post_limit_min = 1;
@@ -125,6 +127,7 @@ export class AddUserComponent implements OnInit {
       phone: this.phone,
       avatar: this.avatar,
       username: this.username,
+      event_type: this.event_type,
       memo: this.memo,
       post_limit: this.post_limit,
       post_limit_min: this.post_limit_min,
@@ -143,6 +146,7 @@ export class AddUserComponent implements OnInit {
       this.phone = data.phone;
       this.username = data.username;
       this.account_type = data.account_type;
+      this.event_type = data.event_type;
       this.post_limit = data.post_limit;
       this.show_shop_tag = data.show_shop_tag;
       this.memo = data.memo;
@@ -170,8 +174,8 @@ export class AddUserComponent implements OnInit {
         //   return;
       }
       this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
-      const { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
-      await this.apiService.user.update(this.id, { account_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+      const { account_type,event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
+      await this.apiService.user.update(this.id, { account_type,event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -186,9 +190,9 @@ export class AddUserComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       this.password = new Md5().appendStr(this.password_show).end();
-      const { fullname, avatar, phone, account_type, email, password, username, nickname } = this;
+      const { fullname, avatar, phone, account_type,event_type, email, password, username, nickname } = this;
       console.log(fullname, avatar, phone, account_type, email, password, username, nickname)
-      await this.apiService.user.add({ avatar, phone, account_type, password, username, nickname, email: username });
+      await this.apiService.user.add({ avatar, phone, account_type,event_type, password, username, nickname, email: username });
       form.reset();
       this.alertSuccess();
       this.backToList();

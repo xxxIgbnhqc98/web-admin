@@ -179,3 +179,11 @@
 /deep/ #setting-list #data-table-grid .data-table-wrapper .data-table-box table thead tr th:nth-child(5) {
   width: 185px;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
