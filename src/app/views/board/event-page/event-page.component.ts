@@ -65,7 +65,7 @@ export class EventPageComponent implements OnInit {
           filter: {
             type: { $in: ['EVENT_PROFILE_TYPE_A', 'EVENT_PROFILE_TYPE_B', 'EVENT_PROFILE_TYPE_C'] }
           },
-          order:[['type','desc']]
+          order:[['type','asc']]
         }
       });
       this.id_a = data[0].id;

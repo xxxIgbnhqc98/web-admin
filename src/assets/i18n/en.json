@@ -544,7 +544,10 @@
   "View history": "View history",
   "History": "History",
   "Pick winners": "Pick winners",
-  "EVENT_SCRIPT": "Pick winners",
+  "EVENT_SCRIPT": "Pick winners(English)",
+  "EVENT_SCRIPT_KR": "Pick winners(Korean)",
+  "C": "Winner",
+  "B": "Loser",
   "EARNING_POINT": "EARNING_POINT",
   "Edit ear": "Edit",
   "Limit per day": "Limit per day",
@@ -557,6 +560,9 @@
   "User leave comment to anywhere": "User leave comment to anywhere",
   "user upload posting to COMMUNITY BOARD": "user upload posting to COMMUNITY BOARD",
   "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature": "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature",
+  "Event page A": "Notice before draw date",
+  "Event page B": "Notice for losers",
+  "Event page C": "Notice for winners",
   "nav": {
     "nav_items": [
       {

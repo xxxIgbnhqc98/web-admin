@@ -148,7 +148,7 @@
         </data-table-column>
         <data-table-column [header]="'Pick winners' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.event_type ? item.event_type : 'No info' | translate}}</span>
+            <span>{{item.event_type ? (item.event_type | translate) : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <!-- <data-table-column header="Paypal account">

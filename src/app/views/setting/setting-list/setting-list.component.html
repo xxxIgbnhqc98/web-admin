@@ -52,9 +52,13 @@
         </data-table-column>
         <data-table-column [header]="'Value' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="item.field !== 'LOCATION' && item.field !== 'EARNING_POINT' && item.field !== 'APP_ICON'"
+            <button *ngIf="item.field !== 'LOCATION' && item.field !== 'EARNING_POINT' && item.field !== 'APP_ICON'&& item.field !== 'EVENT_SCRIPT' && item.field !== 'EVENT_SCRIPT_KR'" 
               (click)="openModalEditValue(template, item)" class="btn btn-primary">
               <i>{{item.value ? (item.value | translate) : 'No info' | translate}}</i>
+            </button>
+            <button *ngIf="item.field === 'EVENT_SCRIPT' || item.field === 'EVENT_SCRIPT_KR'" (click)="openModalEditValue(template, item)"
+              class="btn btn-primary">
+              <i>{{'Edit'| translate}}</i>
             </button>
             <button *ngIf="item.field === 'LOCATION'" (click)="openModalCountry(templateCountry, item)"
               class="btn btn-primary">
@@ -105,7 +109,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item"
-            *ngIf="field !== 'SHOP_LIST_BOARD_COLUMN' && field !== 'EVENT_SCRIPT' && field !== 'APP_SCRIPT'&& field !== 'APP_NAME' && field !== 'APP_ICON'">
+            *ngIf="field !== 'SHOP_LIST_BOARD_COLUMN' && field !== 'EVENT_SCRIPT' && field !== 'EVENT_SCRIPT_KR' && field !== 'APP_SCRIPT'&& field !== 'APP_NAME' && field !== 'APP_ICON'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
@@ -123,7 +127,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item"
-            *ngIf="field === 'SHOP_LIST_BOARD_COLUMN' || field === 'APP_SCRIPT'|| field === 'APP_NAME' || field === 'EVENT_SCRIPT'">
+            *ngIf="field === 'SHOP_LIST_BOARD_COLUMN' || field === 'APP_SCRIPT'|| field === 'APP_NAME' || field === 'EVENT_SCRIPT' || field === 'EVENT_SCRIPT_KR'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>

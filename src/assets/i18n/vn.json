@@ -543,7 +543,10 @@
   "View history": "Xem lịch sử",
   "History": "Lịch sử",
   "Pick winners": "Pick winners",
-  "EVENT_SCRIPT": "Pick winners",
+  "EVENT_SCRIPT": "Pick winners (English)",
+  "EVENT_SCRIPT_KR": "Pick winners (Loser)",
+  "C": "Thắng",
+  "B": "Thua",
   "EARNING_POINT": "Earning point",
   "Edit ear": "Thiết lập điểm thanh toán",
   "Limit per day": "Giới hạn mỗi ngày",
@@ -557,6 +560,9 @@
   "user upload posting to COMMUNITY BOARD": "user upload posting to COMMUNITY BOARD",
   "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature": "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature",
   "Event page": "Trang sự kiện",
+  "Event page A": "Notice before draw date",
+  "Event page B": "Notice for losers",
+  "Event page C": "Notice for winners",
   "nav": {
     "nav_items": [
       {

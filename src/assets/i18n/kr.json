@@ -554,7 +554,10 @@
   "View history": "내역보기",
   "History": "점프업 변동내역",
   "Pick winners": "당첨자 선택하기",
-  "EVENT_SCRIPT": "당첨자 선택하기",
+  "EVENT_SCRIPT": "당첨자 선택하기(영어)",
+  "EVENT_SCRIPT_KR": "당첨자 선택하기(한국어)",
+  "C": "당첨자",
+  "B": "미당첨자",
   "EARNING_POINT": "지급 포인트 설정",
   "Earning point": "지급 포인트",
   "Edit ear": "지급 포인트 설정",
@@ -568,7 +571,10 @@
   "User leave comment to anywhere": "본인이 댓글을 남기는 경우",
   "user upload posting to COMMUNITY BOARD": "커뮤니티게시판 내 본인이 게시글을 올리는 경우",
   "user send message to master by 'CUSTOMER SERVICE > CONTACT US' feature": "고객센터 > 불편사항 접수를 할 경우",
-  "Event page": "이벤트 페이지",
+  "Event page A": "당첨일 전  이벤트 안내문",
+  "Event page B": "비당첨자 이벤트 안내문",
+  "Event page C": "당첨자 이벤트 안내문",
+  "Submit event":"등록하기",
   "nav": {
     "nav_items": [
       {
