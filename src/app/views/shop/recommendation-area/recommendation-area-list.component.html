@@ -28,7 +28,7 @@
             <div class="col-3">
               <select class="form-control" name="filter_selected" [(ngModel)]="filter_selected"
                 (ngModelChange)="changeFilterSelected()">
-                <option value="true" >{{'Recommendation selected' | translate}}</option>
+                <option value="true">{{'Recommendation selected' | translate}}</option>
                 <option value="fasle">{{'Recommendation unselected' | translate}}</option>
               </select>
             </div>
@@ -91,7 +91,8 @@
         </data-table-column> -->
         <data-table-column [header]="'Remaining date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) + ("days"|translate)):"Expired" | translate }}</span><br>
+            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) +
+              ("days"|translate)):"Expired" | translate }}</span><br>
             <button style="margin-right: 2px;" (click)="openModalAddTime(templateAddTime, item)" class="btn btn-danger">
               <i class="fa fa-plus"></i>
             </button>
@@ -140,7 +141,7 @@
         </data-table-column>
         <data-table-column [header]="'Status' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.state ? item.state  : 'No info' | translate}}</span>
+            <span>{{item.state ? (item.state|translate) : 'No info' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Location' | translate">
@@ -154,7 +155,7 @@
           <ng-template #dataTableCell let-item="item">
             <button *ngIf="item.events && item.events.length === 0" (click)="openModalEvent(template2, item)"
               class="btn btn-primary">
-              <i>Add Event</i>
+              <i>{{'Add Event' | translate}}</i>
             </button>
             <button *ngIf="item.events&& (item.events.length > 0 && item.events[0].state ==='PENDING')"
               (click)="openModalEvent(template2, item)" class="btn btn-primary">
@@ -162,7 +163,7 @@
             </button>
             <button *ngIf="item.events && (item.events.length > 0 && item.events[0].state !=='PENDING')"
               (click)="openModalEvent(template2, item)" class="btn btn-danger">
-              <i>Edit Event</i>
+              <i>{{'Edit Event' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>
@@ -246,14 +247,14 @@
           <div class="col-md-12 form-item">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text">{{ 'description' | translate }}</span>
+                <span class="input-group-text">{{ 'Description' | translate }}</span>
               </div>
               <input type="text" id="description" class="form-control" name="description" [(ngModel)]="description"
                 #descriptionControl="ngModel"
                 [ngClass]="{'is-valid' : !descriptionControl.errors?.required, 'is-invalid' : descriptionControl.errors?.required}"
-                required placeholder="event description">
+                required [placeholder]="'Event description' | translate">
               <div class="invalid-feedback" *ngIf="descriptionControl.errors?.required">
-                Please enter description.
+                {{ 'Please enter description.' | translate }}
               </div>
             </div>
           </div>
