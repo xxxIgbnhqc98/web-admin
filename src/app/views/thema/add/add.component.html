@@ -19,7 +19,7 @@
             <div class="form-group">
               <label for="category">{{'Visible boards' | translate}}</label>
               <form [formGroup]="form" *ngIf="form" (ngSubmit)="save()" (reset)="resetForm()">
-                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select broads'" [data]="broads"
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select boards' | translate" [data]="broads"
                   [(ngModel)]="broads_select" [settings]="settings" [formControl]="f.name" [disabled]="false"
                   (onFilterChange)="onSave($event)" (onSelect)="onSave($event)" (onDeSelect)="onSave($event)"
                   (onSelectAll)="onSave($event)" (onDeSelectAll)="onSave($event)">
