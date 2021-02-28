@@ -68,11 +68,11 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
               </div>
-              <input class="form-control" id="value" [placeholder]="'enter value' | translate" type="value" name="name"
+              <input class="form-control" id="value" [placeholder]="'Enter value' | translate" type="value" name="name"
                 [(ngModel)]="value" required #valueControl="ngModel"
                 [ngClass]="{'is-invalid' : valueControl.errors?.required}">
               <div class="invalid-feedback" *ngIf="valueControl.errors?.required">
-                {{'Please enter value.' | translate}}
+                {{'Please enter value' | translate}}
               </div>
             </div>
           </div>

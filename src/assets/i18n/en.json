@@ -582,6 +582,21 @@
   "Reset": "Rest",
   "Bulletin": "Bulletin",
   "APPROVED": "APPROVED",
+  "Geolocation type": "Geolocation type",
+  "Deny message": "Deny message",
+  "Please choose shop": "Please choose shop",
+  "EVENT_BOARD": "EVENT_BOARD",
+  "SHOP_LIST_BOARD": "SHOP_LIST_BOARD",
+  "JUMP_UP_SHOP_LIST_BOARD": "JUMP_UP_SHOP_LIST_BOARD",
+  "Select boards":"Select boards",
+  "Enter badge text": "Enter badge text",
+  "Enter detailed address":  "Enter detailed address",
+  "Enter value": "Enter value",
+  "Please enter value": "Please enter value",
+  "Please join the lottery": "Please join the lottery",
+  "Meta list": "Meta list",
+  "Meta": "Meta",
+  "Edit password": "Edit password",
   "nav": {
     "nav_items": [
       {

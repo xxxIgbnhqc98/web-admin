@@ -36,7 +36,7 @@
                 </div>
               </div>
               <div *ngIf="isEdit">
-                <span *ngIf="!editPass" class="btn btn-primary" (click)="changeStateEditPass()">Edit Password</span>
+                <span *ngIf="!editPass" class="btn btn-primary" (click)="changeStateEditPass()">{{'Edit password' | translate}}                </span>
                 <label *ngIf="editPass" for="password_show">{{'Password' | translate}}</label>
                 <div *ngIf="editPass">
                   <input class="form-control" id="password_show" [placeholder]="'enter password' | translate"
