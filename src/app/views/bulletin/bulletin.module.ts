@@ -15,6 +15,7 @@ import { SharedModule } from '../../shared';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CommentListComponent } from './comment-post-list/comment-post-list.component';
 import { RecruitComponent } from './recruit/recruit-list.component';
+import { ReportListComponent } from './report-list/report-list.component';
 
 
 @NgModule({
@@ -31,10 +32,9 @@ import { RecruitComponent } from './recruit/recruit-list.component';
     BulletinRoutingModule,
     NgMultiSelectDropDownModule,
     ModalModule.forRoot(),
-    NgxInfiniteScrollerModule,
-
+    NgxInfiniteScrollerModule
   ],
-  declarations: [CommentListComponent, BulletinComponent, RecruitComponent],
+  declarations: [ReportListComponent, CommentListComponent, BulletinComponent, RecruitComponent],
   providers: [
     ExcelService,
     DatePipe

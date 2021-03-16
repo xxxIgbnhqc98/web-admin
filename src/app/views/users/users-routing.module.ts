@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserListComponent } from './user-list/user-list.component';
 import { AddUserComponent } from './add/add.component';
+import { LevelHistoryComponent } from './level-history/level-history.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,13 @@ const routes: Routes = [
         component: UserListComponent,
         data: {
           title: 'User list'
+        }
+      },
+      {
+        path: 'level-history',
+        component: LevelHistoryComponent,
+        data: {
+          title: 'Level history'
         }
       },
     ]

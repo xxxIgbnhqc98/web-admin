@@ -574,7 +574,7 @@
   "Event page A": "당첨일 전  이벤트 안내문",
   "Event page B": "비당첨자 이벤트 안내문",
   "Event page C": "당첨자 이벤트 안내문",
-  "Submit event":"등록하기",
+  "Submit event": "등록하기",
   "Event page": "이벤트 페이지",
   "User Permission": "접근가능 그룹",
   "DISTANCE_ORDER_BOARD_2": "거리순 게시판_2",
@@ -601,15 +601,34 @@
   "EVENT_BOARD": "이벤트 게시판",
   "SHOP_LIST_BOARD": "상점목록 게시판",
   "JUMP_UP_SHOP_LIST_BOARD": "상점목록 게시판_점프업",
-  "Select boards":"게시판을 선택하세요",
+  "Select boards": "게시판을 선택하세요",
   "Enter badge text": "배지문구를 입력하세요",
-  "Enter detailed address":  "상세주소를 입력하세요",
+  "Enter detailed address": "상세주소를 입력하세요",
   "Enter value": "이벤트문구 입력",
   "Please enter value": "이벤트문구를 입력하세요",
   "Please join the lottery": "Please join the lottery",
   "Meta list": "메타 리스트",
   "Meta": "메타",
   "Edit password": "비밀번호 변경",
+  "Report post": "신고",
+  "TodayB": "오늘",
+  "Dateb": "날짜",
+  "Thumbnailb": "썸네일",
+  "Titleb": "제목",
+  "Locationb": "게시판",
+  "Writer": "작성자",
+  "Read": "읽음표시",
+  "Report toll": "신고횟수",
+  "Statusb": "처리",
+  "Confirmb": "확인",
+  "Restore": "복원",
+  "Auto delete": "자동삭제됨",
+  "Applicant": "추첨자",
+  "Level": "레벨",
+  "Level ascending order": "레벨 오름차순",
+  "Level descending order": "레벨 내림차순",
+  "Centain level master input": " 레벨선택",
+  "Event transaction list": "이벤트 추첨내역 리스트",
   "nav": {
     "nav_items": [
       {
@@ -621,6 +640,11 @@
             "name": "회원 리스트",
             "icon": "fa fa-list-ol",
             "url": "/users/user-list"
+          },
+          {
+            "name": "레벨 내역",
+            "icon": "fa fa-list-ol",
+            "url": "/users/level-history"
           }
         ]
       },
@@ -760,6 +784,11 @@
             "name": "댓글관리 목록",
             "icon": "fa fa-comment",
             "url": "/bulletin/comment"
+          },
+          {
+            "name": "리포트",
+            "icon": "fa fa-file",
+            "url": "/bulletin/report"
           }
         ]
       },

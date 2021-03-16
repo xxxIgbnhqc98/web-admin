@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BulletinComponent } from './bulletin/bulletin-list.component';
 import { CommentListComponent } from './comment-post-list/comment-post-list.component';
 import { RecruitComponent } from './recruit/recruit-list.component';
+import { ReportListComponent } from './report-list/report-list.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,13 @@ const routes: Routes = [
           title: 'Comment'
         }
       },
+      {
+        path: 'report',
+        component: ReportListComponent,
+        data: {
+          title: 'Report'
+        }
+      }
     ]
   }
 ];

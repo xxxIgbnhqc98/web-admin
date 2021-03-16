@@ -588,15 +588,34 @@
   "EVENT_BOARD": "EVENT_BOARD",
   "SHOP_LIST_BOARD": "SHOP_LIST_BOARD",
   "JUMP_UP_SHOP_LIST_BOARD": "JUMP_UP_SHOP_LIST_BOARD",
-  "Select boards":"Select boards",
+  "Select boards": "Select boards",
   "Enter badge text": "Enter badge text",
-  "Enter detailed address":  "Enter detailed address",
+  "Enter detailed address": "Enter detailed address",
   "Enter value": "Enter value",
   "Please enter value": "Please enter value",
   "Please join the lottery": "Please join the lottery",
   "Meta list": "Meta list",
   "Meta": "Meta",
   "Edit password": "Edit password",
+  "Report post": "Report",
+  "TodayB": "Today",
+  "Dateb": "Date",
+  "Thumbnailb": "Thumbnail",
+  "Titleb": "Title",
+  "Locationb": "Location",
+  "Writer": "Writer",
+  "Read": "Read",
+  "Report toll": "Report toll",
+  "Statusb": "Status",
+  "Confirmb": "Confirm",
+  "Restore": "Restore",
+  "Auto delete": "Auto delete",
+  "Applicant": "Applicant",
+  "Level": "Level",
+  "Level ascending order": "Level ascending order",
+  "Level descending order": "Level descending order",
+  "Centain level master input": "Centain level master input",
+  "Event transaction list": "Event transaction list",
   "nav": {
     "nav_items": [
       {
@@ -608,6 +627,11 @@
             "name": "User list",
             "icon": "fa fa-list-ol",
             "url": "/users/user-list"
+          },
+          {
+            "name": "Level history",
+            "icon": "fa fa-list-ol",
+            "url": "/users/level-history"
           }
         ]
       },
@@ -746,6 +770,11 @@
             "name": "Comment and reply",
             "icon": "fa fa-comment",
             "url": "/bulletin/comment"
+          },
+          {
+            "name": "Report",
+            "icon": "fa fa-file",
+            "url": "/bulletin/report"
           }
         ]
       },

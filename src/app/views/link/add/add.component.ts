@@ -147,7 +147,7 @@ export class AddLinkComponent implements OnInit {
   save() {
     this.user_types_ids = []
     this.form.value.user_type.forEach(async (element) => {
-      await this.user_types_ids.push(element)
+      await this.user_types_ids.push(element.item_id)
     });
   }
   saveCa() {

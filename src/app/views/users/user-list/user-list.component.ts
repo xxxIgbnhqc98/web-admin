@@ -116,10 +116,17 @@ export class UserListComponent implements OnInit {
     return this.listHistories;
   }
   calExpiredDate(expired_date) {
-    if (expired_date < moment().valueOf()) {
+    if (expired_date === null) {
+      return 'Expired'
+    }
+    console.log("hahah ",expired_date)
+    if (moment(new Date(parseInt(expired_date))).endOf('day').valueOf() < moment().valueOf()) {
       return 'Expired'
     } else {
-      return Math.ceil((expired_date - moment().valueOf()) / (1000 * 60 * 60 * 24))
+      // return Math.ceil((expired_date - moment().valueOf()) / (1000 * 60 * 60 * 24))
+      console.log("haha ",(moment(new Date(parseInt(expired_date))).endOf('day').valueOf() - moment().valueOf()))
+      return Math.ceil((moment(new Date(parseInt(expired_date))).endOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000))
+
     }
   }
   alertFormNotValid() {

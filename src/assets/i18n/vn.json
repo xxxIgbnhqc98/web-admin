@@ -597,6 +597,25 @@
   "Meta list": "Danh sách Meta",
   "Meta": "Meta",
   "Edit password": "Chỉnh sửa mật khẩu",
+  "Report post": "Số lượng tố cáo",
+  "TodayB": "Số lương hôm nay",
+  "Dateb": "Ngày",
+  "Thumbnailb": "Hình ảnh",
+  "Titleb": "Tiêu đề",
+  "Locationb": "Bảng",
+  "Writer": "Tác giả",
+  "Read": "Đọc",
+  "Report toll": "Số lần báo cáo",
+  "Statusb": "Tình trạng",
+  "Confirmb": "Xác nhận",
+  "Restore": "Khôi khục",
+  "Auto delete": "Đã tự động xóa",
+  "Applicant": "Applicant",
+  "Level": "Cấp",
+  "Level ascending order": "Cấp tăng dần",
+  "Level descending order": "Cấp giảm dần",
+  "Centain level master input": "Tìm theo cấp",
+  "Event transaction list": "Danh sách",
   "nav": {
     "nav_items": [
       {
@@ -608,6 +627,11 @@
             "name": "Danh sách người dùng",
             "icon": "fa fa-list-ol",
             "url": "/users/user-list"
+          },
+          {
+            "name": "Lịch sử nhận quà",
+            "icon": "fa fa-list-ol",
+            "url": "/users/level-history"
           }
         ]
       },
@@ -746,6 +770,11 @@
             "name": "Bình luận",
             "icon": "fa fa-comment",
             "url": "/bulletin/comment"
+          },
+          {
+            "name": "Báo cáo",
+            "icon": "fa fa-file",
+            "url": "/bulletin/report"
           }
         ]
       },

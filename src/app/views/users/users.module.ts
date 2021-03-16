@@ -14,6 +14,7 @@ import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { SharedModule } from './../../shared';
 import { AddUserComponent } from './add/add.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { LevelHistoryComponent } from './level-history/level-history.component';
 
 
 
@@ -32,7 +33,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     NgxInfiniteScrollerModule,
     BsDatepickerModule.forRoot()
   ],
-  declarations: [UserListComponent, AddUserComponent],
+  declarations: [LevelHistoryComponent, UserListComponent, AddUserComponent],
   providers: [
     ExcelService,
     DatePipe

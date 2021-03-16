@@ -29,6 +29,7 @@ import { Review } from './crud/review';
 import { Recruit } from './crud/recruit';
 
 import { History } from './crud/history';
+import { Report } from './crud/report';
 
 @Injectable()
 export class ApiService {
@@ -67,5 +68,6 @@ export class ApiService {
   review = new Review(this);
   pushNotification = new PushNotification(this);
   history = new History(this);
+  report = new Report(this);
 
 }

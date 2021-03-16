@@ -823,7 +823,7 @@ export class ShopRejectedListComponent implements OnInit {
 
       const files = fileInput.target.files;
       const file = files[0];
-      const result = this.apiService.fileUploader.uploadImage(file, 300)
+      const result = this.apiService.fileUploader.uploadImage(file, 1024)
         .then(result => {
           this.images_event.push(result.url)
           this.loadingUploadImage = false;

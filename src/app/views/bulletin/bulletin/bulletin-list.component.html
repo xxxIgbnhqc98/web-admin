@@ -18,7 +18,7 @@
                 class="form-control input-control">
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name
-                }}</option>
+                  }}</option>
               </select>
             </div>
             <div class="col-4">
@@ -27,7 +27,7 @@
                 class="form-control input-control">
                 <option *ngFor="let item of categories" value="{{ item.id }}">{{
                   item.name
-                }}</option>
+                  }}</option>
               </select>
             </div>
             <div class="col-3">
@@ -92,11 +92,17 @@
             </span>
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Report post' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.report ? item.report : 0}}</span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Comment' | translate">
           <ng-template #dataTableCell let-item="item">
             <span (click)="getListCommentOfConversation(templateComment,item)"
               class="btn btn-primary">{{item.comment}}</span>
-            <span (click)="getComment(item.id)" class="btn btn-warning ml-1"><i class="fa fa-comment" aria-hidden="true"></i></span>
+            <span (click)="getComment(item.id)" class="btn btn-warning ml-1"><i class="fa fa-comment"
+                aria-hidden="true"></i></span>
 
           </ng-template>
         </data-table-column>
