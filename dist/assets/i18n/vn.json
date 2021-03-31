@@ -616,6 +616,9 @@
   "Level descending order": "Cấp giảm dần",
   "Centain level master input": "Tìm theo cấp",
   "Event transaction list": "Danh sách",
+  "Choose level":"Chọn loại",
+  "Repeat application": "Repeat application",
+  "View winners": "View winners",
   "nav": {
     "nav_items": [
       {

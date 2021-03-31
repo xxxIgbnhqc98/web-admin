@@ -120,11 +120,15 @@ export class Shop extends CrudAPI<IShop> {
   async editReTime(id: string, data, options?: CrudOptions) {
     if (!id) { throw new Error('id undefined in edit'); }
     if (!data) { throw new Error('data undefined in edit'); }
+    const ids = []
+    ids.push(id)
     options = _.merge({}, this.options, options);
     const setting = {
       method: 'PUT',
-      uri: this.apiUrl("update_expiration_date/" + id),
-      params: options.query,
+      uri: this.apiUrl(`update_expiration_date_multiple`),
+      params: _.merge({}, {
+        items: ids
+      }, options.query),
       headers: _.merge({}, {
         'content-type': 'application/json',
         'Authorization': this.api.configService.token

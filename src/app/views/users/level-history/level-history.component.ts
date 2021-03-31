@@ -37,6 +37,8 @@ export class LevelHistoryComponent implements OnInit {
   modalRef: BsModalRef;
   searchTimeOut: number = 250;
   type_search: string = null;
+  search_date: any;
+
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -250,6 +252,12 @@ export class LevelHistoryComponent implements OnInit {
         this.keyword = undefined;
       } else {
         this.itemFields = ['$all', { "user": ["$all", { "$filter": { level: this.keyword } }] }];
+      }
+      if (this.search_date) {
+        this.query.filter.created_at_unix_timestamp = {
+          '$gte': moment(this.search_date[0]).set('hour', 0).set('minute', 0).valueOf(),
+          '$lte': moment(this.search_date[1]).set('hour', 23).set('minute', 59).valueOf()
+        };
       }
       await this.getItems();
       this.submitting = false;

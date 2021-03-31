@@ -34,10 +34,17 @@ export class AddShopComponent implements OnInit {
           axios.post('https://server.kormassage.kr:9877/api/v1/image/upload/600', data, {
             headers: {
             }
-          }).then((res: any) => {
-            editor.image.insert(res.data.results.object.url, null, null, editor.image.get());
+          }).then(async (res: any) => {
+            if (res.data.results.object.url) {
+              await editor.image.insert(res.data.results.object.url, null, null, editor.image.get());
+            } else {
+              this.alertErrorUploadImageFroala();
+              editor.image.insert('https://admin.kormassage.kr/assets/img/logo.png', null, null, editor.image.get());
+            }
           }).catch(err => {
-            console.log(err);
+            this.alertErrorUploadImageFroala();
+            editor.image.insert('https://admin.kormassage.kr/assets/img/logo.png', null, null, editor.image.get());
+
           });
         }
         return false;
@@ -94,6 +101,7 @@ export class AddShopComponent implements OnInit {
   badge_color: string = "#f44336";
   state: string;
   settings = {};
+  old_shop: any
   public form_tag: FormGroup;
 
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
@@ -235,16 +243,16 @@ export class AddShopComponent implements OnInit {
     this.shop_id = shop.id;
     this.id = shop.id;
     this.setData()
-    
 
 
-      // this.tags_select = [
-      //   {item_text: "Parking lot", item_id: "1558a660-bf58-11ea-a3ea-5d37b467b530"},
-      //   {item_text: "Wifi", item_id: "184abd40-bf58-11ea-a3ea-5d37b467b530"},
-      //   {item_text: "Credit card accepted", item_id: "096d0b70-bf58-11ea-a3ea-5d37b467b530"}
-      // ];
-      console.log("@@@@@tags_select ", this.tags_select)
-      this.setForm();
+
+    // this.tags_select = [
+    //   {item_text: "Parking lot", item_id: "1558a660-bf58-11ea-a3ea-5d37b467b530"},
+    //   {item_text: "Wifi", item_id: "184abd40-bf58-11ea-a3ea-5d37b467b530"},
+    //   {item_text: "Credit card accepted", item_id: "096d0b70-bf58-11ea-a3ea-5d37b467b530"}
+    // ];
+    console.log("@@@@@tags_select ", this.tags_select)
+    this.setForm();
     document.getElementById("myDropdownShop").classList.remove("show");
   }
   showDropdownShop() {
@@ -532,6 +540,13 @@ export class AddShopComponent implements OnInit {
       timer: 2000,
     });
   }
+  alertErrorUploadImageFroala(message) {
+    return swal({
+      title: 'Upload failed',
+      type: 'warning',
+      timer: 2000,
+    });
+  }
   alertItemNotFound() {
     swal({
       title: 'No information found',
@@ -599,6 +614,7 @@ export class AddShopComponent implements OnInit {
     this.min_price = '1000';
     this.kakaolink_url = null;
     this.state = null;
+    this.old_shop = null;
     return {
       category_id: this.category_id,
       tag_ids: this.tag_ids,
@@ -618,16 +634,20 @@ export class AddShopComponent implements OnInit {
       thumbnails: this.thumbnails,
       short_description: this.short_description,
       min_price: this.min_price,
-      kakaolink_url: this.kakaolink_url
+      kakaolink_url: this.kakaolink_url,
+      old_shop: this.old_shop
     };
   }
 
   async setData() {
     try {
-      const data = await this.apiService.shop.getItem(this.id, {
+      let data = await this.apiService.shop.getItem(this.id, {
         query: { fields: ['$all', { "category": ["$all"] }] }
       });
       this.state = data.state
+
+      this.old_shop =  data.old_shop
+
       this.user_id = data.user_id
       this.thema_id = data.category.thema_id
       this.updateCateList();
@@ -658,7 +678,7 @@ export class AddShopComponent implements OnInit {
 
         }
       }
-      console.log("@#@#" ,this.tags_select)
+      console.log("@#@#", this.tags_select)
       this.title = data.title;
       this.images = data.images;
       if (!this.images) {

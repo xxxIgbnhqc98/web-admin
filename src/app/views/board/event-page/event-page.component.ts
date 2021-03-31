@@ -20,6 +20,10 @@ export class EventPageComponent implements OnInit {
   id_b: string;
   content_c: string = null;
   id_c: string;
+  content_repeat: string = null;
+  id_repeat: string;
+  content_view: string = null;
+  id_view: string;
   public editorOptions: Object = {
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'getPDF', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
     events: {
@@ -52,9 +56,9 @@ export class EventPageComponent implements OnInit {
     private configService: ConfigService,
   ) { }
 
-  async ngOnInit() {
-    this.titleService.setTitle('Level page');
-    await this.getContent();
+  ngOnInit() {
+    this.titleService.setTitle('Event page');
+    this.getContent();
   }
 
   async getContent() {
@@ -63,9 +67,9 @@ export class EventPageComponent implements OnInit {
         query: {
           fields: ['$all'],
           filter: {
-            type: { $in: ['EVENT_PROFILE_TYPE_A', 'EVENT_PROFILE_TYPE_B', 'EVENT_PROFILE_TYPE_C'] }
+            type: { $in: ['EVENT_PROFILE_TYPE_A', 'EVENT_PROFILE_TYPE_B', 'EVENT_PROFILE_TYPE_C', 'repeat-application', 'view-winners'] }
           },
-          order:[['type','asc']]
+          order: [['type', 'asc']]
         }
       });
       this.id_a = data[0].id;
@@ -74,6 +78,10 @@ export class EventPageComponent implements OnInit {
       this.content_b = data[1].content;
       this.id_c = data[2].id;
       this.content_c = data[2].content;
+      this.id_repeat = data[3].id;
+      this.content_repeat = data[3].content;
+      this.id_view = data[4].id;
+      this.content_view = data[4].content;
     } catch (error) {
       this.alertItemNotFound();
     }
@@ -108,6 +116,12 @@ export class EventPageComponent implements OnInit {
       } else if (type === 'C') {
         id = this.id_c
         content = this.content_c
+      } else if (type === 'REPEAT') {
+        id = this.id_repeat
+        content = this.content_repeat
+      } else if (type === 'VIEW') {
+        id = this.id_view
+        content = this.content_view
       }
       if (id && console) {
         await this.apiService.content.update(id, { id, content });

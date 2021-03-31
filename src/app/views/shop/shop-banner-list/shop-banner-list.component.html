@@ -68,8 +68,8 @@
         </data-table-column>
         <data-table-column [header]="'Start date End Date' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{ item.start_date ? getDateFromUnixTimestamp(item.start_date):"No info" }}<br></span>
-            <span>{{ item.expired_date ? getDateFromUnixTimestamp(item.expired_date):"No info" }}</span>
+            <span>{{ (item.start_date > 0) ? getDateFromUnixTimestamp(item.start_date):"No info" }}<br></span>
+            <span>{{ (item.expired_date > 0) ? getDateFromUnixTimestamp(item.expired_date):"No info" }}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Remaining date' | translate">

@@ -144,7 +144,7 @@
             <button (click)="openModalDeny(templateDeny,item)" class="btn btn-danger mr-1">
               <i>{{'Reject' | translate}}</i>
             </button>
-            <button *ngIf="!item.old_shop" (click)="editItem(item)" class="btn btn-primary">
+            <button (click)="editItem(item)" class="btn btn-primary">
               <i class="fa fa-edit"></i>
             </button>
           </ng-template>

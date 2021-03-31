@@ -13,15 +13,24 @@
         <div class="col-12 search form-group">
           <div class="row">
             <div class="col-3">
+              <div class="form-group">
+                  <input type="text" class="form-control input-control" [placeholder]="'From - to' | translate" (ngModelChange)="search()"
+                    bsDaterangepicker placement="bottom" name="search_date" [(ngModel)]="search_date" [bsConfig]="{
+          rangeInputFormat: 'YYYY-MM-DD',
+          dateInputFormat: 'YYYY-MM-DD'
+        }" placement="right" autocomplete="off" onkeydown="return false" />
+                </div>
+            </div>
+            <div class="col-3">
               <select class="form-control" name="type_search" [(ngModel)]="type_search" (ngModelChange)="searchType()">
-                <option [ngValue]=null>{{'Choose type' | translate}}</option>
+                <option [ngValue]=null>{{'Choose level' | translate}}</option>
                 <option value="ASC">{{'Level ascending order' | translate}}</option>
                 <option value="DESC">{{'Level descending order' | translate}}</option>
                 <option value="INPUT">{{'Centain level master input' | translate}}</option>
               </select>
             </div>
             <div class="col-2" *ngIf="type_search ==='INPUT'">
-              <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
+              <input type="number" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
             </div>
             <div class="col-3" *ngIf="type_search ==='INPUT'">

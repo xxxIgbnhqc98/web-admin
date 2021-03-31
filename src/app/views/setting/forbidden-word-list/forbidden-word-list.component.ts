@@ -57,7 +57,7 @@ export class ForbiddenWordListComponent implements OnInit {
       query: {
         fields: ['$all'],
         filter: {
-          value: "FORBIDDEN_WORDS"
+          field: "FORBIDDEN_WORDS"
         }
       }
     });

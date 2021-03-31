@@ -198,7 +198,7 @@ export class CommentListComponent implements OnInit {
         if (type === 'RECRUIT') {
           this.query.filter.type = type
         } else if (type === 'SHOP') {
-          this.query.filter.type = null
+          this.query.filter.type = 'SHOP'
         } else {
           this.query.filter.type = 'RECRUIT'
           this.query.filter.board_type = "SHOP_SALES_BOARD"

@@ -30,9 +30,16 @@ export class ToolBoxComponent implements OnInit {
             headers: {
             }
           }).then((res: any) => {
-            editor.image.insert(res.data.results.object.url, null, null, editor.image.get());
+            if (res.data.results.object.url) {
+                editor.image.insert(res.data.results.object.url, null, null, editor.image.get());
+            } else {
+              this.alertErrorUploadImageFroala();
+              editor.image.insert('https://admin.kormassage.kr/assets/img/logo.png', null, null, editor.image.get());
+            }
           }).catch(err => {
-            console.log(err);
+            this.alertErrorUploadImageFroala();
+            editor.image.insert('https://admin.kormassage.kr/assets/img/logo.png', null, null, editor.image.get());
+
           });
         }
         return false;
@@ -41,7 +48,9 @@ export class ToolBoxComponent implements OnInit {
     },
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'getPDF', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
     placeholderText: ' ',
-    key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp=='
+    // key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' //key for kormassage.kr
+    key: 'jC1D2B2D4B1C2uF2C1G1I1A10C1A6A1A5G5hwcdywE-11zpF3A2E2ndv==' //key for busandal31.net
+
   };
   constructor(
 

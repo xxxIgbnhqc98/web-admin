@@ -76,8 +76,10 @@ export class SettingListComponent implements OnInit {
 
   }
   addCircle() {
-
-    const newNum = parseInt(_.orderBy(this.value_array_obj, [item => parseInt(item.id_num)], ['desc'])[0].id_num) + 1;
+    let newNum = 0
+    if (this.value_array_obj.length > 0) {
+      newNum = parseInt(_.orderBy(this.value_array_obj, [item => parseInt(item.id_num)], ['desc'])[0].id_num) + 1;
+    }
     const newC: any = {
       id_num: newNum.toString(),
       id: '',
