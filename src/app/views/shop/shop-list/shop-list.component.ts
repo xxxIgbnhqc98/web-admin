@@ -100,7 +100,9 @@ export class ShopListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-
+    this.route.params.subscribe(params => {
+      this.category_id = params.category_id;
+    });
     await this.getShopList();
     this.themas = await this.apiService.thema.getList({
       query: {
@@ -111,12 +113,7 @@ export class ShopListComponent implements OnInit {
       }
     });
     this.titleService.setTitle('Shop list')
-    this.route.params.subscribe(params => {
-      this.category_id = params.category_id;
-      if (this.category_id) {
-        this.query.filter.category_id = this.category_id
-      }
-    });
+
   }
   filterThema() {
     this.itemsTable.reloadItems();
@@ -667,7 +664,7 @@ export class ShopListComponent implements OnInit {
     ] : null;
     if (!sortBy && !sortAsc) {
       if (!this.option_order || this.option_order === "null") {
-        this.query.order = [['updated_at', 'DESC']]
+        this.query.order = [['geolocation_api_type', 'DESC']]
       } else {
         this.query.order = [['expired_date', this.option_order], ['updated_at', 'DESC']]
       }
@@ -747,6 +744,10 @@ export class ShopListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      if (this.category_id) {
+        this.query.filter.category_id = this.category_id
+      }
+      console.log("this.query ", this.query.filter)
       this.items.next(await this.apiService.shop.getList({ query }));
       this.itemCount = this.apiService.shop.pagination.totalItems;
       this.ref.detectChanges();
@@ -863,8 +864,12 @@ export class ShopListComponent implements OnInit {
   }
   async search() {
     this.submitting = true;
-    this.query.filter = {
-      // state: { $in: ["APPROVED", "PENDING"] }
+    if (this.category_id) {
+      this.query.filter.category_id = this.category_id
+    } else {
+      this.query.filter = {
+        // state: { $in: ["APPROVED", "PENDING"] }
+      }
     }
     this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
 

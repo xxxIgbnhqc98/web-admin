@@ -297,6 +297,30 @@ export class AddShopComponent implements OnInit {
     const input: any = document.getElementById("myShopInput");
     this.filterShopFunction(input.value);
   }
+  rgb2hex(orig) {
+    var a, isPercent,
+      rgb = orig.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
+      alpha = (rgb && rgb[4] || "").trim(),
+      hex = rgb ? "#" +
+        (rgb[1] | 1 << 8).toString(16).slice(1) +
+        (rgb[2] | 1 << 8).toString(16).slice(1) +
+        (rgb[3] | 1 << 8).toString(16).slice(1) : orig;
+    if (alpha !== "") {
+      isPercent = alpha.indexOf("%") > -1;
+      a = parseFloat(alpha);
+      if (!isPercent && a >= 0 && a <= 1) {
+        a = Math.round(255 * a);
+      } else if (isPercent && a >= 0 && a <= 100) {
+        a = Math.round(255 * a / 100)
+      } else {
+        a = "";
+      }
+    }
+    if (a) {
+      hex += (a | 1 << 8).toString(16).slice(1);
+    }
+    return hex;
+  }
   async filterShopFunction(keyword: string) {
     if (!keyword || keyword.length === 0) {
       this.listShopFiltered = this.listShop;
@@ -646,7 +670,7 @@ export class AddShopComponent implements OnInit {
       });
       this.state = data.state
 
-      this.old_shop =  data.old_shop
+      this.old_shop = data.old_shop
 
       this.user_id = data.user_id
       this.thema_id = data.category.thema_id
@@ -654,7 +678,7 @@ export class AddShopComponent implements OnInit {
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
-      this.geolocation_type = data.geolocation_type;
+      this.geolocation_type = data.geolocation_api_type;
       this.badge_text = data.badge_text;
       this.badge_color = data.badge_color;
       this.thumbnails = data.thumbnails;
@@ -707,18 +731,27 @@ export class AddShopComponent implements OnInit {
 
   async updateItem(form: NgForm) {
     try {
+
       this.opening_hours = this.start_time + '~' + this.end_time
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
+      let { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      if(badge_color){
+        if (badge_color.match('rgba')) {
+          badge_color = this.rgb2hex(badge_color)
+        }
+      }
+      console.log("@#@#@#@ ",badge_color)
+      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_api_type: geolocation_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
 
       this.submitting = false;
     } catch (error) {
+      console.log("@#@#@#@ ",error)
+
       if (error.error.message === "Please remove relevant Event before transferring the ownership") {
         this.alertErrorFromServerOwner(error.error.message);
       } else {
@@ -765,8 +798,13 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      const { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
-      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, geolocation_type, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
+      let { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      if(badge_color){
+        if (badge_color.match('rgba')) {
+          badge_color = this.rgb2hex(badge_color)
+        }
+      }
+      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, geolocation_api_type: geolocation_type, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
       form.reset();
       this.alertSuccess();
       if (this.params_thema_id) {

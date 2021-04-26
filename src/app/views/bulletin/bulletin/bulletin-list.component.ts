@@ -44,6 +44,7 @@ export class BulletinComponent implements OnInit {
   category_id: string;
   categories: any;
   count_list_comments: number = 0;
+  title_full: string;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -72,7 +73,14 @@ export class BulletinComponent implements OnInit {
       query
     });
   }
-  getComment( post_id) {
+  openModalTitleFull(template: TemplateRef<any>, text) {
+    this.title_full = text
+    this.modalRef = this.modalService.show(template);
+  }
+  sliceText(text) {
+    return text.slice(0, 20)
+  }
+  getComment(post_id) {
     this.router.navigate(['/bulletin/comment-list/' + post_id], {
       relativeTo: this.route
     });

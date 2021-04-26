@@ -168,6 +168,34 @@ export class ContactListComponent implements OnInit {
       this.alertErrorFromServer(error.error.message);
     }
   }
+  async deleteAll() {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      try {
+        await this.confirmDelete();
+      } catch (err) {
+        return;
+      }
+      await this.apiService.contact.deleteAll(ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertDeleteSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
   async search() {
     this.submitting = true;
     this.query.filter = {};

@@ -174,8 +174,8 @@ export class AddUserComponent implements OnInit {
         //   return;
       }
       this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
-      const { account_type,event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
-      await this.apiService.user.update(this.id, { account_type,event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+      const { account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
+      await this.apiService.user.update(this.id, { account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -190,9 +190,9 @@ export class AddUserComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       this.password = new Md5().appendStr(this.password_show).end();
-      const { fullname, avatar, phone, account_type,event_type, email, password, username, nickname } = this;
+      const { fullname, avatar, phone, account_type, event_type, email, password, username, nickname, post_limit } = this;
       console.log(fullname, avatar, phone, account_type, email, password, username, nickname)
-      await this.apiService.user.add({ avatar, phone, account_type,event_type, password, username, nickname, email: username });
+      await this.apiService.user.add({ avatar, phone, account_type, event_type: "B", post_limit, password, username, nickname, email: username });
       form.reset();
       this.alertSuccess();
       this.backToList();

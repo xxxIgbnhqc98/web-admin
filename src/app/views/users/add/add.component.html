@@ -122,14 +122,14 @@
               <label for="memo">{{'Memo' | translate}}</label>
               <input class="form-control" id="memo" type="text" name="memo" [(ngModel)]="memo">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="memo">{{'Pick winners' | translate}}</label>
               <select class="form-control" name="event_type" id="event_type" [(ngModel)]="event_type" required
                 #event_typeControl="ngModel" [ngClass]="{'is-invalid' : event_typeControl.errors?.required}">
                 <option value="B">{{'B' | translate}}</option>
                 <option value="C">{{'C' | translate}}</option>
               </select>
-            </div>
+            </div> -->
             <div class="input-group" *ngIf="account_type === 'BIZ_USER'">
 
               <label for="role">{{'Show Badge' | translate}}</label>

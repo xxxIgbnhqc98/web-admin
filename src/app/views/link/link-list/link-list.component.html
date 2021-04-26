@@ -60,6 +60,11 @@
               onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
           </ng-template>
         </data-table-column>
+        <data-table-column [header]="'Order' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.index ? item.index : 'No Info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
         <data-table-column [header]="'Geolocation' | translate">
           <ng-template #dataTableCell let-item="item">
             <span>{{item.geolocation_api_type ? item.geolocation_api_type : 'No Info' | translate}}</span>

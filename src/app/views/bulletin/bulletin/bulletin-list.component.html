@@ -78,7 +78,10 @@
         </data-table-column>
         <data-table-column [header]="'Content' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.content ? item.content : 'No info' | translate}}</span>
+            <!-- <span>{{item.content ? item.content : 'No info' | translate}}</span> -->
+            <span>{{item.content ? sliceText(item.content):'No info' |
+              translate}}<br><i *ngIf="item.content.length > 20"
+                (click)="openModalTitleFull(templateTitle,item.content)">...{{'see more' | translate}}</i></span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'List Image' | translate">
@@ -193,4 +196,18 @@
       </div>
     </div>
   </div>
+</ng-template>
+<ng-template #templateTitle>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Title'| translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <span>{{title_full}}</span>
+
+  </div>
+
 </ng-template>

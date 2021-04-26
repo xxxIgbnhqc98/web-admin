@@ -11,6 +11,8 @@ import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import { async } from '@angular/core/testing';
 import * as moment from "moment";
+import * as _ from 'lodash';
+declare var $: any;
 
 declare var swal: any;
 @Component({
@@ -21,7 +23,7 @@ declare var swal: any;
 export class ReportListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { 'post': ['$all', { 'user': ['$all'] }] }, { 'review': ['$all', { 'user': ['$all'] }] }, { 'user': ['$all'] }];
+  itemFields: any = ['$all', { 'post': ['$all', '$paranoid', { 'user': ['$all'] }] }, { 'review': ['$all', '$paranoid', { 'user': ['$all'] }] }, { 'user': ['$all'] }];
   query: any = {
     filter: {
       report: { $gt: 0 }
@@ -43,6 +45,22 @@ export class ReportListComponent implements OnInit {
   zoom_image: string = null
   // post_id: string = null;
   record_today: number;
+  title_full: string;
+
+  listCommentOfConversation: any = [];
+
+  post_id: string;
+  post: string;
+
+  page_list_comments: number = 1;
+  load_more: boolean = false;
+  loading_api: boolean = false;
+  limit_list_comments: number = 10;
+  themas: any;
+  thema_id: string;
+  category_id: string;
+  categories: any;
+  count_list_comments: number = 0;
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
@@ -73,6 +91,74 @@ export class ReportListComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
     this.zoom_image = item.replace('300', '1024')
   }
+  openModalTitleFull(template: TemplateRef<any>, text) {
+    this.title_full = text
+    this.modalRef = this.modalService.show(template);
+  }
+  async openModalInfoPost(template: TemplateRef<any>, item) {
+    try {
+      this.loading_api = true;
+      this.page_list_comments = 1;
+      this.post_id = item.id
+      this.post = item
+      this.modalRef = this.modalService.show(template);
+      this.listCommentOfConversation = await this.apiService.comment.getList({
+        query: {
+          fields: ['$all', '$paranoid', { 'user': ['$all', '$paranoid'] }, { 'comment_childs': ['$all', { 'user': ['$all', '$paranoid'] }] }],
+          filter: { post_id: this.post_id, parent_id: null },
+          order: [['created_at_unix_timestamp', 'DESC']],
+          limit: this.limit_list_comments,
+          page: this.page_list_comments
+        }
+      });
+      this.listCommentOfConversation.forEach(element => {
+        element.comment_childs = _.orderBy(element.comment_childs, ['created_at_unix_timestamp'], ['asc']);
+      });
+      // this.listCommentOfConversation.reverse();
+      this.count_list_comments = this.apiService.comment.pagination.totalItems;
+      this.ref.detectChanges();
+      await this.autoScroll();
+      this.loading_api = false;
+    } catch (error) {
+      this.loading_api = false;
+    }
+  }
+  async autoScroll() {
+    $(document).ready(function () {
+      var itemList = document.getElementById("msg_history");
+      itemList.scrollTop = itemList.scrollHeight;
+    })
+  }
+  async onScrollDown() {
+    this.load_more = true;
+    await this.loadMoreListComment();
+    this.load_more = false;
+  }
+  async loadMoreListComment() {
+    try {
+      if (this.listCommentOfConversation.length < this.count_list_comments) {
+        this.page_list_comments = this.page_list_comments + 1;
+        console.log("#@$%% ", this.page_list_comments)
+        const res = await this.apiService.comment.getList({
+          query: {
+            fields: ['$all', { 'user': ['$all', '$paranoid'] }, { 'comment_childs': ['$all', { 'user': ['$all', '$paranoid'] }] }],
+            filter: { post_id: this.post_id, parent_id: null },
+            order: [['created_at_unix_timestamp', 'DESC']],
+            limit: this.limit_list_comments,
+            page: this.page_list_comments
+          }
+        });
+        this.listCommentOfConversation.forEach(element => {
+          element.comment_childs = _.orderBy(element.comment_childs, ['created_at_unix_timestamp'], ['asc']);
+        });
+        const old_res: any = this.listCommentOfConversation
+        this.listCommentOfConversation = [...old_res, ...res];
+        // this.listCommentOfConversation.reverse();
+      }
+    } catch (error) {
+
+    }
+  }
   alertFormNotValid() {
     return swal({
       title: (this.configService.lang === 'en') ? 'Please enter full information' : ((this.configService.lang === 'vn') ? 'Hãy nhập đầy đủ thông tin' : '모든 내역을 빠짐없이 입력하세요'),
@@ -92,6 +178,9 @@ export class ReportListComponent implements OnInit {
       confirmButtonText: (this.configService.lang === 'en') ? 'Confirm' : ((this.configService.lang === 'vn') ? 'Xác nhận' : '확인'),
       cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
     });
+  }
+  sliceText(text) {
+    return text.slice(0, 20)
   }
   async deleteAll() {
     if (this.itemsTable.selectedRows.length === 0) {

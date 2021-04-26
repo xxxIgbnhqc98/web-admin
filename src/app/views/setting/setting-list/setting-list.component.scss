@@ -187,3 +187,4 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+/deep/ .color-picker .alpha  {display:none !important;}

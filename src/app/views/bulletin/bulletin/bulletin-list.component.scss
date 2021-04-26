@@ -129,6 +129,11 @@
   width: 100%;
   height: 100%;
 }
+.modal-body span{
+  text-align: center;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
 .modal-header{
   .setting{
     .btn{
