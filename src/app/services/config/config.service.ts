@@ -13,7 +13,8 @@ export class ConfigService {
       avatar: '',
       fullname: '',
       type: '',
-      lang: ''
+      lang: '',
+      themaFilter: '',
     };
   }
 
@@ -26,7 +27,8 @@ export class ConfigService {
     id: string,
     isLogon: string,
     token: string,
-    lang: string
+    lang: string,
+    themaFilter: string
   };
 
   apiUrl(path: string = '') {
@@ -99,5 +101,14 @@ export class ConfigService {
 
   set lang(value: string) {
     localStorage.setItem('lang', value);
+  }
+
+
+  get themaFilter() {
+    return localStorage.getItem('themaFilter');
+  }
+
+  set themaFilter(value: string) {
+    localStorage.setItem('themaFilter', value);
   }
 }

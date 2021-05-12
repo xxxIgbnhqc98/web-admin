@@ -3,6 +3,9 @@
     <div class="card-header">
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
+        <button class="btn btn-info" [disabled]="!itemsTable.selectedRows.length" (click)="openModalAddTimeAll(templateAddTimeAll)">
+          <i class="fa fa-plus"></i> {{'Add AD date' | translate}}
+        </button>
         <button class="btn btn-danger" [disabled]="!itemsTable.selectedRows.length" (click)="deleteAll()">
           <i class="fa fa-trash"></i>{{'Delete' | translate}}
         </button>
@@ -523,4 +526,34 @@
       </div>
     </div>
   </div>
+</ng-template>
+<ng-template #templateAddTimeAll>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Add advertising date' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Extra days' | translate }}</span>
+              </div>
+              <input type="text" id="days" class="form-control" name="days" [(ngModel)]="days" #nameControl="ngModel">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitAddTimeAll(formContent)">
+          <i>{{ 'Add' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
 </ng-template>

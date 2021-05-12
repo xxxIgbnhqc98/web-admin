@@ -41,6 +41,7 @@ export class ShopExpiredListComponent implements OnInit {
   searchTimeOut: number = 250;
   category_id: string;
   admin_message: string;
+  days: number = 30;
   zoom_image: string;
   link_map: string;
   images_event: any = []
@@ -115,7 +116,34 @@ export class ShopExpiredListComponent implements OnInit {
   onChangeDate(event) {
     console.log('event12eihiuhg', event)
   }
+  openModalAddTimeAll(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+  async submitAddTimeAll(form: NgForm) {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      await this.apiService.shop.addDateAll({ days: this.days }, ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertSuccess();
+      this.modalRef.hide()
 
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
   openModalZoomImage(template: TemplateRef<any>, item) {
     this.modalRef = this.modalService.show(template);
     this.zoom_image = item.replace('300', '1024')

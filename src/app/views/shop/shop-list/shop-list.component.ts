@@ -27,7 +27,7 @@ export class ShopListComponent implements OnInit {
   itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
     filter: {
-      // state: { $in: ["APPROVED", "PENDING"] }
+      state: { $notIn: ["REJECTED"] }
     }
   };
   option_search: string = 'id';
@@ -81,7 +81,7 @@ export class ShopListComponent implements OnInit {
   isShowingCategoryDropDown: boolean = false
   option_order: string = null;
   themas: any;
-  thema_id: string = "null";
+  thema_id: string = (this.configService.themaFilter === null || this.configService.themaFilter === '') ? "null" : this.configService.themaFilter
   // 
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
@@ -112,10 +112,16 @@ export class ShopListComponent implements OnInit {
         }
       }
     });
+    this.thema_id = (this.configService.themaFilter === null || this.configService.themaFilter === '') ? "null" : this.configService.themaFilter;
+    console.log("dahahahahahah tuan, ", this.thema_id)
+    if(this.thema_id === 'null'){
+      this.itemsTable.reloadItems();
+    }
     this.titleService.setTitle('Shop list')
 
   }
   filterThema() {
+    this.configService.themaFilter = this.thema_id
     this.itemsTable.reloadItems();
   }
   async changeOptionOrder() {
@@ -868,7 +874,7 @@ export class ShopListComponent implements OnInit {
       this.query.filter.category_id = this.category_id
     } else {
       this.query.filter = {
-        // state: { $in: ["APPROVED", "PENDING"] }
+        state: { $notIn: ["REJECTED"] }
       }
     }
     this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];

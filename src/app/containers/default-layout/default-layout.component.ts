@@ -63,6 +63,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
   async ngOnInit() {
     this.fullname = this.configService.fullname;
+
     try {
       const data = await this.apiService.employee.getItem(this.configService.id, {
         query: { fields: ['$all'] }
@@ -82,6 +83,8 @@ export class DefaultLayoutComponent implements OnInit {
       if (data) {
         await this.authService.employeeLogin({ username: this.configService.username, password: this.configService.password });
       }
+    this.configService.themaFilter = null
+
       // try {
       // } catch (error) {
       //   this.logout()

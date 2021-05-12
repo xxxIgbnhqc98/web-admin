@@ -19,7 +19,7 @@ declare var swal: any;
 export class LevelHistoryComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "user": ["$all"] }];
+  itemFields: any = ['$all', { "user": ["$all", "$paranoid"] }];
   query: any = {
     filter: {
       category: "USER",

@@ -629,10 +629,11 @@
   "Level descending order": "레벨 내림차순",
   "Centain level master input": " 레벨선택",
   "Event transaction list": "이벤트 추첨내역 리스트",
-  "Choose level":"레벨을 선택하세요",
+  "Choose level": "레벨을 선택하세요",
   "Repeat application": "중복접수 안내문",
   "View winners": "당첨자 목록 안내문",
-  "see more":"더보기",
+  "see more": "더보기",
+  "Level history": "이벤트신청자 내역",
   "nav": {
     "nav_items": [
       {
@@ -646,7 +647,7 @@
             "url": "/users/user-list"
           },
           {
-            "name": "레벨 내역",
+            "name": "이벤트신청자 내역",
             "icon": "fa fa-list-ol",
             "url": "/users/level-history"
           }
