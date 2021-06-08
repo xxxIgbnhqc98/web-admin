@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api/api.service';
 declare let swal: any;
 import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-traffic',
@@ -27,7 +28,8 @@ export class TrafficComponent implements OnInit {
     private router: Router,
     public apiService: ApiService,
     private route: ActivatedRoute,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -53,6 +55,8 @@ export class TrafficComponent implements OnInit {
 
         // }
       };
+      this.spinner.show();
+
       const res: any = await this.apiService.statistic.getStatisticTraffic(body);
       console.log('bambi log coi thu cai res ne', res);
       const statistic = [...res];
@@ -92,6 +96,7 @@ export class TrafficComponent implements OnInit {
       //   },
       // ]
       this.listStatisticTrafficOfMonth = this.listStatisticTraffic[this.month].data
+      this.spinner.hide();
 
     } catch (err) {
       console.log('err: ', err);

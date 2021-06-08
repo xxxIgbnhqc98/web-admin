@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import * as moment from "moment";
 import * as _ from 'lodash';
 import { title } from 'process';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var $: any;
 
@@ -27,7 +28,7 @@ export class ShopListComponent implements OnInit {
   itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
     filter: {
-      state: { $notIn: ["REJECTED"] }
+      state: { $notIn: ["REJECTED", "EXPIRED"] }
     }
   };
   option_search: string = 'id';
@@ -74,7 +75,8 @@ export class ShopListComponent implements OnInit {
   limit_list_reviews: number = 10;
   count_list_reviews: number = 0;
   load_more: boolean = false;
-  default_limit: number = 50;
+  default_limit: number = (this.configService.limitActiveShop === null || this.configService.limitActiveShop === '' || this.configService.limitActiveShop === 'null') ? 50 : parseInt(this.configService.limitActiveShop);
+  default_page: number = (this.configService.pageActiveShop === null || this.configService.pageActiveShop === '' || this.configService.pageActiveShop === 'null') ? 1 : parseInt(this.configService.pageActiveShop);
   listShopFiltered: any = []
   listShop: any = []
   lastSubmitSingerId: string;
@@ -83,6 +85,7 @@ export class ShopListComponent implements OnInit {
   themas: any;
   thema_id: string = (this.configService.themaFilter === null || this.configService.themaFilter === '') ? "null" : this.configService.themaFilter
   // 
+
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
 
@@ -96,7 +99,8 @@ export class ShopListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -112,9 +116,11 @@ export class ShopListComponent implements OnInit {
         }
       }
     });
+    this.default_limit = (this.configService.limitActiveShop === null || this.configService.limitActiveShop === '' || this.configService.limitActiveShop === 'null') ? 50 : parseInt(this.configService.limitActiveShop);
+    this.default_page = (this.configService.pageActiveShop === null || this.configService.pageActiveShop === '' || this.configService.pageActiveShop === 'null') ? 1 : parseInt(this.configService.pageActiveShop);
+
     this.thema_id = (this.configService.themaFilter === null || this.configService.themaFilter === '') ? "null" : this.configService.themaFilter;
-    console.log("dahahahahahah tuan, ", this.thema_id)
-    if(this.thema_id === 'null'){
+    if (this.thema_id === 'null') {
       this.itemsTable.reloadItems();
     }
     this.titleService.setTitle('Shop list')
@@ -647,8 +653,12 @@ export class ShopListComponent implements OnInit {
     }
   }
   async reloadItems(params) {
-    const { limit, offset, sortBy, sortAsc } = params;
+    const { limit, page, offset, sortBy, sortAsc } = params;
     this.query.limit = limit;
+
+    console.log("para ne ", params)
+    this.query.page = page;
+
     if (this.thema_id !== "null") {
       this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "$filter": { "thema_id": this.thema_id } }, { "thema": ["$all"] }] }, { "events": ["$all"] }];
     } else {
@@ -753,12 +763,19 @@ export class ShopListComponent implements OnInit {
       if (this.category_id) {
         this.query.filter.category_id = this.category_id
       }
-      console.log("this.query ", this.query.filter)
+      console.log("this.query ", this.query)
+      console.log("this.query.page ", this.query.page)
+      console.log("this.query.limit ", this.query.limit)
+      this.configService.limitActiveShop = this.query.limit.toString();
+      this.configService.pageActiveShop = this.query.page ? this.query.page.toString() : 1;
+      this.spinner.show();
       this.items.next(await this.apiService.shop.getList({ query }));
+      this.spinner.hide();
       this.itemCount = this.apiService.shop.pagination.totalItems;
       this.ref.detectChanges();
       return this.items;
     } catch (error) {
+      console.log("eeee ", error)
       this.alertErrorFromServer(error.error.message);
     }
   }
@@ -790,7 +807,14 @@ export class ShopListComponent implements OnInit {
   }
   async alertDeleteSuccess() {
     return await swal({
-      title: (this.configService.lang === 'en') ? 'Delete successful' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
+      title: (this.configService.lang === 'en') ? 'Delete successfully' : ((this.configService.lang === 'vn') ? 'Xóa thành cồng' : '정상적으로 삭제되었습니다.'),
+      type: 'success',
+      timer: 1000,
+    });
+  }
+  async alertRemoveAddDateSuccess() {
+    return await swal({
+      title: (this.configService.lang === 'en') ? 'remove ad expiration date successfully' : ((this.configService.lang === 'vn') ? 'Gỡ bỏ ngày hết hạn quảng cáo thành cồng' : '광고일이 성공적으로 삭제되었습니다.'),
       type: 'success',
       timer: 1000,
     });
@@ -799,6 +823,18 @@ export class ShopListComponent implements OnInit {
     return await swal({
       title: (this.configService.lang === 'en') ? 'DELETE' : ((this.configService.lang === 'vn') ? 'Xóa' : '삭제'),
       text: (this.configService.lang === 'en') ? 'Are you sure you want to delete?' : ((this.configService.lang === 'vn') ? 'Bạn có chắc chắn muốn xóa không?' : '삭제를 진행할까요?'),
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: (this.configService.lang === 'en') ? 'Confirm' : ((this.configService.lang === 'vn') ? 'Xác nhận' : '확인'),
+      cancelButtonText: (this.configService.lang === 'en') ? 'Cancel' : ((this.configService.lang === 'vn') ? 'Kết thúc' : '취소')
+    });
+  }
+  async confirmRemoveAddDate() {
+    return await swal({
+      title: (this.configService.lang === 'en') ? 'Remove Add date' : ((this.configService.lang === 'vn') ? 'Gở bỏ ngày quảng cáo' : '광고일 삭제'),
+      text: (this.configService.lang === 'en') ? 'Are you sure you want to remove?' : ((this.configService.lang === 'vn') ? 'Bạn có chắc chắn muốn gỡ không?' : '삭제를 진행할까요?'),
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -945,7 +981,34 @@ export class ShopListComponent implements OnInit {
       });
     }
   }
-
+  async removeAddDateAll() {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      try {
+        await this.confirmRemoveAddDate();
+      } catch (err) {
+        return;
+      }
+      await this.apiService.shop.removeReTime(ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertRemoveAddDateSuccess();
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
   async exportAsXLSX() {
     try {
       this.loadingExportExcel = true;
@@ -976,10 +1039,10 @@ export class ShopListComponent implements OnInit {
   }
   mathRemainingTime(unixtimestamp: any) {
     // return new Date(parseInt(unixtimestamp))
-    return (moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000)
+    return (moment(new Date(parseInt(unixtimestamp))).startOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000)
   }
   ceilRemainingTime(unixtimestamp: any) {
-    return Math.ceil((moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000))
+    return Math.ceil((moment(new Date(parseInt(unixtimestamp))).startOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000))
   }
 
   subTimeOpen1(time) {

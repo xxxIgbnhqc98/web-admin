@@ -9,6 +9,8 @@ import { ExcelService } from '../../../services/excel/excel.service';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from "ngx-spinner";
+
 declare var $: any;
 import * as _ from 'lodash';
 declare var swal: any;
@@ -57,7 +59,8 @@ export class BulletinComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -171,11 +174,15 @@ export class BulletinComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      this.spinner.show();
+
       this.items.next(await this.apiService.bulletin.getList({ query }));
       let query1 = Object.assign({
         fields: ["$all", { "user": ["$all"] }]
       }, this.query);
       const countLink: any = await this.apiService.bulletin.count({ query: query1 })
+      this.spinner.hide();
+
       this.itemCount = countLink;
       this.ref.detectChanges();
       return this.items;

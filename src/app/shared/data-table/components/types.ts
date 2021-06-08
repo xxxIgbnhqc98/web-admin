@@ -28,6 +28,7 @@ export var defaultTranslations = <DataTableTranslations>{
 
 export interface DataTableParams {
     offset?: number;
+    page?: number;
     limit?: number;
     sortBy?: string;
     sortAsc?: boolean;

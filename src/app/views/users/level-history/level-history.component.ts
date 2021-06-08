@@ -9,6 +9,7 @@ import { ExcelService } from '../../../services/excel/excel.service';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var swal: any;
 @Component({
@@ -42,6 +43,7 @@ export class LevelHistoryComponent implements OnInit {
   @ViewChild('itemsTable') itemsTable: DataTable;
 
   constructor(
+    private spinner: NgxSpinnerService,
     public ref: ChangeDetectorRef,
     public apiService: ApiService,
     public router: Router,
@@ -185,7 +187,9 @@ export class LevelHistoryComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      this.spinner.show();
       this.items.next(await this.apiService.history.getList({ query }));
+      this.spinner.hide();
       this.itemCount = this.apiService.history.pagination.totalItems;
       this.ref.detectChanges();
       return this.items;

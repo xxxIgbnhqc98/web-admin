@@ -28,7 +28,7 @@ import { CommentListComponent } from './comment-shop-list/comment-shop-list.comp
 import { ShopRejectedListComponent } from './shop-rejected-list/shop-rejected-list.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
-
+import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   imports: [
     GooglePlaceModule,
@@ -50,7 +50,8 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     QuillModule,
     BsDatepickerModule.forRoot(),
     ColorPickerModule,
-    CustomFormsModule
+    CustomFormsModule,
+    NgxSpinnerModule
   ],
   declarations: [ShopListComponent, CommentListComponent, recommendationAreaListComponent, ShopBannerListComponent, TagListComponent, ShopPendingListComponent, AddShopComponent, ShopExpiredListComponent, ShopRejectedListComponent],
   providers: [

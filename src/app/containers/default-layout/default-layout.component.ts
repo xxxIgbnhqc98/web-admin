@@ -84,7 +84,8 @@ export class DefaultLayoutComponent implements OnInit {
         await this.authService.employeeLogin({ username: this.configService.username, password: this.configService.password });
       }
     this.configService.themaFilter = null
-
+    this.configService.pageActiveShop = null
+    this.configService.limitActiveShop = null
       // try {
       // } catch (error) {
       //   this.logout()

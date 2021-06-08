@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import { async } from '@angular/core/testing';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var swal: any;
 @Component({
@@ -51,7 +52,8 @@ export class CommentListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -193,6 +195,8 @@ export class CommentListComponent implements OnInit {
         fields: this.itemFields
       }, this.query);
       console.log("DSadasdas ", type)
+      this.spinner.show();
+
       if (type === 'SHOP' || type === 'RECRUIT' || type === "SALE_SHOP") {
         this.query.filter = {}
         if (type === 'RECRUIT') {
@@ -208,7 +212,9 @@ export class CommentListComponent implements OnInit {
         query = Object.assign({
           fields: this.itemFields
         }, this.query);
+
         this.items.next(await this.apiService.review.getList({ query }));
+
         this.itemCount = this.apiService.review.pagination.totalItems;
       } else {
         this.query.filter = {
@@ -225,6 +231,8 @@ export class CommentListComponent implements OnInit {
       }
 
       this.ref.detectChanges();
+      this.spinner.hide();
+
       return this.items;
     } catch (error) {
       this.alertErrorFromServer(error.error.message);

@@ -66,6 +66,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'shop-list/:limit/:page',
+        component: ShopListComponent,
+        data: {
+          title: 'shop list'
+        }
+      },
+      {
         path: 'shop-rejected-list',
         component: ShopRejectedListComponent,
         data: {

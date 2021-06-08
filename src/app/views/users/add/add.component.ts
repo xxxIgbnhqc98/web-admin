@@ -7,6 +7,8 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config/config.service';
 import { ShareDataService } from '../../../services/share-data/share-data-service';
 import * as moment from 'moment'
+import { NgxSpinnerService } from "ngx-spinner";
+
 declare var $: any;
 declare let swal: any;
 
@@ -46,7 +48,8 @@ export class AddUserComponent implements OnInit {
     private apiService: ApiService,
     private titleService: Title,
     public configService: ConfigService,
-    public shareDataService: ShareDataService) {
+    public shareDataService: ShareDataService,
+    private spinner: NgxSpinnerService) {
   }
   async ngOnInit() {
     this.route.params.subscribe(params => {

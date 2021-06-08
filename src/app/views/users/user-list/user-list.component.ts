@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var swal: any;
 @Component({
@@ -65,7 +66,8 @@ export class UserListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -345,7 +347,9 @@ export class UserListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      this.spinner.show();
       this.items.next(await this.apiService.user.getList({ query }));
+      this.spinner.hide();
       this.itemCount = this.apiService.user.pagination.totalItems;
       this.ref.detectChanges();
       return this.items;

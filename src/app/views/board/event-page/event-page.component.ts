@@ -6,6 +6,8 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 declare var swal: any;
 import axios from 'axios';
+import { environment } from '../../../../environments/environment';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-event-page',
@@ -25,13 +27,14 @@ export class EventPageComponent implements OnInit {
   content_view: string = null;
   id_view: string;
   public editorOptions: Object = {
+    useClasses: false,
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'getPDF', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
     events: {
       'froalaEditor.image.beforeUpload': function (e, editor, images) {
         if (images.length) {
           const data = new FormData();
           data.append('image', images[0]);
-          axios.post('https://server.kormassage.kr:9877/api/v1/image/upload/600', data, {
+          axios.post(`${environment.host}/api/v1/image/upload/600`, data, {
             headers: {
             }
           }).then((res: any) => {
@@ -46,7 +49,7 @@ export class EventPageComponent implements OnInit {
     },
     placeholderText: ' ',
     // key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' //key for kormassage.kr
-    key: 'jC1D2B2D4B1C2uF2C1G1I1A10C1A6A1A5G5hwcdywE-11zpF3A2E2ndv==' //key for busandal31.net
+    key: environment.froalakey //key for busandal31.net
   };
   constructor(
     public ref: ChangeDetectorRef,
@@ -55,11 +58,14 @@ export class EventPageComponent implements OnInit {
     public route: ActivatedRoute,
     public titleService: Title,
     private configService: ConfigService,
+    private spinner: NgxSpinnerService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.titleService.setTitle('Event page');
-    this.getContent();
+    this.spinner.show();
+    await this.getContent();
+    this.spinner.hide();
   }
 
   async getContent() {

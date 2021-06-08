@@ -242,6 +242,8 @@ export class DataTable implements DataTableParams, OnInit {
         if (this.pagination) {
             params.offset = this.offset;
             params.limit = this.limit;
+            params.page = this.page;
+
         }
         return params;
     }

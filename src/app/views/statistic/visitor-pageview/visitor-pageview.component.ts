@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api/api.service';
 declare let swal: any;
 import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-visitor-pageview',
@@ -29,7 +30,8 @@ export class VisitorPageviewomponent implements OnInit {
     private router: Router,
     public apiService: ApiService,
     private route: ActivatedRoute,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -66,10 +68,14 @@ export class VisitorPageviewomponent implements OnInit {
           "to_date": endOfMonth
         }
       };
+      this.spinner.show();
+
       const res: any = await this.apiService.statistic.getStatisticVisitorViewPage(body);
       console.log('bambi log coi thu cai res ne', res);
       const statistic = [...res];
       this.listStatisticDaily = statistic
+      this.spinner.hide();
+
       console.log("#@$#%#$% ", this.listStatisticDaily.length)
     } catch (err) {
       console.log('err: ', err);

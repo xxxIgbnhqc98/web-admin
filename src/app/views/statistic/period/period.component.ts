@@ -6,6 +6,7 @@ import { ApiService } from '../../../services/api/api.service';
 declare let swal: any;
 import * as moment from "moment";
 import { ConfigService } from '../../../services/config/config.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -31,7 +32,7 @@ export class PeriodComponent implements OnInit {
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef,
     private configService: ConfigService,
-
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -63,6 +64,8 @@ export class PeriodComponent implements OnInit {
 
         }
       };
+      this.spinner.show();
+
       const res: any = await this.apiService.statistic.getStatisticPeriod(body);
       console.log('bambi log coi thu cai res ne', res);
       const statistic = [...res];
@@ -92,6 +95,8 @@ export class PeriodComponent implements OnInit {
         }
       }
       this.listStatisticPeriod.push(total)
+      this.spinner.hide();
+
       console.log("@@#### ", this.listStatisticPeriod[this.listStatisticPeriod.length])
     } catch (err) {
       console.log('err: ', err);

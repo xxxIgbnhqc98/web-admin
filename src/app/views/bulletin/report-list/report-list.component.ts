@@ -12,6 +12,8 @@ import { DatePipe } from '@angular/common';
 import { async } from '@angular/core/testing';
 import * as moment from "moment";
 import * as _ from 'lodash';
+import { NgxSpinnerService } from "ngx-spinner";
+
 declare var $: any;
 
 declare var swal: any;
@@ -73,7 +75,8 @@ export class ReportListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -297,6 +300,8 @@ export class ReportListComponent implements OnInit {
       query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      this.spinner.show();
+
       this.items.next(await this.apiService.report.getList({ query }));
       this.itemCount = this.apiService.report.pagination.totalItems;
       const queryCountToday: any = { ...query }
@@ -304,6 +309,7 @@ export class ReportListComponent implements OnInit {
       queryCountToday.filter.created_at_unix_timestamp = { $gte: before12Hour }
       this.record_today = await this.apiService.report.countToday({ query: queryCountToday })
       this.ref.detectChanges();
+      this.spinner.hide();
 
       return this.items;
     } catch (error) {

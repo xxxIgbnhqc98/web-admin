@@ -7,6 +7,7 @@ import { ConfigService } from '../../services/config/config.service';
 import { html } from '../../_html_de';
 import { ApiService } from '../../services/api/api.service';
 import axios from 'axios';
+import { environment } from '../../../environments/environment';
 
 declare var swal: any;
 @Component({
@@ -26,7 +27,7 @@ export class ToolBoxComponent implements OnInit {
         if (images.length) {
           const data = new FormData();
           data.append('image', images[0]);
-          axios.post('https://server.kormassage.kr:9877/api/v1/image/upload/600', data, {
+          axios.post(`${environment.host}/api/v1/image/upload/600`, data, {
             headers: {
             }
           }).then((res: any) => {
@@ -46,10 +47,11 @@ export class ToolBoxComponent implements OnInit {
       }
 
     },
+    useClasses: false,
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'getPDF', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
     placeholderText: ' ',
     // key: 'EA1C1C2G2H1A17vB3D2D1B1E5A4D4I1A16B11iC-13xjtH-8hoC-22yzF4jp==' //key for kormassage.kr
-    key: 'jC1D2B2D4B1C2uF2C1G1I1A10C1A6A1A5G5hwcdywE-11zpF3A2E2ndv==' //key for busandal31.net
+    key: environment.froalakey //key for busandal31.net
 
   };
   constructor(

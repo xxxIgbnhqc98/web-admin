@@ -9,6 +9,7 @@ import { ExcelService } from '../../../services/excel/excel.service';
 import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var swal: any;
 @Component({
@@ -44,7 +45,8 @@ export class LinkListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -125,6 +127,8 @@ export class LinkListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      this.spinner.show();
+
       this.items.next(await this.apiService.link.getList({ query }));
       let query1 = Object.assign({
         fields: ["$all"]
@@ -132,6 +136,7 @@ export class LinkListComponent implements OnInit {
       const countLink: any = await this.apiService.link.count({ query: query1 })
       this.itemCount = countLink;
       this.ref.detectChanges();
+      this.spinner.hide();
       return this.items;
     } catch (error) {
       this.alertErrorFromServer(error.error.message);

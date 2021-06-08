@@ -31,7 +31,8 @@ import { LevelHistoryComponent } from './level-history/level-history.component';
     UsersRoutingModule,
     ModalModule.forRoot(),
     NgxInfiniteScrollerModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+
   ],
   declarations: [LevelHistoryComponent, UserListComponent, AddUserComponent],
   providers: [

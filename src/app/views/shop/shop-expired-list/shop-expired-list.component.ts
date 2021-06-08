@@ -11,6 +11,8 @@ import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
 import * as _ from 'lodash';
+import { NgxSpinnerService } from "ngx-spinner";
+
 declare var $: any;
 
 declare var swal: any;
@@ -89,7 +91,8 @@ export class ShopExpiredListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -612,7 +615,11 @@ export class ShopExpiredListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      this.spinner.show();
+
       this.items.next(await this.apiService.shop.getList({ query }));
+      this.spinner.hide();
+
       this.itemCount = this.apiService.shop.pagination.totalItems;
       this.ref.detectChanges();
       return this.items;

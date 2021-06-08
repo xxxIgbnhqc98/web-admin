@@ -106,7 +106,6 @@ export class CrudAPI<T> extends BaseAPI {
         pagination: this.pagination,
         items: rows
       };
-      console.log("pagination ne ", this.pagination)
       this.items.next(rows);
     }
     return rows;

@@ -15,6 +15,7 @@ import { SharedModule } from '../../shared';
 import { AddBannerComponent } from './add/add.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomFormsModule } from 'ng2-validation'
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CustomFormsModule } from 'ng2-validation'
     NgMultiSelectDropDownModule,
     ModalModule.forRoot(),
     NgxInfiniteScrollerModule,
-    CustomFormsModule
+    CustomFormsModule,
+    NgxSpinnerModule
 
   ],
   declarations: [BannerListComponent, AddBannerComponent],

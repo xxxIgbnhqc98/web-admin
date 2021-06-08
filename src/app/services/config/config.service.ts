@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+
 @Injectable()
 export class ConfigService {
-
   constructor() {
     this.config = {
       host: environment.host,
@@ -15,6 +15,9 @@ export class ConfigService {
       type: '',
       lang: '',
       themaFilter: '',
+      limitActiveShop: '',
+      pageActiveShop: '',
+
     };
   }
 
@@ -28,7 +31,9 @@ export class ConfigService {
     isLogon: string,
     token: string,
     lang: string,
-    themaFilter: string
+    themaFilter: string,
+    limitActiveShop: string,
+    pageActiveShop: string
   };
 
   apiUrl(path: string = '') {
@@ -110,5 +115,20 @@ export class ConfigService {
 
   set themaFilter(value: string) {
     localStorage.setItem('themaFilter', value);
+  }
+  get limitActiveShop() {
+    return localStorage.getItem('limitActiveShop');
+  }
+
+  set limitActiveShop(value: string) {
+    localStorage.setItem('limitActiveShop', value);
+
+  }
+  get pageActiveShop() {
+    return localStorage.getItem('pageActiveShop');
+  }
+
+  set pageActiveShop(value: string) {
+    localStorage.setItem('pageActiveShop', value);
   }
 }

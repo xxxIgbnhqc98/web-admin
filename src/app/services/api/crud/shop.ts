@@ -4,13 +4,14 @@ import * as _ from 'lodash';
 import * as hash from 'object-hash';
 export interface IShop extends ICrud {
 }
-
 export class Shop extends CrudAPI<IShop> {
   constructor(
+
     public api: ApiService
   ) {
     super(api, 'shop');
   }
+
   async deleteShop(id: string, options?: CrudOptions) {
     if (!id) { throw new Error('id undefined in delete'); }
     options = _.merge({}, this.options, options);
@@ -116,6 +117,44 @@ export class Shop extends CrudAPI<IShop> {
       }
     }
     return row;
+  }
+  async removeReTime(ids: string[], options?: CrudOptions) {
+    if (!ids) { throw new Error('id undefined in edit'); }
+    options = _.merge({}, this.options, options);
+    const setting = {
+      method: 'PUT',
+      uri: this.apiUrl(`force_expired_multiple`),
+      params: _.merge({}, {
+        items: ids
+      }, options.query),
+      headers: _.merge({}, {
+        'content-type': 'application/json',
+        'Authorization': this.api.configService.token
+      }, options.headers),
+      body: {},
+      responseType: 'json'
+    };
+    const res: any = await this.exec(setting);
+    if (options.reload) {
+      const items = this.items.getValue();
+      const removed = _.remove(items, function (item: any) {
+        return _.indexOf(ids, item.id) !== -1;
+      });
+      if (removed.length > 0) {
+        if (this.activeHashQuery && this.hashCache[this.activeHashQuery]) {
+          this.hashCache[this.activeHashQuery].items = items;
+        }
+        this.items.next(items);
+      } else {
+        await this.getList({ local: false, query: this.activeQuery });
+      }
+      if (this.activeHashQuery) {
+        this.hashCache = {
+          [this.activeHashQuery]: this.hashCache[this.activeHashQuery]
+        };
+      }
+    }
+    return true;
   }
   async editReTime(id: string, data, options?: CrudOptions) {
     if (!id) { throw new Error('id undefined in edit'); }

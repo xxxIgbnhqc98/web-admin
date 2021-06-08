@@ -19,7 +19,7 @@ declare var swal: any;
 export class CategoryListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all"] }];
+  itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all", { "$filter": { "state": { "$notIn": ["REJECTED"] } } }] }];
   query: any = {
     filter: {
 

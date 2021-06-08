@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var swal: any;
 @Component({
@@ -66,7 +67,8 @@ export class ShopPendingListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -255,7 +257,11 @@ export class ShopPendingListComponent implements OnInit {
       let query = Object.assign({
         fields: this.itemFields
       }, this.query);
+      this.spinner.show();
+
       this.items.next(await this.apiService.shop.getList({ query }));
+      this.spinner.hide();
+
       this.itemCount = this.apiService.shop.pagination.totalItems;
       this.ref.detectChanges();
       return this.items;

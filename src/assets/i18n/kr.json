@@ -634,6 +634,7 @@
   "View winners": "당첨자 목록 안내문",
   "see more": "더보기",
   "Level history": "이벤트신청자 내역",
+  "Remove AD date": "광고일 삭제",
   "nav": {
     "nav_items": [
       {
@@ -776,12 +777,12 @@
         "icon": "fa fa-sticky-note-o",
         "children": [
           {
-            "name": "게시판 목록",
+            "name": "커뮤니티 목록",
             "icon": "fa fa-list-ol",
             "url": "/bulletin/bulletin"
           },
           {
-            "name": "구인구직샵매물",
+            "name": "구인/구직/샵매물 목록",
             "icon": "fa fa-address-card",
             "url": "/bulletin/recruit"
           },
@@ -791,7 +792,7 @@
             "url": "/bulletin/comment"
           },
           {
-            "name": "리포트",
+            "name": "신고관리 목록",
             "icon": "fa fa-file",
             "url": "/bulletin/report"
           }

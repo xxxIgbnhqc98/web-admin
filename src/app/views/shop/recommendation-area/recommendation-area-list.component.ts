@@ -11,6 +11,7 @@ import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
 import { async } from '@angular/core/testing';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var swal: any;
 @Component({
@@ -81,7 +82,8 @@ export class recommendationAreaListComponent implements OnInit {
     public excelService: ExcelService,
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -395,7 +397,10 @@ export class recommendationAreaListComponent implements OnInit {
         fields: this.itemFields
       }, this.query);
       console.log("@@@@ ", this.itemFields)
+      this.spinner.show();
       this.items.next(await this.apiService.shop.getList({ query }));
+      this.spinner.hide();
+
       this.itemCount = this.apiService.shop.pagination.totalItems;
       this.count_random_20_shop = this.apiService.shop.count_random_20_shop;
       this.ref.detectChanges();

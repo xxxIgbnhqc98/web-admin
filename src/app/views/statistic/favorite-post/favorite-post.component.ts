@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config/config.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var swal: any;
 @Component({
@@ -34,6 +35,7 @@ export class FavoritePostComponent implements OnInit {
     public route: ActivatedRoute,
     public titleService: Title,
     private configService: ConfigService,
+    private spinner: NgxSpinnerService
   ) { }
 
   async ngOnInit() {
@@ -70,7 +72,11 @@ export class FavoritePostComponent implements OnInit {
     const query = Object.assign({
       fields: this.itemFields
     }, this.query);
+    this.spinner.show();
+
     this.items.next(await this.apiService.shop.getList({ query }));
+    this.spinner.hide();
+
     this.itemCount = this.apiService.shop.pagination.totalItems;
     this.ref.detectChanges();
     return this.items;
