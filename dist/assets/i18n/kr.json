@@ -375,7 +375,7 @@
   "Approved": "승인완료",
   "Rejected": "거부",
   "Start date End Date": "시작시간\n종료시간",
-  "Remaining date": "유효 기간",
+  "Remaining date": "남은 유효기간",
   "Add": "추가하기",
   "Edit Event": "이벤트\n수정하기",
   "Add Event": "이벤트\n추가하기",
@@ -635,6 +635,9 @@
   "see more": "더보기",
   "Level history": "이벤트신청자 내역",
   "Remove AD date": "광고일 삭제",
+  "Subtract advertising date": "광고일 단축하기",
+  "Subtract days": "단축할 광고일",
+  "Subtract": "단축하기",
   "nav": {
     "nav_items": [
       {

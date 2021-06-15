@@ -4,7 +4,7 @@
       <i class="fa fa-search"></i> {{'Search' | translate}}
       <div class="btn-action float-right">
         <button class="btn btn-info" [disabled]="!itemsTable.selectedRows.length"
-          (click)="removeAddDateAll()">
+          (click)="openModalSubTimeAll(templateSubTimeAll)">
           <i class="fa fa-plus"></i> {{'Remove AD date' | translate}}
         </button>
         <button class="btn btn-info" [disabled]="!itemsTable.selectedRows.length"
@@ -486,7 +486,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Extra days' | translate }}</span>
               </div>
-              <input type="text" id="days" class="form-control" name="days" [(ngModel)]="days" #nameControl="ngModel">
+              <input type="number" id="days" class="form-control" name="days" [(ngModel)]="days" #nameControl="ngModel">
             </div>
           </div>
         </div>
@@ -495,6 +495,36 @@
         <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
           (click)="submitAddTimeAll(formContent)">
           <i>{{ 'Add' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateSubTimeAll>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Subtract advertising date' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Subtract days' | translate }}</span>
+              </div>
+              <input type="text" id="number" class="form-control" name="sub_days" [(ngModel)]="sub_days" #nameControl="ngModel">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitSubTimeAll(formContent)">
+          <i>{{ 'Subtract' | translate }}</i>
         </button>
       </div>
     </div>

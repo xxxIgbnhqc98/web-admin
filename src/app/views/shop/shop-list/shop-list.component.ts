@@ -61,6 +61,7 @@ export class ShopListComponent implements OnInit {
   expiration_date: any;
   start_date: any;
   days: number = 30;
+  sub_days: number = 0;
   // 
   start_date_1: Date;
   start_time_1: any = '12:00';
@@ -279,6 +280,9 @@ export class ShopListComponent implements OnInit {
   openModalAddTimeAll(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
+  openModalSubTimeAll(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
   async cloneShop(shop_id) {
     try {
       try {
@@ -305,6 +309,31 @@ export class ShopListComponent implements OnInit {
     });
     try {
       await this.apiService.shop.addDateAll({ days: this.days }, ids);
+      this.itemsTable.selectAllCheckbox = false;
+      this.itemsTable.reloadItems();
+      this.alertSuccess();
+      this.modalRef.hide()
+
+    } catch (err) {
+      this.alertErrorFromServer(err.error.message);
+    } finally {
+      rows.forEach(row => {
+        row.item.deleting = false;
+      });
+    }
+  }
+  async submitSubTimeAll(form: NgForm) {
+    if (this.itemsTable.selectedRows.length === 0) {
+      return;
+    }
+    const rows = this.itemsTable.selectedRows;
+    const ids = [];
+    rows.forEach(row => {
+      row.item.deleting = true;
+      ids.push(row.item.id);
+    });
+    try {
+      await this.apiService.shop.subDateAll({ days: this.sub_days }, ids);
       this.itemsTable.selectAllCheckbox = false;
       this.itemsTable.reloadItems();
       this.alertSuccess();
@@ -910,7 +939,7 @@ export class ShopListComponent implements OnInit {
       this.query.filter.category_id = this.category_id
     } else {
       this.query.filter = {
-        state: { $notIn: ["REJECTED"] }
+        state: { $notIn: ["REJECTED", "EXPIRED"] }
       }
     }
     this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
@@ -1039,10 +1068,10 @@ export class ShopListComponent implements OnInit {
   }
   mathRemainingTime(unixtimestamp: any) {
     // return new Date(parseInt(unixtimestamp))
-    return (moment(new Date(parseInt(unixtimestamp))).startOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000)
+    return (moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().endOf('day').valueOf()) / (24 * 60 * 60 * 1000)
   }
   ceilRemainingTime(unixtimestamp: any) {
-    return Math.ceil((moment(new Date(parseInt(unixtimestamp))).startOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000))
+    return Math.floor((moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000))
   }
 
   subTimeOpen1(time) {

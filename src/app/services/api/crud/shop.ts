@@ -310,6 +310,45 @@ export class Shop extends CrudAPI<IShop> {
     }
     return true;
   }
+  async subDateAll(data: any, ids: string[], options?: CrudOptions) {
+    console.log(ids)
+    if (!ids) { throw new Error('ids undefined in rejectAll'); }
+    options = _.merge({}, this.options, options);
+    const setting = {
+      method: 'PUT',
+      uri: this.apiUrl(`force_expired_multiple`),
+      params: _.merge({}, {
+        items: ids
+      }, options.query),
+      headers: _.merge({}, {
+        'content-type': 'application/json',
+        'Authorization': this.api.configService.token
+      }, options.headers),
+      body: data,
+      responseType: 'json'
+    };
+    const res: any = await this.exec(setting);
+    if (options.reload) {
+      const items = this.items.getValue();
+      const removed = _.remove(items, function (item: any) {
+        return _.indexOf(ids, item.id) !== -1;
+      });
+      if (removed.length > 0) {
+        if (this.activeHashQuery && this.hashCache[this.activeHashQuery]) {
+          this.hashCache[this.activeHashQuery].items = items;
+        }
+        this.items.next(items);
+      } else {
+        await this.getList({ local: false, query: this.activeQuery });
+      }
+      if (this.activeHashQuery) {
+        this.hashCache = {
+          [this.activeHashQuery]: this.hashCache[this.activeHashQuery]
+        };
+      }
+    }
+    return true;
+  }
   async setReShop(state, ids: string[], options?: CrudOptions) {
     if (!ids) { throw new Error('ids undefined in rejectAll'); }
     options = _.merge({}, this.options, options);

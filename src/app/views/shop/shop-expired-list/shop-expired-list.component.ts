@@ -816,11 +816,11 @@ export class ShopExpiredListComponent implements OnInit {
     return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD")
   }
   mathRemainingTime(unixtimestamp: any) {
-    // return new Date(parseInt(unixtimestamp));
-    return (unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)
+    // return new Date(parseInt(unixtimestamp))
+    return (moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().endOf('day').valueOf()) / (24 * 60 * 60 * 1000)
   }
   ceilRemainingTime(unixtimestamp: any) {
-    return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
+    return Math.floor((moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000))
   }
 
   subTimeOpen1(time) {

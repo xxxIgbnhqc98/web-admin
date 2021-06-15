@@ -623,11 +623,11 @@ export class recommendationAreaListComponent implements OnInit {
     return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD")
   }
   mathRemainingTime(unixtimestamp: any) {
-    // return new Date(parseInt(unixtimestamp));
-    return (unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000)
+    // return new Date(parseInt(unixtimestamp))
+    return (moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().endOf('day').valueOf()) / (24 * 60 * 60 * 1000)
   }
   ceilRemainingTime(unixtimestamp: any) {
-    return Math.ceil((unixtimestamp - moment().valueOf()) / (24 * 60 * 60 * 1000))
+    return Math.floor((moment(new Date(parseInt(unixtimestamp))).endOf('day').valueOf() - moment().valueOf()) / (24 * 60 * 60 * 1000))
   }
   openModalSubTime(template: TemplateRef<any>, item) {
     this.id_update = item.id
@@ -638,7 +638,7 @@ export class recommendationAreaListComponent implements OnInit {
     this.submitting = true;
     if (form.valid) {
       try {
-        const max_day = Math.ceil((this.expired_date - moment().valueOf()) / 86400000)
+        const max_day = Math.ceil((moment(new Date(this.expired_date)).endOf('day').valueOf() - moment().valueOf()) / 86400000)
         console.log("@@@@ n ", max_day)
         if (this.extra_days >= max_day) {
           this.extra_days = max_day - 1

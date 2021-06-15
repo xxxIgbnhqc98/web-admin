@@ -19,7 +19,9 @@ declare var swal: any;
 export class CategoryListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all", { "$filter": { "state": { "$notIn": ["REJECTED"] } } }] }];
+  // itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all", { "$filter": { "state": { "$notIn": ["REJECTED","EXPIRED"] } } }] }];
+  itemFields: any = ['$all', { "thema": ["$all"] }];
+  
   query: any = {
     filter: {
 
@@ -161,15 +163,16 @@ export class CategoryListComponent implements OnInit {
       }, this.query);
       this.items.next(await this.apiService.category.getList({ query }));
       console.log("$@#$@# ", this.items)
-      const countLink: any = await this.apiService.category.count({
-        query: {
-          fields: ['$all'],
-          filter: {
-            thema_id: this.thema_id
-          }
-        }
-      })
-      this.itemCount = countLink
+      // const countLink: any = await this.apiService.category.count({
+      //   query: {
+      //     fields: ['$all'],
+      //     filter: {
+      //       thema_id: this.thema_id
+      //     }
+      //   }
+      // })
+      // this.itemCount = countLink
+      this.itemCount = this.apiService.category.pagination.totalItems;
       console.log("@#@!#$ ", this.itemCount)
       this.ref.detectChanges();
       return this.items;

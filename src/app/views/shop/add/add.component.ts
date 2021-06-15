@@ -11,7 +11,7 @@ import { html } from './../../../_html_de';
 import { BehaviorSubject } from 'rxjs';
 import axios from 'axios';
 import { environment } from '../../../../environments/environment';
-
+import { GooglePlaceDirective } from "ngx-google-places-autocomplete/ngx-google-places-autocomplete.directive";
 declare var require: any;
 // const NodeGeocoder = require('node-geocoder');
 
@@ -25,6 +25,8 @@ declare let swal: any;
 })
 export class AddShopComponent implements OnInit {
   @ViewChild('multiSelect') multiSelect;
+  @ViewChild("placesRef") placesRef: GooglePlaceDirective;
+
   public editorOptions: Object = {
     useClasses: false,
 
@@ -214,6 +216,10 @@ export class AddShopComponent implements OnInit {
     fields: this.itemFields,
     filter: {}
   };
+  public handleAddressChange(address: any) {
+    console.log("addressaddress ", address)
+    // Do some stuff
+  }
   //Shop Search Section
   async getListShop() {
     try {
@@ -741,20 +747,20 @@ export class AddShopComponent implements OnInit {
         return item.replace("300", "1024")
       });
       let { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
-      if(badge_color){
+      if (badge_color) {
         if (badge_color.match('rgba')) {
           badge_color = this.rgb2hex(badge_color)
         }
       }
-      console.log("@#@#@#@ ",badge_color)
-      await this.apiService.shop.update(this.id, { short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_api_type: geolocation_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
+      console.log("@#@#@#@ ", badge_color)
+      await this.apiService.shop.update(this.id, { use_server_geolocation: true, short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_api_type: geolocation_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
 
       this.submitting = false;
     } catch (error) {
-      console.log("@#@#@#@ ",error)
+      console.log("@#@#@#@ ", error)
 
       if (error.error.message === "Please remove relevant Event before transferring the ownership") {
         this.alertErrorFromServerOwner(error.error.message);
@@ -803,7 +809,7 @@ export class AddShopComponent implements OnInit {
         return item.replace("300", "1024")
       });
       let { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
-      if(badge_color){
+      if (badge_color) {
         if (badge_color.match('rgba')) {
           badge_color = this.rgb2hex(badge_color)
         }
