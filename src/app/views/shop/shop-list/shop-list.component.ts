@@ -791,6 +791,7 @@ export class ShopListComponent implements OnInit {
       }, this.query);
       if (this.category_id) {
         this.query.filter.category_id = this.category_id
+        delete this.query.filter.state
       }
       console.log("this.query ", this.query)
       console.log("this.query.page ", this.query.page)

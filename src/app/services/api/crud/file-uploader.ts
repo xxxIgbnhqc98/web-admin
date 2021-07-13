@@ -47,6 +47,26 @@ export class FileUploader extends CrudAPI<IFileUploader> {
     console.log("@@@ chay vao ", result)
     return result;
   }
+  async uploadFile(file: File, options?: CrudOptions) {
+    options = _.merge({}, this.options, options);
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    const setting = {
+      method: 'POST',
+      uri: this.api.configService.apiUrl('file/upload'),
+      params: options.query,
+      headers: _.merge({}, {
+        'Authorization': this.api.configService.token
+      }, options.headers),
+      body: formData,
+      responseType: 'json'
+    };
+    const res: any = await this.exec(setting);
+    let result
+    result = res.body.results.object;
+    console.log("@@@ chay vao ", result)
+    return result;
+  }
   async uploadImage(file: File, size?: number, options?: CrudOptions) {
     options = _.merge({}, this.options, options);
     const formData: FormData = new FormData();

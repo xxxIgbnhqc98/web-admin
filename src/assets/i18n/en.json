@@ -624,7 +624,16 @@
   "Remove AD date": "Remove AD date",
   "Subtract advertising date": "Subtract advertising date",
   "Subtract days": "Subtract days",
-  "Subtract": "Subtract",
+  "Group": "Group",
+  "Depositor": "Depositor",
+  "Contact": "Contact",
+  "Deposit date": "Deposit date",
+  "Deposit amount": "Deposit amount",
+  "Exposure bulletin board": "Exposure bulletin board",
+  "Start date": "Start date",
+  "End date": "End date",
+  "Uniqueness": "Uniqueness",
+  "Attachments": "Attachments",
   "nav": {
     "nav_items": [
       {

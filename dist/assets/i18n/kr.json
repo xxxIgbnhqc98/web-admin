@@ -638,6 +638,16 @@
   "Subtract advertising date": "광고일 단축하기",
   "Subtract days": "단축할 광고일",
   "Subtract": "단축하기",
+  "Group": "그룹",
+  "Depositor": "입금자명",
+  "Contact": "연락처",
+  "Deposit date": "입금일",
+  "Deposit amount": "입금금액",
+  "Exposure bulletin board": "노출게시판",
+  "Start date": "시작일과",
+  "End date": "종료일",
+  "Uniqueness": "특이사항",
+  "Attachments": "이미지 및 파일",
   "nav": {
     "nav_items": [
       {

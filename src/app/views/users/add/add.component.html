@@ -65,6 +65,19 @@
                   {{'Please enter password' | translate}}
                 </div>
               </div>
+              <div *ngIf="isEditInAppUser">
+                <span *ngIf="!editPass" class="btn btn-primary" (click)="changeStateEditPass()">{{'Edit password' |
+                  translate}} </span>
+                <label *ngIf="editPass" for="password_show">{{'Password' | translate}}</label>
+                <div *ngIf="editPass">
+                  <input class="form-control" id="password_show" [placeholder]="'enter password' | translate"
+                    type="password" name="password_show" [(ngModel)]="password_show" required
+                    #password_showControl="ngModel" [ngClass]="{'is-invalid' : password_showControl.errors?.required}">
+                  <div class="invalid-feedback" *ngIf="password_showControl.errors?.required">
+                    {{'Please enter password' | translate}}
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="form-group" *ngIf="!isEdit">
               <label for="email">{{'Nickname' | translate}}</label>
@@ -118,9 +131,70 @@
                 {{ 'Please choose expiration date.' | translate }}
               </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="memo">{{'Memo' | translate}}</label>
               <input class="form-control" id="memo" type="text" name="memo" [(ngModel)]="memo">
+            </div> -->
+            <div class="form-group">
+              <label for="group">{{'Group' | translate}}</label>
+              <select class="form-control" name="group" id="group" [(ngModel)]="group">
+                <option value="1번">{{'1번' | translate}}</option>
+                <option value="2번">{{'2번' | translate}}</option>
+                <option value="3번">{{'3번' | translate}}</option>
+                <option value="4번">{{'4번' | translate}}</option>
+                <option value="5번">{{'5번' | translate}}</option>
+                <option value="6번">{{'6번' | translate}}</option>
+                <option value="7번">{{'7번' | translate}}</option>
+                <option value="8번">{{'8번' | translate}}</option>
+                <option value="9번">{{'9번' | translate}}</option>
+                <option value="10번">{{'10번' | translate}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="depositor">{{'Depositor' | translate}}</label>
+              <input class="form-control" id="depositor" type="text" name="depositor" [(ngModel)]="depositor">
+            </div>
+            <div class="form-group">
+              <label for="contact">{{'Contact' | translate}}</label>
+              <input class="form-control" id="contact" type="text" name="contact" [(ngModel)]="contact">
+            </div>
+            <div class="form-group">
+              <label for="deposit_date">{{'Deposit date' | translate}}</label>
+              <input type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose expiration date.' | translate" name="deposit_date"
+                [(ngModel)]="deposit_date" [bsConfig]="{
+                dateInputFormat: 'YYYY-MM-DD'
+              }" placement="right" onkeydown="return false" />
+            </div>
+            <div class="form-group">
+              <label for="deposit_amount">{{'deposit amount' | translate}}</label>
+              <input class="form-control" id="deposit_amount" type="number" min="0" name="deposit_amount"
+                [(ngModel)]="deposit_amount">
+            </div>
+            <div class="form-group">
+              <label for="exposure_bulletin_board">{{'Exposure bulletin board' | translate}}</label>
+              <input class="form-control" id="exposure_bulletin_board" type="text" name="exposure_bulletin_board"
+                [(ngModel)]="exposure_bulletin_board">
+            </div>
+            <div class="form-group">
+              <label for="end_date">{{'Start date' | translate}}</label>
+              <input type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose expiration date.' | translate" name="start_date" [(ngModel)]="start_date"
+                [bsConfig]="{
+                dateInputFormat: 'YYYY-MM-DD'
+              }" placement="right" onkeydown="return false" />
+            </div>
+            <div class="form-group">
+              <label for="end_date">{{'End date' | translate}}</label>
+              <input type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose expiration date.' | translate" name="end_date" [(ngModel)]="end_date"
+                [bsConfig]="{
+              dateInputFormat: 'YYYY-MM-DD'
+            }" placement="right" onkeydown="return false" />
+            </div>
+            <div class="form-group">
+              <label for="uniqueness">{{'Uniqueness' | translate}}</label>
+              <input class="form-control" id="uniqueness" type="text" name="uniqueness" [(ngModel)]="uniqueness">
             </div>
             <!-- <div class="form-group">
               <label for="memo">{{'Pick winners' | translate}}</label>
@@ -144,6 +218,34 @@
                 <label class="form-check-label" for="inline-radio2">{{ 'No' | translate }}</label>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="fa fa-picture-o"></i> {{'Attachments' | translate}}</strong>
+            <button class="pull-right btn btn-primary btn-upload-avatar" (click)="fileAttachments.click()"
+              *ngIf="!loadingUploadAvatar && attachments.length < 5"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+              {{'Upload' | translate}}</button>
+            <button class="pull-right btn btn-primary btn-upload-avatar" *ngIf="loadingUploadAvatar"><i
+                class="fa fa-spinner fa-spin"></i> {{'Uploading' | translate}}</button>
+            <input id="fileAttachments" type="file" (change)="uploadFile($event)" #fileAttachments>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let item of attachments">
+              <div *ngIf="checkItemIsImage(item)">
+                <div class="avatar" [style.backgroundImage]="'url('+ item +')'" *ngIf="item && item !== null">
+                  <span class="remove-avatar" (click)="removeFile(item)"><i class="fa fa-times"></i></span>
+                </div>
+              </div>
+              <div *ngIf="!checkItemIsImage(item)">
+                <div class="avatar" *ngIf="item && item !== null">
+                  <a [href]="item">{{getFileName(item)}}</a>
+                  <span class="remove-avatar" (click)="removeFile(item)"><i class="fa fa-times"></i></span>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </div>

@@ -187,14 +187,14 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="geolocation_type">{{'Geolocation type' | translate}}</label>
-              <select name="geolocation_type" [(ngModel)]="geolocation_type" required #geolocation_typeControl="ngModel"
-                [ngClass]="{'is-invalid' : geolocation_typeControl.errors?.required}" id="geolocation_type"
+              <label for="geolocation_api_type">{{'Geolocation type' | translate}}</label>
+              <select name="geolocation_api_type" [(ngModel)]="geolocation_api_type" required #geolocation_api_typeControl="ngModel"
+                [ngClass]="{'is-invalid' : geolocation_api_typeControl.errors?.required}" id="geolocation_api_type"
                 class="form-control input-control">
                 <option value="GOOGLE">Google</option>
                 <option value="NAVER">Naver</option>
               </select>
-              <div class="invalid-feedback" *ngIf="geolocation_typeControl.errors?.required">
+              <div class="invalid-feedback" *ngIf="geolocation_api_typeControl.errors?.required">
                 {{'Please choose geolocation type.' | translate}}
               </div>
             </div>
@@ -238,7 +238,7 @@
               <label for="address">{{'Address' | translate}}</label>
               <input ngx-google-places-autocomplete class="form-control" id="address"
                 [placeholder]="'Enter address' | translate" type="text" name="address" [(ngModel)]="address" required
-                #addressControl="ngModel" [ngClass]="{'is-invalid' : addressControl.errors?.required}">
+                #addressControl="ngModel" [ngClass]="{'is-invalid' : addressControl.errors?.required}" (onAddressChange)="handleAddressChange($event)">
               <div class="invalid-feedback" *ngIf="addressControl.errors?.required">
                 {{'Please enter address.' | translate}}
               </div>

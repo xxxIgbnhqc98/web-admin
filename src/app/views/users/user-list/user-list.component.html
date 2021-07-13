@@ -39,6 +39,20 @@
               <input type="text" class="form-control" [placeholder]="'Enter keyword' | translate" name="keyword"
                 [(ngModel)]="keyword">
             </div>
+            <div class="col-1">
+              <select class="form-control" name="group" [(ngModel)]="group">
+                <option value="1번">{{'1번' | translate}}</option>
+                <option value="2번">{{'2번' | translate}}</option>
+                <option value="3번">{{'3번' | translate}}</option>
+                <option value="4번">{{'4번' | translate}}</option>
+                <option value="5번">{{'5번' | translate}}</option>
+                <option value="6번">{{'6번' | translate}}</option>
+                <option value="7번">{{'7번' | translate}}</option>
+                <option value="8번">{{'8번' | translate}}</option>
+                <option value="9번">{{'9번' | translate}}</option>
+                <option value="10번">{{'10번' | translate}}</option>
+              </select>
+            </div>
             <div class="col-3">
               <button class="btn btn-primary" (click)="search()" data-style="expand-left" [ladda]='submitting'><i
                   class="fa fa-search"></i> {{'Search' | translate}}</button>
@@ -132,17 +146,19 @@
         </data-table-column>
         <data-table-column [header]="'Post status' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{'Active post' | translate}}: {{item.current_active_post}}<br></span>
+            <span (click)="openModalShop(templateShopPage, item,'active')">{{'Active post' | translate}}:
+              {{item.current_active_post}}<br></span>
             <span>{{'Pending post' | translate}}: {{item.current_pending_post}}<br></span>
             <span>{{'Rejected post' | translate}}: {{item.current_rejected_post}}<br></span>
-            <span>{{'Expired post' | translate}}: {{item.current_expired_post}}<br></span>
+            <span (click)="openModalShop(templateShopPage, item,'expired')">{{'Expired post' | translate}}:
+              {{item.current_expired_post}}<br></span>
             <span>{{'Recommend post' | translate}}: {{item.current_recommendation_post}}</span>
 
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Memo' | translate">
           <ng-template #dataTableCell let-item="item">
-            <span>{{item.memo ? item.memo : 'No info' | translate}}</span>
+            <span (click)="openModalMemo(templateMemo, item)">...{{'see more' | translate}}</span>
           </ng-template>
         </data-table-column>
         <data-table-column [header]="'Pick winners' | translate">
@@ -304,4 +320,560 @@
       </div>
     </div>
   </form>
+</ng-template>
+
+<ng-template #templateShopPage>
+  <div class="modal-header">
+    <h4 class="modal-title">{{'Shop List' | translate}}</h4>
+
+    <div class="btn-action float-right">
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <button *ngIf="type_shop === 'active'" class="btn btn-info mr-1"
+        [disabled]="!itemsTableListShop.selectedRows.length"
+        (click)="openModalSubTimeAll(templateSubTimeAll,itemsTableListShop)">
+        <i class="fa fa-plus"></i> {{'Remove AD date' | translate}}
+      </button>
+      <button class="btn btn-info mr-1" [disabled]="!itemsTableListShop.selectedRows.length"
+        (click)="openModalAddTimeAll(templateAddTimeAll,itemsTableListShop)">
+        <i class="fa fa-plus"></i> {{'Add AD date' | translate}}
+      </button>
+      <button class="btn btn-danger mr-1" [disabled]="!itemsTableListShop.selectedRows.length"
+        (click)="deleteAllShop(itemsTableListShop)">
+        <i class="fa fa-trash"></i> {{'Delete' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="table-wrapper" id="shop-list">
+      <data-table id="data-table-grid" #itemsTableListShop [indexColumnHeader]="'no' | translate"
+        [items]="listShop | async" [itemCount]="itemCountListShop" (reload)="reloadListShop($event)" [pagination]="true"
+        [selectColumn]="true" [multiSelect]="true" [substituteRows]="false" [selectOnRowClick]="false"
+        [showReloading]="false" class="itemsTableListShop" (select)="onSelectShop($event)">
+        <data-table-column [header]="'ID' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{(item.user && item.user.username) ? item.user.username : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Nickname' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.user ? item.user.nickname : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Title' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.old_shop ? item.old_shop.title : item.title ? item.title : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Thema' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{ (item.category && item.category.thema) ? item.category.thema.name : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Category' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.category ? item.category.name : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Start date End Date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.start_date) : (item.start_date > 0)?
+              getDateFromUnixTimestamp(item.start_date):"No info" | translate}}<br></span>
+            <span>{{ item.old_shop ? getDateFromUnixTimestamp(item.old_shop.expired_date) : (item.expired_date > 0) ?
+              getDateFromUnixTimestamp(item.expired_date):"No info" | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Remaining date' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{(mathRemainingTime(item.expired_date) >= 0) ? (ceilRemainingTime(item.expired_date) +
+              ("days"|translate)):"Expired" | translate }}</span><br>
+            <button style="margin-right: 2px;" (click)="openModalAddTimeShop(templateAddTime, item)"
+              class="btn btn-danger">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button *ngIf="mathRemainingTime(item.expired_date) > 0" (click)="openModalSubTime(templateSubTime, item)"
+              class="btn btn-primary">
+              <i class="fa fa-minus"></i>
+            </button>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Geolocation' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.geolocation_api_type?item.geolocation_api_type:'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'List Image' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <div *ngIf="!item.old_shop">
+              <span *ngIf="!item.thumbnails">
+                {{'No info' | translate}}
+              </span>
+              <span *ngFor="let item of item.thumbnails" lazy-load-images style="float: left; margin-left: 2px;">
+                <img id="view" height="50px" [attr.data-src]="item"
+                  onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
+              </span>
+            </div>
+            <div *ngIf="item.old_shop">
+              <span *ngIf="!item.old_shop.thumbnails">
+                {{'No info' | translate}}
+              </span>
+              <span *ngFor="let item of item.old_shop.thumbnails" lazy-load-images
+                style="float: left; margin-left: 2px;">
+                <img id="view" height="50px" [attr.data-src]="item" (click)="openModalZoomImage(templateImage,item)"
+                  onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
+              </span>
+            </div>
+          </ng-template>
+        </data-table-column>
+        <!-- <data-table-column [header]="'Comment' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span (click)="getListReviewOfConversation(templateComment,item)"
+              class="btn btn-primary">{{item.comment}}</span>
+            <span (click)="getReview(item.id)" class="btn btn-warning ml-1"><i class="fa fa-comment"
+                aria-hidden="true"></i> //boi xanh no di
+            </span>
+          </ng-template>
+        </data-table-column> -->
+        <data-table-column [header]="'Status' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.state ? item.state : 'No info' | translate}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Location' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button (click)="openModalLocationShop(templateLocationShop, item)" class="btn btn-primary">
+              <i class="fa fa-map-marker"></i>
+            </button>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Event' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button *ngIf="item.events && item.events.length === 0" (click)="openModalEvent(templateEvent, item)"
+              class="btn btn-primary" [disabled]="mathRemainingTime(item.expired_date) < 0">
+              <i>{{'Add Event' | translate}}</i>
+            </button>
+            <button *ngIf="item.events && (item.events.length > 0 && item.events[0].state ==='PENDING')"
+              (click)="openModalEvent(templateEvent, item)" class="btn btn-primary">
+              <i class="fa fa-spinner">Pending</i>
+            </button>
+            <button *ngIf="item.events && (item.events.length > 0 && item.events[0].state !=='PENDING')"
+              (click)="openModalEvent(templateEvent, item)" class="btn btn-danger">
+              <i>{{'Edit Event' | translate}}</i>
+            </button>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [header]="'Actions' | translate">
+          <ng-template #dataTableCell let-item="item">
+            <button *ngIf="!item.old_shop" (click)="editItemShop(item)" class="btn btn-primary"
+              style="margin-right: 5px;">
+              <i class="fa fa-edit"></i>
+            </button>
+
+            <button (click)="deleteShop(item)" class="btn btn-danger" style="margin-right: 5px;">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button *ngIf="item.state !== 'EXPIRED'" (click)="cloneShop(item.id)" class="btn btn-success">
+              <i class="fa fa-clone"></i>
+            </button>
+          </ng-template>
+        </data-table-column>
+      </data-table>
+    </div>
+  </div>
+</ng-template>
+<ng-template #templateAddTime>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Add advertising date' | translate }}</h4>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">shop ID</span>
+              </div>
+              <input type="text" id="shop_id" class="form-control" name="shop_id" [(ngModel)]="shop_id"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Extra days' | translate }}</span>
+              </div>
+              <input type="text" id="extra_days" class="form-control" name="extra_days" [(ngModel)]="extra_days"
+                #nameControl="ngModel">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitAddTimeShop(formContent)">
+          <i>{{ 'Add' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateAddTimeAll>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Add advertising date' | translate }}</h4>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Extra days' | translate }}</span>
+              </div>
+              <input type="number" id="days" class="form-control" name="days" [(ngModel)]="days" #nameControl="ngModel">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitAddTimeAll(formContent)">
+          <i>{{ 'Add' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateSubTimeAll>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Subtract advertising date' | translate }}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Subtract days' | translate }}</span>
+              </div>
+              <input type="text" id="number" class="form-control" name="sub_days" [(ngModel)]="sub_days"
+                #nameControl="ngModel">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitSubTimeAll(formContent)">
+          <i>{{ 'Subtract' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateSubTime>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Decrease advertising date' | translate }}</h4>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">User ID</span>
+              </div>
+              <input type="text" id="shop_id" class="form-control" name="shop_id" [(ngModel)]="shop_id"
+                #nameControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Days to decrease' | translate }}</span>
+              </div>
+              <input type="text" id="extra_days" class="form-control" name="extra_days" [(ngModel)]="extra_days"
+                #nameControl="ngModel">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" data-style="expand-right" [ladda]='submitting'
+          (click)="submitSubTime(formContent)">
+          <i>{{ 'Decrease' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateLocationShop>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Location' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+
+    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(link_map)" width="730" height="450" frameborder="0"
+      style="border:0;" allowfullscreen=""></iframe>
+
+  </div>
+</ng-template>
+<ng-template #templateMemo>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Memo' | translate }}</h4>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <!-- <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Group' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.group" class="form-control" name="memoItem.group" [(ngModel)]="memoItem.group">
+            </div>
+          </div> -->
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Depositor' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.depositor" class="form-control" name="memoItem.depositor"
+                [(ngModel)]="memoItem.depositor">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Contact' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.contact" class="form-control" name="memoItem.contact"
+                [(ngModel)]="memoItem.contact">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Deposit date' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.deposit_date" class="form-control" name="memoItem.deposit_date"
+                [value]="getDateFromUnixTimestamp(memoItem.deposit_date)?getDateFromUnixTimestamp(memoItem.deposit_date):''">
+            </div>
+          </div>
+
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Deposit amount' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.deposit_amount" class="form-control"
+                name="memoItem.deposit_amount" [(ngModel)]="memoItem.deposit_amount">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Exposure bulletin board' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.exposure_bulletin_board" class="form-control"
+                name="memoItem.exposure_bulletin_board" [(ngModel)]="memoItem.exposure_bulletin_board">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Start date' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.start_date" class="form-control" name="memoItem.start_date"
+                [value]="getDateFromUnixTimestamp(memoItem.start_date)?getDateFromUnixTimestamp(memoItem.start_date):''">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'End date' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.end_date" class="form-control" name="memoItem.end_date"
+                [value]="getDateFromUnixTimestamp(memoItem.end_date)?getDateFromUnixTimestamp(memoItem.end_date):''">
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Uniqueness' | translate }}</span>
+              </div>
+              <input readonly type="text" id="memoItem.uniqueness" class="form-control" name="memoItem.uniqueness"
+                [(ngModel)]="memoItem.uniqueness">
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-md-2 mr-5" *ngFor="let item of memoItem.attachments">
+                <div *ngIf="checkItemIsImage(item)">
+                  <div (click)="openModalZoomImage(templateImage,item)" class="image"
+                    [style.backgroundImage]="'url('+ item +')'" *ngIf="item && item !== null">
+                  </div>
+                </div>
+                <div *ngIf="!checkItemIsImage(item)">
+                  <div class="image" *ngIf="item && item !== null">
+                    <a style="font-size: 10px;word-wrap: break-word;" [href]="item">{{getFileName(item)}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateEvent>
+  <form class="form-horizontal form-content" #formContent="ngForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{ 'Event' | translate }}</h4>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="modal-body">
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Event ID</span>
+              </div>
+              <input type="text" id="event_id" class="form-control" name="event_id" [(ngModel)]="event_id"
+                #event_idControl="ngModel">
+            </div>
+          </div>
+          <div class="col-md-12 form-item" hidden>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Title' | translate }}</span>
+              </div>
+              <input type="text" id="title_event" class="form-control" name="title_event" [(ngModel)]="title_event"
+                #title_eventControl="ngModel" [placeholder]="'Title event' | translate">
+              <div class="invalid-feedback" *ngIf="title_eventControl.errors?.required">
+                {{ 'Please enter title.' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'Description' | translate }}</span>
+              </div>
+              <input type="text" id="description" class="form-control" name="description" [(ngModel)]="description"
+                #descriptionControl="ngModel"
+                [ngClass]="{'is-valid' : !descriptionControl.errors?.required, 'is-invalid' : descriptionControl.errors?.required}"
+                required [placeholder]="'Event description' | translate">
+              <div class="invalid-feedback" *ngIf="descriptionControl.errors?.required">
+                {{ 'Please enter description.' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 form-item">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{ 'End time' | translate }}</span>
+              </div>
+              <input #expiration_dateController="ngModel"
+                [ngClass]="{'is-valid' : !expiration_dateController.errors?.required, 'is-invalid' : expiration_dateController.errors?.required}"
+                required type="text" class="form-control input-control" bsDatepicker placement="bottom"
+                [placeholder]="'Please choose end time.' | translate" name="expiration_date_1"
+                [(ngModel)]="expiration_date_1" [bsConfig]="{
+                  dateInputFormat: 'YYYY-MM-DD'
+                }" placement="right" onkeydown="return false" />
+              <div class="invalid-feedback"
+                *ngIf="expiration_dateController.errors?.required || expiration_dateController.errors?.required">
+                {{ 'Please choose start time.' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="card-header" style="position: relative;">
+            <i class="fa fa-picture-o"></i> {{ 'Images' | translate }}
+            <button class="pull-right btn btn-primary btn-upload-image" (click)="fileImage.click()"
+              *ngIf="!loadingUploadImage">
+              <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+              {{ 'Upload image' | translate }}
+            </button>
+            <button class="pull-right btn btn-primary btn-upload-image" *ngIf="loadingUploadImage">
+              <i class="fa fa-spinner fa-spin"></i>{{ 'Uploading image' | translate }}
+            </button>
+            <input id="fileImage" type="file" (change)="uploadImage($event)" #fileImage accept="image/*">
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-md-2" *ngFor="let item of images_event">
+                <div class="image" [style.backgroundImage]="'url('+ item +')'" *ngIf="item && item !== null">
+                  <span class="remove-avatar" (click)="removeImage(item)"><i class="fa fa-times"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button *ngIf="state !== 'PENDING'" type="submit" class="btn btn-primary" data-style="expand-right"
+          [ladda]='submitting' (click)="submitAddEvent(formContent)">
+          <i *ngIf="!event_id">{{ 'Add' | translate }}</i>
+          <i *ngIf="event_id">{{ 'Update' | translate }}</i>
+        </button>
+        <button style="margin-left: 2px;" *ngIf="state !== 'PENDING' && event_id" type="submit" class="btn btn-danger"
+          data-style="expand-right" [ladda]='submitting' (click)="submitDeleteEvent(formContent)">
+          <i *ngIf="event_id">{{ 'Delete' | translate }}</i>
+        </button>
+        <button style="margin-right: 2px;" *ngIf="state === 'PENDING'" type="submit" class="btn btn-success"
+          data-style="expand-right" [ladda]='submitting' (click)="setStateItem(event_id,'APPROVED')">
+          <i>{{ 'Approved' | translate }}</i>
+        </button>
+        <button *ngIf="state === 'PENDING'" type="submit" class="btn btn-danger" data-style="expand-right"
+          [ladda]='submitting' (click)="setStateItem(event_id,'REJECTED')">
+          <i>{{ 'Rejected' | translate }}</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #templateImage>
+  <div class="modal-body-img">
+    <div style="    white-space: nowrap;
+                    overflow-x: visible;
+                    overflow-y: hidden;
+                    height: 100%;;
+                    width: 100%;">
+
+      <p lazy-load-images>
+        <img [attr.data-src]="zoom_image" (error)="replaceImage($event)"
+          onerror="this.src='https://kormassage.s3.ap-northeast-2.amazonaws.com/resized-image-1600918517975.png'">
+      </p>
+    </div>
+  </div>
 </ng-template>

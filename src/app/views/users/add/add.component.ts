@@ -34,13 +34,25 @@ export class AddUserComponent implements OnInit {
   show_shop_tag: boolean = false;
   loadingUploadAvatar: boolean = false;
   paid_user_expiration_date: any;
-
+  isEditInAppUser: boolean = false;
   fullname: string;
   password: any;
   password_show: string;
+  editPass: boolean = false;
+  group: string = '1번';
+  depositor: string;
+  contact: string;
+  deposit_date: any;
+  deposit_amount: number;
+  exposure_bulletin_board: string;
+  start_date: any;
+  end_date: any;
+  uniqueness: string;
+  attachments: any;
 
 
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
+  @ViewChild('fileAttachments') fileAttachmentsElementRef: ElementRef;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -110,7 +122,9 @@ export class AddUserComponent implements OnInit {
   backToList() {
     this.router.navigate(['/users/user-list'], { relativeTo: this.route });
   }
-
+  changeStateEditPass() {
+    this.editPass = true
+  }
   setDefaultData() {
     this.titleService.setTitle('Add new user');
     this.email = null;
@@ -123,7 +137,16 @@ export class AddUserComponent implements OnInit {
     this.post_limit = 1;
     this.post_limit_min = 1;
     this.paid_user_expiration_date = new Date()
-
+    this.group = null;
+    this.depositor = null;
+    this.contact = null;
+    this.deposit_date = null;
+    this.deposit_amount = null;
+    this.exposure_bulletin_board = null;
+    this.start_date = null;
+    this.end_date = null;
+    this.uniqueness = null;
+    this.attachments = [];
     return {
       email: this.email,
       nickname: this.nickname,
@@ -134,7 +157,17 @@ export class AddUserComponent implements OnInit {
       memo: this.memo,
       post_limit: this.post_limit,
       post_limit_min: this.post_limit_min,
-      paid_user_expiration_date: this.paid_user_expiration_date
+      paid_user_expiration_date: this.paid_user_expiration_date,
+      group: this.group,
+      depositor: this.depositor,
+      contact: this.contact,
+      deposit_date: this.deposit_date,
+      deposit_amount: this.deposit_amount,
+      exposure_bulletin_board: this.exposure_bulletin_board,
+      start_date: this.start_date,
+      end_date: this.end_date,
+      uniqueness: this.uniqueness,
+      attachments: this.attachments
     };
   }
 
@@ -153,9 +186,23 @@ export class AddUserComponent implements OnInit {
       this.post_limit = data.post_limit;
       this.show_shop_tag = data.show_shop_tag;
       this.memo = data.memo;
+      this.group = data.group;
+      this.depositor = data.depositor;
+      this.contact = data.contact;
+      this.deposit_date = data.deposit_date !== null ?
+        new Date(parseInt(data.deposit_date)) : null;
+      this.deposit_amount = data.deposit_amount;
+      this.exposure_bulletin_board = data.exposure_bulletin_board;
+      this.start_date = data.start_date !== null ?
+        new Date(parseInt(data.start_date)) : null;
+      this.end_date = data.end_date !== null ?
+        new Date(parseInt(data.end_date)) : null;
+      this.uniqueness = data.uniqueness;
+      this.attachments = data.attachments ? data.attachments : [];
       this.post_limit_min = data.current_active_post + data.current_pending_post;
       this.paid_user_expiration_date = data.paid_user_expiration_date !== null ?
         new Date(parseInt(data.paid_user_expiration_date)) : new Date();
+      this.isEditInAppUser = (data.login_type === 'INAPP') ? true : false
       this.titleService.setTitle(this.nickname);
     } catch (err) {
       console.log('err: ', err);
@@ -177,8 +224,23 @@ export class AddUserComponent implements OnInit {
         //   return;
       }
       this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
-      const { account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
-      await this.apiService.user.update(this.id, { account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+      this.deposit_date = moment(this.deposit_date).valueOf()
+      this.start_date = moment(this.start_date).valueOf()
+      this.end_date = moment(this.end_date).valueOf()
+
+
+
+
+      if (this.password_show && this.editPass === true) {
+        this.password = new Md5().appendStr(this.password_show).end();
+        const { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, password, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
+        await this.apiService.user.update(this.id, { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, password, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+      } else {
+        const { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
+        await this.apiService.user.update(this.id, { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+      }
+
+
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -193,9 +255,8 @@ export class AddUserComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       this.password = new Md5().appendStr(this.password_show).end();
-      const { fullname, avatar, phone, account_type, event_type, email, password, username, nickname, post_limit } = this;
-      console.log(fullname, avatar, phone, account_type, email, password, username, nickname)
-      await this.apiService.user.add({ avatar, phone, account_type, event_type: "B", post_limit, password, username, nickname, email: username });
+      const { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, fullname, avatar, phone, account_type, event_type, email, password, username, nickname, post_limit, memo } = this;
+      await this.apiService.user.add({ group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, avatar, phone, account_type, event_type: "B", post_limit, password, username, nickname, email: username, memo });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -252,5 +313,38 @@ export class AddUserComponent implements OnInit {
 
   removeAvatar() {
     this.avatar = null;
+  }
+  uploadFile(fileInput) {
+    this.loadingUploadAvatar = true;
+    try {
+      const files = this.fileAttachmentsElementRef.nativeElement.files;
+      const file = files[0];
+      const result = this.apiService.fileUploader.uploadFile(file)
+        .then(result => {
+          this.attachments.push(result.url)
+          this.loadingUploadAvatar = false;
+        });
+    } catch (err) {
+      console.log('Không úp được hình');
+    }
+  }
+
+  removeFile(image) {
+    this.attachments = this.attachments.filter(function (item) {
+      return item !== image
+    })
+
+  }
+  checkItemIsImage(string) {
+    console.log("hahahaha ", string)
+
+    if (string.includes('.png') || string.includes('.jpg') || string.includes('.jpeg') || string.includes('.gif')) {
+      return true
+    } else {
+      return false
+    }
+  }
+  getFileName(string) {
+    return string.substring(string.indexOf('file'), string.lenght)
   }
 }

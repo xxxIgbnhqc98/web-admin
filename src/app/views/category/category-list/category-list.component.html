@@ -67,7 +67,7 @@
         <data-table-column [header]="'List Shop' | translate">
           <ng-template #dataTableCell let-item="item">
             <button (click)="getListShop(item)" class="btn btn-primary">
-              <i>{{item.active_shops?item.active_shops : 0}} {{'shops' | translate}}</i>
+              <i>{{item.shops.length}} {{'shops' | translate}}</i>
             </button>
           </ng-template>
         </data-table-column>

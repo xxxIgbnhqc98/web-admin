@@ -94,7 +94,7 @@ export class AddShopComponent implements OnInit {
   min_price: string;
   kakaolink_url: string;
   theme_color: string = "#f44336";
-  geolocation_type: string = "NAVER";
+  geolocation_api_type: string = "NAVER";
   hours = [
     '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'
   ]
@@ -108,6 +108,8 @@ export class AddShopComponent implements OnInit {
   state: string;
   settings = {};
   old_shop: any
+  latitude: number;
+  longitude: number;
   public form_tag: FormGroup;
 
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
@@ -217,7 +219,12 @@ export class AddShopComponent implements OnInit {
     filter: {}
   };
   public handleAddressChange(address: any) {
-    console.log("addressaddress ", address)
+    console.log("addressaddress long", address.geometry.viewport.Eb.g)
+    console.log("addressaddress lat", address.geometry.viewport.mc.g)
+    this.longitude = address.geometry.viewport.Eb.g
+    this.latitude = address.geometry.viewport.mc.g
+
+    this.address = address.formatted_address
     // Do some stuff
   }
   //Shop Search Section
@@ -649,6 +656,8 @@ export class AddShopComponent implements OnInit {
     this.kakaolink_url = null;
     this.state = null;
     this.old_shop = null;
+    this.longitude = 0;
+    this.latitude = 0
     return {
       category_id: this.category_id,
       tag_ids: this.tag_ids,
@@ -669,7 +678,9 @@ export class AddShopComponent implements OnInit {
       short_description: this.short_description,
       min_price: this.min_price,
       kakaolink_url: this.kakaolink_url,
-      old_shop: this.old_shop
+      old_shop: this.old_shop,
+      longitude: this.longitude,
+      latitude: this.latitude,
     };
   }
 
@@ -688,13 +699,15 @@ export class AddShopComponent implements OnInit {
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
-      this.geolocation_type = data.geolocation_api_type;
+      this.geolocation_api_type = data.geolocation_api_type;
       this.badge_text = data.badge_text;
       this.badge_color = data.badge_color;
       this.thumbnails = data.thumbnails;
       this.short_description = data.short_description;
       this.min_price = data.min_price;
       this.kakaolink_url = data.kakaolink_url;
+      this.longitude = data.longitude;
+      this.latitude = data.longitude;
       if (this.tag_ids) {
         for (let index = 0; index < this.tag_ids.length; index++) {
           const tag_id = this.tag_ids[index];
@@ -746,14 +759,14 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      let { short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      let { longitude, latitude, short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_api_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
       if (badge_color) {
         if (badge_color.match('rgba')) {
           badge_color = this.rgb2hex(badge_color)
         }
       }
       console.log("@#@#@#@ ", badge_color)
-      await this.apiService.shop.update(this.id, { use_server_geolocation: true, short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_api_type: geolocation_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
+      await this.apiService.shop.update(this.id, { longitude, latitude, short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_api_type: geolocation_api_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
@@ -808,13 +821,13 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      let { short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      let { longitude, latitude, short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_api_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
       if (badge_color) {
         if (badge_color.match('rgba')) {
           badge_color = this.rgb2hex(badge_color)
         }
       }
-      await this.apiService.shop.add({ short_description, min_price, kakaolink_url, category_id, theme_color, geolocation_api_type: geolocation_type, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
+      await this.apiService.shop.add({ longitude, latitude, short_description, min_price, kakaolink_url, category_id, theme_color, geolocation_api_type: geolocation_api_type, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
       form.reset();
       this.alertSuccess();
       if (this.params_thema_id) {

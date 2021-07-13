@@ -20,8 +20,8 @@ export class CategoryListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
   // itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all", { "$filter": { "state": { "$notIn": ["REJECTED","EXPIRED"] } } }] }];
-  itemFields: any = ['$all', { "thema": ["$all"] }];
-  
+  itemFields: any = ['$all', { "thema": ["$all"] }, { "shops": ["$all"] }];
+
   query: any = {
     filter: {
 
