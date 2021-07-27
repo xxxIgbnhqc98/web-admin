@@ -535,7 +535,7 @@ export class recommendationAreaListComponent implements OnInit {
     this.submittingCheck = true;
     try {
       console.log("#@#$@#$2 ", this.count_random_20_shop)
-      if (this.count_random_20_shop < 20) {
+      if (this.count_random_20_shop < 50) {
         await this.apiService.shop.update(id, {
           is_random_20_shop: true
         });

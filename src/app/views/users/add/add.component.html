@@ -7,6 +7,29 @@
             <strong><i class="fa fa-info"></i> {{'Information' | translate}}</strong>
           </div>
           <div class="card-body">
+            <div class="form-group">
+              <label for="group">{{'Group' | translate}}</label>
+              <!-- <select class="form-control" name="group" id="group" [(ngModel)]="group">
+                <option value="1번">{{'1번' | translate}}</option>
+                <option value="2번">{{'2번' | translate}}</option>
+                <option value="3번">{{'3번' | translate}}</option>
+                <option value="4번">{{'4번' | translate}}</option>
+                <option value="5번">{{'5번' | translate}}</option>
+                <option value="6번">{{'6번' | translate}}</option>
+                <option value="7번">{{'7번' | translate}}</option>
+                <option value="8번">{{'8번' | translate}}</option>
+                <option value="9번">{{'9번' | translate}}</option>
+                <option value="10번">{{'10번' | translate}}</option>
+              </select> -->
+              <form [formGroup]="form_group" *ngIf="form_group" (ngSubmit)="save()" (reset)="resetForm()">
+
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Group' | translate" [data]="group_list"
+                  [(ngModel)]="groups_select" [settings]="settings" [formControl]="f.name" [disabled]="false"
+                  (onFilterChange)="onSave($event)" (onSelect)="onSave($event)" (onDeSelect)="onSave($event)"
+                  (onSelectAll)="onSave($event)" (onDeSelectAll)="onSave($event)">
+                </ng-multiselect-dropdown>
+              </form>
+            </div>
             <div class="form-group" *ngIf="!isEdit">
               <label for="role">{{'Account type' | translate}}</label>
               <select class="form-control" name="account_type" id="account_type" [(ngModel)]="account_type" required
@@ -135,21 +158,7 @@
               <label for="memo">{{'Memo' | translate}}</label>
               <input class="form-control" id="memo" type="text" name="memo" [(ngModel)]="memo">
             </div> -->
-            <div class="form-group">
-              <label for="group">{{'Group' | translate}}</label>
-              <select class="form-control" name="group" id="group" [(ngModel)]="group">
-                <option value="1번">{{'1번' | translate}}</option>
-                <option value="2번">{{'2번' | translate}}</option>
-                <option value="3번">{{'3번' | translate}}</option>
-                <option value="4번">{{'4번' | translate}}</option>
-                <option value="5번">{{'5번' | translate}}</option>
-                <option value="6번">{{'6번' | translate}}</option>
-                <option value="7번">{{'7번' | translate}}</option>
-                <option value="8번">{{'8번' | translate}}</option>
-                <option value="9번">{{'9번' | translate}}</option>
-                <option value="10번">{{'10번' | translate}}</option>
-              </select>
-            </div>
+            
             <div class="form-group">
               <label for="depositor">{{'Depositor' | translate}}</label>
               <input class="form-control" id="depositor" type="text" name="depositor" [(ngModel)]="depositor">
@@ -160,16 +169,18 @@
             </div>
             <div class="form-group">
               <label for="deposit_date">{{'Deposit date' | translate}}</label>
-              <input type="text" class="form-control input-control" bsDatepicker placement="bottom"
+              <!-- <input type="text" class="form-control input-control" bsDatepicker placement="bottom"
                 [placeholder]="'Please choose expiration date.' | translate" name="deposit_date"
                 [(ngModel)]="deposit_date" [bsConfig]="{
                 dateInputFormat: 'YYYY-MM-DD'
-              }" placement="right" onkeydown="return false" />
+              }" placement="right" onkeydown="return false" /> -->
+              <input class="form-control" id="deposit_date" type="text" name="deposit_date" [(ngModel)]="deposit_date">
+
             </div>
             <div class="form-group">
-              <label for="deposit_amount">{{'deposit amount' | translate}}</label>
-              <input class="form-control" id="deposit_amount" type="number" min="0" name="deposit_amount"
-                [(ngModel)]="deposit_amount">
+              <label for="deposit_amount">{{'Deposit amount' | translate}}</label>
+              <input class="form-control" id="deposit_amount" type="text" name="deposit_amount" [(ngModel)]="deposit_amount">
+
             </div>
             <div class="form-group">
               <label for="exposure_bulletin_board">{{'Exposure bulletin board' | translate}}</label>
@@ -177,24 +188,21 @@
                 [(ngModel)]="exposure_bulletin_board">
             </div>
             <div class="form-group">
-              <label for="end_date">{{'Start date' | translate}}</label>
-              <input type="text" class="form-control input-control" bsDatepicker placement="bottom"
-                [placeholder]="'Please choose expiration date.' | translate" name="start_date" [(ngModel)]="start_date"
-                [bsConfig]="{
-                dateInputFormat: 'YYYY-MM-DD'
-              }" placement="right" onkeydown="return false" />
+              <label for="end_date">{{'Start date and End date' | translate}}</label>
+              <input class="form-control" id="start_date" type="text" name="start_date"
+                [(ngModel)]="start_date">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="end_date">{{'End date' | translate}}</label>
               <input type="text" class="form-control input-control" bsDatepicker placement="bottom"
                 [placeholder]="'Please choose expiration date.' | translate" name="end_date" [(ngModel)]="end_date"
                 [bsConfig]="{
               dateInputFormat: 'YYYY-MM-DD'
             }" placement="right" onkeydown="return false" />
-            </div>
+            </div> -->
             <div class="form-group">
-              <label for="uniqueness">{{'Uniqueness' | translate}}</label>
-              <input class="form-control" id="uniqueness" type="text" name="uniqueness" [(ngModel)]="uniqueness">
+              <label for="memo">{{'Uniqueness' | translate}}</label>
+              <input class="form-control" id="memo" type="text" name="memo" [(ngModel)]="memo">
             </div>
             <!-- <div class="form-group">
               <label for="memo">{{'Pick winners' | translate}}</label>
@@ -224,7 +232,8 @@
           <div class="card-header">
             <strong><i class="fa fa-picture-o"></i> {{'Attachments' | translate}}</strong>
             <button class="pull-right btn btn-primary btn-upload-avatar" (click)="fileAttachments.click()"
-              *ngIf="!loadingUploadAvatar && attachments.length < 5"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+              *ngIf="!loadingUploadAvatar && attachments.length < 5"><i class="fa fa-cloud-upload"
+                aria-hidden="true"></i>
               {{'Upload' | translate}}</button>
             <button class="pull-right btn btn-primary btn-upload-avatar" *ngIf="loadingUploadAvatar"><i
                 class="fa fa-spinner fa-spin"></i> {{'Uploading' | translate}}</button>

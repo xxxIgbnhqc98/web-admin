@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { DataTable } from 'angular-2-data-table-bootstrap4/dist';
 import { BehaviorSubject } from 'rxjs';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title, DomSanitizer } from '@angular/platform-browser';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ExcelService } from '../../../services/excel/excel.service';
-import { NgForm } from '@angular/forms';
 import { ConfigService } from '../../../services/config/config.service';
 import { DatePipe } from '@angular/common';
 import * as moment from "moment";
@@ -49,7 +49,7 @@ export class UserListComponent implements OnInit {
   shop_id: string;
   extra_day: number = 30;
   post_expired_date: number;
-  account_type: string = null;
+  account_type: string = (this.configService.userTypeFilter === null || this.configService.userTypeFilter === '') ? "null" : this.configService.userTypeFilter;
   jump_limit: number = 0;
   zoom_image: string;
   add_jump_limit: number = 1;
@@ -80,10 +80,20 @@ export class UserListComponent implements OnInit {
   start_time_unix_timestamp: number;
   expiration_time_unix_timestamp: number;
   memoItem: any
-  group: string
+  group: string = null
+  group_ids: any = [];
+  groups: any = [];
+  groups_select: any[] = []
+  default_limit: number = (this.configService.limitActiveShop === null || this.configService.limitActiveShop === '' || this.configService.limitActiveShop === 'null') ? 10 : parseInt(this.configService.limitActiveShop);
+  default_page: number = (this.configService.pageActiveShop === null || this.configService.pageActiveShop === '' || this.configService.pageActiveShop === 'null') ? 1 : parseInt(this.configService.pageActiveShop);
+  settings: any = {}
+  public form_group: FormGroup;
+
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('itemsTableListShop') itemsTableListShop: DataTable;
+  @ViewChild('multiSelect') multiSelect;
   itemsTableShop: DataTable;
+
   constructor(
     public ref: ChangeDetectorRef,
     public apiService: ApiService,
@@ -95,12 +105,107 @@ export class UserListComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private configService: ConfigService,
     private datePipe: DatePipe,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) { }
 
   async ngOnInit() {
     console.log(this.items)
     this.titleService.setTitle('User list')
+    this.groups = [
+      {
+        item_id: '1번',
+        item_text: '1번'
+      },
+      {
+        item_id: '2번',
+        item_text: '2번'
+      },
+      {
+        item_id: '3번',
+        item_text: '3번'
+      },
+      {
+        item_id: '4번',
+        item_text: '4번'
+      },
+      {
+        item_id: '5번',
+        item_text: '5번'
+      },
+      {
+        item_id: '6번',
+        item_text: '6번'
+      },
+      {
+        item_id: '7번',
+        item_text: '7번'
+      },
+      {
+        item_id: '8번',
+        item_text: '8번'
+      },
+      {
+        item_id: '9번',
+        item_text: '9번'
+      },
+      {
+        item_id: '10번',
+        item_text: '10번'
+      }
+    ]
+    this.default_limit = (this.configService.limitUser === null || this.configService.limitUser === '' || this.configService.limitUser === 'null') ? 10 : parseInt(this.configService.limitUser);
+    this.default_page = (this.configService.pageUser === null || this.configService.pageUser === '' || this.configService.pageUser === 'null') ? 1 : parseInt(this.configService.pageUser);
+
+    this.account_type = (this.configService.userTypeFilter === null || this.configService.userTypeFilter === '') ? "null" : this.configService.userTypeFilter;
+    if (this.account_type === 'null') {
+      this.itemsTable.reloadItems();
+    }
+    console.log("sddasd ", this.account_type)
+    this.settings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: false,
+      selectAllText: 'Select all',
+      unSelectAllText: 'Unselect all',
+      allowSearchFilter: false,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 1,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No info',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
+    this.setForm();
+  }
+  resetForm() {
+    this.setForm();
+    this.multiSelect.toggleSelectAll();
+  }
+  setForm() {
+    this.form_group = new FormGroup({
+      name: new FormControl(this.groups, Validators.required)
+    });
+  }
+  save() {
+    this.group_ids = []
+    this.form_group.value.name.forEach(element => {
+      this.group_ids.push(element)
+    });
+    console.log("group ", this.group_ids)
+  }
+  public onSave(items: any) {
+    this.save();
+  }
+  get f() {
+    return this.form_group.controls;
+  }
+  filterUserType() {
+    this.configService.userTypeFilter = this.account_type
+    this.itemsTable.reloadItems();
   }
   openModalEvent(template: TemplateRef<any>, item) {
     this.shop_id_event = item.id
@@ -182,6 +287,9 @@ export class UserListComponent implements OnInit {
   openModalShop(template: TemplateRef<any>, item, type_shop) {
     this.id_update = item.id
     this.type_shop = type_shop
+    this.query.limit = 10;
+    this.query.page = 1;
+
     this.modalRef = this.modalService.show(template,
       Object.assign({}, { class: 'modal-shop modal-lg-shop' }));
   }
@@ -217,6 +325,8 @@ export class UserListComponent implements OnInit {
     await this.getListShop();
   }
   async getListShop() {
+    this.listShop = new BehaviorSubject<any[]>([]);
+    this.itemCountListShop = 0
     console.log("tua ne")
     const query = Object.assign({
       fields: ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }]
@@ -550,8 +660,9 @@ export class UserListComponent implements OnInit {
     });
   }
   async reloadItems(params) {
-    const { limit, offset, sortBy, sortAsc } = params;
+    const { limit, offset, sortBy, sortAsc, page } = params;
     this.query.limit = limit;
+    this.query.page = page;
     // this.query.filter = {
     //   $or: [
     //     {
@@ -561,6 +672,9 @@ export class UserListComponent implements OnInit {
     //     }
     //   ]
     // }
+    if (this.account_type !== null && this.account_type !== 'null') {
+      this.query.filter.account_type = this.account_type
+    }
     this.query.offset = offset;
     this.query.order = sortBy ? [
       [sortBy, sortAsc ? 'ASC' : 'DESC']
@@ -569,6 +683,14 @@ export class UserListComponent implements OnInit {
       this.query.order = [['updated_at', 'DESC']]
     }
     await this.getItems();
+  }
+  arrayGroupToText(array: any) {
+    let text = ''
+    for (let index = 0; index < array.length; index++) {
+      const element = array[index];
+      text = text + `${element}, `
+    }
+    return text.substring(0, text.length - 2)
   }
   alertCopied(text) {
     return swal({
@@ -633,6 +755,11 @@ export class UserListComponent implements OnInit {
         fields: this.itemFields
       }, this.query);
       this.spinner.show();
+      this.configService.limitUser = this.query.limit.toString();
+      this.configService.pageUser = this.query.page ? this.query.page.toString() : 1;
+      console.log("???? ", this.configService.limitUser)
+      console.log("???? ", this.configService.pageUser)
+
       this.items.next(await this.apiService.user.getList({ query }));
       this.spinner.hide();
       this.itemCount = this.apiService.user.pagination.totalItems;
@@ -772,11 +899,25 @@ export class UserListComponent implements OnInit {
             break;
         }
       }
-      if (this.account_type !== null) {
+      if (this.account_type !== null && this.account_type !== 'null') {
         this.query.filter.account_type = this.account_type;
       }
-      if (this.group !== null) {
-        this.query.filter.group = this.group;
+      if (this.group_ids.length > 0) {
+        const or = []
+        for (let index = 0; index < this.group_ids.length; index++) {
+          const group = this.group_ids[index];
+          or.push(
+            {
+              groups: { $contains: [group] }
+            }
+          )
+
+        }
+        console.log("@#@ ", or)
+        this.query.filter.$and = [{
+          $or: or
+        }]
+        // this.q uery.filter.groups = { $contains: this.group_ids };
       }
       await this.getItems();
       this.submitting = false;
@@ -992,7 +1133,7 @@ export class UserListComponent implements OnInit {
   }
   checkItemIsImage(string) {
     console.log("hahahaha ", string)
-
+    string = string.toLowerCase()
     if (string.includes('.png') || string.includes('.jpg') || string.includes('.jpeg') || string.includes('.gif')) {
       return true
     } else {

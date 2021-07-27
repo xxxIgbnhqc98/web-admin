@@ -86,6 +86,10 @@ export class DefaultLayoutComponent implements OnInit {
     this.configService.themaFilter = null
     this.configService.pageActiveShop = null
     this.configService.limitActiveShop = null
+
+    this.configService.userTypeFilter = null
+    this.configService.pageUser = null
+    this.configService.limitUser = null
       // try {
       // } catch (error) {
       //   this.logout()

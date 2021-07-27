@@ -131,4 +131,28 @@ export class ConfigService {
   set pageActiveShop(value: string) {
     localStorage.setItem('pageActiveShop', value);
   }
+
+
+  get userTypeFilter() {
+    return localStorage.getItem('userTypeFilter');
+  }
+
+  set userTypeFilter(value: string) {
+    localStorage.setItem('userTypeFilter', value);
+  }
+  get limitUser() {
+    return localStorage.getItem('limitUser');
+  }
+
+  set limitUser(value: string) {
+    localStorage.setItem('limitUser', value);
+
+  }
+  get pageUser() {
+    return localStorage.getItem('pageUser');
+  }
+
+  set pageUser(value: string) {
+    localStorage.setItem('pageUser', value);
+  }
 }

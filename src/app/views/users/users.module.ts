@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes.module';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DataTableModule } from '../../shared/data-table';
@@ -15,18 +14,22 @@ import { SharedModule } from './../../shared';
 import { AddUserComponent } from './add/add.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { LevelHistoryComponent } from './level-history/level-history.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     PipesModule.forRoot(),
     CommonModule,
     DataTableModule,
     LaddaModule,
     LazyLoadImagesModule,
     SharedModule,
+    NgMultiSelectDropDownModule,
     ClipboardModule,
     UsersRoutingModule,
     ModalModule.forRoot(),

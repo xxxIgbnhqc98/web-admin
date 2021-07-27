@@ -631,10 +631,10 @@
   "Deposit date": "Deposit date",
   "Deposit amount": "Deposit amount",
   "Exposure bulletin board": "Exposure bulletin board",
-  "Start date": "Start date",
-  "End date": "End date",
+  "Start date and End date": "Start date and End date",
   "Uniqueness": "Uniqueness",
   "Attachments": "Attachments",
+  "All group": "All",
   "nav": {
     "nav_items": [
       {

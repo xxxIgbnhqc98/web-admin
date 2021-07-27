@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api/api.service';
 import { Md5 } from 'ts-md5/dist/md5';
 import { Title } from '@angular/platform-browser';
@@ -43,16 +43,63 @@ export class AddUserComponent implements OnInit {
   depositor: string;
   contact: string;
   deposit_date: any;
-  deposit_amount: number;
+  deposit_amount: string;
   exposure_bulletin_board: string;
   start_date: any;
-  end_date: any;
   uniqueness: string;
   attachments: any;
+  settings: any = {}
+  public form_group: FormGroup;
+  rangeDate: any
+  // group_ids: any = [];
+  groups: any = [];
 
-
+  group_list: any = [
+    {
+      item_id: '1번',
+      item_text: '1번'
+    },
+    {
+      item_id: '2번',
+      item_text: '2번'
+    },
+    {
+      item_id: '3번',
+      item_text: '3번'
+    },
+    {
+      item_id: '4번',
+      item_text: '4번'
+    },
+    {
+      item_id: '5번',
+      item_text: '5번'
+    },
+    {
+      item_id: '6번',
+      item_text: '6번'
+    },
+    {
+      item_id: '7번',
+      item_text: '7번'
+    },
+    {
+      item_id: '8번',
+      item_text: '8번'
+    },
+    {
+      item_id: '9번',
+      item_text: '9번'
+    },
+    {
+      item_id: '10번',
+      item_text: '10번'
+    }
+  ]
+  groups_select: any[] = []
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
   @ViewChild('fileAttachments') fileAttachmentsElementRef: ElementRef;
+  @ViewChild('multiSelect') multiSelect;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -77,6 +124,47 @@ export class AddUserComponent implements OnInit {
         this.setData();
       }
     });
+    this.settings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: false,
+      selectAllText: 'Select all',
+      unSelectAllText: 'Unselect all',
+      allowSearchFilter: false,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 10,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No info',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
+    this.setForm();
+  }
+  resetForm() {
+    this.setForm();
+    this.multiSelect.toggleSelectAll();
+  }
+  setForm() {
+    this.form_group = new FormGroup({
+      name: new FormControl(this.group_list, Validators.required)
+    });
+  }
+  save() {
+    this.groups = []
+    this.form_group.value.name.forEach(element => {
+      this.groups.push(element)
+    });
+    console.log("group ", this.groups)
+  }
+  public onSave(items: any) {
+    this.save();
+  }
+  get f() {
+    return this.form_group.controls;
   }
 
 
@@ -144,9 +232,10 @@ export class AddUserComponent implements OnInit {
     this.deposit_amount = null;
     this.exposure_bulletin_board = null;
     this.start_date = null;
-    this.end_date = null;
     this.uniqueness = null;
     this.attachments = [];
+    this.rangeDate = []
+    this.groups = [];
     return {
       email: this.email,
       nickname: this.nickname,
@@ -165,9 +254,11 @@ export class AddUserComponent implements OnInit {
       deposit_amount: this.deposit_amount,
       exposure_bulletin_board: this.exposure_bulletin_board,
       start_date: this.start_date,
-      end_date: this.end_date,
       uniqueness: this.uniqueness,
-      attachments: this.attachments
+      attachments: this.attachments,
+      rangeDate: this.rangeDate,
+      groups: this.groups
+
     };
   }
 
@@ -189,20 +280,32 @@ export class AddUserComponent implements OnInit {
       this.group = data.group;
       this.depositor = data.depositor;
       this.contact = data.contact;
-      this.deposit_date = data.deposit_date !== null ?
-        new Date(parseInt(data.deposit_date)) : null;
+      this.deposit_date = data.deposit_date;
       this.deposit_amount = data.deposit_amount;
       this.exposure_bulletin_board = data.exposure_bulletin_board;
-      this.start_date = data.start_date !== null ?
-        new Date(parseInt(data.start_date)) : null;
-      this.end_date = data.end_date !== null ?
-        new Date(parseInt(data.end_date)) : null;
+      this.start_date = data.start_date;
       this.uniqueness = data.uniqueness;
       this.attachments = data.attachments ? data.attachments : [];
       this.post_limit_min = data.current_active_post + data.current_pending_post;
       this.paid_user_expiration_date = data.paid_user_expiration_date !== null ?
         new Date(parseInt(data.paid_user_expiration_date)) : new Date();
       this.isEditInAppUser = (data.login_type === 'INAPP') ? true : false
+      this.groups = data.groups;
+
+      if (this.groups) {
+        for (let index = 0; index < this.groups.length; index++) {
+          const group = this.groups[index];
+          try {
+            this.groups_select.push({
+              item_text: group,
+              item_id: group
+            })
+          } catch (err) {
+            this.groups = this.groups
+          }
+
+        }
+      }
       this.titleService.setTitle(this.nickname);
     } catch (err) {
       console.log('err: ', err);
@@ -224,20 +327,19 @@ export class AddUserComponent implements OnInit {
         //   return;
       }
       this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
-      this.deposit_date = moment(this.deposit_date).valueOf()
-      this.start_date = moment(this.start_date).valueOf()
-      this.end_date = moment(this.end_date).valueOf()
-
+      // this.deposit_date = moment(this.deposit_date).valueOf()
+      // this.start_date = moment(this.rangeDate[0]).valueOf()
+      this.uniqueness = this.memo
 
 
 
       if (this.password_show && this.editPass === true) {
         this.password = new Md5().appendStr(this.password_show).end();
-        const { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, password, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
-        await this.apiService.user.update(this.id, { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, password, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+        const { group, groups, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, uniqueness, attachments, password, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
+        await this.apiService.user.update(this.id, { group, groups, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, uniqueness, attachments, password, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
       } else {
-        const { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
-        await this.apiService.user.update(this.id, { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
+        const { group, groups, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, uniqueness, attachments, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date } = this;
+        await this.apiService.user.update(this.id, { group, groups, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, uniqueness, attachments, account_type, event_type, post_limit, show_shop_tag, memo, paid_user_expiration_date });
       }
 
 
@@ -255,8 +357,13 @@ export class AddUserComponent implements OnInit {
   async addItem(form: NgForm) {
     try {
       this.password = new Md5().appendStr(this.password_show).end();
-      const { group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, fullname, avatar, phone, account_type, event_type, email, password, username, nickname, post_limit, memo } = this;
-      await this.apiService.user.add({ group, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, end_date, uniqueness, attachments, avatar, phone, account_type, event_type: "B", post_limit, password, username, nickname, email: username, memo });
+      this.paid_user_expiration_date = moment(this.paid_user_expiration_date).valueOf()
+      // this.deposit_date = moment(this.deposit_date).valueOf()
+      // this.start_date = moment(this.rangeDate[0]).valueOf()
+      // this.end_date = moment(this.rangeDate[1]).valueOf()
+      this.uniqueness = this.memo
+      const { group, groups, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, uniqueness, attachments, fullname, avatar, phone, account_type, event_type, email, password, username, nickname, post_limit, memo } = this;
+      await this.apiService.user.add({ group, groups, depositor, contact, deposit_date, deposit_amount, exposure_bulletin_board, start_date, uniqueness, attachments, avatar, phone, account_type, event_type: "B", post_limit, password, username, nickname, email: username, memo });
       form.reset();
       this.alertSuccess();
       this.backToList();
@@ -337,7 +444,7 @@ export class AddUserComponent implements OnInit {
   }
   checkItemIsImage(string) {
     console.log("hahahaha ", string)
-
+    string = string.toLowerCase()
     if (string.includes('.png') || string.includes('.jpg') || string.includes('.jpeg') || string.includes('.gif')) {
       return true
     } else {
