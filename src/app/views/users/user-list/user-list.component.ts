@@ -903,21 +903,21 @@ export class UserListComponent implements OnInit {
         this.query.filter.account_type = this.account_type;
       }
       if (this.group_ids.length > 0) {
-        const or = []
-        for (let index = 0; index < this.group_ids.length; index++) {
-          const group = this.group_ids[index];
-          or.push(
-            {
-              groups: { $contains: [group] }
-            }
-          )
+        // const or = []
+        // for (let index = 0; index < this.group_ids.length; index++) {
+        //   const group = this.group_ids[index];
+        //   or.push(
+        //     {
+        //       groups: { $contains: [group] }
+        //     }
+        //   )
 
-        }
-        console.log("@#@ ", or)
-        this.query.filter.$and = [{
-          $or: or
-        }]
-        // this.q uery.filter.groups = { $contains: this.group_ids };
+        // }
+        // console.log("@#@ ", or)
+        // this.query.filter.$and = [{
+        //   $or: or
+        // }]
+        this.query.filter.group = { $in: this.group_ids };
       }
       await this.getItems();
       this.submitting = false;

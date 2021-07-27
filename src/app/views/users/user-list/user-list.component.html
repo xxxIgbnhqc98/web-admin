@@ -665,7 +665,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Group' | translate }}</span>
               </div>
-              <input readonly type="text" id="memoItem.group" class="form-control" name="memoItem.group" [value]="arrayGroupToText(memoItem.groups)">
+              <input readonly type="text" id="memoItem.group" class="form-control" name="memoItem.group" [(ngModel)]="memoItem.group">
             </div>
           </div>
           <div class="col-md-12 form-item">
