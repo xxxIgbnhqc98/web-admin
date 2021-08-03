@@ -648,6 +648,8 @@
   "Uniqueness": "특이사항",
   "Attachments": "이미지 및 파일",
   "All group": "전체",
+  "FAQ categories": "FAQ 카테고리",
+  "FAQ list": "FAQ 리스트",
   "nav": {
     "nav_items": [
       {
@@ -847,6 +849,23 @@
             "name": "푸시알림 내역",
             "icon": "fa fa-list-ol",
             "url": "/notification/sent"
+          }
+        ]
+      },
+      {
+        "name": "FAQ 카테고리",
+        "url": "/faq-category",
+        "icon": "fa fa-sticky-note-o",
+        "children": [
+          {
+            "name": "카테고리 보기",
+            "icon": "fa fa-list-ol",
+            "url": "/faq-category/faq-category-list"
+          },
+          {
+            "name": "추가하기",
+            "icon": "fa fa-plus",
+            "url": "/faq-category/add"
           }
         ]
       },

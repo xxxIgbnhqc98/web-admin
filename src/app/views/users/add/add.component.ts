@@ -385,7 +385,7 @@ export class AddUserComponent implements OnInit {
 
   async submitUpdate(form: NgForm) {
     this.submitting = true;
-    if (form.valid) {
+    if (form.valid && this.groups.length > 0) {
       await this.updateItem(form);
     } else {
       this.submitting = false;
@@ -395,7 +395,7 @@ export class AddUserComponent implements OnInit {
 
   async submitAdd(form: NgForm) {
     this.submitting = true;
-    if (form.valid) {
+    if (form.valid && this.groups.length > 0) {
       await this.addItem(form);
     } else {
       this.alertFormNotValid();

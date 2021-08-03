@@ -30,6 +30,8 @@ import { Recruit } from './crud/recruit';
 
 import { History } from './crud/history';
 import { Report } from './crud/report';
+import { Faq } from './crud/faq';
+import { FaqCategory } from './crud/faq_category';
 
 @Injectable()
 export class ApiService {
@@ -46,6 +48,8 @@ export class ApiService {
   fileUploader = new FileUploader(this);
   user = new User(this);
   thema = new Thema(this);
+  faq = new Faq(this);
+  faq_category = new FaqCategory(this);
   link = new Link(this);
   contact = new Contact(this);
   category = new Category(this);

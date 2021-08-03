@@ -634,6 +634,8 @@
   "Uniqueness": "Uniqueness",
   "Attachments": "Attachments",
   "All group": "All",
+  "FAQ categories": "FAQ categories",
+  "FAQ List": "FAQ List",
   "nav": {
     "nav_items": [
       {
@@ -849,6 +851,23 @@
             "name": "Forbidden word list",
             "icon": "fa fa-list-ol",
             "url": "/setting/forbidden-word-list"
+          }
+        ]
+      },
+      {
+        "name": "Faq Categories",
+        "url": "/faq-category",
+        "icon": "fa fa-sticky-note-o",
+        "children": [
+          {
+            "name": "List category",
+            "icon": "fa fa-list-ol",
+            "url": "/faq-category/faq-category-list"
+          },
+          {
+            "name": "Add",
+            "icon": "fa fa-plus",
+            "url": "/faq-category/add"
           }
         ]
       },

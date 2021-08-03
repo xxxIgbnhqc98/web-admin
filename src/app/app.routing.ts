@@ -109,6 +109,14 @@ export const routes: Routes = [
         loadChildren: './views/setting/setting.module#SettingModule'
       },
       {
+        path: 'faq-category',
+        loadChildren: './views/faq-category/faq-category.module#FaqCategoryModule'
+      },
+      {
+        path: 'faq',
+        loadChildren: './views/faq/faq.module#FaqModule'
+      },
+      {
         path: 'board',
         loadChildren: './views/board/board.module#BoardModule'
       },
