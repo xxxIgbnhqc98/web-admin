@@ -221,10 +221,10 @@ export class AddShopComponent implements OnInit {
   public handleAddressChange(address: any) {
     this.address = address.formatted_address
 
-    console.log("addressaddress long", address.geometry)
-    console.log("addressaddress lat", address.geometry.viewport.lc.g)
-    this.longitude = address.geometry.viewport.Eb.g
-    this.latitude = address.geometry.viewport.mc ? address.geometry.viewport.mc.g : address.geometry.viewport.lc.g
+    const locale = JSON.stringify(address.geometry.location)
+
+    this.longitude = JSON.parse(locale).lng
+    this.latitude = JSON.parse(locale).lat
 
     // Do some stuff
   }
