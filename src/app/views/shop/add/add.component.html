@@ -68,7 +68,7 @@
             <!-- ////////////////////// -->
             <div class="form-group">
               <label for="thema_id">{{'Thema' | translate}}</label>
-              <select (change)="updateCateList()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
+              <select (change)="updateCateListWhenChooseThema()" name="thema_id" [(ngModel)]="thema_id" id="thema_id"
                 class="form-control input-control">
                 <option *ngFor="let item of themas" value="{{ item.id }}">{{
                   item.name

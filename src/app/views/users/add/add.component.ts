@@ -39,6 +39,7 @@ export class AddUserComponent implements OnInit {
   password: any;
   password_show: string;
   editPass: boolean = false;
+  msgCheckUsername: string = null;
   group: string = '1번';
   depositor: string;
   contact: string;
@@ -382,7 +383,31 @@ export class AddUserComponent implements OnInit {
       this.submitting = false;
     }
   }
-
+  async checkUserName() {
+    this.msgCheckUsername = null
+    if (this.username.length < 2) {
+      this.msgCheckUsername = 'username must be 2 or more characters'
+    } else {
+      const data = await this.apiService.user.getList({
+        query: {
+          limit: 1,
+          fields: ['username'],
+          filter: {
+            username: this.username
+          }
+        }
+      });
+      if (data.length > 0) {
+        let msg;
+        (this.configService.lang === 'en') ? msg = '[EMAIL (ID)] already exists plz choose another email address'
+          : ((this.configService.lang === 'vn')
+            ? msg = '[EMAIL (ID)] đã tồn tại, vui lòng chọn [EMAIL (ID)] khác' :
+            msg = '[EMAIL (ID)] 는 이미 존재하는 아이디입니다. 다른 이메일을 등록해주세요')
+        this.msgCheckUsername = msg
+      }
+    }
+    console.log("this.msgCheckUsername ",this.msgCheckUsername)
+  }
   async submitUpdate(form: NgForm) {
     this.submitting = true;
     if (form.valid && this.groups.length > 0) {

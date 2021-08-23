@@ -176,7 +176,7 @@ export class AddFaqComponent implements OnInit {
     try {
       // this.password = new Md5().appendStr(this.password_show).end();
       // const { .faq., email, password } = this;
-      await this.apiService.faq.add({ name: this.name, faq_category_id: this.faq_category_id });
+      await this.apiService.faq.add({ name: this.name, faq_category_id: this.faq_category_id, content: this.content });
       form.reset();
       this.alertSuccess();
       this.backToList();

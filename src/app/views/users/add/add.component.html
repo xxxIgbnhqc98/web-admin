@@ -73,10 +73,18 @@
               <label for="username">{{'ID' | translate}}</label>
               <input class="form-control" id="username" [placeholder]="'enter email' | translate" type="text"
                 name="username" [(ngModel)]="username" required #usernameControl="ngModel"
-                [ngClass]="{'is-invalid' : usernameControl.errors?.required}" [disabled]="isEdit">
-              <div class="invalid-feedback" *ngIf="usernameControl.errors?.required">
+                [ngClass]="{'is-invalid' : usernameControl.errors?.required}" [disabled]="isEdit" (keyup)="checkUserName()">
+              <!-- <div class="invalid-feedback" *ngIf="usernameControl.errors?.required">
                 {{'Please enter email.' | translate}}
+              </div> -->
+              <div *ngIf="msgCheckUsername" style="
+              width: 100%;
+              margin-top: 0.25rem;
+              font-size: 80%;
+              color: #f86c6b;">
+                {{msgCheckUsername}}
               </div>
+              
             </div>
             <div class="form-group">
               <div *ngIf="!isEdit">

@@ -5,10 +5,11 @@
 
 export const environment = {
   // froalakey: 'jC1D2B2D4B1C2uF2C1G1I1A10C1A6A1A5G5hwcdywE-11zpF3A2E2ndv==', //bu
-  froalakey: 'FC1E1D2A1A3A7wB1B1B1D1E1D4A3B2A9D9jC-11wkwzonD-16xeD3ali==', //kor
+  // froalakey: 'FC1E1D2A1A3A7wB1B1B1D1E1D4A3B2A9D9jC-11wkwzonD-16xeD3ali==', //kor
+  froalakey: '9D4E3D3A5D3B3F-11D2C2D2G2C3B3A2D6C1A1rdC-7cC-21d1sA1uxu==', //kor-new
   production: true,
   // host: 'https://server.busandal31.net:9877',
-  host: 'https://server.kormassage.com:9887',
+  host: 'https://server.kormsg.com:9887',
   version: 'v1',
   firebase: {
     apiKey: "AIzaSyAQcH8BRO7NR9BtQDuUiNi2dWl-SX1pGBY",

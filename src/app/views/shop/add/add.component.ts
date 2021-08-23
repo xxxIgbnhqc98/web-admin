@@ -220,10 +220,11 @@ export class AddShopComponent implements OnInit {
   };
   public handleAddressChange(address: any) {
     this.address = address.formatted_address
+    console.log("addressaddress ", JSON.stringify(address.geometry.location))
+    const locale = JSON.stringify(address.geometry.location)
 
-    
-    this.longitude = address.geometry.viewport.Eb.g
-    this.latitude = address.geometry.viewport.mc ? address.geometry.viewport.mc.g : address.geometry.viewport.lc.g
+    this.longitude = JSON.parse(locale).lng
+    this.latitude = JSON.parse(locale).lat
     console.log("addressaddress long", this.longitude)
     console.log("addressaddress lat", this.latitude)
     // Do some stuff
@@ -608,6 +609,33 @@ export class AddShopComponent implements OnInit {
   backToThema() {
     this.router.navigate(['/thema/thema-list'], { relativeTo: this.route });
 
+  }
+  async updateCateListWhenChooseThema() {
+    const query: any = {
+      fields: ["$all"],
+      limit: 9999999,
+      filter: {
+        thema_id: this.thema_id
+      }
+    }
+    this.categories = await this.apiService.category.getList({
+      query
+    });
+    const dataTag = await this.apiService.tag.getList({
+      query
+    });
+    // this.cities = await this.apiService.city.getList({
+    //   query
+    // });
+    // this.listDistrict();
+    // this.listWard();
+    this.tags = dataTag.map(item => {
+      return {
+        item_id: item.id,
+        item_text: item.name
+      }
+    });
+    this.tags_select = []
   }
   async updateCateList() {
     const query: any = {
