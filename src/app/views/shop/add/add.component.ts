@@ -261,8 +261,8 @@ export class AddShopComponent implements OnInit {
     await this.confirmChooseShop()
     this.shop_id = shop.id;
     this.id = shop.id;
-    this.setData()
-
+    await this.setData()
+    this.state = null
 
 
     // this.tags_select = [
@@ -736,7 +736,7 @@ export class AddShopComponent implements OnInit {
       this.min_price = data.min_price;
       this.kakaolink_url = data.kakaolink_url;
       this.longitude = data.longitude;
-      this.latitude = data.longitude;
+      this.latitude = data.latitude;
       if (this.tag_ids) {
         for (let index = 0; index < this.tag_ids.length; index++) {
           const tag_id = this.tag_ids[index];
