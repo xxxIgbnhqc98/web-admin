@@ -25,7 +25,7 @@ declare var swal: any;
 export class ReportListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { 'post': ['$all', '$paranoid', { 'user': ['$all'] }] }, { 'review': ['$all', '$paranoid', { 'user': ['$all'] }] }, { 'user': ['$all'] }];
+  itemFields: any = ['$all', { 'post': ['$all', '$paranoid', { 'user': ['$all', '$paranoid'] }] }, { 'review': ['$all', '$paranoid', { 'user': ['$all', '$paranoid'] }] }, { 'user': ['$all', '$paranoid'] }];
   query: any = {
     filter: {
       report: { $gt: 0 }
@@ -308,6 +308,7 @@ export class ReportListComponent implements OnInit {
       const before12Hour: number = moment().subtract(1, 'days').valueOf()
       queryCountToday.filter.created_at_unix_timestamp = { $gte: before12Hour }
       this.record_today = await this.apiService.report.countToday({ query: queryCountToday })
+      console.log("chay toi day")
       this.ref.detectChanges();
       this.spinner.hide();
 

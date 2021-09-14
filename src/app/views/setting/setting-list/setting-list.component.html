@@ -52,11 +52,11 @@
         </data-table-column>
         <data-table-column [header]="'Value' | translate">
           <ng-template #dataTableCell let-item="item">
-            <button *ngIf="item.field !== 'PHONE_NUMBER' && item.field !== 'KAKAO_TALK_OPEN_CHAT_URL' && item.field !== 'LOCATION' && item.field !== 'EARNING_POINT' && item.field !== 'APP_ICON'&& item.field !== 'EVENT_SCRIPT' && item.field !== 'EVENT_SCRIPT_KR'" 
+            <button *ngIf="item.field !== 'APP_STORE_LINK' && item.field !== 'CH_PLAY_LINK' && item.field !== 'PHONE_NUMBER' && item.field !== 'KAKAO_TALK_OPEN_CHAT_URL' && item.field !== 'LOCATION' && item.field !== 'EARNING_POINT' && item.field !== 'APP_ICON'&& item.field !== 'EVENT_SCRIPT' && item.field !== 'EVENT_SCRIPT_KR'" 
               (click)="openModalEditValue(template, item)" class="btn btn-primary">
               <i>{{item.value ? (item.value | translate) : 'No info' | translate}}</i>
             </button>
-            <button *ngIf="item.field === 'PHONE_NUMBER' || item.field === 'KAKAO_TALK_OPEN_CHAT_URL' || item.field === 'EVENT_SCRIPT' || item.field === 'EVENT_SCRIPT_KR'" (click)="openModalEditValue(template, item)"
+            <button *ngIf="item.field === 'APP_STORE_LINK' || item.field === 'CH_PLAY_LINK' || item.field === 'PHONE_NUMBER' || item.field === 'KAKAO_TALK_OPEN_CHAT_URL' || item.field === 'EVENT_SCRIPT' || item.field === 'EVENT_SCRIPT_KR'" (click)="openModalEditValue(template, item)"
               class="btn btn-primary">
               <i>{{'Edit'| translate}}</i>
             </button>
@@ -109,7 +109,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item"
-            *ngIf="field !== 'PHONE_NUMBER' && field !== 'KAKAO_TALK_OPEN_CHAT_URL' && field !== 'SHOP_LIST_BOARD_COLUMN' && field !== 'EVENT_SCRIPT' && field !== 'EVENT_SCRIPT_KR' && field !== 'APP_SCRIPT'&& field !== 'APP_NAME' && field !== 'APP_ICON'">
+            *ngIf="field !== 'APP_STORE_LINK' && field !== 'CH_PLAY_LINK' && field !== 'PHONE_NUMBER' && field !== 'KAKAO_TALK_OPEN_CHAT_URL' && field !== 'SHOP_LIST_BOARD_COLUMN' && field !== 'EVENT_SCRIPT' && field !== 'EVENT_SCRIPT_KR' && field !== 'APP_SCRIPT'&& field !== 'APP_NAME' && field !== 'APP_ICON'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
@@ -127,7 +127,7 @@
             </div>
           </div>
           <div class="col-md-12 form-item"
-            *ngIf="field === 'PHONE_NUMBER' || field === 'KAKAO_TALK_OPEN_CHAT_URL' || field === 'SHOP_LIST_BOARD_COLUMN' || field === 'APP_SCRIPT'|| field === 'APP_NAME' || field === 'EVENT_SCRIPT' || field === 'EVENT_SCRIPT_KR'">
+            *ngIf="field === 'APP_STORE_LINK' || field === 'CH_PLAY_LINK' || field === 'PHONE_NUMBER' || field === 'KAKAO_TALK_OPEN_CHAT_URL' || field === 'SHOP_LIST_BOARD_COLUMN' || field === 'APP_SCRIPT'|| field === 'APP_NAME' || field === 'EVENT_SCRIPT' || field === 'EVENT_SCRIPT_KR'">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">{{ 'Value' | translate }}</span>
