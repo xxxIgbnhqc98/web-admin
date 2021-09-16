@@ -636,6 +636,33 @@
   "All group": "All",
   "FAQ categories": "FAQ categories",
   "FAQ List": "FAQ List",
+  "Shop tutorial": "Shop tutorial",
+  "Recruit tutorial": "Recruit tutorial",
+  "Course tutorial": "Course tutorial",
+  "Shop description tutorial": "Shop description tutorial",
+  "Shop reservation tutorial": "Shop reservation tutorial",
+  "Shop sns link tutorial": "Shop sns link tutorial",
+  "Shop upload image tutorial": "Shop upload image tutorial",
+  "Recruit sns link tutorial": "Recruit sns link tutorial",
+  "Course day discount tutorial": "Course day discount tutorial",
+  "Course day price tutorial": "Course day price tutorial",
+  "Course description tutorial": "Course description tutorial",
+  "Course full day discount tutorial": "Course full day discount tutorial",
+  "Course full day price tutorial": "Course full day price tutorial",
+  "Course night discount tutorial": "Course night discount tutorial",
+  "Course night price tutorial": "Course night price tutorial",
+  "Course running time tutorial": "Course running time tutorial",
+  "Course title tutorial": "Course title tutorial",
+  "Course unit tutorial": "Course unit tutorial",
+  "NIGHT": "night",
+  "DAY": "day",
+  "REJECTED": "Seller rejected",
+  "CANCELLED": "Buyer cancelled",
+  "COMPLETED": "Completed",
+  "MEET_AND_CASH": "Meet and cash",
+  "MEET_AND_TRANSFER": "Meet and transfer",
+  "MEET_AND_CARD": "Meet and card",
+  "IN_APP_PAYMENT": "In app payment",
   "nav": {
     "nav_items": [
       {
@@ -691,6 +718,18 @@
           {
             "name": "Event page",
             "url": "/board/event-page"
+          },
+          {
+            "name": "Shop tutorial",
+            "url": "/board/shop-page-tutorial"
+          },
+          {
+            "name": "Recruit tutorial",
+            "url": "/board/recruit-tutorial-page"
+          },
+          {
+            "name": "Course tutorial",
+            "url": "/board/course-tutorial-page"
           }
         ]
       },
@@ -771,6 +810,11 @@
             "url": "/shop/add"
           }
         ]
+      },
+      {
+        "name": "Reservation",
+        "url": "/reservation",
+        "icon": "fa fa-book"
       },
       {
         "name": "Post",

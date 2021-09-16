@@ -25,7 +25,7 @@ declare var swal: any;
 export class ShopListComponent implements OnInit {
   items: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   itemCount: number = 0;
-  itemFields: any = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+  itemFields: any = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
   query: any = {
     filter: {
       state: { $notIn: ["REJECTED", "EXPIRED"] }
@@ -86,6 +86,8 @@ export class ShopListComponent implements OnInit {
   themas: any;
   thema_id: string = (this.configService.themaFilter === null || this.configService.themaFilter === '') ? "null" : this.configService.themaFilter
   // 
+  item_more_info: any;
+  payment_menthod_text: string;
 
   @ViewChild('itemsTable') itemsTable: DataTable;
   @ViewChild('fileImage') fileImageElementRef: ElementRef;
@@ -247,9 +249,61 @@ export class ShopListComponent implements OnInit {
     console.log("@@@ ", this.link_map)
 
   }
+  parsePaymentMenthod(items: any) {
+    let string
+    for (let index = 0; index < items.length; index++) {
+      string = string + ", " + items[index];
+
+    }
+    return string
+  }
   openModalAddTime(template: TemplateRef<any>, item) {
     this.id_update = item.id
     this.expired_date = item.expired_date;
+    this.modalRef = this.modalService.show(template);
+  }
+  openModalPrices(template: TemplateRef<any>, item) {
+    this.item_more_info = item
+    let string = ''
+    for (let index = 0; index < item.payment_methods.length; index++) {
+      let text = item.payment_methods[index]
+      if (this.configService.lang === 'kr') {
+        if (text === 'MEET_AND_CASH') {
+          text = '만나서 현금결제'
+        }
+        if (text === 'MEET_AND_TRANSFER') {
+          text = '만나서 계좌이체'
+
+        }
+        if (text === 'MEET_AND_CARD') {
+          text = '만나서 카드결제'
+
+        }
+        if (text === 'IN_APP_PAYMENT') {
+          text = '앱에서 결제(준비중)'
+
+        }
+      } else {
+        if (text === 'MEET_AND_CASH') {
+          text = 'Meet and cash'
+        }
+        if (text === 'MEET_AND_TRANSFER') {
+          text = 'Meet and transfer'
+
+        }
+        if (text === 'MEET_AND_CARD') {
+          text = 'Meet and card'
+
+        }
+        if (text === 'IN_APP_PAYMENT') {
+          text = 'In app payment'
+
+        }
+      }
+      string = string + ", " + text;
+
+    }
+    this.payment_menthod_text = string
     this.modalRef = this.modalService.show(template);
   }
   async submitAddTime(form: NgForm) {
@@ -689,9 +743,9 @@ export class ShopListComponent implements OnInit {
     this.query.page = page;
 
     if (this.thema_id !== "null") {
-      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "$filter": { "thema_id": this.thema_id } }, { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all"] }, { "category": ["$all", { "$filter": { "thema_id": this.thema_id } }, { "thema": ["$all"] }] }, { "events": ["$all"] }];
     } else {
-      this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
 
     }
     // this.query.filter = {
@@ -943,7 +997,7 @@ export class ShopListComponent implements OnInit {
         state: { $notIn: ["REJECTED", "EXPIRED"] }
       }
     }
-    this.itemFields = ['$all', { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+    this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
 
     if (this.searchRef) { clearTimeout(this.searchRef); }
     this.searchRef = setTimeout(async () => {
@@ -965,12 +1019,12 @@ export class ShopListComponent implements OnInit {
         if (this.keyword.length === 36) {
           this.query.filter.id = this.keyword;
         } else {
-          this.itemFields = ['$all', { "user": ["$all", { "$filter": { username: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+          this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { username: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
         }
       } else if (this.option_search === 'nickname') {
-        this.itemFields = ['$all', { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+        this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
       } else if (this.option_search === 'gmail') {
-        this.itemFields = ['$all', { "user": ["$all", { "$filter": { email: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+        this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { email: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
       } else if (this.option_search === 'title') {
         this.query.filter.title = { $iLike: `%${this.keyword}%` }
       } else if (this.option_search === 'phone_number') {

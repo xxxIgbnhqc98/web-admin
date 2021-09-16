@@ -335,7 +335,7 @@ export class recommendationAreaListComponent implements OnInit {
     // }
     if (this.filter_selected !== "null") {
       this.query.filter.is_random_20_shop = (this.filter_selected === "true") ? true : false;
-    }else{
+    } else {
       this.query.filter.is_random_20_shop = undefined
     }
     this.query.offset = offset;
@@ -503,10 +503,23 @@ export class recommendationAreaListComponent implements OnInit {
       ids.push(row.item.id);
     });
     try {
-      await this.apiService.shop.setReShop(state, ids);
-      this.itemsTable.selectAllCheckbox = false;
-      this.itemsTable.reloadItems();
-      this.alertSuccess();
+      if (state) {
+        if (this.count_random_20_shop + ids.length < 50) {
+          await this.apiService.shop.setReShop(state, ids);
+          this.itemsTable.selectAllCheckbox = false;
+          this.itemsTable.reloadItems();
+          this.alertSuccess();
+        } else {
+          this.alertLimit();
+        }
+      } else {
+        await this.apiService.shop.setReShop(state, ids);
+        this.itemsTable.selectAllCheckbox = false;
+        this.itemsTable.reloadItems();
+        this.alertSuccess();
+      }
+
+
     } catch (err) {
       this.alertErrorFromServer(err.error.message);
     } finally {
@@ -687,7 +700,7 @@ export class recommendationAreaListComponent implements OnInit {
   }
   alertLimit() {
     return swal({
-      title: "Only a maximum of 20 shops can be selected",
+      title: "Only a maximum of 50 shops can be selected",
       type: 'warning',
       timer: 2000,
     });

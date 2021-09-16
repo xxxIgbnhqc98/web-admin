@@ -32,6 +32,8 @@ import { History } from './crud/history';
 import { Report } from './crud/report';
 import { Faq } from './crud/faq';
 import { FaqCategory } from './crud/faq_category';
+import { Reservation } from './crud/reservation';
+import { Course } from './crud/course';
 
 @Injectable()
 export class ApiService {
@@ -52,6 +54,8 @@ export class ApiService {
   faq_category = new FaqCategory(this);
   link = new Link(this);
   contact = new Contact(this);
+  reservation = new Reservation(this);
+
   category = new Category(this);
   shop = new Shop(this);
   tag = new Tag(this);
@@ -73,5 +77,6 @@ export class ApiService {
   pushNotification = new PushNotification(this);
   history = new History(this);
   report = new Report(this);
+  course = new Course(this);
 
 }

@@ -110,6 +110,12 @@ export class AddShopComponent implements OnInit {
   old_shop: any
   latitude: number;
   longitude: number;
+  shop_province: string
+  shop_district: string
+  subway_location: string
+  subway_line: string
+  subway_station: string
+  payment_methods: any
   public form_tag: FormGroup;
 
   @ViewChild('fileAvatar') fileAvatarElementRef: ElementRef;
@@ -194,6 +200,7 @@ export class AddShopComponent implements OnInit {
   }
   lastShopSubmitSingerId: string;
   shop_id: string;
+  courses: any;
   listShop: any = [];
   listShopFiltered: any = [];
   option_search: string = 'title';
@@ -716,7 +723,7 @@ export class AddShopComponent implements OnInit {
   async setData() {
     try {
       let data = await this.apiService.shop.getItem(this.id, {
-        query: { fields: ['$all', { "category": ["$all"] }] }
+        query: { fields: ['$all', { "category": ["$all"] }, { "courses": ["$all", { "prices": ["$all"] }] }] }
       });
       this.state = data.state
 
@@ -737,6 +744,33 @@ export class AddShopComponent implements OnInit {
       this.kakaolink_url = data.kakaolink_url;
       this.longitude = data.longitude;
       this.latitude = data.latitude;
+      this.courses = data.courses.map(item => {
+        const prices = item.prices.map(item => {
+          return {
+            id: '1',
+            course_id: '1',
+            name: item.name,
+            price: item.price,
+            discount: item.discount,
+          }
+        });
+        return {
+          id: '1',
+          title: item.title,
+          running_time: item.running_time,
+          description: item.description,
+          recommended: item.recommended,
+          unit: item.unit,
+          prices
+        }
+      });
+      this.shop_province = data.shop_province
+      this.shop_district = data.shop_district
+      this.subway_location = data.subway_location
+      this.subway_line = data.subway_line
+      this.subway_station = data.subway_station
+      this.payment_methods = data.payment_methods
+      console.log("course ne ", this.courses)
       if (this.tag_ids) {
         for (let index = 0; index < this.tag_ids.length; index++) {
           const tag_id = this.tag_ids[index];
@@ -788,14 +822,14 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      let { longitude, latitude, short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_api_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      let { shop_province, shop_district, subway_location, subway_line, subway_station, payment_methods, longitude, latitude, short_description, min_price, kakaolink_url, category_id, thumbnails, badge_text, badge_color, theme_color, geolocation_api_type, description, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
       if (badge_color) {
         if (badge_color.match('rgba')) {
           badge_color = this.rgb2hex(badge_color)
         }
       }
       console.log("@#@#@#@ ", badge_color)
-      await this.apiService.shop.update(this.id, { longitude, latitude, short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_api_type: geolocation_api_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
+      await this.apiService.shop.update(this.id, { shop_province, shop_district, subway_location, subway_line, subway_station, payment_methods, longitude, latitude, short_description, min_price, kakaolink_url, category_id, thumbnails, theme_color, geolocation_api_type: geolocation_api_type, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, user_id: this.user_id });
       this.alertSuccess();
       this.backToList();
       form.reset();
@@ -850,13 +884,16 @@ export class AddShopComponent implements OnInit {
       this.images = this.thumbnails.map(item => {
         return item.replace("300", "1024")
       });
-      let { longitude, latitude, short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_api_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
+      let { shop_province, shop_district, subway_location, subway_line, subway_station, payment_methods, longitude, latitude, short_description, min_price, kakaolink_url, category_id, badge_text, badge_color, theme_color, geolocation_api_type, description, thumbnails, tag_ids, title, images, opening_hours, contact_phone, address, address_2, city_id, district_id, ward_id } = this;
       if (badge_color) {
         if (badge_color.match('rgba')) {
           badge_color = this.rgb2hex(badge_color)
         }
       }
-      await this.apiService.shop.add({ longitude, latitude, short_description, min_price, kakaolink_url, category_id, theme_color, geolocation_api_type: geolocation_api_type, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
+      const shop = await this.apiService.shop.add({ shop_province, shop_district, subway_location, subway_line, subway_station, payment_methods, longitude, latitude, short_description, min_price, kakaolink_url, category_id, theme_color, geolocation_api_type: geolocation_api_type, thumbnails, description, tag_ids, title, images, badge_text, badge_color, opening_hours, contact_phone, address, address_2, verified: true, user_id: this.user_id });
+      console.log("shop ne ", shop.shop.id)
+      await this.apiService.course.addCourses(shop.shop.id, { courses: this.courses });
+
       form.reset();
       this.alertSuccess();
       if (this.params_thema_id) {

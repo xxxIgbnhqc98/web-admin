@@ -8,6 +8,9 @@ import { CompanyInfoComponent } from './company-info/company-info.component';
 import { JumpUpPageComponent } from './jump-up-page/jump-up-page.component';
 import { LevelPageComponent } from './level-page/level-page.component';
 import { EventPageComponent } from './event-page/event-page.component';
+import { ShopPageTutorialComponent } from './shop-page-tutorial/shop-page-tutorial.component';
+import { RecruitTutorialPageComponent } from './recruit-tutorial-page/recruit-tutorial-page.component';
+import { CourseTutorialPageComponent } from './course-tutorial-page/course-tutorial-page.component';
 const routes: Routes = [
   {
     path: '',
@@ -74,6 +77,27 @@ const routes: Routes = [
         component: EventPageComponent,
         data: {
           title: 'Level page'
+        }
+      },
+      {
+        path: 'shop-page-tutorial',
+        component: ShopPageTutorialComponent,
+        data: {
+          title: 'Shop tutorial page'
+        }
+      },
+      {
+        path: 'recruit-tutorial-page',
+        component: RecruitTutorialPageComponent,
+        data: {
+          title: 'Recruit tutorial page'
+        }
+      },
+      {
+        path: 'course-tutorial-page',
+        component: CourseTutorialPageComponent,
+        data: {
+          title: 'Course tutorial page'
         }
       }
     ]

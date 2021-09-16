@@ -135,6 +135,10 @@ export const routes: Routes = [
       {
         path: 'bulletin',
         loadChildren: './views/bulletin/bulletin.module#BulletinModule'
+      },
+      {
+        path: 'reservation',
+        loadChildren: './views/reservation/reservation.module#ReservationModule'
       }
     ]
   }

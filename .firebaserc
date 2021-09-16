@@ -1,6 +1,7 @@
 {
   "projects": {
     "kor": "massage-813ec",
-    "com" "kormassagecom"
+    "com":"kormassagecom",
+    "kormassagedev":"kormassagedev"
   }
 }

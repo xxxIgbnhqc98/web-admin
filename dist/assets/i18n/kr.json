@@ -650,6 +650,45 @@
   "All group": "전체",
   "FAQ categories": "FAQ 카테고리",
   "FAQ list": "FAQ 리스트",
+  "Shop tutorial": "상점 이용안내",
+  "Recruit tutorial": "구인 이용안내",
+  "Course tutorial": "코스 이용안내",
+  "Shop description tutorial": "상점 세부내역 이용안내",
+  "Shop reservation tutorial": "상점 예약 이용안내",
+  "Shop sns link tutorial": "상점 SNS링크 이용안내",
+  "Shop upload image tutorial": "상점 이미지업로드 이용안내",
+  "Recruit sns link tutorial": "구인 SNS링크 이용안내",
+  "Course day discount tutorial": "코스 주간 할인 이용안내",
+  "Course day price tutorial": "코스 주간 금액 이용얀내",
+  "Course description tutorial": "코스 세부내역 이용안내",
+  "Course full day discount tutorial": "코스 전체 주간 할인 이용안내",
+  "Course full day price tutorial": "코스 전체 주간 금액 이용안내",
+  "Course night discount tutorial": "코스 야간 할인 이용안내",
+  "Course night price tutorial": "코스 야간 금액 이용안내",
+  "Course running time tutorial": "코스 이용시간 이용안내",
+  "Course title tutorial": "코스 제목 이용안내",
+  "Course unit tutorial": "코스 단가 이용안내",
+  "NIGHT": "야간",
+  "DAY": "주간",
+  "REJECTED": "상점주 예약거절",
+  "CANCELLED": "회원 예약취소",
+  "COMPLETED": "Completed",
+  "MEET_AND_CASH": "만나서 현금결제",
+  "MEET_AND_TRANSFER": "만나서 계좌이체",
+  "MEET_AND_CARD": "만나서 카드결제",
+  "IN_APP_PAYMENT": "앱에서 결제(준비중)",
+  "Shop province": "상점 광역시/도",
+  "Shop district": "상점 시/군/구",
+  "Subway location": "역주변",
+  "Subway line": "노선도",
+  "Subway station": "지하철역",
+  "Payment methods": "결제방법",
+  "More info": "더보기",
+  "Seller": "상점주",
+  "Services": "서비스",
+  "Completed": "완료",
+  "Payment method": "결제방법",
+  "Booking date": "예약일자",
   "nav": {
     "nav_items": [
       {
@@ -705,6 +744,18 @@
           {
             "name": "이벤트 페이지",
             "url": "/board/event-page"
+          },
+          {
+            "name": "상점 이용안내",
+            "url": "/board/shop-page-tutorial"
+          },
+          {
+            "name": "구인 이용안내",
+            "url": "/board/recruit-tutorial-page"
+          },
+          {
+            "name": "코스 이용안내",
+            "url": "/board/course-tutorial-page"
           }
         ]
       },
@@ -785,6 +836,11 @@
             "url": "/shop/add"
           }
         ]
+      },
+      {
+        "name": "Reservation",
+        "url": "/reservation",
+        "icon": "fa fa-book"
       },
       {
         "name": "게시판",

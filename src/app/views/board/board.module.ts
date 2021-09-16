@@ -16,6 +16,9 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { JumpUpPageComponent } from './jump-up-page/jump-up-page.component';
 import { LevelPageComponent } from './level-page/level-page.component';
 import { EventPageComponent } from './event-page/event-page.component';
+import { ShopPageTutorialComponent } from './shop-page-tutorial/shop-page-tutorial.component';
+import { RecruitTutorialPageComponent } from './recruit-tutorial-page/recruit-tutorial-page.component';
+import { CourseTutorialPageComponent } from './course-tutorial-page/course-tutorial-page.component';
 
 @NgModule({
   imports: [
@@ -30,7 +33,7 @@ import { EventPageComponent } from './event-page/event-page.component';
     TabsModule.forRoot(),
     SharedModule
   ],
-  declarations: [EventPageComponent, LevelPageComponent, HowToUseComponent, JumpUpPageComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
+  declarations: [CourseTutorialPageComponent, RecruitTutorialPageComponent, ShopPageTutorialComponent, EventPageComponent, LevelPageComponent, HowToUseComponent, JumpUpPageComponent, CompanyInfoComponent, PolicyComponent, TermsOfServiceComponent, LocationBasedServicesComponent],
   providers: [
 
   ]
