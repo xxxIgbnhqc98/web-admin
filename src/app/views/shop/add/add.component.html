@@ -28,7 +28,7 @@
                 </div>
                 <div id="singerShopListWrapper" style="overflow: scroll; height: 200px;">
                   <div [id]="item.id" *ngFor="let item of listShopFiltered"
-                    (click)="onShopClick(item);onChangeShopName()"
+                    (click)="onShopClick(item);"
                     [ngClass]="this.lastShopSubmitSingerId === item.id ? 'checked' : ''">
                     <img height="80px" width="80px" style="object-fit: cover; margin: 5px;"
                       [src]="item.images ? item.images[0] : thumbDefault"

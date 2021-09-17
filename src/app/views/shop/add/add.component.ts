@@ -270,13 +270,12 @@ export class AddShopComponent implements OnInit {
     this.id = shop.id;
     await this.setData()
     this.state = null
-
-
     // this.tags_select = [
     //   {item_text: "Parking lot", item_id: "1558a660-bf58-11ea-a3ea-5d37b467b530"},
     //   {item_text: "Wifi", item_id: "184abd40-bf58-11ea-a3ea-5d37b467b530"},
     //   {item_text: "Credit card accepted", item_id: "096d0b70-bf58-11ea-a3ea-5d37b467b530"}
     // ];
+    console.log("hazz ", this.tags)
     console.log("@@@@@tags_select ", this.tags_select)
     this.setForm();
     document.getElementById("myDropdownShop").classList.remove("show");
@@ -631,11 +630,6 @@ export class AddShopComponent implements OnInit {
     const dataTag = await this.apiService.tag.getList({
       query
     });
-    // this.cities = await this.apiService.city.getList({
-    //   query
-    // });
-    // this.listDistrict();
-    // this.listWard();
     this.tags = dataTag.map(item => {
       return {
         item_id: item.id,
@@ -731,7 +725,7 @@ export class AddShopComponent implements OnInit {
 
       this.user_id = data.user_id
       this.thema_id = data.category.thema_id
-      this.updateCateList();
+      await this.updateCateList();
       this.category_id = data.category_id;
       this.tag_ids = data.tag_ids;
       this.theme_color = data.theme_color;
@@ -744,6 +738,42 @@ export class AddShopComponent implements OnInit {
       this.kakaolink_url = data.kakaolink_url;
       this.longitude = data.longitude;
       this.latitude = data.latitude;
+      this.tags_select = []
+      console.log("tag ne ", data.tag_ids)
+      if (this.tag_ids) {
+        const query: any = {
+          fields: ["$all"],
+          limit: 9999999,
+          filter: {
+            id: { $in: this.tag_ids }
+          }
+        }
+        const dataTagSelect = await this.apiService.tag.getList({
+          query
+        });
+        this.tags_select = dataTagSelect.map(item => {
+          return {
+            item_text: item.name,
+            item_id: item.id
+          }
+        });
+        // for (let index = 0; index < data.tag_ids.length; index++) {
+        //   const tag_id = data.tag_ids[index];
+        //   try {
+        //     const tag = await this.apiService.tag.getItem(tag_id, {
+        //       query: { fields: ['$all'] }
+        //     });
+        //     this.tags_select.push({
+        //       item_text: tag.name,
+        //       item_id: tag_id
+        //     })
+        //   } catch (err) {
+        //     this.tags_select = this.tags_select
+        //   }
+
+        // }
+      }
+      console.log("@#@#", this.tags_select)
       this.courses = data.courses.map(item => {
         const prices = item.prices.map(item => {
           return {
@@ -770,25 +800,7 @@ export class AddShopComponent implements OnInit {
       this.subway_line = data.subway_line
       this.subway_station = data.subway_station
       this.payment_methods = data.payment_methods
-      console.log("course ne ", this.courses)
-      if (this.tag_ids) {
-        for (let index = 0; index < this.tag_ids.length; index++) {
-          const tag_id = this.tag_ids[index];
-          try {
-            const tag = await this.apiService.tag.getItem(tag_id, {
-              query: { fields: ['$all'] }
-            });
-            this.tags_select.push({
-              item_text: tag.name,
-              item_id: tag_id
-            })
-          } catch (err) {
-            this.tags_select = this.tags_select
-          }
 
-        }
-      }
-      console.log("@#@#", this.tags_select)
       this.title = data.title;
       this.images = data.images;
       if (!this.images) {
