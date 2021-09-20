@@ -97,7 +97,32 @@ export class FileUploader extends CrudAPI<IFileUploader> {
     console.log("@@@ chay vao ", result)
     return result;
   }
-
+  async uploadExcel(file: File, options?: CrudOptions) {
+    options = _.merge({}, this.options, options);
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    let url
+    url = `shop/import_excel`
+    const setting = {
+      method: 'POST',
+      uri: this.api.configService.apiUrl(url),
+      params: options.query,
+      headers: _.merge({}, {
+        'Authorization': this.api.configService.token
+      }, options.headers),
+      body: formData,
+      responseType: 'json'
+    };
+    const res: any = await this.exec(setting);
+    let result
+    if (res.body.results) {
+      result = res.body.results.object;
+    } else {
+      result = res.body
+    }
+    console.log("@@@ chay vao ", result)
+    return result;
+  }
   async uploadVideo(video: File, options?: CrudOptions) {
     options = _.merge({}, this.options, options);
     const formData: FormData = new FormData();

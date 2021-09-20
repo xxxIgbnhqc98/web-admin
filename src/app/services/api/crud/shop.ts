@@ -389,4 +389,25 @@ export class Shop extends CrudAPI<IShop> {
     }
     return true;
   }
+  async downLoadExcel(options?: CrudOptions){
+    options = _.merge({}, this.options, options);
+    console.log("@#$%^ qr", options.query)
+    const setting = {
+      method: 'GET',
+      uri: this.apiUrl('download_excel'),
+      params: options.query,
+      headers: _.merge({}, {
+        'Authorization': this.api.configService.token
+      }, options.headers),
+      responseType: 'json',
+      decode: options.decodeUrl
+    };
+    const hashedQuery = hash(options.query);
+    this.activeHashQuery = hashedQuery;
+    this.activeQuery = options.query;
+    const res = await this.exec(setting);
+    const results: any = res;
+    const rows = results.body.results.object
+    return rows;
+  }
 }

@@ -134,9 +134,45 @@ export class CourseTutorialPageComponent implements OnInit {
     try {
       this.submitting = true;
       let id, content;
+      if (type === 'COURSE_DAY_DISCOUNT_TUTORIAL') {
+        id = this.id_day_discount
+        content = this.content_day_discount
+      }
+      if (type === 'COURSE_DAY_PRICE_TUTORIAL') {
+        id = this.id_day_price
+        content = this.content_day_price
+      }
       if (type === 'COURSE_DESCRIPTION_TUTORIAL') {
         id = this.id_description
         content = this.content_description
+      }
+      if (type === 'COURSE_FULL_DAY_DISCOUNT_TUTORIAL') {
+        id = this.id_fullday_discount
+        content = this.content_fullday_discount
+      }
+      if (type === 'COURSE_FULL_DAY_PRICE_TUTORIAL') {
+        id = this.id_fullday_price
+        content = this.content_fullday_price
+      }
+      if (type === 'COURSE_NIGHT_DISCOUNT_TUTORIAL') {
+        id = this.id_night_discount
+        content = this.content_night_discount
+      }
+      if (type === 'COURSE_NIGHT_PRICE_TUTORIAL') {
+        id = this.id_night_price
+        content = this.content_night_price
+      }
+      if (type === 'COURSE_RUNNING_TIME_TUTORIAL') {
+        id = this.id_running_time
+        content = this.content_running_time
+      }
+      if (type === 'COURSE_TITLE_TUTORIAL') {
+        id = this.id_title
+        content = this.content_title
+      }
+      if (type === 'COURSE_UNIT_TUTORIAL') {
+        id = this.id_unit
+        content = this.content_unit
       }
       if (id && console) {
         await this.apiService.content.update(id, { id, content });

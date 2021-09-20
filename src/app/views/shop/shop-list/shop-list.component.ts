@@ -48,6 +48,7 @@ export class ShopListComponent implements OnInit {
   link_map: string;
   images_event: any = []
   loadingUploadImage: boolean = false;
+  loadingUploadExcel: boolean = false;
   title_event: string;
   description: string;
   shop_id_event: string;
@@ -162,6 +163,9 @@ export class ShopListComponent implements OnInit {
       });
     }
     return title;
+  }
+  mathRoundPrice(price: number) {
+    return Math.round(price)
   }
   closeDropdownUser() {
     // document.getElementById("myDropdown").classList.remove("show");
@@ -1117,7 +1121,47 @@ export class ShopListComponent implements OnInit {
       console.log('error: ', error);
     }
   }
+  async downloadExcel() {
+    try {
+      this.loadingExportExcel = true;
+      const data = await this.apiService.shop.downLoadExcel({
+        query: {
+          filter: { "state": { "$notIn": ["REJECTED", "EXPIRED"] } },
+          limit: 999999,
+          fields: ["$all", { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }],
+          order: [["geolocation_api_type", "DESC"]]
+        }
+      });
+      console.log("@#@#@ ", data)
+      window.open(data.url, '_blank');
+      // this.excelService.exportAsExcelFile(data_map, `category_list`);
+      this.loadingExportExcel = false;
+    } catch (error) {
+      this.loadingExportExcel = false;
+      console.log('error: ', error);
+    }
+  }
+  uploadExcel(fileInput) {
+    this.loadingUploadExcel = true;
 
+    try {
+      console.log("haha")
+
+      const files = fileInput.target.files;
+      const file = files[0];
+      const result = this.apiService.fileUploader.uploadExcel(file)
+        .then(result => {
+          this.alertSuccess();
+          this.itemsTable.reloadItems();
+          // this.images_event.push(result.url)
+          this.loadingUploadExcel = false;
+        });
+    } catch (err) {
+      this.alertFailed();
+
+      console.log('Không úp được hình');
+    }
+  }
   getDateFromUnixTimestamp(unixtimestamp: any) {
     return moment(parseInt(unixtimestamp)).format("YYYY-MM-DD")
   }
