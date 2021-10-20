@@ -663,8 +663,13 @@
   "MEET_AND_TRANSFER": "Meet and transfer",
   "MEET_AND_CARD": "Meet and card",
   "IN_APP_PAYMENT": "In app payment",
-  "Uploading excel":"Uploading excel",
-  "Download excel":"Download excel",
+  "Uploading excel": "Uploading excel",
+  "Download excel": "Download excel",
+  "Province": "Province",
+  "District": "District",
+  "Subway location": "Subway location",
+  "Subway line": "Subway line",
+  "Subway station": "Subway station",
   "nav": {
     "nav_items": [
       {

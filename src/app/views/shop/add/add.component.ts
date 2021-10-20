@@ -1839,6 +1839,7 @@ export class AddShopComponent implements OnInit {
   }
   updateDistrict() {
     const filter = this.provinces.filter((data: any) => data.name === this.shop_province)[0]
+    console.log("@#$@$ ", this.shop_province)
     this.districtSelect = filter.districtList
   }
   updateSubwayLine() {
@@ -2313,14 +2314,18 @@ export class AddShopComponent implements OnInit {
       this.user_id = data.user_id
       this.thema_id = data.category.thema_id
       this.shop_province = data.shop_province;
-      await this.updateDistrict()
+      if (this.shop_province) {
+        await this.updateDistrict()
+      }
       this.shop_district = data.shop_district;
       this.subway_location = data.subway_location;
-      await this.updateSubwayLine()
-
+      if (this.subway_location) {
+        await this.updateSubwayLine()
+      }
       this.subway_line = data.subway_line;
-      await this.updateSubwayStation()
-
+      if (this.subway_line) {
+        await this.updateSubwayStation()
+      }
       this.subway_station = data.subway_station;
 
       await this.updateCateList();

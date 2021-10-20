@@ -679,9 +679,6 @@
   "IN_APP_PAYMENT": "앱에서 결제(준비중)",
   "Shop province": "상점 광역시/도",
   "Shop district": "상점 시/군/구",
-  "Subway location": "역주변",
-  "Subway line": "노선도",
-  "Subway station": "지하철역",
   "Payment methods": "결제방법",
   "More info": "더보기",
   "Seller": "상점주",
@@ -691,6 +688,11 @@
   "Booking date": "예약일자",
   "Upload excel":"엑셀 업로드",
   "Download excel":"엑셀 다운로드",
+  "Province": "광역시/도",
+  "District": "시/군/구",
+  "Subway location": "지하철 지역",
+  "Subway line": "노선도",
+  "Subway station": "지하철역",
   "nav": {
     "nav_items": [
       {
