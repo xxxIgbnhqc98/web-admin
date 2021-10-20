@@ -248,6 +248,52 @@
               <input class="form-control" id="address_2" [placeholder]="'Enter detailed address' | translate"
                 type="text" name="address_2" [(ngModel)]="address_2">
             </div>
+            <div class="form-group">
+              <label for="shop_province">{{'Province' | translate}}</label>
+              <select (change)="updateDistrict()" name="shop_province" [(ngModel)]="shop_province" id="shop_province"
+                class="form-control input-control">
+                <option *ngFor="let item of provinces" value="{{ item.name }}">{{
+                  item.name
+                  }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="shop_district">{{'District' | translate}}</label>
+              <select name="shop_district" [(ngModel)]="shop_district" id="shop_district"
+                class="form-control input-control">
+                <option *ngFor="let item of districtSelect" value="{{ item }}">{{
+                  item
+                  }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subway_location">{{'Subway location' | translate}}</label>
+              <select (change)="updateSubwayLine()" name="subway_location" [(ngModel)]="subway_location" id="subway_location"
+                class="form-control input-control">
+                <option *ngFor="let item of station" value="{{ item.name }}">{{
+                  item.name
+                  }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subway_line">{{'Subway line' | translate}}</label>
+              <select (change)="updateSubwayStation()" name="subway_line" [(ngModel)]="subway_line" id="subway_line"
+                class="form-control input-control">
+                <option *ngFor="let item of stationLineList" value="{{ item.name }}">{{
+                  item.name
+                  }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subway_station">{{'Subway station' | translate}}</label>
+              <select name="subway_station" [(ngModel)]="subway_station" id="subway_station"
+                class="form-control input-control">
+                <option *ngFor="let item of stationSubwayList" value="{{ item }}">{{
+                  item
+                  }}</option>
+              </select>
+            </div>
+
           </div>
         </div>
       </div>

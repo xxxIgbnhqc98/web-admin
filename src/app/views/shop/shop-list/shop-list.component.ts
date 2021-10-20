@@ -747,9 +747,7 @@ export class ShopListComponent implements OnInit {
     this.query.page = page;
 
     if (this.thema_id !== "null") {
-      this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all"] }, { "category": ["$all", { "$filter": { "thema_id": this.thema_id } }, { "thema": ["$all"] }] }, { "events": ["$all"] }];
-    } else {
-      this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all"] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      this.itemFields[2].category.push({ "$filter": { "thema_id": this.thema_id } })
 
     }
     // this.query.filter = {

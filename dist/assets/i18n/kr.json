@@ -689,6 +689,8 @@
   "Completed": "완료",
   "Payment method": "결제방법",
   "Booking date": "예약일자",
+  "Upload excel":"엑셀 업로드",
+  "Download excel":"엑셀 다운로드",
   "nav": {
     "nav_items": [
       {
