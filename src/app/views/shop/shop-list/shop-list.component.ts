@@ -1017,21 +1017,24 @@ export class ShopListComponent implements OnInit {
       //     this.query.filter.title = { $iLike: `%${this.keyword}%` }
       //   }
       // }
-      if (this.option_search === 'id' && this.keyword) {
-        if (this.keyword.length === 36) {
-          this.query.filter.id = this.keyword;
-        } else {
-          this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { username: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+      if (this.keyword) {
+        if (this.option_search === 'id') {
+          if (this.keyword.length === 36) {
+            this.query.filter.id = this.keyword;
+          } else {
+            this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { username: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+          }
+        } else if (this.option_search === 'nickname') {
+          this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+        } else if (this.option_search === 'gmail') {
+          this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { email: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
+        } else if (this.option_search === 'title') {
+          this.query.filter.title = { $iLike: `%${this.keyword}%` }
+        } else if (this.option_search === 'phone_number') {
+          this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
         }
-      } else if (this.option_search === 'nickname') {
-        this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { nickname: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
-      } else if (this.option_search === 'gmail') {
-        this.itemFields = ['$all', { "courses": ["$all", { "prices": ["$all"] }] }, { "user": ["$all", { "$filter": { email: { $iLike: `%${this.keyword}%` } } }] }, { "category": ["$all", { "thema": ["$all"] }] }, { "events": ["$all"] }];
-      } else if (this.option_search === 'title') {
-        this.query.filter.title = { $iLike: `%${this.keyword}%` }
-      } else if (this.option_search === 'phone_number') {
-        this.query.filter.contact_phone = { $iLike: `%${this.keyword}%` }
       }
+
       if (this.thema_id !== "null") {
         this.itemFields[2].category.push({ "$filter": { "thema_id": this.thema_id } })
       }
