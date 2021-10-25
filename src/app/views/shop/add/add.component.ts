@@ -1682,7 +1682,7 @@ export class AddShopComponent implements OnInit {
   badge_text: string = null;
   badge_color: string = "#f44336";
   state: string;
-  nickname: string;
+  nickname: string = "";
   settings = {};
   old_shop: any
   latitude: number;
