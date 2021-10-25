@@ -1977,7 +1977,7 @@ export class AddShopComponent implements OnInit {
   //User Search Section
   getUserNickNameFromId(id) {
 
-    return this.nickname;
+    return this.nickname ? this.nickname : "";
 
   }
   async filterFunction(keyword: string) {
@@ -2034,7 +2034,7 @@ export class AddShopComponent implements OnInit {
       }
     }
     this.user_id = user.id;
-
+    this.nickname = user.nickname
     // if (this.type_category !== 'GERNE') {
     //     this.listSelectedCategoryIds = [];
     //     this.type_category = 'GERNE';

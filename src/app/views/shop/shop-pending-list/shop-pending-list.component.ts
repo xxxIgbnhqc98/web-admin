@@ -408,10 +408,14 @@ export class ShopPendingListComponent implements OnInit {
   }
   async acceptItemOld(item: any) {
     try {
-      await this.apiService.shop.update(item.id, {
-        state: 'APPROVED',
-        geolocation_api_type: this.geolocation
-      });
+      let bodyUpdate: any = {
+        state: 'APPROVED'
+      }
+      if (this.geolocation) {
+        bodyUpdate.geolocation_api_type = this.geolocation
+      }
+      await this.apiService.shop.update(item.id, bodyUpdate);
+
       this.alertSuccess();
       this.itemsTable.reloadItems();
     } catch (error) {
